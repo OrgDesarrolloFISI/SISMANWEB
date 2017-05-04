@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 03/05/2017 02:54:05 AM by Hibernate Tools 5.2.0.CR1 -->
+<hibernate-mapping>
+    <class name="pe.edu.sistemas.sismanweb.entidades.Plan" table="plan" catalog="modelogeneralfisi" optimistic-lock="version">
+        <id name="idplan" type="java.lang.Integer">
+            <column name="IDPLAN" />
+            <generator class="identity" />
+        </id>
+        <property name="escuelaIdescuela" type="int">
+            <column name="ESCUELA_IDESCUELA" not-null="true" />
+        </property>
+        <property name="planNombre" type="string">
+            <column name="PLAN_NOMBRE" length="45" not-null="true" />
+        </property>
+        <set name="alumnos" table="alumno" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PLAN_IDPLAN" not-null="true" />
+            </key>
+            <one-to-many class="pe.edu.sistemas.sismanweb.entidades.Alumno" />
+        </set>
+        <set name="cursoBases" table="curso_base" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PLAN_ID_PLAN" not-null="true" />
+            </key>
+            <one-to-many class="pe.edu.sistemas.sismanweb.entidades.CursoBase" />
+        </set>
+    </class>
+</hibernate-mapping>
