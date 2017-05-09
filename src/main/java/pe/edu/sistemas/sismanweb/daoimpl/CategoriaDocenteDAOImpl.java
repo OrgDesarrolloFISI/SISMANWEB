@@ -14,7 +14,7 @@ public class CategoriaDocenteDAOImpl implements CategoriaDocenteDAO{
 	}
 
 	@Override
-	public List<CategoriaDocente> obtenerCategoriaDocentexID(Integer idCategoriaDocente) {
+	public CategoriaDocente obtenerCategoriaDocentexID(Integer idCategoriaDocente) {
 		// TODO Auto-generated method stub
 		return null;
 	}

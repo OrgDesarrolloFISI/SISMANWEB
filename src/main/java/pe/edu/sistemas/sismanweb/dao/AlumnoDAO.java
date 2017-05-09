@@ -6,7 +6,7 @@ import pe.edu.sistemas.sismanweb.entidades.Alumno;
 
 public interface AlumnoDAO {
 	
-	public void insertarAlumno (Alumno alumno);
+	public long insertarAlumno (Alumno alumno);
 	
 	public void actualizarAlumno (Alumno alumno);
 	

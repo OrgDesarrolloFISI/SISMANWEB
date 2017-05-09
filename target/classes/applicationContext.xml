@@ -10,11 +10,10 @@
 
 	<!--  
 	<tx:annotation-driven />
-	<context:component-scan base-package="pe.edu.sistemas.sismanweb.servicios" />
-	-->
+	<context:component-scan base-package="pe.edu.sistemas.sismanweb.servicios" />	
 	<context:annotation-config/>
+	-->
 	
-	<context:component-scan base-package="pe.edu.sistemas.sismanweb.dao" />
 	<context:component-scan base-package="pe.edu.sistemas.sismanweb.daoimpl" />
 	
 	<bean class="pe.edu.sistemas.sismanweb.daoimpl.HibernateUtil" factory-method="getSessionFactory"  />

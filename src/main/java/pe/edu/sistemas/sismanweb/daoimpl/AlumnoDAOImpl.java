@@ -8,7 +8,8 @@ import pe.edu.sistemas.sismanweb.entidades.Alumno;
 public class AlumnoDAOImpl implements AlumnoDAO {
 
 	@Override
-	public void insertarAlumno(Alumno alumno) {
+	public long insertarAlumno(Alumno alumno) {
+		return 0;
 		// TODO Auto-generated method stub
 
 	}
