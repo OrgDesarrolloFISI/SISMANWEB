@@ -31,6 +31,7 @@ public class PersonaDAOImpl implements PersonaDAO {
 
 	private void manejaExcepcion(HibernateException he){
 		tx.rollback();
+		he.printStackTrace();
 		throw new HibernateException("Ocurrió un error en el acceso a datos", he);
 	}
 	

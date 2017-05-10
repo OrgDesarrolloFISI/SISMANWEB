@@ -18,12 +18,11 @@ public class PruebasDAO {
 	
 	@Autowired
 	public PersonaDAO personaDAO;
-	
-	Persona persona;
-	
+		
 
 	@Test
-	public void mostrarPersonar() {	
+	@Ignore
+	public void seMuestraPersonas() {	
 		
 		List<Persona> lista = personaDAO.obtenerTodoPersona();
 		
@@ -34,12 +33,54 @@ public class PruebasDAO {
 	}
 	
 	@Test
-	public void insertarPersona() {
-		persona = new Persona();
-		persona.setPersonaCodigo("14200045");
-		persona.setPersonaNombre("andherson");
+	@Ignore
+	public void seAgregaPersona() {
+		Persona persona = new Persona();
+		persona.setPersonaCodigo("");
+		persona.setPersonaNombre("");
+		persona.setPersonaCodigoSistema("");
+		persona.setPersonaPasswordSistema("");
+		persona.setPersonaPasswordSistema2("");
 		personaDAO.insertarPersona(persona);
 		System.out.println("Persona Registrada");
+		
+	}
+	
+	@Test
+	//@Ignore
+	public void seMuestraPersonarxID() {	
+		
+		Persona persona = personaDAO.obtenerPersonaxID(5830);
+		if(persona!=null) System.out.println("Se encontro a "+persona.getPersonaNombre()+" "+persona.getPersonaAppaterno());
+		else System.out.println("No se encuentra a la persona");
+		
+		
+			
+
+	}
+	
+	@Test
+	@Ignore
+	public void seActualizaPersona(){
+		
+		Persona persona = personaDAO.obtenerPersonaxID(5831);
+		persona.setPersonaAppaterno("");
+		persona.setPersonaApmaterno("");
+		personaDAO.actualizarPersona(persona);	
+		
+		System.out.println(persona.getPersonaCodigo()+" : "+persona.getPersonaNombre()+" : "+persona.getPersonaAppaterno()+" : "+persona.getPersonaApmaterno());		
+		
+	}
+	
+	@Test
+	@Ignore
+	public void seEliminaPersona(){
+		Persona personaAntes = personaDAO.obtenerPersonaxID(5831);
+		personaDAO.eliminarPersona(personaAntes);
+		Persona personaDespues = personaDAO.obtenerPersonaxID(5831);
+		if(personaDespues!=null) System.out.println("Se encontro a "+personaDespues.getPersonaNombre());
+		else System.out.println("No se encuentra a la persona");
+		
 	}
 
 }
