@@ -3,7 +3,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pe.edu.sistemas</groupId>
 	<artifactId>sismanweb</artifactId>
+	<packaging>war</packaging>
 	<version>1.0</version>
+	<name>sismanweb Maven Webapp</name>
+  	<url>http://maven.apache.org</url>
 
 	<dependencies>
 		<dependency>
