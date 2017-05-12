@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-target/classes/META-INF/MANIFEST.MF
-Built-By: pc
-Build-Jdk: 1.8.0_45
-Created-By: Maven Integration for Eclipse
-
