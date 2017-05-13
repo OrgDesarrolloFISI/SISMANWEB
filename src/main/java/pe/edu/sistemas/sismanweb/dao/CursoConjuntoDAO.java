@@ -14,6 +14,6 @@ public interface CursoConjuntoDAO {
 
 	public List<CursoConjunto> obtenerTodoCursoConjunto();
 
-	public List<CursoConjunto> obtenerCursoConjuntoxID(Integer idCursoConjunto);
+	public CursoConjunto obtenerCursoConjuntoxID(Integer idCursoConjunto);
 
 }

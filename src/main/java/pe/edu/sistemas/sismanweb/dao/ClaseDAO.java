@@ -14,6 +14,6 @@ public interface ClaseDAO {
 	
 	public List<Clase> obtenerTodoClase();
 	
-	public List<Clase> obtenerClasexID(Integer idClase);	
+	public Clase obtenerClasexID(Integer idClase);	
 
 }

@@ -14,6 +14,6 @@ public interface PeriodoDAO {
 
 	public List<Periodo> obtenerTodoPeriodo();
 
-	public List<Periodo> obtenerPeriodoxID(Integer idPeriodo);
+	public Periodo obtenerPeriodoxID(Integer idPeriodo);
 
 }

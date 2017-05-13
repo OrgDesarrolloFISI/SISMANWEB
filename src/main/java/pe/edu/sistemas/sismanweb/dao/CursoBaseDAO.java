@@ -14,5 +14,5 @@ public interface CursoBaseDAO {
 	
 	public List<CursoBase> obtenerTodoCursoBase();
 	
-	public List<CursoBase> obtenerCursoBasexID(Integer idCursoBase);
+	public CursoBase obtenerCursoBasexID(Integer idCursoBase);
 }

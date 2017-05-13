@@ -14,6 +14,6 @@ public interface TipoAlumnoDAO {
 
 	public List<TipoAlumno> obtenerTodoTipoAlumno();
 
-	public List<TipoAlumno> obtenerTipoAlumnoxID(Integer idTipoAlumno);
+	public TipoAlumno obtenerTipoAlumnoxID(Integer idTipoAlumno);
 
 }
