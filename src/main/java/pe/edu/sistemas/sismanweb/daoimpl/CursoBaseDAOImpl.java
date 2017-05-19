@@ -20,7 +20,7 @@ public class CursoBaseDAOImpl implements CursoBaseDAO{
 	private Transaction tx;
 	
 	@Autowired
-	public CursoBaseDAOImpl(SessionFactory sessionFactory){
+	public void setSessionFactory(SessionFactory sessionFactory){
 		this.sessionFactory = sessionFactory;		
 	}
 	

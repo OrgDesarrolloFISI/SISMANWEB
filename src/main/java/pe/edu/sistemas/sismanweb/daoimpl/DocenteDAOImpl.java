@@ -21,7 +21,7 @@ public class DocenteDAOImpl implements DocenteDAO {
 	private Transaction tx;
 	
 	@Autowired
-	public DocenteDAOImpl(SessionFactory sessionFactory){
+	public void setSessionFactory(SessionFactory sessionFactory){
 		this.sessionFactory = sessionFactory;		
 	}
 	

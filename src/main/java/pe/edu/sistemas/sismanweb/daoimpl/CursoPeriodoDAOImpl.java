@@ -20,7 +20,7 @@ public class CursoPeriodoDAOImpl implements CursoPeriodoDAO{
 	private Transaction tx;
 	
 	@Autowired
-	public CursoPeriodoDAOImpl(SessionFactory sessionFactory){
+	public void setSessionFactory(SessionFactory sessionFactory){
 		this.sessionFactory = sessionFactory;		
 	}
 	

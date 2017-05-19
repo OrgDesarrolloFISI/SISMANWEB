@@ -20,7 +20,7 @@ public class CategoriaDocenteDAOImpl implements CategoriaDocenteDAO{
 	private Transaction tx;
 	
 	@Autowired
-	public CategoriaDocenteDAOImpl(SessionFactory sessionFactory){
+	public void setSessionFactory(SessionFactory sessionFactory){
 		this.sessionFactory = sessionFactory;		
 	}
 	

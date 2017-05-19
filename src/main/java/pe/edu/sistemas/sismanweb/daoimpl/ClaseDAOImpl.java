@@ -20,7 +20,7 @@ public class ClaseDAOImpl implements ClaseDAO{
 	private Transaction tx;
 	
 	@Autowired
-	public ClaseDAOImpl(SessionFactory sessionFactory){
+	public void setSessionFactory(SessionFactory sessionFactory){
 		this.sessionFactory = sessionFactory;		
 	}
 	

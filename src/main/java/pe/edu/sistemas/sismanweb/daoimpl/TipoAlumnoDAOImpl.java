@@ -20,7 +20,7 @@ public class TipoAlumnoDAOImpl implements TipoAlumnoDAO {
 	private Transaction tx;
 	
 	@Autowired
-	public TipoAlumnoDAOImpl(SessionFactory sessionFactory){
+	public void setSessionFactory(SessionFactory sessionFactory){
 		this.sessionFactory = sessionFactory;		
 	}
 	

@@ -20,7 +20,7 @@ public class PlanDAOImpl implements PlanDAO {
 	private Transaction tx;
 	
 	@Autowired
-	public PlanDAOImpl(SessionFactory sessionFactory){
+	public void setSessionFactory(SessionFactory sessionFactory){
 		this.sessionFactory = sessionFactory;		
 	}
 	

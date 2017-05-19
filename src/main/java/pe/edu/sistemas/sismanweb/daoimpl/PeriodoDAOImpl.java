@@ -20,7 +20,7 @@ public class PeriodoDAOImpl implements PeriodoDAO {
 	private Transaction tx;
 	
 	@Autowired
-	public PeriodoDAOImpl(SessionFactory sessionFactory){
+	public void setSessionFactory(SessionFactory sessionFactory){
 		this.sessionFactory = sessionFactory;		
 	}
 	

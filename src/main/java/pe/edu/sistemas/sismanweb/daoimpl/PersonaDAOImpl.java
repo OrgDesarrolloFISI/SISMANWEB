@@ -20,7 +20,7 @@ public class PersonaDAOImpl implements PersonaDAO {
 	private Transaction tx;
 	
 	@Autowired
-	public PersonaDAOImpl(SessionFactory sessionFactory){
+	public void setSessionFactory(SessionFactory sessionFactory){
 		this.sessionFactory = sessionFactory;		
 	}
 	

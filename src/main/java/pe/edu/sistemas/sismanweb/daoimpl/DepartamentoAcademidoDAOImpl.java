@@ -20,7 +20,7 @@ public class DepartamentoAcademidoDAOImpl implements DepartamentoAcademicoDAO {
 	private Transaction tx;
 	
 	@Autowired
-	public DepartamentoAcademidoDAOImpl(SessionFactory sessionFactory){
+	public void setSessionFactory(SessionFactory sessionFactory){
 		this.sessionFactory = sessionFactory;		
 	}
 	
