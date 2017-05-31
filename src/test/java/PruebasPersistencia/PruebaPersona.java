@@ -9,9 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import pe.edu.sistemas.sismanweb.dao.AlumnoDAO;
 import pe.edu.sistemas.sismanweb.dao.PersonaDAO;
+import pe.edu.sistemas.sismanweb.entidades.Alumno;
 import pe.edu.sistemas.sismanweb.entidades.Persona;
+import pe.edu.sistemas.sismanweb.services.AlumnoService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -19,6 +20,9 @@ public class PruebaPersona {
 	
 	@Autowired
 	public PersonaDAO personaDAO;
+	
+	@Autowired
+	public AlumnoService alumnoService;
 		
 
 	@Test
@@ -48,7 +52,7 @@ public class PruebaPersona {
 	}
 	
 	@Test
-	//@Ignore
+	@Ignore
 	public void seMuestraPersonarxID() {	
 		
 		Persona persona = personaDAO.obtenerPersonaxID(5830);
@@ -82,6 +86,14 @@ public class PruebaPersona {
 		if(personaDespues!=null) System.out.println("Se encontro a "+personaDespues.getPersonaNombre());
 		else System.out.println("No se encuentra a la persona");
 		
+	}
+	
+	
+	@Test
+	public void mostrarAlumnos(){
+		for(Alumno al:alumnoService.obtenerAlumnos()){
+			System.out.println(al.getIdAlumno()+" -- "+al.getPersona().getPersonaNombre());
+		}
 	}
 
 }

@@ -83,7 +83,7 @@ public class AlumnoDAOImpl implements AlumnoDAO {
 		}catch(HibernateException he){
 			manejaExcepcion(he);
 		}finally{
-			session.close();			
+			//session.close();			
 		}		
 		
 		return listaAlumno;
