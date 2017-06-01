@@ -8,6 +8,11 @@
 	<name>sismanweb Maven Webapp</name>
   	<url>http://maven.apache.org</url>
 
+	<properties>
+            <java-version>1.8</java-version>
+            <spring.version>4.3.8.RELEASE</spring.version>
+    </properties>
+    
 	<dependencies>
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -18,24 +23,24 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>3.1.1.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>3.1.1.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>3.1.1.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>3.1.1.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>	
 		
 		<!-- The spring-webmvc module (also known as the Web-Servlet module) contains 
@@ -44,7 +49,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>4.3.8.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 		
 		<!-- The spring-web module provides basic web-oriented integration features 
@@ -53,7 +58,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>4.3.8.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>	
 		
 		<dependency>
