@@ -26,15 +26,14 @@ public class PruebaPersona {
 		
 
 	@Test
-	@Ignore
+	//@Ignore
 	public void seMuestraPersonas() {	
 		
 		List<Persona> lista = personaDAO.obtenerTodoPersona();
 		
 		for(Persona p : lista){
 			System.out.println(p.getPersonaCodigo()+" : "+p.getPersonaNombre());			
-		}		
-
+		}	
 	}
 	
 	@Test
@@ -47,8 +46,7 @@ public class PruebaPersona {
 		persona.setPersonaPasswordSistema("");
 		persona.setPersonaPasswordSistema2("");
 		personaDAO.insertarPersona(persona);
-		System.out.println("Persona Registrada");
-		
+		System.out.println("Persona Registrada");		
 	}
 	
 	@Test
@@ -59,9 +57,6 @@ public class PruebaPersona {
 		if(persona!=null) System.out.println("Se encontro a "+persona.getPersonaNombre()+" "+persona.getPersonaAppaterno());
 		else System.out.println("No se encuentra a la persona");
 		
-		
-			
-
 	}
 	
 	@Test
@@ -95,5 +90,6 @@ public class PruebaPersona {
 			System.out.println(al.getIdAlumno()+" -- "+al.getPersona().getPersonaNombre());
 		}
 	}
+	
 
 }
