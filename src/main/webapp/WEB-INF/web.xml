@@ -18,8 +18,14 @@
   
   <servlet-mapping>
 	<servlet-name>ServletDespachadorMVC</servlet-name>
-	<url-pattern>*.htm</url-pattern>
+    <url-pattern>/</url-pattern>
   </servlet-mapping>
+  
+  <!--  
+  <listener> 
+        <listener-class> org.springframework.web.context.ContextLoaderListener </listener-class> 
+  </listener>
+  -->
   
   <!--  
   <welcome-file-list>
