@@ -26,7 +26,7 @@ public class PruebaDocente {
 		List<Docente> lista = docenteDAO.obtenerTodoDocente();
 		
 		for(Docente p : lista){
-			System.out.print(p.getIddocente()+" : ");		
+			System.out.print(p.getIddocente()+" : ");
 			System.out.println(p.getPersona().getPersonaNombre());
 		}		
 

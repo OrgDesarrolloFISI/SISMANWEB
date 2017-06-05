@@ -7,7 +7,7 @@
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-
+ 
     <!-- Custom styles for this template -->
     <link href="#" th:href="@{/estilos/css/style.css}" rel="stylesheet" />
     
@@ -36,7 +36,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>Mark</td>
+						<td><span th:text="${persona.personaNombre}"></span></td>
 						<td>Otto</td>
 						<td>656765678</td>
 						<td>Berlin</td>
