@@ -79,7 +79,7 @@ public class AlumnoDAOImpl implements AlumnoDAO {
 		List<Alumno> listaAlumno = null;
 		try{
 			iniciaOperacion();
-			listaAlumno = (List<Alumno>)session.createQuery("from Alumno").setMaxResults(10).list();	
+			listaAlumno = (List<Alumno>)session.createQuery("from Alumno").setMaxResults(10).getResultList();	
 		}catch(HibernateException he){
 			manejaExcepcion(he);
 		}finally{

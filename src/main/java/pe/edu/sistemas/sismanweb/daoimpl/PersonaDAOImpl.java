@@ -79,7 +79,7 @@ public class PersonaDAOImpl implements PersonaDAO {
 		List<Persona> listaPersonas = null;
 		try{
 			iniciaOperacion();
-			listaPersonas = (List<Persona>)session.createQuery("from Persona").setMaxResults(10).list();	
+			listaPersonas = (List<Persona>)session.createQuery("from Persona").setMaxResults(10).getResultList();	
 		}catch(HibernateException he){
 			manejaExcepcion(he);
 		}finally{

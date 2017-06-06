@@ -81,7 +81,7 @@ public class DocenteDAOImpl implements DocenteDAO {
 		List<Docente> listaDocente = null;
 		try{
 			iniciaOperacion();
-			listaDocente = (List<Docente>)session.createQuery("from Docente").setMaxResults(10).list();	
+			listaDocente = (List<Docente>)session.createQuery("from Docente").setMaxResults(10).getResultList();	
 		}catch(HibernateException he){
 			manejaExcepcion(he);
 		}finally{

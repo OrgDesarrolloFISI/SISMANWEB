@@ -40,7 +40,7 @@ public class CategoriaDocenteDAOImpl implements CategoriaDocenteDAO{
 		List<CategoriaDocente> listaCategoriaDocente = null;
 		try{
 			iniciaOperacion();
-			listaCategoriaDocente = (List<CategoriaDocente>)session.createQuery("from CategoriaDocente").setMaxResults(10).list();	
+			listaCategoriaDocente = (List<CategoriaDocente>)session.createQuery("from CategoriaDocente").setMaxResults(10).getResultList();	
 		}catch(HibernateException he){
 			manejaExcepcion(he);
 		}finally{

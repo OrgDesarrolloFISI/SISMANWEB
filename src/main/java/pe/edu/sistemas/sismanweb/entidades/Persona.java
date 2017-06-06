@@ -25,8 +25,6 @@ public class Persona implements java.io.Serializable {
 	private String personaCodigoSistema;
 	private String personaPasswordSistema;
 	private String personaPasswordSistema2;
-	private Set alumnos = new HashSet(0);
-	private Set docentes = new HashSet(0);
 
 	public Persona() {
 	}
@@ -40,7 +38,7 @@ public class Persona implements java.io.Serializable {
 	public Persona(String personaCodigo, String personaNombre, String personaAppaterno, String personaApmaterno,
 			String personaTelefono, String personaCorreo, String personaDireccion, String personaDni,
 			Date personaFechaNacimiento, String personaSexo, String personaEstadoCivil, String personaCodigoSistema,
-			String personaPasswordSistema, String personaPasswordSistema2, Set alumnos, Set docentes) {
+			String personaPasswordSistema, String personaPasswordSistema2) {
 		this.personaCodigo = personaCodigo;
 		this.personaNombre = personaNombre;
 		this.personaAppaterno = personaAppaterno;
@@ -55,8 +53,6 @@ public class Persona implements java.io.Serializable {
 		this.personaCodigoSistema = personaCodigoSistema;
 		this.personaPasswordSistema = personaPasswordSistema;
 		this.personaPasswordSistema2 = personaPasswordSistema2;
-		this.alumnos = alumnos;
-		this.docentes = docentes;
 	}
 
 	public Integer getIdPersona() {
@@ -177,22 +173,6 @@ public class Persona implements java.io.Serializable {
 
 	public void setPersonaPasswordSistema2(String personaPasswordSistema2) {
 		this.personaPasswordSistema2 = personaPasswordSistema2;
-	}
-
-	public Set getAlumnos() {
-		return this.alumnos;
-	}
-
-	public void setAlumnos(Set alumnos) {
-		this.alumnos = alumnos;
-	}
-
-	public Set getDocentes() {
-		return this.docentes;
-	}
-
-	public void setDocentes(Set docentes) {
-		this.docentes = docentes;
 	}
 
 }

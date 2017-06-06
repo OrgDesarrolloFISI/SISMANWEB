@@ -24,7 +24,6 @@ public class PruebaPersona {
 	@Autowired
 	public AlumnoService alumnoService;
 		
-
 	@Test
 	//@Ignore
 	public void seMuestraPersonas() {	
