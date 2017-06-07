@@ -1,6 +1,7 @@
 package pe.edu.sistemas.sismanweb.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,18 +24,18 @@ public class PersonaController {
 	
 	@Autowired
 	PersonaService personaService;
-	Persona persona;
+	List<Persona> listaPersonas;
 	
 	protected final Log logger = LogFactory.getLog(getClass());
 	
 	//@RequestMapping(value="/hola",method=RequestMethod.GET)
-	@GetMapping("/hola")
+	@GetMapping("/lista")
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-		persona = personaService.obtenerPersonaXID(1);
-		logger.info("Retornando modelo y vista "+ " -- Datos: "+ persona.getPersonaNombre());
-		ModelAndView mav = new ModelAndView("contacts");		
-		mav.addObject("persona", persona);        
+		listaPersonas = personaService.obtenerPersonas();
+		logger.info("Retornando modelo y vista "+ " -- Datos: "+ listaPersonas.size());
+		ModelAndView mav = new ModelAndView("personas");		
+		mav.addObject("listaPersonas", listaPersonas);        
         return mav;
     }	
 

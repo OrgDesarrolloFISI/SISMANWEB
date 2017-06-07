@@ -68,7 +68,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">
-                                                            <a href="Gestion_Curso.jsp">
+                                <a href="Gestion_Curso.jsp">
 									<span class="glyphicon glyphicon-user" aria-expanded="true"></span>CURSOS
 								</a>
 								</h4>
