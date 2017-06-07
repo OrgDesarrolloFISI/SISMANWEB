@@ -40,7 +40,7 @@ public class PlanDAOImpl implements PlanDAO {
 		List<Plan> listaPlan = null;
 		try{
 			iniciaOperacion();
-			listaPlan = (List<Plan>)session.createQuery("from Plan").setMaxResults(10).list();	
+			listaPlan = (List<Plan>)session.createQuery("from Plan").setMaxResults(10).getResultList();	
 		}catch(HibernateException he){
 			manejaExcepcion(he);
 		}finally{

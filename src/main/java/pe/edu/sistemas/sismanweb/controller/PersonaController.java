@@ -32,7 +32,7 @@ public class PersonaController {
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 		persona = personaService.obtenerPersonaXID(1);
-		logger.info("Returning hello view"+ "-- Datos: "+ persona.getPersonaNombre());
+		logger.info("Retornando modelo y vista "+ " -- Datos: "+ persona.getPersonaNombre());
 		ModelAndView mav = new ModelAndView("contacts");		
 		mav.addObject("persona", persona);        
         return mav;

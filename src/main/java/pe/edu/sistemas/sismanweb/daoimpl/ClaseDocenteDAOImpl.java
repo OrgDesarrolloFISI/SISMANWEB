@@ -9,11 +9,11 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import pe.edu.sistemas.sismanweb.dao.ClaseDAO;
+import pe.edu.sistemas.sismanweb.dao.ClaseDocenteDAO;
 import pe.edu.sistemas.sismanweb.entidades.Clase;
 
 @Repository
-public class ClaseDAOImpl implements ClaseDAO{
+public class ClaseDocenteDAOImpl implements ClaseDocenteDAO{
 	
 	private SessionFactory sessionFactory;
 	private Session session;
@@ -40,7 +40,7 @@ public class ClaseDAOImpl implements ClaseDAO{
 		List<Clase> listaClase= null;
 		try{
 			iniciaOperacion();
-			listaClase = (List<Clase>)session.createQuery("from Clase").setMaxResults(10).list();	
+			listaClase = (List<Clase>)session.createQuery("from Clase").setMaxResults(10).getResultList();	
 		}catch(HibernateException he){
 			manejaExcepcion(he);
 		}finally{

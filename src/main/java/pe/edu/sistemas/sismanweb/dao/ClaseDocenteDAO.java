@@ -4,7 +4,7 @@ import java.util.List;
 
 import pe.edu.sistemas.sismanweb.entidades.Clase;
 
-public interface ClaseDAO {
+public interface ClaseDocenteDAO {
 	
 	/*public void insertarClase (Clase clase);
 	
