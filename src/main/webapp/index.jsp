@@ -1,3 +1,3 @@
 <%
-	response.sendRedirect("/sismanweb/persona/hola");
+	response.sendRedirect("login.html");
 %>
