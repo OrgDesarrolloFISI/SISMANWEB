@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8"/>
+
+    <title>SISMANWEB</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+    <!-- Custom styles for this template -->
+    <link href="#" th:href="@{/static/css/login.css}" rel="stylesheet" />
+    <link href="#" th:href="@{/static/css/style.css}" rel="stylesheet" />
+    
+
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <form class="form-signin" action="#" th:action="@{/validar}" th:object="${persona}" method="post">
+        <h2 class="form-signin-heading">Ingresar</h2>
+        <label for="inputEmail" class="sr-only">Username</label>
+        <input type="text" id="inputUsername" class="form-control" placeholder="Username" th:field="*{persona.personaCodigoSistema}"/>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" th:field="*{persona.personaPasswordSistema}"/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+        	<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Entrar
+        </button>
+      </form>
+
+    </div> <!-- /container -->
+
+</body>
+</html>
