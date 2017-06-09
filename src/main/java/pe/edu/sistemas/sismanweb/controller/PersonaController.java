@@ -19,7 +19,7 @@ import pe.edu.sistemas.sismanweb.entidades.Persona;
 import pe.edu.sistemas.sismanweb.services.PersonaService;
 
 @Controller
-@RequestMapping("/persona")
+@RequestMapping("/personas")
 public class PersonaController {
 	
 	@Autowired
@@ -29,7 +29,7 @@ public class PersonaController {
 	protected final Log logger = LogFactory.getLog(getClass());
 	
 	//@RequestMapping(value="/hola",method=RequestMethod.GET)
-	@GetMapping("/lista")
+	@GetMapping("/listarPersonas")
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 		listaPersonas = personaService.obtenerPersonas();

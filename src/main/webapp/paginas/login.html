@@ -22,9 +22,9 @@
       <form class="form-signin" action="#" th:action="@{/validar}" th:object="${persona}" method="post">
         <h2 class="form-signin-heading">Ingresar</h2>
         <label for="inputEmail" class="sr-only">Username</label>
-        <input type="text" id="inputUsername" class="form-control" placeholder="Username" th:field="*{persona.personaCodigoSistema}"/>
+        <input type="text" id="inputUsername" class="form-control" placeholder="Username" th:field="*{personaCodigoSistema}"/>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" th:field="*{persona.personaPasswordSistema}"/>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" th:field="*{personaPasswordSistema}"/>
         <button class="btn btn-lg btn-primary btn-block" type="submit">
         	<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Entrar
         </button>
