@@ -1,5 +1,10 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: koyomi
 Build-Jdk: 1.8.0_131
+=======
+Built-By: usuario
+Build-Jdk: 1.8.0_121
+>>>>>>> ee42224... alumnoController
 Created-By: Maven Integration for Eclipse
 
