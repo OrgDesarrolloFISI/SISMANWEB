@@ -4,7 +4,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,7 +31,7 @@ public class LoginController {
 
 	@RequestMapping(value="/validar",method=RequestMethod.POST)
 	public RedirectView validarLogin(@ModelAttribute("persona") Persona persona){
-		Persona resultado = personaService.obtenerPersonaXID(5237);
+		Persona resultado = personaService.obtenerPersonaXID(4504);
 		logger.info("Recibiendo persona: "+persona.getPersonaCodigoSistema()+" -- Se obtuvo una persona :"+resultado.getPersonaCodigoSistema());
 		if(!resultado.getPersonaCodigoSistema().equals(persona.getPersonaCodigoSistema())){
 			return new RedirectView("/sismanweb/login");			

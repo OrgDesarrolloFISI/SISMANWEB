@@ -30,8 +30,7 @@ public class PersonaController {
 	
 	//@RequestMapping(value="/hola",method=RequestMethod.GET)
 	@GetMapping("/listarPersonas")
-	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+	public ModelAndView handleRequest() {
 		listaPersonas = personaService.obtenerPersonas();
 		logger.info("Retornando modelo y vista "+ " -- Datos: "+ listaPersonas.size());
 		ModelAndView mav = new ModelAndView("personas");		
