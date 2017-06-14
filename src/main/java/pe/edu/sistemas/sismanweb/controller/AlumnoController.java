@@ -30,7 +30,7 @@ public class AlumnoController {
 	
 	@GetMapping("/allAlumnos")
 	public ModelAndView obtenerAlumnos(){
-		ModelAndView mav = new ModelAndView("alumnos");
+		ModelAndView mav = new ModelAndView("cursos_Eliminar");
 		listaAlumno = alumnoService.obtenerAlumnos();
 		logger.info("Retornando modelo y vista "+ " -- Datos: "+ listaAlumno.size());
 		mav.addObject("listaAlumnos", listaAlumno);
