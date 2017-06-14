@@ -14,6 +14,6 @@ public interface PlanDAO {
 
 	public List<Plan> obtenerTodoPlan();
 
-	public List<Plan> obtenerPlanxID(Integer idPlan);
+	public Plan obtenerPlanxID(Integer idPlan);
 
 }

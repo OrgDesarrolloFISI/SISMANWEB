@@ -14,6 +14,6 @@ public interface CursoPeriodoDAO {
 
 	public List<CursoPeriodo> obtenerTodoCursoPeriodo();
 
-	public List<CursoPeriodo> obtenerCursoPeriodoxID(Integer idcursoPeriodo);
+	public CursoPeriodo obtenerCursoPeriodoxID(Integer idcursoPeriodo);
 
 }

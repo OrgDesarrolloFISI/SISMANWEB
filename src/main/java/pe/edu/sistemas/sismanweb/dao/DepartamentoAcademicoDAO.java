@@ -14,7 +14,7 @@ public interface DepartamentoAcademicoDAO {
 
 	public List<DepartamentoAcademico> obtenerTodoDepartamentoAcademico();
 
-	public List<DepartamentoAcademico> obtenerDepartamentoAcademicoxID(Integer idDepartamentoAcademico);
+	public DepartamentoAcademico obtenerDepartamentoAcademicoxID(Integer idDepartamentoAcademico);
 	
 
 }

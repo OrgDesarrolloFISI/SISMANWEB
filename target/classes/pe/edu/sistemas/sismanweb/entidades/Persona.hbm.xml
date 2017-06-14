@@ -50,17 +50,5 @@
         <property name="personaPasswordSistema2" type="string">
             <column name="PERSONA_PASSWORD_SISTEMA2" length="100" not-null="true" />
         </property>
-        <set name="alumnos" table="alumno" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="PERSONA_ID_PERSONA" not-null="true" />
-            </key>
-            <one-to-many class="pe.edu.sistemas.sismanweb.entidades.Alumno" />
-        </set>
-        <set name="docentes" table="docente" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="PERSONA_ID_PERSONA" not-null="true" />
-            </key>
-            <one-to-many class="pe.edu.sistemas.sismanweb.entidades.Docente" />
-        </set>
     </class>
 </hibernate-mapping>
