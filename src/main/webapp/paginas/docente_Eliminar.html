@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+  <head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>Gestion Docente</title>
+	<link rel="stylesheet" href="https://bootswatch.com/sandstone/bootstrap.min.css" type="text/css"/>
+  </head>
+
+
+
+  <body>
+
+	<nav class="navbar navbar-default">
+			  <div class="container-fluid">
+					<div class="navbar-header">
+			      <a class="navbar-brand" href="#">SISTEMA DE MANTENIMIENTO WEB</a>
+			    </div>
+			    <div class="collapse navbar-collapse" id="ejemplo1">
+			      <ul class="nav navbar-nav navbar-right">
+			        <li><a href="login.html">CERRAR SESION</a></li>
+			      </ul>
+			    </div>
+			  </div>
+		</nav>
+	<div class="container">
+
+		<h3>OPCIONES</h3>
+		<div class="container well ">
+			<div class="row">
+				<div class="col-xs-2 ">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a href="cursos_Agregar.html" th:href="@{/personas/listarPersonas}">
+									<span class="glyphicon glyphicon-user" aria-expanded="true"></span>CURSOS
+								</a>
+							</h4>
+						</div>
+
+						<div class="panel-collapse collapse " id="cursoBARRA">
+							<div class="panel-body">
+									<li><a href="cursos_Agregar.html" th:href="@{/personas/listarPersonas}">Agregar</a></li>
+									<li><a href="cursos_Mostrar.html" th:href="@{/personas/listarPersonas}">Mostrar</a></li>
+									<li><a href="cursos_Eliminar.html" th:href="@{/personas/listarPersonas}">Eliminar</a></li>
+							</div>
+						</div>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a href="alumnos_Agregar.html" th:href="@{/personas/listarPersonas}">
+									<span class="glyphicon glyphicon-user" aria-expanded="true"></span>ALUMNO
+								</a>
+							</h4>
+						</div>
+						<div class="panel-collapse collapse " id="alumnoBARRA">
+							<div class="panel-body">
+									<li><a href="alumnos_Agregar.html" th:href="@{/personas/listarPersonas}">Agregar</a></li>
+									<li><a href="alumnos_Mostrar.html" th:href="@{/personas/listarPersonas}">Mostrar</a></li>
+									<li><a href="alumnos_Eliminar.html" th:href="@{/personas/listarPersonas}">Eliminar</a></li>
+							</div>
+						</div>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a href="docente_Agregar.html" th:href="@{/personas/listarPersonas}">
+									<span class="glyphicon glyphicon-user" aria-expanded="true"></span>DOCENTE
+								</a>
+							</h4>
+						</div>
+						<div class="panel-collapse collapse in " id="docenteBarra">
+								<div class="panel-body">
+									<li><a href="docente_Agregar.html" th:href="@{/personas/listarPersonas}">Agregar</a></li>
+									<li><a href="docente_Mostrar.html" th:href="@{/personas/listarPersonas}">Mostrar</a></li>
+									<li><a href="docente_Eliminar.html" th:href="@{/personas/listarPersonas}">Eliminar</a></li>
+								</div>
+						</div>
+					</div>
+
+				</div>
+				
+				<div class="col-xs-10 ">
+					<div ><h2>GESTION DE DOCENTES</h2></div>
+				
+					<div class="panel panel-default well">
+										
+						<ul class="tab-content">			
+							
+								<h1>ELIMINAR DOCENTE</h1>
+								
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</body>
+</html>
