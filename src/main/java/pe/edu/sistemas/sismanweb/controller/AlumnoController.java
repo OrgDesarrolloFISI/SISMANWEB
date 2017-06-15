@@ -21,22 +21,33 @@ public class AlumnoController {
 	
 	@Autowired
 	AlumnoService alumnoService;
-	List<Alumno> listaAlumno;
+	List<Alumno> alumnos;
 	
 	@GetMapping("")
 	public String vistaAlumno(){
 		return "alumnos";		
 	}
 	
-	@GetMapping("/allAlumnos")
-	public ModelAndView obtenerAlumnos(){
-		ModelAndView mav = new ModelAndView("alumnos");
-		listaAlumno = alumnoService.obtenerAlumnos();
-		logger.info("Retornando modelo y vista "+ " -- Datos: "+ listaAlumno.size());
-		mav.addObject("listaAlumnos", listaAlumno);
+	@GetMapping("/all")
+	public ModelAndView mostrarAlumnos(){
+		ModelAndView mav = new ModelAndView("/alumno/alumnos_Mostrar");
+		alumnos = alumnoService.obtenerAlumnos();
+		logger.info("Retornando modelo y vista "+ " -- Datos: "+ alumnos.size());
+		mav.addObject("listaAlumnos", alumnos);
 		return mav;		
 	}
 	
+	@GetMapping("/add")
+	public ModelAndView agregarAlumno(){
+		ModelAndView mav = new ModelAndView("/alumno/alumnos_Agregar");
+		return mav;
+	}
+	
+	@GetMapping("/delete")
+	public ModelAndView eliminarAlumno(){
+		ModelAndView mav = new ModelAndView("/alumno/alumnos_Eliminar");
+		return mav;
+	}
 	
 	
 	
