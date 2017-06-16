@@ -17,11 +17,10 @@ import pe.edu.sistemas.sismanweb.services.AlumnoService;
 @RequestMapping("/alumno")
 public class AlumnoController {
 	
-	protected final Log logger = LogFactory.getLog(getClass());
+	protected final Log logger = LogFactory.getLog(AlumnoController.class);
 	
 	@Autowired
-	AlumnoService alumnoService;
-	List<Alumno> alumnos;
+	AlumnoService alumnoService;	
 	
 	@GetMapping("")
 	public String vistaAlumno(){
@@ -29,9 +28,9 @@ public class AlumnoController {
 	}
 	
 	@GetMapping("/all")
-	public ModelAndView mostrarAlumnos(){
-		ModelAndView mav = new ModelAndView("/alumno/alumnos_Mostrar");
-		alumnos = alumnoService.obtenerAlumnos();
+	public ModelAndView verAlumnos(){
+		ModelAndView mav = new ModelAndView("/alumno/alumno_Ver");
+		List<Alumno> alumnos = alumnoService.obtenerAlumnos();
 		logger.info("Retornando modelo y vista "+ " -- Datos: "+ alumnos.size());
 		mav.addObject("listaAlumnos", alumnos);
 		return mav;		
@@ -39,13 +38,13 @@ public class AlumnoController {
 	
 	@GetMapping("/add")
 	public ModelAndView agregarAlumno(){
-		ModelAndView mav = new ModelAndView("/alumno/alumnos_Agregar");
+		ModelAndView mav = new ModelAndView("/alumno/alumno_Agregar");
 		return mav;
 	}
 	
 	@GetMapping("/delete")
 	public ModelAndView eliminarAlumno(){
-		ModelAndView mav = new ModelAndView("/alumno/alumnos_Eliminar");
+		ModelAndView mav = new ModelAndView("/alumno/alumno_Eliminar");
 		return mav;
 	}
 	
