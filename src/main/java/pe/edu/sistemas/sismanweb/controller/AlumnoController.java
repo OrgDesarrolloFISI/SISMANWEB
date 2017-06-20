@@ -21,12 +21,7 @@ public class AlumnoController {
 	
 	@Autowired
 	AlumnoService alumnoService;	
-	
-	@GetMapping("")
-	public String vistaAlumno(){
-		return "alumnos";		
-	}
-	
+			
 	@GetMapping("/all")
 	public ModelAndView verAlumnos(){
 		ModelAndView mav = new ModelAndView("/alumno/alumno_Ver");

@@ -18,7 +18,7 @@
 			    </div>
 			    <div class="collapse navbar-collapse" id="ejemplo1">
 			      <ul class="nav navbar-nav navbar-right">
-			        <li><a href="login.html">CERRAR SESION</a></li>
+			        <li><a href="../login.html">CERRAR SESION</a></li>
 			      </ul>
 			    </div>
 			  </div>
@@ -32,13 +32,13 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">
-								<a href="curso_Agregar.html" th:href="@{/curso/add}">
+								<a data-toggle="collapse" href="#cursoBARRA" aria-expanded="true" >
 									<span class="glyphicon glyphicon-user" aria-expanded="true"></span>CURSOS
 								</a>
 							</h4>
 						</div>
 
-						<div class="panel-collapse collapse in " id="cursoBARRA">
+						<div class="panel-collapse collapse in" id="cursoBARRA">
 							<div class="panel-body">
 									<li><a href="curso_Agregar.html" th:href="@{/curso/add}">Agregar</a></li>
 									<li><a href="curso_Ver.html" th:href="@{/curso/all}">Ver</a></li>
@@ -50,12 +50,12 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">
-								<a href="alumno_Agregar.html" th:href="@{/alumno/add}">
+								<a data-toggle="collapse" href="#alumnoBARRA" aria-expanded="false" class="collapsed" >
 									<span class="glyphicon glyphicon-user" aria-expanded="true"></span>ALUMNO
 								</a>
 							</h4>
 						</div>
-						<div class="panel-collapse collapse " id="alumnoBARRA">
+						<div class="panel-collapse collapse" id="alumnoBARRA">
 							<div class="panel-body">
 									<li><a href="alumno_Agregar.html" th:href="@{/alumno/add}">Agregar</a></li>
 									<li><a href="alumno_Ver.html" th:href="@{/alumno/all}">Ver</a></li>
@@ -67,12 +67,12 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">
-								<a href="docente_Agregar.html" th:href="@{/docente/add}">
+								<a data-toggle="collapse" href="#docenteBarra" aria-expanded="false" class="collapsed" >
 									<span class="glyphicon glyphicon-user" aria-expanded="true"></span>DOCENTE
 								</a>
 							</h4>
 						</div>
-						<div class="panel-collapse collapse " id="docenteBarra">
+						<div class="panel-collapse collapse" id="docenteBarra">
 								<div class="panel-body">
 									<li><a href="docente_Agregar.html" th:href="@{/docente/add}">Agregar</a></li>
 									<li><a href="docente_Ver.html" th:href="@{/docente/all}">Ver</a></li>
