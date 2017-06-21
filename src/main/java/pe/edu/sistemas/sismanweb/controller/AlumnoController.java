@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import pe.edu.sistemas.sismanweb.entidades.Alumno;
+import pe.edu.sistemas.sismanweb.entidades.Plan;
 import pe.edu.sistemas.sismanweb.services.AlumnoService;
+import pe.edu.sistemas.sismanweb.services.PlanService;
 
 @Controller
 @RequestMapping("/alumno")
@@ -21,19 +23,24 @@ public class AlumnoController {
 	
 	@Autowired
 	AlumnoService alumnoService;	
+	
+	@Autowired
+	PlanService planService;
 			
 	@GetMapping("/all")
 	public ModelAndView verAlumnos(){
 		ModelAndView mav = new ModelAndView("/alumno/alumno_Ver");
 		List<Alumno> alumnos = alumnoService.obtenerAlumnos();
 		logger.info("Retornando modelo y vista "+ " -- Datos: "+ alumnos.size());
-		mav.addObject("listaAlumnos", alumnos);
+		mav.addObject("listaAlumno", alumnos);
 		return mav;		
 	}
 	
 	@GetMapping("/add")
 	public ModelAndView agregarAlumno(){
 		ModelAndView mav = new ModelAndView("/alumno/alumno_Agregar");
+		List<Plan> planesDeEstudio = planService.obtenerPlanes();
+		mav.addObject("listaPlan", planesDeEstudio);
 		return mav;
 	}
 	

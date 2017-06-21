@@ -103,12 +103,7 @@
 								    	<input type="text " class="form-control" id="Apellido_materno" placeholder="Ingrese Apellido_m" required=""></input>
 										<label >Plan (*)</label>
 							            <select name="plan" class="form-control">
-							                        <option value="1">1997-Sistemas</option>
-							                        <option value="2">1999-Sistemas</option>
-							                        <option value="3">2002-Sistemas</option>
-							                        <option value="4">2009-Sistemas</option>
-							                        <option value="5">2009-Software</option>
-							                        <option value="6">2014-Sistemas</option>
+							                 <option th:each="plan : ${listaPlan}" th:value="${plan.idplan}" th:text="${plan.planNombre}" />
 							            </select>
 									</div>
 
