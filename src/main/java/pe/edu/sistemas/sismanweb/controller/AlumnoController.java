@@ -7,12 +7,15 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import pe.edu.sistemas.sismanweb.entidades.Alumno;
+import pe.edu.sistemas.sismanweb.entidades.Persona;
 import pe.edu.sistemas.sismanweb.entidades.Plan;
 import pe.edu.sistemas.sismanweb.services.AlumnoService;
+import pe.edu.sistemas.sismanweb.services.PersonaService;
 import pe.edu.sistemas.sismanweb.services.PlanService;
 
 @Controller
@@ -23,6 +26,9 @@ public class AlumnoController {
 	
 	@Autowired
 	AlumnoService alumnoService;	
+	
+	@Autowired
+	PersonaService personaService;
 	
 	@Autowired
 	PlanService planService;
@@ -36,22 +42,23 @@ public class AlumnoController {
 		return mav;		
 	}
 	
-	@GetMapping("/add")
-	public ModelAndView agregarAlumno(){
-		ModelAndView mav = new ModelAndView("/alumno/alumno_Agregar");
+	@GetMapping("/form")
+	public ModelAndView formularioAlumno(){
+		ModelAndView mav = new ModelAndView("/alumno/alumno_Form");
 		List<Plan> planesDeEstudio = planService.obtenerPlanes();
 		mav.addObject("listaPlan", planesDeEstudio);
+		mav.addObject("persona", new Persona());
+		logger.info("Retornando formulario");
 		return mav;
 	}
 	
-	@GetMapping("/delete")
-	public ModelAndView eliminarAlumno(){
-		ModelAndView mav = new ModelAndView("/alumno/alumno_Eliminar");
-		return mav;
+	@GetMapping("/agregar")
+	public String agregarAlumno(@ModelAttribute("persona") Persona persona){
+
+		logger.info("Agregando datos de: "+ persona.getPersonaCodigo()+" -- ");
+		return "/alumno/alumno_Form";
 	}
-	
-	
-	
+		
 	
 	
 

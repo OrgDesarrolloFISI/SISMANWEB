@@ -26,17 +26,13 @@ public class DocenteController {
 		return mav;
 	}
 	
-	@GetMapping("/add")
+	@GetMapping("/form")
 	public ModelAndView agregarDocente(){
-		ModelAndView mav = new ModelAndView("/docente/docente_Agregar");
+		ModelAndView mav = new ModelAndView("/docente/docente_Form");
 		return mav;
 	}
 	
-	@GetMapping("/delete")
-	public ModelAndView eliminarDocente(){
-		ModelAndView mav = new ModelAndView("/docente/docente_Eliminar");
-		return mav;
-	}
+	
 	
 	
 	

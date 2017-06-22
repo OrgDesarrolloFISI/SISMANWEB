@@ -40,9 +40,8 @@
 
 						<div class="panel-collapse collapse" id="cursoBARRA" aria-expanded="false">
 							<div class="panel-body">
-									<li><a href="curso_Agregar.html" th:href="@{/curso/add}">Agregar</a></li>
+									<li><a href="curso_Agregar.html" th:href="@{/curso/form}">Agregar</a></li>
 									<li><a href="curso_Ver.html" th:href="@{/curso/all}">Ver</a></li>
-									<li><a href="curso_Eliminar.html" th:href="@{/curso/delete}">Eliminar</a></li>
 							</div>
 						</div>
 					</div>
@@ -57,9 +56,8 @@
 						</div>
 						<div class="panel-collapse collapse in" id="alumnoBARRA">
 							<div class="panel-body">
-									<li><a href="alumno_Agregar.html" th:href="@{/alumno/add}">Agregar</a></li>
+									<li><a href="alumno_Agregar.html" th:href="@{/alumno/form}">Agregar</a></li>
 									<li><a href="alumno_Ver.html" th:href="@{/alumno/all}">Ver</a></li>
-									<li><a href="alumno_Eliminar.html" th:href="@{/alumno/delete}">Eliminar</a></li>
 							</div>
 						</div>
 					</div>
@@ -74,9 +72,8 @@
 						</div>
 						<div class="panel-collapse collapse" id="docenteBarra">
 								<div class="panel-body">
-									<li><a href="docente_Agregar.html" th:href="@{/docente/add}">Agregar</a></li>
+									<li><a href="docente_Agregar.html" th:href="@{/docente/form}">Agregar</a></li>
 									<li><a href="docente_Ver.html" th:href="@{/docente/all}">Ver</a></li>
-									<li><a href="docente_Eliminar.html" th:href="@{/docente/delete}">Eliminar</a></li>
 								</div>
 						</div>
 					</div>
@@ -91,40 +88,40 @@
 						<ul class="tab-content">
 							
 								<h1>AGREGAR ALUMNO</h1>
-								<form role="form">
+								<form th:action="@{/alumno/agregar}" th:object="${persona}"  method="get">
 									<div class="form-group">
-										<label for="nombre">Codigo (*)</label>
-										<input type="text " class="form-control" id="codigo" placeholder="Ingrese Codigo" required=""></input>
+										<label for="codigo">Codigo (*)</label>
+										<input type="text" class="form-control" id="codigo" placeholder="Ingrese Codigo" th:field="*{personaCodigo}"/>
 										<label for="nombre">Nombre (*)</label>s
-										<input type="text " class="form-control" id="nombre" placeholder="Ingrese Nombre" required=""></input>
-								    	<label for="Apellido_paterno_p">Apellido Paterno(*)</label>
-								    	<input type="text " class="form-control" id="Apellido_paterno" placeholder="Ingrese Apellido_p" required=""></input>
-										<label for="Apellido_materno_m">Apellido Materno(*)</label>
-								    	<input type="text " class="form-control" id="Apellido_materno" placeholder="Ingrese Apellido_m" required=""></input>
-										<label >Plan (*)</label>
-							            <select name="plan" class="form-control">
-							                 <option th:each="plan : ${listaPlan}" th:value="${plan.idplan}" th:text="${plan.planNombre}" />
+										<input type="text" class="form-control" id="nombre" placeholder="Ingrese Nombre" />
+								    	<label for="apellido_paterno">Apellido Paterno(*)</label>
+								    	<input type="text" class="form-control" id="apellido_paterno" placeholder="Ingrese Apellido Paterno" />
+										<label for="apellido_materno">Apellido Materno(*)</label>
+								    	<input type="text" class="form-control" id="apellido_materno" placeholder="Ingrese Apellido Materno" />
+										<label for="plan">Plan (*)</label>
+							            <select name="plan" class="form-control" >
+							                 <option th:each="plan : ${listaPlan}" th:value="${plan.idplan}" th:text="${plan.planNombre}"/>
 							            </select>
 									</div>
 
 									<h2>Datos Opcionales</h2>
 
 									<div class="form-group">
-										<label >Fecha de Nacimiento</label>
-					          			<input type="date" name="fechaInicio" class="form-control"  ></input>
+										<label for="FecNac">Fecha de Nacimiento</label>
+					          			<input type="date" id="FecNac" class="form-control"  ></input>
 										<label >Sexo</label>
-										<select name="Sexo" class="form-control">
+										<select name="Sexo" class="form-control" >
 											<option value="M">MASCULINO</option>
 											<option value="F">FEMENINO</option>
 										</select>
 					          			<label for="DNI">DNI</label>
-								    	<input type="text " class="form-control" id="DNI" placeholder="DNI"></input>
+								    	<input type="text" class="form-control" id="DNI" placeholder="DNI" />
 									  	<label for="Telefono">Telefono</label>
-								    	<input type="text " class="form-control" id="Telefono" placeholder="Telefono"></input>
+								    	<input type="text" class="form-control" id="Telefono" placeholder="Telefono" />
 									  	<label for="Correo">Correo</label>
-								    	<input type="email" class="form-control" id="Correo" placeholder="Introduce Correo"></input>
+								    	<input type="email" class="form-control" id="Correo" placeholder="Introduce Correo" />
 									  	<label for="Direccion">Direccion</label>
-										<input type="text " class="form-control" id="Direccion" placeholder="Direccion"></input>
+										<input type="text" class="form-control" id="Direccion" placeholder="Direccion" />
 								 	</div>
 									<label>(*) Campos obligatorios</label>
 								 	<button type="submit" class="btn btn-default">Enviar</button>

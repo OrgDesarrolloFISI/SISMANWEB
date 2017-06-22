@@ -21,16 +21,12 @@ public class CursoController {
 		return mav;
 	}
 
-	@GetMapping("/add")
+	@GetMapping("/form")
 	public ModelAndView agregarCurso(){
-		ModelAndView mav = new ModelAndView("/curso/curso_Agregar");
+		ModelAndView mav = new ModelAndView("/curso/curso_Form");
 		return mav;
 	}
 	
-	@GetMapping("/delete")
-	public ModelAndView eliminarCurso(){
-		ModelAndView mav = new ModelAndView("/curso/curso_Eliminar");
-		return mav;
-	}
+
 	
 }
