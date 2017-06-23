@@ -1,6 +1,9 @@
 package pe.edu.sistemas.sismanweb.controller;
 
+import java.awt.print.Pageable;
 import java.util.List;
+
+import javax.inject.Qualifier;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,6 +38,7 @@ public class AlumnoController {
 			
 	@GetMapping("/all")
 	public ModelAndView verAlumnos(){
+		
 		ModelAndView mav = new ModelAndView("/alumno/alumno_Ver");
 		List<Alumno> alumnos = alumnoService.obtenerAlumnos();
 		logger.info("Retornando modelo y vista "+ " -- Datos: "+ alumnos.size());
