@@ -10,8 +10,7 @@ import pe.edu.sistemas.sismanweb.dao.PlanDAO;
 import pe.edu.sistemas.sismanweb.dao.TipoAlumnoDAO;
 import pe.edu.sistemas.sismanweb.entidades.Alumno;
 import pe.edu.sistemas.sismanweb.entidades.Persona;
-import pe.edu.sistemas.sismanweb.entidades.Plan;
-import pe.edu.sistemas.sismanweb.model.AlumnoPersonaModel;
+import pe.edu.sistemas.sismanweb.services.model.FormAlumnoModel;
 
 @Service
 public class AlumnoService {
@@ -45,22 +44,26 @@ public class AlumnoService {
 		return alumnoDao.obtenerAlumnoxID(idAlumno);
 	}
 	
-	public Alumno convertirAlumnoPersonaModelAalumno(AlumnoPersonaModel alumnoPersonaModel){
+	public Alumno converterToAlumno(FormAlumnoModel formAlumnoModel){
 		Alumno alumno = new Alumno();
 		Persona persona = new Persona();
-		persona.setPersonaCodigo(alumnoPersonaModel.getCodigo());
-		persona.setPersonaAppaterno(alumnoPersonaModel.getApPaterno());
-		persona.setPersonaApmaterno(alumnoPersonaModel.getApMaterno());
-		persona.setPersonaNombre(alumnoPersonaModel.getNombre());
-		persona.setPersonaFechaNacimiento(alumnoPersonaModel.getFechaNacimiento());
-		persona.setPersonaSexo(alumnoPersonaModel.getSexo());
-		persona.setPersonaDni(alumnoPersonaModel.getDni());
-		persona.setPersonaTelefono(alumnoPersonaModel.getTelefono());
-		persona.setPersonaCorreo(alumnoPersonaModel.getCorreo());
-		persona.setPersonaDireccion(alumnoPersonaModel.getDireccion());
+		persona.setPersonaCodigo(formAlumnoModel.getCodigo());
+		persona.setPersonaAppaterno(formAlumnoModel.getApPaterno());
+		persona.setPersonaApmaterno(formAlumnoModel.getApMaterno());
+		persona.setPersonaNombre(formAlumnoModel.getNombre());
+		persona.setPersonaFechaNacimiento(formAlumnoModel.getFechaNacimiento());
+		persona.setPersonaSexo(formAlumnoModel.getSexo());
+		persona.setPersonaDni(formAlumnoModel.getDni());
+		persona.setPersonaTelefono(formAlumnoModel.getTelefono());
+		persona.setPersonaCorreo(formAlumnoModel.getCorreo());
+		persona.setPersonaDireccion(formAlumnoModel.getDireccion());
+		persona.setPersonaCodigoSistema(formAlumnoModel.getCodigo());
+		persona.setPersonaPasswordSistema(formAlumnoModel.getCodigo());
+		persona.setPersonaPasswordSistema2("d41d8cd98f00b204e9800998ecf8427e");
 		alumno.setPersona(persona);
+		alumno.setAlumnoActivo(1);
 		alumno.setTipoAlumno(tipoAlumnoDao.obtenerTipoAlumnoxID(1));
-		alumno.setPlan(planDao.obtenerPlanxID(alumnoPersonaModel.getIdPlan()));		
+		alumno.setPlan(planDao.obtenerPlanxID(formAlumnoModel.getIdPlan()));		
 		return alumno;
 	}
 	

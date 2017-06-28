@@ -1,14 +1,8 @@
-package pe.edu.sistemas.sismanweb.model;
+package pe.edu.sistemas.sismanweb.services.model;
 
 import java.util.Date;
 
-import org.springframework.stereotype.Component;
-
-import pe.edu.sistemas.sismanweb.entidades.Alumno;
-import pe.edu.sistemas.sismanweb.entidades.Persona;
-import pe.edu.sistemas.sismanweb.entidades.Plan;
-
-public class AlumnoPersonaModel {
+public class FormAlumnoModel {
 	
 	private int idPlan;
 	private String codigo;
@@ -22,11 +16,11 @@ public class AlumnoPersonaModel {
 	private String correo;
 	private String direccion;	
 	
-	public AlumnoPersonaModel(){		
+	public FormAlumnoModel(){		
 		
 	}
 
-	public AlumnoPersonaModel(int idPlan, String codigo, String nombre, String apPaterno, String apMaterno,
+	public FormAlumnoModel(int idPlan, String codigo, String nombre, String apPaterno, String apMaterno,
 			Date fechaNacimiento, String sexo, String dni, String telefono, String correo, String direccion) {
 		super();
 		this.idPlan = idPlan;
