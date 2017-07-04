@@ -8,7 +8,7 @@
             <column name="ID_ALUMNO" />
             <generator class="identity" />
         </id>
-        <many-to-one name="persona" class="pe.edu.sistemas.sismanweb.entidades.Persona" fetch="select">
+        <many-to-one name="persona" class="pe.edu.sistemas.sismanweb.entidades.Persona" fetch="select" cascade="save-update">
             <column name="PERSONA_ID_PERSONA" not-null="true" />
         </many-to-one>
         <many-to-one name="plan" class="pe.edu.sistemas.sismanweb.entidades.Plan" fetch="select">

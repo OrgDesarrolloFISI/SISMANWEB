@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+  <head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>Busqueda</title>
+	<link rel="stylesheet" href="https://bootswatch.com/sandstone/bootstrap.min.css" type="text/css"/>
+  <link rel="stylesheet" href="../../static/css/style.css"/>
+  <link rel="stylesheet" href="/sismanweb/static/css/style.css"/>
+
+  </head>
+
+
+
+  <body>
+
+
+  	<nav class="navbar navbar-default">
+			  <div class="container-fluid">
+					<div class="navbar-header">
+			      <a class="navbar-brand" href="#">SISTEMA DE MANTENIMIENTO WEB</a>
+			    </div>
+			    <div class="collapse navbar-collapse" id="ejemplo1">
+			      <ul class="nav navbar-nav navbar-right">
+			        <li><a href="../login.html">CERRAR SESION</a></li>
+			      </ul>
+			    </div>
+			  </div>
+	</nav>
+
+	<div class="container">
+
+		<h3>OPCIONES</h3>
+		<div class="container well ">
+			<div class="row">
+				<div class="col-xs-2 ">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" href="#cursoBARRA" aria-expanded="true" >
+									<span class="glyphicon glyphicon-user" aria-expanded="true"></span>CURSOS
+								</a>
+							</h4>
+						</div>
+
+						<div class="panel-collapse collapse" id="cursoBARRA">
+							<div class="panel-body">
+									<li><a href="curso_Agregar.html" th:href="@{/curso/form}">Agregar</a></li>
+									<li><a href="curso_Ver.html" th:href="@{/curso/all}">Ver</a></li>
+							</div>
+						</div>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" href="#alumnoBARRA" aria-expanded="false" class="collapsed" >
+									<span class="glyphicon glyphicon-user" aria-expanded="true"></span>ALUMNO
+								</a>
+							</h4>
+						</div>
+						<div class="panel-collapse collapse" id="alumnoBARRA">
+							<div class="panel-body">
+									<li><a href="alumno_Agregar.html" th:href="@{/alumno/form}">Agregar</a></li>
+									<li><a href="alumno_Ver.html" th:href="@{/alumno/all}">Ver</a></li>
+							</div>
+						</div>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" href="#docenteBarra" aria-expanded="false" class="collapsed" >
+									<span class="glyphicon glyphicon-user" aria-expanded="true"></span>DOCENTE
+								</a>
+							</h4>
+						</div>
+						<div class="panel-collapse collapse" id="docenteBarra">
+								<div class="panel-body">
+									<li><a href="docente_Agregar.html" th:href="@{/docente/form}">Agregar</a></li>
+									<li><a href="docente_Ver.html" th:href="@{/docente/all}">Ver</a></li>
+								</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" href="#verBARRA" aria-expanded="false" class="collapsed" >
+									<span class="glyphicon glyphicon-user" aria-expanded="true"></span>Reporte
+								</a>
+							</h4>
+						</div>
+						<div class="panel-collapse collapse in" id="verBARRA">
+							<div class="panel-body">
+									
+									<li><a href="alumno_Ver.html" th:href="@{/alumno/all}">Ver</a></li>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="col-xs-10 ">
+					<div class="panel panel-default">
+ 
+					  <div class="panel-heading">
+					  	<h2>REPORTE</h2>
+					  </div>
+					  <div class="panel-body">
+					  		<div class="row">
+					  			<div class="col-xs-2">
+									<label >Desde semana</label>
+							    	<select  class="form-control">
+
+										  <option>1</option>
+										  <option>2</option>
+										  <option>3</option>
+										  <option>4</option>
+										  <option>5</option>
+									</select>							
+							    </div>
+						   
+						    
+							    <div class="col-xs-2">
+							    	<label >Hasta Semana</label>
+
+							    	<select  class="form-control">
+										  <option>1</option>
+										  <option>2</option>
+										  <option>3</option>
+										  <option>4</option>
+										  <option>5</option>
+									</select>
+							    </div>
+							    <div class="col-xs-5">
+							    	<label >Docente</label>
+
+							    	<select  class="form-control">
+										  <option>Todos</option>
+										  <option>Nombre docente</option>
+										  <option>Nombre docente</option>
+										  <option>Nombre docente</option>
+										  <option>Nombre docente</option>
+									</select>
+							    </div>
+							    <div class="col-xs-2">
+							    	<label >CICLO</label>
+
+							    	<select  class="form-control">
+										  <option>Num_ciclo</option>
+										  <option>Num_ciclo</option>
+										  <option>Num_ciclo</option>
+										  <option>Num_ciclo</option>
+										  <option>Num_ciclo</option>
+									</select>
+							    </div>
+					  		</div>
+					  		<div class="row">
+								
+								<div class="checkbox" align="center">
+								  	<label><input type="checkbox" value="">Mostrar solo Los que tienen horas no laboradas</label>
+								</div>
+								
+
+								<div align="center">
+									<button type="button" class="btn btn-primary btn-lg btn-block" >BUSCAR</button>
+								</div>
+					  		</div>
+						    
+						    
+					  </div>
+					 
+
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				
+					<div class="table-responsive ">
+								<table class="table table-hover table-bordered">
+								    <thead class="well">
+								        <tr>
+								            
+								            <th>CURSO</th>
+								            <th>GRUPO</th>
+								            <th>TIPO</th>
+								            <th>DIA</th>
+								            <th>NUM. SEMANA</th>
+								            <th>FECHA</th>								            
+								            <th>Horario</th>
+								            <th>H. Entrada</th>								            
+								            <th>H. Salida</th>
+								            
+								        </tr>
+								    </thead>
+								    <tbody>
+								        <tr>
+								            
+								            <td>Algoritmica</td>
+								            <td>Num_grupo</td>								            
+								            <td >T o L</td>
+								            <td>Lunes</td>
+								            <td align="center">1</td>
+								            <td>dd/mm/aa</td>
+								            <td>horas</td>
+								            <td>horas</td>
+								            <td>horas</td>
+								            
+								             
+								        </tr>
+								        <tr>
+								            
+								            <td>Algoritmica</td>
+								            <td>Num_grupo</td>								            
+								            <td>T o L</td>
+								            <td>Lunes</td>
+								            <td align="center">2</td>
+								            <td>dd/mm/aa</td>
+								            <td>horas</td>
+								            <td>horas</td>
+								            <td>horas</td>
+								            
+								             
+								      </tr>
+								        <tr>
+								            
+								            <td>Algoritmica</td>
+								            <td>Num_grupo</td>								            
+								            <td>T o L</td>
+								            <td>Lunes</td>
+								            <td align="center">2</td>
+								            <td>dd/mm/aa</td>
+								            <td>horas</td>
+								            <td>horas</td>
+								            <td>horas</td>
+								            
+								                  
+								        </tr>
+								    </tbody>
+								</table>
+							</div>
+									
+			</div>
+			<div class="col-xs-3" align="center">
+				<div class="panel panel-default " >
+						<div class="panel-heading">
+								Total de horas no laboradas
+						</div>
+						<div class="pael-body">
+								horas
+						</div>
+				</div>
+			</div>
+							
+		</div>
+	</div>
+	
+    <!-- Fin de Footer-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</body>

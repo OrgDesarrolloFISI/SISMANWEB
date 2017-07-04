@@ -11,7 +11,7 @@
       					http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 
 	
-	<mvc:annotation-driven/>
+	
 	<context:component-scan base-package="pe.edu.sistemas.sismanweb.controller" />
 	<context:component-scan base-package="pe.edu.sistemas.sismanweb.daoimpl" />
 	<context:component-scan base-package="pe.edu.sistemas.sismanweb.services" />

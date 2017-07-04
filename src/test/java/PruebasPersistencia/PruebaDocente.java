@@ -26,7 +26,10 @@ public class PruebaDocente {
 		List<Docente> lista = docenteService.obtenerDocentes();
 		
 		for(Docente p : lista){
-			System.out.print(p.getIddocente()+" : ");
+			System.out.print(p.getPersona().getPersonaCodigo()+" : ");
+			System.out.print(p.getCategoriaDocente()+" : ");
+			System.out.print(p.getClase()+" : ");
+			System.out.print(p.getDepartamentoAcademico().getDepartamentoAcademicoNombre()+" : ");
 			System.out.println(p.getPersona().getPersonaNombre());
 		}	
 		
