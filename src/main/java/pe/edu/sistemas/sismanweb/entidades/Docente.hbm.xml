@@ -17,7 +17,7 @@
         <many-to-one name="departamentoAcademico" class="pe.edu.sistemas.sismanweb.entidades.DepartamentoAcademico" fetch="select">
             <column name="DOCENTE_DEPARTAMENTO_ACADEMICO" />
         </many-to-one>
-        <many-to-one name="persona" class="pe.edu.sistemas.sismanweb.entidades.Persona" fetch="select">
+        <many-to-one name="persona" class="pe.edu.sistemas.sismanweb.entidades.Persona" fetch="select" cascade="save-update">
             <column name="PERSONA_ID_PERSONA" not-null="true" />
         </many-to-one>
         <property name="docenteClave" type="string">

@@ -50,18 +50,17 @@ public class AlumnoController {
 		List<Plan> planesDeEstudio = planService.obtenerPlanes();
 		mav.addObject("listaPlan", planesDeEstudio);
 		mav.addObject("alumno", new FormAlumnoModel());
-		logger.info("Retornando formulario");
+		logger.info("Retornando formulario Alumno");
 		return mav;
 	}
 	
-	@PostMapping("/agregar")
+	@PostMapping("/add")
 	public String agregarAlumno(@ModelAttribute("alumno") FormAlumnoModel alumnoPersonaModel){
 		Alumno alumno = alumnoService.converterToAlumno(alumnoPersonaModel);
 		alumnoService.insertarAlumno(alumno);
 		logger.info("Agregando datos de: "+ alumnoPersonaModel.getCodigo()+" -- "+alumnoPersonaModel.getIdPlan());
 		return "redirect:/alumno/form";
-	}
-		
+	}		
 	
 	
 

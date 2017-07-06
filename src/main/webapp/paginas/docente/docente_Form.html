@@ -90,54 +90,48 @@
 						<ul class="tab-content">
 
 								<h1>AGREGAR DOCENTE</h1>
-								<form role="form">
+								<form th:action="@{/docente/add}" th:object="${docente}"  method="post">
 
 							  		<div class="form-group">
 										<label for="nombre">Codigo (*)</label>
-								    	<input type="text " class="form-control" id="codigo" placeholder="Ingrese Codigo" required=""></input>
+								    	<input type="text" class="form-control" id="codigo" placeholder="Ingrese Codigo" required="" th:field="*{codigo}" />
 								    	<label for="nombre">Nombre (*)</label>
-								    	<input type="text " class="form-control" id="nombre" placeholder="Ingrese Nombre" required=""></input>
+								    	<input type="text" class="form-control" id="nombre" placeholder="Ingrese Nombre" required="" th:field="*{nombre}" />
 								    	<label for="Apellido_paterno_p">Apellido Paterno(*)</label>
-								    	<input type="text " class="form-control" id="Apellido_paterno" placeholder="Ingrese Apellido_p" required=""></input>
+								    	<input type="text" class="form-control" id="Apellido_paterno" placeholder="Ingrese Apellido Paterno" required="" th:field="*{apPaterno}" />
 										<label for="Apellido_materno_m">Apellido Materno(*)</label>
-								    	<input type="text " class="form-control" id="Apellido_materno" placeholder="Ingrese Apellido_m" required=""></input>
+								    	<input type="text" class="form-control" id="Apellido_materno" placeholder="Ingrese Apellido Materno" required="" th:field="*{apMaterno}" />
+								    	<label >Clase (*)</label>
+						            	<select name="Clase" class="form-control" th:field="*{idClase}" >
+						                        <option th:each="clase : ${clasesDoc}" th:value="${clase.idclase}" th:text="${clase.claseNombre}"/>
+						            	</select>
 										<label >Categoria (*)</label>
-					            	<select name="Categoria" class="form-control">
-					                        <option value="1">Principal</option>
-					                        <option value="2">Asociado</option>
-					                        <option value="3">Auxiliar</option>
-					                        <option value="4">Jefe de Practica</option>
-					            	</select>
+						            	<select name="Categoria" class="form-control" th:field="*{idCategoria}" >
+						                        <option th:each="cat : ${categoriasDoc}" th:value="${cat.idecategoriaDocente}" th:text="${cat.categoriaDocenteNombre}"/>
+						            	</select>
 										<label >Departamento Academico (*)</label>
-										<select name="Departamento_Academico" class="form-control">
-					                        <option value="13">ADMINISTRACION</option>
-					                        <option value="15">AUXILIAR</option>
-					                        <option value="5">CIENCIAS CONTABLES</option>
-					                        <option value="1">CIENCIAS DE LA COMPUTACION</option>
-											<option value="11">CIENCIAS FISICAS</option>
-					                        <option value="9">CIENCIAS MATEMATICAS</option>
-					                        <option value="6">CIENCIAS SOCIALES</option>
-					                        <option value="8">DISEÑO Y TECNOLOGIA INDUSTRIAL</option>
+										<select name="Departamento_Academico" class="form-control" th:field="*{idDepAcad}">
+					                        <option th:each="depAcad : ${depAcadDoc}" th:value="${depAcad.iddepartamentoAcademico}" th:text="${depAcad.departamentoAcademicoNombre}" />
 					            		</select>
-								  </div>
+								    </div>
 
 								  <h2>Datos Opcionales</h2>
 								 	<div class="form-group">
 										<label >Fecha de Nacimiento</label>
-					          			<input type="date" name="fechaInicio" class="form-control"  ></input>
+					          			<input type="date" name="fechaInicio" class="form-control" ></input>
 										<label >Sexo</label>
-										<select name="Sexo" class="form-control">
+										<select name="Sexo" class="form-control" th:field="*{sexo}">
 											<option value="M">MASCULINO</option>
 											<option value="F">FEMENINO</option>
 										</select>
 					          			<label for="DNI">DNI</label>
-								    	<input type="text " class="form-control" id="DNI" placeholder="DNI"></input>
+								    	<input type="text " class="form-control" id="DNI" placeholder="DNI" th:field="*{dni}" ></input>
 									  	<label for="Telefono">Telefono</label>
-								    	<input type="text " class="form-control" id="Telefono" placeholder="Telefono"></input>
+								    	<input type="text " class="form-control" id="Telefono" placeholder="Telefono" th:field="*{telefono}" ></input>
 									  	<label for="Correo">Correo</label>
-								    	<input type="email" class="form-control" id="Correo" placeholder="Introduce Correo"></input>
+								    	<input type="email" class="form-control" id="Correo" placeholder="Introduce Correo" th:field="*{correo}"></input>
 									  	<label for="Direccion">Direccion</label>
-										<input type="text " class="form-control" id="Direccion" placeholder="Direccion"></input>
+										<input type="text " class="form-control" id="Direccion" placeholder="Direccion" th:field="*{direccion}" ></input>
 								 	</div>
 
 								 <label>(*) Campos obligatorios</label>

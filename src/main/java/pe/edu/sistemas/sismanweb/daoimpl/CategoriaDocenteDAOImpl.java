@@ -51,7 +51,7 @@ public class CategoriaDocenteDAOImpl implements CategoriaDocenteDAO{
 	}
 
 	@Override
-	public CategoriaDocente obtenerCategoriaDocentexID(Integer idCategoriaDocente) {
+	public CategoriaDocente obtenerCategoriaDocentexID(Short idCategoriaDocente) {
 		CategoriaDocente categoriaDocente = null;
 		try{
 			iniciaOperacion();
