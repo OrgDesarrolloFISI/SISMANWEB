@@ -35,9 +35,8 @@ public class AlumnoController {
 	PlanService planService;
 			
 	@GetMapping("/all")
-	public ModelAndView verAlumnos(){
-		
-		ModelAndView mav = new ModelAndView("/alumno/alumno_Ver");
+	public ModelAndView verAlumnos(){		
+		ModelAndView mav = new ModelAndView("/alumno/alumno_Ver2");
 		List<Alumno> alumnos = alumnoService.obtenerAlumnos();
 		logger.info("Retornando modelo y vista "+ " -- Datos: "+ alumnos.size());
 		mav.addObject("listaAlumno", alumnos);
