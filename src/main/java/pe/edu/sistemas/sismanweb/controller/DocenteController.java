@@ -43,6 +43,7 @@ public class DocenteController {
 	public ModelAndView verDocentes(){
 		ModelAndView mav = new ModelAndView("/docente/docente_Ver");
 		List<Docente> docentes = docenteService.obtenerDocentes();
+		logger.info("Busqueda -- Retornando modelo y vista "+ " -- Datos: "+ docentes.size());
 		mav.addObject("listaDocentes",docentes);
 		return mav;
 	}
