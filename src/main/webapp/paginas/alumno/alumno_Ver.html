@@ -10,88 +10,86 @@
   </head>
 
   <body>
-	<nav class="navbar navbar-default">
-			  <div class="container-fluid">
-					<div class="navbar-header">
-			      <a class="navbar-brand" href="#">SISTEMA DE MANTENIMIENTO WEB</a>
-			    </div>
-			    <div class="collapse navbar-collapse" id="ejemplo1">
-			      <ul class="nav navbar-nav navbar-right">
-			        <li><a href="../login.html">CERRAR SESION</a></li>
-			      </ul>
-			    </div>
-			  </div>
-		</nav>
-	<div class="container">
+	
+	
 
-		<h3>OPCIONES</h3>
-    <!-- Inicio de Desplegables -->
-		<div class="container well ">
-			<div class="row">
-				<div class="col-xs-2 ">
-<!-- Inicio de Desplegables -->
-  <!-- Inicio Curso Opcion -->
-          <div class="panel panel-default">
-            <div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" href="#cursoBARRA" aria-expanded="false" class="collapsed" >
-									<span class="glyphicon glyphicon-user" aria-expanded="true"></span>CURSOS
-								</a>
-							</h4>
-						</div>
+		<!-- **********************************Inicio  barrra lateral**********************************-->
+  <div class="row col-xs-3" >
+    <div class="nav-side-menu">
+          <div class="brand"><h3>SISTEMA DE MANTENIMIENTO WEB</h3></div>
+          <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+        
+              <div class="menu-list">
+        
+                  <ul id="menu-content" class="menu-content collapse out">
+                      <li>
+                        <a href="#">
+                        <i class="fa fa-dashboard fa-lg"></i> OPCIONES
+                        </a>
+                      </li>
 
-						<div class="panel-collapse collapse" id="cursoBARRA">
-							<div class="panel-body">
-									<li><a href="alumno_Form.html" th:href="@{/curso/form}">Registrar</a></li>
-									<li><a href="curso_Ver.html" th:href="@{/curso/all}">Buscar</a></li>
-							</div>
-						</div>
-					</div>
-  <!-- Fin Curso Opcion -->
-  <!-- Inicio Alumno Opcion -->
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" href="#alumnoBARRA" aria-expanded="true" >
-									<span class="glyphicon glyphicon-user" aria-expanded="true"></span>ALUMNO
-								</a>
-							</h4>
-						</div>
-						<div class="panel-collapse collapse in" id="alumnoBARRA">
-							<div class="panel-body">
-									<li><a href="alumno_Agregar.html" th:href="@{/alumno/form}">Registrar</a></li>
-									<li><a href="alumno_Ver.html" th:href="@{/alumno/all}">Buscar</a></li>
-							</div>
-						</div>
-					</div>
-  <!-- Fin Alumno Opcion -->
-  <!-- Inicio Docente Opcion -->
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" href="#docenteBarra" aria-expanded="false" class="collapsed" >
-									<span class="glyphicon glyphicon-user" aria-expanded="true"></span>DOCENTE
-								</a>
-							</h4>
-						</div>
-						<div class="panel-collapse collapse" id="docenteBarra">
-								<div class="panel-body">
-									<li><a href="docente_Agregar.html" th:href="@{/docente/form}">Registrar</a></li>
-									<li><a href="docente_Ver.html" th:href="@{/docente/all}">Buscar</a></li>
-								</div>
-						</div>
-					</div>
-  <!-- Fin Docente Opcion -->
-<!-- Fin de Desplegables -->
-				</div>
-				<div class="col-xs-10 ">
-					<div ><h2>GESTION DE ALUMNOS</h2></div>
+                      <li  data-toggle="collapse" data-target="#curso" class="collapsed active">
+                        <a href="#"><i class="fa fa-gift fa-lg"></i>&nbsp;<span class="glyphicon glyphicon-book">&nbsp;CURSOS</span></a>
+                      </li>
+                      <ul class="sub-menu collapse" id="curso">
+                          <li><a href="curso_Agregar.html" th:href="@{/curso/form}">Registrar</a></li>
+                <li><a href="curso_Ver.html" th:href="@{/curso/all}">Buscar</a></li>
+                      </ul>
 
-					<div class="panel panel-default well">
-						<div ><h2>Mostrar Alumnos</h2></div>
-						<ul class="tab-content">
 
-								<h1>Lista de Alumnos</h1>
+                      <li data-toggle="collapse" data-target="#alumno" class="collapsed">
+                        <a href="#"><i class="fa fa-globe fa-lg"></i>&nbsp;<span class="glyphicon glyphicon-user" >&nbsp; ALUMNO </span></a>
+                      </li>  
+                      <ul class="sub-menu collapse" id="alumno">
+                        <li><a href="alumno_Agregar.html" th:href="@{/alumno/form}">Registrar</a></li>
+                <li><a href="alumno_Ver.html" th:href="@{/alumno/all}">Buscar</a></li>
+                      </ul>
+
+
+                      <li data-toggle="collapse" data-target="#new" class="collapsed">
+                        <a href="#"><i class="fa fa-car fa-lg"></i>&nbsp;<span class="glyphicon glyphicon-apple">&nbsp; DOCENTE </span></a>
+                      </li>
+                      <ul class="sub-menu collapse" id="new">
+                        <li><a href="docente_Agregar.html" th:href="@{/docente/form}">Registrar</a></li>
+                <li><a href="docente_Ver.html" th:href="@{/docente/all}">Buscar</a></li>
+                      </ul>
+
+
+                  </ul>
+           </div>
+    </div>
+
+  </div>
+  <!-- **********************************Fin barrra lateral**********************************-->
+    
+		
+			
+				
+				<div class="col-xs-9 ">
+
+          <!-- **********************************Inicio  encabezado**********************************-->
+					<div class="col-xs-12 well">
+        <div align="left" class="col-xs-6">
+          <h2 >MOSTRAR ALUMNOS</h2>
+          
+          
+        </div>
+        <div align="right" class="col-xs-6">
+        
+          <button class="btn btn-primary" onclick="location='../login.html'">CERRAR SESION</button>
+        </div>
+        
+      </div>
+
+      <!-- **********************************Fin encabezado**********************************-->
+
+
+
+					
+						
+						
+
+								
   <!-- Buscar -->
                 <div id="search-bar" >
                   <div class="row">
@@ -190,12 +188,12 @@
                 	</div>
                 </div>
 <!-- Fin de Paginacion-->
-						</ul>
+						
 					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+				
+			
+		
+	
 <!--  Footer -->
   <div id="footer-container">
       <div class="container">
