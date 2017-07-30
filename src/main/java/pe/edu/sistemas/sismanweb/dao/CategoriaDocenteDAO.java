@@ -14,6 +14,6 @@ public interface CategoriaDocenteDAO {
 	
 	public List<CategoriaDocente> obtenerTodoCategoriaDocente();
 	
-	public CategoriaDocente obtenerCategoriaDocentexID(Integer idCategoriaDocente);	
+	public CategoriaDocente obtenerCategoriaDocentexID(Short idCategoriaDocente);	
 
 }

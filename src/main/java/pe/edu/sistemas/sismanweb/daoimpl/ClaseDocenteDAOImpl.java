@@ -51,7 +51,7 @@ public class ClaseDocenteDAOImpl implements ClaseDocenteDAO{
 	}
 
 	@Override
-	public Clase obtenerClasexID(Integer idClase) {
+	public Clase obtenerClasexID(Short idClase) {
 		Clase clase = null;
 		try{
 			iniciaOperacion();

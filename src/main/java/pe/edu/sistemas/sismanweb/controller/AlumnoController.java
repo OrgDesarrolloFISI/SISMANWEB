@@ -35,11 +35,10 @@ public class AlumnoController {
 	PlanService planService;
 			
 	@GetMapping("/all")
-	public ModelAndView verAlumnos(){
-		
+	public ModelAndView verAlumnos(){		
 		ModelAndView mav = new ModelAndView("/alumno/alumno_Ver");
 		List<Alumno> alumnos = alumnoService.obtenerAlumnos();
-		logger.info("Retornando modelo y vista "+ " -- Datos: "+ alumnos.size());
+		logger.info("Busqueda -- Retornando modelo y vista "+ " -- Datos: "+ alumnos.size());
 		mav.addObject("listaAlumno", alumnos);
 		return mav;		
 	}
@@ -50,18 +49,17 @@ public class AlumnoController {
 		List<Plan> planesDeEstudio = planService.obtenerPlanes();
 		mav.addObject("listaPlan", planesDeEstudio);
 		mav.addObject("alumno", new FormAlumnoModel());
-		logger.info("Retornando formulario");
+		logger.info("Retornando formulario Alumno");
 		return mav;
 	}
 	
-	@PostMapping("/agregar")
+	@PostMapping("/add")
 	public String agregarAlumno(@ModelAttribute("alumno") FormAlumnoModel alumnoPersonaModel){
 		Alumno alumno = alumnoService.converterToAlumno(alumnoPersonaModel);
 		alumnoService.insertarAlumno(alumno);
 		logger.info("Agregando datos de: "+ alumnoPersonaModel.getCodigo()+" -- "+alumnoPersonaModel.getIdPlan());
 		return "redirect:/alumno/form";
-	}
-		
+	}		
 	
 	
 

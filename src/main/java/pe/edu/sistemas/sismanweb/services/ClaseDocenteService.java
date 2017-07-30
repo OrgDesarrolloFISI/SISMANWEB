@@ -18,7 +18,7 @@ public class ClaseDocenteService {
 		return claseDocenteDao.obtenerTodoClase();
 	}
 	
-	public Clase obtenerClaseDeDocenteXID(Integer idClaseDocente){
+	public Clase obtenerClaseDeDocenteXID(Short idClaseDocente){
 		return claseDocenteDao.obtenerClasexID(idClaseDocente);
 	}
 	
