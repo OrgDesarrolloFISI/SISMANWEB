@@ -32,7 +32,7 @@ public class CursoBaseDAOImpl implements CursoBaseDAO{
 	private void manejaExcepcion(HibernateException he){
 		tx.rollback();
 		he.printStackTrace();
-		throw new HibernateException("Ocurrió un error en el acceso a datos", he);
+		throw new HibernateException("Ocurriï¿½ un error en el acceso a datos", he);
 	}
 
 	@Override
@@ -66,11 +66,11 @@ public class CursoBaseDAOImpl implements CursoBaseDAO{
 		List<CursoBase> listaCursoBase = null;
 		try{
 			iniciaOperacion();
-			listaCursoBase = (List<CursoBase>)session.createQuery("from CursoBase").setMaxResults(10).list();	
+			listaCursoBase = (List<CursoBase>)session.createQuery("from CursoBase").setMaxResults(10).getResultList();	
 		}catch(HibernateException he){
 			manejaExcepcion(he);
 		}finally{
-			session.close();			
+			//session.close();			
 		}		
 		
 		return listaCursoBase;
@@ -88,6 +88,20 @@ public class CursoBaseDAOImpl implements CursoBaseDAO{
 			session.close();
 		}
 		return cursoBase;
+	}
+
+	@Override
+	public List<CursoBase> obtenerCursoBasexNombre(String nombre) {
+		List<CursoBase> listaCursoBase = null;
+		try{
+			iniciaOperacion();
+			listaCursoBase = (List<CursoBase>)session.createQuery("from CursoBase where cursobNombre like '%"+nombre+"%'").getResultList();
+		}catch (HibernateException he) {
+			manejaExcepcion(he);
+		}finally {
+			//session.close();
+		}
+		return listaCursoBase;
 	}
 
 	
