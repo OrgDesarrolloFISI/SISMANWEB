@@ -75,6 +75,20 @@ public class CursoBaseDAOImpl implements CursoBaseDAO{
 		
 		return listaCursoBase;
 	}
+	
+	public Integer insertarRetornarCursoBase(CursoBase cursoBase) {
+		Integer id = null;
+		try{
+			iniciaOperacion();
+			id = (Integer) session.save(cursoBase);
+			tx.commit();
+		}catch(HibernateException he){
+			manejaExcepcion(he);
+		}finally{
+			session.close();
+		}	
+		return id;
+	}
 
 	@Override
 	public CursoBase obtenerCursoBasexID(Integer idCursoBase) {

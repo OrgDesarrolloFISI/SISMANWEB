@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import pe.edu.sistemas.sismanweb.entidades.CursoBase;
+import pe.edu.sistemas.sismanweb.entidades.Plan;
 import pe.edu.sistemas.sismanweb.services.CursoService;
+import pe.edu.sistemas.sismanweb.services.PlanService;
 
 @Controller
 @RequestMapping("/curso")
@@ -21,6 +23,9 @@ public class CursoController {
 	
 	@Autowired
 	CursoService cursoService;
+	
+	@Autowired
+	PlanService  planService;
 	
 	@GetMapping("/all")
 	public ModelAndView verCursos(){
@@ -34,6 +39,9 @@ public class CursoController {
 	@GetMapping("/form")
 	public ModelAndView agregarCurso(){
 		ModelAndView mav = new ModelAndView("/curso/curso_Form");
+		List<Plan> planesDeEstudio = planService.obtenerPlanes();
+		mav.addObject("listaPlan",planesDeEstudio);
+		
 		return mav;
 	}
 	

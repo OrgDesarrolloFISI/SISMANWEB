@@ -10,6 +10,8 @@ public interface CursoBaseDAO {
 	
 	public void actualizarCursoBase (CursoBase cursoBase);
 	
+	public Integer insertarRetornarCursoBase(CursoBase cursoBase);
+	
 //	public void eliminarCursoBase (CursoBase cursoBase);
 	
 	public List<CursoBase> obtenerTodoCursoBase();
