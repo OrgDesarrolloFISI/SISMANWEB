@@ -3,6 +3,9 @@ body {
   color: #46485c;
   font-family: sans-serif;
   background-image: url("../imgs/fisi.JPG");
+  background-repeat: no-repeat;
+  
+  background-position: 50% 20%;
 }
 
 h2 {
