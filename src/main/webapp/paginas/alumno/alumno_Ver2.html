@@ -5,6 +5,7 @@
 	  <meta name="viewport" content="width=device-width, initial-scale=1"/>
 	  <title>Gestion Alumno</title>
 	  <link rel="stylesheet" href="https://bootswatch.com/sandstone/bootstrap.min.css" type="text/css"/>
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>
       <link rel="stylesheet" href="../../static/css/style.css"/>
       <link rel="stylesheet" href="/sismanweb/static/css/style.css"/>
       
@@ -15,51 +16,51 @@
 	
 <!-- **********************************Inicio  barrra lateral**********************************-->
     <div class="row col-xs-3" >
-        <div class="nav-side-menu">
-                <div class="brand"><h3>SISTEMA DE MANTENIMIENTO WEB</h3></div>
-                <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
-              
-                    <div class="menu-list" >
-              
-                        <ul id="menu-content" class="menu-content collapse out" >
-                            <li>
-                              <a href="#">
-                              <i class="fa fa-dashboard fa-lg"></i> OPCIONES
-                              </a>
-                            </li>
+		<div class="nav-side-menu">
+			    <div class="brand"><h3>SISTEMA DE MANTENIMIENTO WEB</h3></div>
+			    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+			  
+			        <div class="menu-list">
+			  
+			            <ul id="menu-content" class="menu-content collapse out">
+			                <li>
+			                  <a href="#">
+			                  <i >OPCIONES</i> 
+			                  </a>
+			                </li>
 
-                            <li  data-toggle="collapse" data-target="#curso" class="collapsed active">
-                              <a href="#"><i class="fa fa-gift fa-lg"></i>&nbsp;<span class="glyphicon glyphicon-book">&nbsp;CURSOS</span></a>
-                            </li>
-                            <ul class="sub-menu collapse" id="curso">
-                                <li><a href="curso_Agregar.html" th:href="@{/curso/form}">Registrar</a></li>
-                                <li><a href="curso_Ver.html" th:href="@{/curso/all}">Buscar</a></li>
-                            </ul>
-
-
-                            <li data-toggle="collapse" data-target="#alumno" class="collapsed">
-                              <a href="#"><i class="fa fa-globe fa-lg"></i>&nbsp;<span class="glyphicon glyphicon-user" >&nbsp; ALUMNO </span></a>
-                            </li>  
-                            <ul class="sub-menu collapse" id="alumno">
-                              <li><a href="alumno_Agregar.html" th:href="@{/alumno/form}">Registrar</a></li>
-                              <li><a href="alumno_Ver.html" th:href="@{/alumno/all}">Buscar</a></li>
-                            </ul>
+			                <li  data-toggle="collapse" data-target="#curso" class="collapsed active">
+			                  <a href="#">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-book">&nbsp;CURSOS</span></a>
+			                </li>
+			                <ul class="sub-menu collapse" id="curso">
+			                    <li><a href="curso_Agregar.html" th:href="@{/curso/form}">Registrar</a></li>
+								<li><a href="curso_Ver.html" th:href="@{/curso/all}">Buscar</a></li>
+			                </ul>
 
 
-                            <li data-toggle="collapse" data-target="#new" class="collapsed">
-                              <a href="#"><i class="fa fa-car fa-lg"></i>&nbsp;<span class="glyphicon glyphicon-apple">&nbsp; DOCENTE </span></a>
-                            </li>
-                            <ul class="sub-menu collapse" id="new">
-                              <li><a href="docente_Agregar.html" th:href="@{/docente/form}">Registrar</a></li>
-                              <li><a href="docente_Ver.html" th:href="@{/docente/all}">Buscar</a></li>
-                            </ul>
+			                <li data-toggle="collapse" data-target="#alumno" class="collapsed">
+			                  <a href="#">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-user" >&nbsp;ALUMNO</span></a>
+			                </li>  
+			                <ul class="sub-menu collapse" id="alumno">
+			                  <li><a href="alumno_Agregar.html" th:href="@{/alumno/form}">Registrar</a></li>
+							  <li><a href="alumno_Ver.html" th:href="@{/alumno/all}">Buscar</a></li>
+			                </ul>
 
 
-                        </ul>
-                 </div>
-        </div>
+			                <li data-toggle="collapse" data-target="#new" class="collapsed">
+			                  <a href="#">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-apple">&nbsp;DOCENTE</span></a>
+			                </li>
+			                <ul class="sub-menu collapse" id="new">
+			                  <li><a href="docente_Agregar.html" th:href="@{/docente/form}">Registrar</a></li>
+							  <li><a href="docente_Ver.html" th:href="@{/docente/all}">Buscar</a></li>
+			                </ul>
 
-    </div>
+
+			            </ul>
+			     </div>
+		</div>
+
+	</div>
     <!-- **********************************Fin barrra lateral**********************************-->
 
 
