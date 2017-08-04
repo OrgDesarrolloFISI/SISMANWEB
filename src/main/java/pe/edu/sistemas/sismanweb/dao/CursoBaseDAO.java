@@ -10,7 +10,7 @@ public interface CursoBaseDAO {
 	
 	public void actualizarCursoBase (CursoBase cursoBase);
 	
-	public Integer insertarRetornarCursoBase(CursoBase cursoBase);
+	public Integer agregarCursoBase(CursoBase cursoBase);
 	
 //	public void eliminarCursoBase (CursoBase cursoBase);
 	
@@ -18,5 +18,7 @@ public interface CursoBaseDAO {
 	
 	public CursoBase obtenerCursoBasexID(Integer idCursoBase);
 	
-	public List<CursoBase> obtenerCursoBasexNombre(String nombre);
+	public List<CursoBase> obtenerTodoCursoBasexNombre(String nombre);
+	
+	public CursoBase obtenerCursoBasexCodigoxPlan(String codigo, Integer idplan);
 }

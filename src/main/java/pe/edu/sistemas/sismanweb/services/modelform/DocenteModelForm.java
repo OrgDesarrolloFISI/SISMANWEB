@@ -1,10 +1,12 @@
-package pe.edu.sistemas.sismanweb.services.model;
+package pe.edu.sistemas.sismanweb.services.modelform;
 
 import java.util.Date;
 
-public class FormAlumnoModel {
+public class DocenteModelForm {
 	
-	private int idPlan;
+	private short idClase;
+	private short idCategoria;
+	private int idDepAcad;
 	private String codigo;
 	private String nombre;
 	private String apPaterno;
@@ -14,16 +16,19 @@ public class FormAlumnoModel {
 	private String dni;
 	private String telefono;
 	private String correo;
-	private String direccion;	
+	private String direccion;
 	
-	public FormAlumnoModel(){		
+	public DocenteModelForm(){
 		
 	}
 
-	public FormAlumnoModel(int idPlan, String codigo, String nombre, String apPaterno, String apMaterno,
-			Date fechaNacimiento, String sexo, String dni, String telefono, String correo, String direccion) {
+	public DocenteModelForm(short idClase, short idCategoria, int idDepAcad, String codigo, String nombre,
+			String apPaterno, String apMaterno, Date fechaNacimiento, String sexo, String dni, String telefono,
+			String correo, String direccion) {
 		super();
-		this.idPlan = idPlan;
+		this.idClase = idClase;
+		this.idCategoria = idCategoria;
+		this.idDepAcad = idDepAcad;
 		this.codigo = codigo;
 		this.nombre = nombre;
 		this.apPaterno = apPaterno;
@@ -36,12 +41,28 @@ public class FormAlumnoModel {
 		this.direccion = direccion;
 	}
 
-	public int getIdPlan() {
-		return idPlan;
+	public short getIdClase() {
+		return idClase;
 	}
 
-	public void setIdPlan(int idPlan) {
-		this.idPlan = idPlan;
+	public void setIdClase(short idClase) {
+		this.idClase = idClase;
+	}
+
+	public short getIdCategoria() {
+		return idCategoria;
+	}
+
+	public void setIdCategoria(short idCategoria) {
+		this.idCategoria = idCategoria;
+	}
+
+	public int getIdDepAcad() {
+		return idDepAcad;
+	}
+
+	public void setIdDepAcad(int idDepAcad) {
+		this.idDepAcad = idDepAcad;
 	}
 
 	public String getCodigo() {
@@ -122,8 +143,7 @@ public class FormAlumnoModel {
 
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
-	}
-	
+	}	
 	
 
 }

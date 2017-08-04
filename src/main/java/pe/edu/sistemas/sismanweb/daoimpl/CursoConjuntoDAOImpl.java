@@ -32,7 +32,7 @@ public class CursoConjuntoDAOImpl implements CursoConjuntoDAO{
 	private void manejaExcepcion(HibernateException he){
 		tx.rollback();
 		he.printStackTrace();
-		throw new HibernateException("Ocurrió un error en el acceso a datos", he);
+		throw new HibernateException("Ocurriï¿½ un error en el acceso a datos", he);
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class CursoConjuntoDAOImpl implements CursoConjuntoDAO{
 		List<CursoConjunto> listaCursoConjunto = null;
 		try{
 			iniciaOperacion();
-			listaCursoConjunto = (List<CursoConjunto>)session.createQuery("from CursoConjunto").setMaxResults(10).list();	
+			listaCursoConjunto = (List<CursoConjunto>)session.createQuery("from CursoConjunto").setMaxResults(10).getResultList();	
 		}catch(HibernateException he){
 			manejaExcepcion(he);
 		}finally{
@@ -88,6 +88,21 @@ public class CursoConjuntoDAOImpl implements CursoConjuntoDAO{
 			session.close();
 		}
 		return cursoConjunto;
+	}
+
+	@Override
+	public Integer agregarCursoConjunto(CursoConjunto cursoConjunto) {
+		Integer id = null;
+		try{
+			iniciaOperacion();
+			id = (Integer) session.save(cursoConjunto);
+			tx.commit();
+		}catch(HibernateException he){
+			manejaExcepcion(he);
+		}finally{
+			session.close();
+		}		
+		return id;
 	}
 
 	

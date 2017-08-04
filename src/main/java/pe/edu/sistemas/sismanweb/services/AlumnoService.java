@@ -10,19 +10,15 @@ import pe.edu.sistemas.sismanweb.dao.PlanDAO;
 import pe.edu.sistemas.sismanweb.dao.TipoAlumnoDAO;
 import pe.edu.sistemas.sismanweb.entidades.Alumno;
 import pe.edu.sistemas.sismanweb.entidades.Persona;
-import pe.edu.sistemas.sismanweb.services.model.FormAlumnoModel;
+import pe.edu.sistemas.sismanweb.services.modelform.AlumnoModelForm;
 
 @Service
 public class AlumnoService {
 	
-	@Autowired
-	AlumnoDAO alumnoDao;
+	@Autowired private AlumnoDAO alumnoDao;	
+	@Autowired private PlanDAO planDao;	
+	@Autowired private TipoAlumnoDAO tipoAlumnoDao;
 	
-	@Autowired
-	PlanDAO planDao;
-	
-	@Autowired
-	TipoAlumnoDAO tipoAlumnoDao;
 	
 	public void insertarAlumno(Alumno alumno){
 		alumnoDao.insertarAlumno(alumno);
@@ -44,7 +40,7 @@ public class AlumnoService {
 		return alumnoDao.obtenerAlumnoxID(idAlumno);
 	}
 	
-	public Alumno converterToAlumno(FormAlumnoModel formAlumnoModel){
+	public Alumno converterToAlumno(AlumnoModelForm formAlumnoModel){
 		Alumno alumno = new Alumno();
 		Persona persona = new Persona();
 		persona.setPersonaCodigo(formAlumnoModel.getCodigo());
@@ -63,7 +59,8 @@ public class AlumnoService {
 		alumno.setPersona(persona);
 		alumno.setAlumnoActivo(1);
 		alumno.setTipoAlumno(tipoAlumnoDao.obtenerTipoAlumnoxID(1));
-		alumno.setPlan(planDao.obtenerPlanxID(formAlumnoModel.getIdPlan()));		
+		alumno.setPlan(planDao.obtenerPlanxID(formAlumnoModel.getIdPlan()));	
+		
 		return alumno;
 	}
 	

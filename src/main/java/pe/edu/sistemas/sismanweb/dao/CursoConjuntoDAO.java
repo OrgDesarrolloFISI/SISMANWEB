@@ -9,6 +9,8 @@ public interface CursoConjuntoDAO {
 	public void insertarCursoConjunto(CursoConjunto cursoConjunto);
 
 	public void actualizarCursoConjunto(CursoConjunto cursoConjunto);
+	
+	public Integer agregarCursoConjunto(CursoConjunto cursoConjunto);
 
 //	public void eliminarCursoConjunto(CursoConjunto cursoConjunto);
 

@@ -11,22 +11,15 @@ import pe.edu.sistemas.sismanweb.dao.DepartamentoAcademicoDAO;
 import pe.edu.sistemas.sismanweb.dao.DocenteDAO;
 import pe.edu.sistemas.sismanweb.entidades.Docente;
 import pe.edu.sistemas.sismanweb.entidades.Persona;
-import pe.edu.sistemas.sismanweb.services.model.FormDocenteModel;
+import pe.edu.sistemas.sismanweb.services.modelform.DocenteModelForm;
 
 @Service
 public class DocenteService {
 	
-	@Autowired
-	DocenteDAO docenteDao;
-	
-	@Autowired
-	ClaseDocenteDAO claseDao;
-	
-	@Autowired
-	CategoriaDocenteDAO categoriaDocenteDao;
-	
-	@Autowired
-	DepartamentoAcademicoDAO departamentoAcademicoDao;
+	@Autowired private DocenteDAO docenteDao;	
+	@Autowired private ClaseDocenteDAO claseDao;	
+	@Autowired private CategoriaDocenteDAO categoriaDocenteDao;	
+	@Autowired private DepartamentoAcademicoDAO departamentoAcademicoDao;
 	
 
 	public void insertarDocente(Docente docente){
@@ -49,7 +42,7 @@ public class DocenteService {
 		return docenteDao.obtenerDocentexID(idDocente);
 	}
 	
-	public Docente converterToDocente(FormDocenteModel formDocenteModel){
+	public Docente converterToDocente(DocenteModelForm formDocenteModel){
 		Docente docente = new Docente();
 		Persona persona = new Persona();
 		persona.setPersonaCodigo(formDocenteModel.getCodigo());

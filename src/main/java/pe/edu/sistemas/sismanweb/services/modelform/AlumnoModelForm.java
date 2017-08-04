@@ -1,12 +1,10 @@
-package pe.edu.sistemas.sismanweb.services.model;
+package pe.edu.sistemas.sismanweb.services.modelform;
 
 import java.util.Date;
 
-public class FormDocenteModel {
+public class AlumnoModelForm {
 	
-	private short idClase;
-	private short idCategoria;
-	private int idDepAcad;
+	private int idPlan;
 	private String codigo;
 	private String nombre;
 	private String apPaterno;
@@ -16,19 +14,16 @@ public class FormDocenteModel {
 	private String dni;
 	private String telefono;
 	private String correo;
-	private String direccion;
+	private String direccion;	
 	
-	public FormDocenteModel(){
+	public AlumnoModelForm(){		
 		
 	}
 
-	public FormDocenteModel(short idClase, short idCategoria, int idDepAcad, String codigo, String nombre,
-			String apPaterno, String apMaterno, Date fechaNacimiento, String sexo, String dni, String telefono,
-			String correo, String direccion) {
+	public AlumnoModelForm(int idPlan, String codigo, String nombre, String apPaterno, String apMaterno,
+			Date fechaNacimiento, String sexo, String dni, String telefono, String correo, String direccion) {
 		super();
-		this.idClase = idClase;
-		this.idCategoria = idCategoria;
-		this.idDepAcad = idDepAcad;
+		this.idPlan = idPlan;
 		this.codigo = codigo;
 		this.nombre = nombre;
 		this.apPaterno = apPaterno;
@@ -41,28 +36,12 @@ public class FormDocenteModel {
 		this.direccion = direccion;
 	}
 
-	public short getIdClase() {
-		return idClase;
+	public int getIdPlan() {
+		return idPlan;
 	}
 
-	public void setIdClase(short idClase) {
-		this.idClase = idClase;
-	}
-
-	public short getIdCategoria() {
-		return idCategoria;
-	}
-
-	public void setIdCategoria(short idCategoria) {
-		this.idCategoria = idCategoria;
-	}
-
-	public int getIdDepAcad() {
-		return idDepAcad;
-	}
-
-	public void setIdDepAcad(int idDepAcad) {
-		this.idDepAcad = idDepAcad;
+	public void setIdPlan(int idPlan) {
+		this.idPlan = idPlan;
 	}
 
 	public String getCodigo() {
@@ -143,7 +122,8 @@ public class FormDocenteModel {
 
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
-	}	
+	}
+	
 	
 
 }

@@ -17,7 +17,7 @@ import pe.edu.sistemas.sismanweb.entidades.Plan;
 import pe.edu.sistemas.sismanweb.services.AlumnoService;
 import pe.edu.sistemas.sismanweb.services.PersonaService;
 import pe.edu.sistemas.sismanweb.services.PlanService;
-import pe.edu.sistemas.sismanweb.services.model.FormAlumnoModel;
+import pe.edu.sistemas.sismanweb.services.modelform.AlumnoModelForm;
 
 @Controller
 @RequestMapping("/alumno")
@@ -48,13 +48,13 @@ public class AlumnoController {
 		ModelAndView mav = new ModelAndView("/alumno/alumno_Form");
 		List<Plan> planesDeEstudio = planService.obtenerPlanes();
 		mav.addObject("listaPlan", planesDeEstudio);
-		mav.addObject("alumno", new FormAlumnoModel());
+		mav.addObject("alumno", new AlumnoModelForm());
 		logger.info("Retornando formulario Alumno");
 		return mav;
 	}
 	
 	@PostMapping("/add")
-	public String agregarAlumno(@ModelAttribute("alumno") FormAlumnoModel alumnoPersonaModel){
+	public String agregarAlumno(@ModelAttribute("alumno") AlumnoModelForm alumnoPersonaModel){
 		Alumno alumno = alumnoService.converterToAlumno(alumnoPersonaModel);
 		alumnoService.insertarAlumno(alumno);
 		logger.info("Agregando datos de: "+ alumnoPersonaModel.getCodigo()+" -- "+alumnoPersonaModel.getIdPlan());

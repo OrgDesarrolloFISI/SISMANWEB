@@ -18,8 +18,8 @@ import pe.edu.sistemas.sismanweb.services.CategoriaDocenteService;
 import pe.edu.sistemas.sismanweb.services.ClaseDocenteService;
 import pe.edu.sistemas.sismanweb.services.DepartamentoAcademicoService;
 import pe.edu.sistemas.sismanweb.services.DocenteService;
-import pe.edu.sistemas.sismanweb.services.model.FormAlumnoModel;
-import pe.edu.sistemas.sismanweb.services.model.FormDocenteModel;
+import pe.edu.sistemas.sismanweb.services.modelform.AlumnoModelForm;
+import pe.edu.sistemas.sismanweb.services.modelform.DocenteModelForm;
 
 @Controller
 @RequestMapping("/docente")
@@ -54,13 +54,13 @@ public class DocenteController {
 		mav.addObject("clasesDoc",claseService.obtenerClasesDeDocentes());
 		mav.addObject("categoriasDoc",categoriaDocenteService.obtenerCategorias());
 		mav.addObject("depAcadDoc",departamentoAcademicoService.obtenerDepAcademicos());
-		mav.addObject("docente",new FormDocenteModel());
+		mav.addObject("docente",new DocenteModelForm());
 		logger.info("Retornando formulario Docente");
 		return mav;
 	}
 	
 	@PostMapping("/add")
-	public String agregarDocente(@ModelAttribute("docente") FormDocenteModel docentePersonaModel){
+	public String agregarDocente(@ModelAttribute("docente") DocenteModelForm docentePersonaModel){
 		Docente docente = docenteService.converterToDocente(docentePersonaModel);
 		docenteService.insertarDocente(docente);
 		logger.info("Agregando datos de: "+ docentePersonaModel.getCodigo()+" -- "+docentePersonaModel.getApPaterno()+" -- "+docentePersonaModel.getApMaterno());

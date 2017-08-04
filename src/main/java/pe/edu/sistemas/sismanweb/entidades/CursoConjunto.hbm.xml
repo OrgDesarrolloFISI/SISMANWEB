@@ -8,7 +8,7 @@
             <column name="IDCURSO_CONJUNTO" />
             <generator class="identity" />
         </id>
-        <many-to-one name="cursoBase" class="pe.edu.sistemas.sismanweb.entidades.CursoBase" fetch="select">
+        <many-to-one name="cursoBase" class="pe.edu.sistemas.sismanweb.entidades.CursoBase" fetch="select" cascade="save-update">
             <column name="CURSOC_IDCURSO_GENERAL" not-null="true" />
         </many-to-one>
         <property name="cursocNombre" type="string">

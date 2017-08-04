@@ -6,6 +6,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -76,7 +77,8 @@ public class CursoBaseDAOImpl implements CursoBaseDAO{
 		return listaCursoBase;
 	}
 	
-	public Integer insertarRetornarCursoBase(CursoBase cursoBase) {
+	@Override
+	public Integer agregarCursoBase(CursoBase cursoBase) {
 		Integer id = null;
 		try{
 			iniciaOperacion();
@@ -105,17 +107,37 @@ public class CursoBaseDAOImpl implements CursoBaseDAO{
 	}
 
 	@Override
-	public List<CursoBase> obtenerCursoBasexNombre(String nombre) {
+	public List<CursoBase> obtenerTodoCursoBasexNombre(String nombre) {
 		List<CursoBase> listaCursoBase = null;
+		Query query = null;
 		try{
 			iniciaOperacion();
-			listaCursoBase = (List<CursoBase>)session.createQuery("from CursoBase where cursobNombre like '%"+nombre+"%'").getResultList();
+			query = session.createQuery("from CursoBase where cursobNombre like '%"+nombre+"%'");
+			listaCursoBase = (List<CursoBase>)query.getResultList();					
 		}catch (HibernateException he) {
 			manejaExcepcion(he);
 		}finally {
 			//session.close();
 		}
 		return listaCursoBase;
+	}
+
+	@Override
+	public CursoBase obtenerCursoBasexCodigoxPlan(String codigo,Integer idplan) {
+		CursoBase cursoBase = null;
+		Query query = null;
+		try{
+			iniciaOperacion();
+			query = session.createQuery("from CursoBase where cursobCodigo = :codigo and plan.idplan = :idplan").setMaxResults(1);
+			query.setParameter("codigo", codigo);
+			query.setParameter("idplan", idplan);
+			cursoBase = (CursoBase)query.getSingleResult();
+		}catch (HibernateException he) {
+			manejaExcepcion(he);
+		}finally {
+			//session.close();
+		}
+		return cursoBase;
 	}
 
 	

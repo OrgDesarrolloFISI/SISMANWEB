@@ -25,7 +25,7 @@ public class PruebaPersona {
 	public AlumnoService alumnoService;
 		
 	@Test
-	//@Ignore
+	@Ignore
 	public void seMuestraPersonas() {	
 		
 		List<Persona> lista = personaDAO.obtenerTodoPersona();
