@@ -33,7 +33,7 @@ public class CursoBaseDAOImpl implements CursoBaseDAO{
 	private void manejaExcepcion(HibernateException he){
 		tx.rollback();
 		he.printStackTrace();
-		throw new HibernateException("Ocurri� un error en el acceso a datos", he);
+		throw new HibernateException("Ocurrio un error en el acceso a datos", he);
 	}
 
 	@Override
@@ -139,7 +139,5 @@ public class CursoBaseDAOImpl implements CursoBaseDAO{
 		}
 		return cursoBase;
 	}
-
-	
 
 }

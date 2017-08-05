@@ -25,14 +25,9 @@ public class AlumnoController {
 	
 	protected final Log logger = LogFactory.getLog(AlumnoController.class);
 	
-	@Autowired
-	AlumnoService alumnoService;	
-	
-	@Autowired
-	PersonaService personaService;
-	
-	@Autowired
-	PlanService planService;
+	@Autowired AlumnoService alumnoService;		
+	@Autowired PersonaService personaService;	
+	@Autowired PlanService planService;
 			
 	@GetMapping("/all")
 	public ModelAndView verAlumnos(){		

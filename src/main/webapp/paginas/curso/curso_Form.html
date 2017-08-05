@@ -88,14 +88,14 @@
 						<ul class="tab-content">
 
 							<h1>AGREGAR CURSO</h1>
-							<form role="form" th:object>
+							<form th:action="@{/curso/add}" th:object="${curso}" method="post">
 							  		<div class="form-group">
 										<label for="codigo">Codigo Curso (*)</label>
-								    	<input type="text " class="form-control" id="codigo" placeholder="Ingrese Codigo" required=""></input>
+								    	<input type="text " class="form-control" id="codigo" placeholder="Ingrese Codigo" th:field="*{codigo}" required=""></input>
 								    	<label for="nombre">Nombre Curso (*)</label>
-								    	<input type="text " class="form-control" id="nombre" placeholder="Ingrese Nombre" required=""></input>
+								    	<input type="text " class="form-control" id="nombre" placeholder="Ingrese Nombre" th:field="*{nombre}" required=""></input>
 								    	<label for="ciclo">Ciclo (*)</label>
-								    	<select name="plan" class="form-control">
+								    	<select name="ciclo" class="form-control" th:field="*{ciclo}">
 					                        <option value="1">1</option>
 					                        <option value="2">2</option>
 					                        <option value="3">3</option>
@@ -109,9 +109,9 @@
 					                        <option value="0">0</option>
 					            		</select>
 										<label for="creditos">Creditos (*)</label>
-								    	<input type="text " class="form-control" id="creditos" placeholder="Ingrese creditos" required=""></input>
+								    	<input type="text " class="form-control" id="creditos" placeholder="Ingrese creditos" th:field="*{creditos}" required=""></input>
 										<label >Plan (*)</label>
-					            		<select name="plan" class="form-control">
+					            		<select name="plan" class="form-control" th:field="*{idPlan}">
 					                        <option th:each="plan : ${listaPlan}" th:value="${plan.idplan}" th:text="${plan.planNombre}" />
 					            		</select>
 								  	</div>

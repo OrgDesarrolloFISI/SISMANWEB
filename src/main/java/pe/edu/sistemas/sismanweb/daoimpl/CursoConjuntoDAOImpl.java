@@ -6,6 +6,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -71,8 +72,7 @@ public class CursoConjuntoDAOImpl implements CursoConjuntoDAO{
 			manejaExcepcion(he);
 		}finally{
 			session.close();			
-		}		
-		
+		}			
 		return listaCursoConjunto;
 	}
 
@@ -105,6 +105,35 @@ public class CursoConjuntoDAOImpl implements CursoConjuntoDAO{
 		return id;
 	}
 
+	@Override
+	public CursoConjunto obtenerCursoConjuntoxNombre(String nombre){
+		CursoConjunto cursoConjunto = null;
+		Query query = null;
+		try{
+			iniciaOperacion();
+			query = session.createQuery("from CursoConjunto where cursocNombre = :nombre").setMaxResults(1);
+			query.setParameter("nombre", nombre);
+			cursoConjunto = (CursoConjunto)query.getSingleResult();
+		}catch (HibernateException he) {
+			manejaExcepcion(he);
+		}finally {
+			//session.close();
+		}
+		return cursoConjunto;	
+	}
 	
+	@Override
+	public Integer obtenerCodigoMaximo(){
+		Integer codigo = null;
+		try{
+			iniciaOperacion();
+			codigo = (Integer)session.createQuery("select max(cursocCodcomun)from CursoConjunto").getSingleResult();
+		}catch (HibernateException he) {
+			manejaExcepcion(he);
+		}finally {
+			session.close();
+		}
+		return codigo;
+	}
 
 }

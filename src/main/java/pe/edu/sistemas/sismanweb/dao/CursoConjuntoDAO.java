@@ -11,11 +11,15 @@ public interface CursoConjuntoDAO {
 	public void actualizarCursoConjunto(CursoConjunto cursoConjunto);
 	
 	public Integer agregarCursoConjunto(CursoConjunto cursoConjunto);
+	
+	public CursoConjunto obtenerCursoConjuntoxNombre(String nombre);
 
 //	public void eliminarCursoConjunto(CursoConjunto cursoConjunto);
 
 	public List<CursoConjunto> obtenerTodoCursoConjunto();
 
 	public CursoConjunto obtenerCursoConjuntoxID(Integer idCursoConjunto);
+	
+	public Integer obtenerCodigoMaximo();
 
 }

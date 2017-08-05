@@ -64,13 +64,31 @@ public class PruebaCurso {
 	
 	@Test
 	//@Ignore
-	public void muestraUnCurso(){
-		CursoBase cb = cursoBaseDao.obtenerCursoBasexCodigoxPlan("405",3);
+	public void muestraUnCursoBase(){
+		CursoBase cb = cursoBaseDao.obtenerCursoBasexCodigoxPlan("201001",1);
 		if(cb != null){
 			System.out.print(cb.getIdcursoGeneral()+" -- "+cb.getCursobCodigo()+" -- "+cb.getCursobNombre()+" -- "+cb.getCursobCreditos()+" -- "+cb.getPlan().getPlanNombre());
 			System.out.println(" -- " +cb.getCursoConjuntos().size());
 		}else System.out.println("Es nulo");
 		
+	}
+	
+	@Test
+	@Ignore
+	public void muestraUnCursoConjunto(){
+		CursoConjunto cc = cursoConjuntoDao.obtenerCursoConjuntoxNombre("base de daTOs");
+		if(cc != null){
+			System.out.print(cc.getIdcursoConjunto()+" -- "+cc.getCursocNombre()+" -- ["+cc.getCursoBase().getIdcursoGeneral()+" :: "+cc.getCursoBase().getCursobNombre()+" :: "
+			+cc.getCursoBase().getCursobCodigo()+" :: "+cc.getCursoBase().getPlan().getIdplan()+"] -- "+cc.getCursocCodcomun());
+		}else System.out.println("Es nulo");		
+		
+	}
+	
+	@Test
+	@Ignore
+	public void mostrarMaximoCodigo(){
+		Integer codmax = cursoConjuntoDao.obtenerCodigoMaximo();
+		System.out.println("CODIGO MAXIMO --> "+codmax);
 	}
 	
 	

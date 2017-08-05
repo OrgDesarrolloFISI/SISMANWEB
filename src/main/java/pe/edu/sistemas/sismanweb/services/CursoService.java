@@ -9,6 +9,7 @@ import pe.edu.sistemas.sismanweb.dao.CursoBaseDAO;
 import pe.edu.sistemas.sismanweb.dao.CursoConjuntoDAO;
 import pe.edu.sistemas.sismanweb.dao.PlanDAO;
 import pe.edu.sistemas.sismanweb.entidades.CursoBase;
+import pe.edu.sistemas.sismanweb.entidades.CursoConjunto;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
 
 @Service
@@ -24,12 +25,29 @@ public class CursoService {
 	}
 	
 	public void insertarCurso(CursoBase cursoBase){
-		//verificar cursobase unico
-		//buscar codigo comun del curso
-		/*Integer id = null;
-		id = cursoBaseDao.agregarCursoBase(cursoBase);
-		CursoConjunto cursoConjunto = new CursoConjunto();
-		cursoConjuntoDao.insertarCursoConjunto(cursoConjunto);*/
+		CursoBase cursoBaseExiste;
+		
+		cursoBaseExiste = cursoBaseDao.obtenerCursoBasexCodigoxPlan(cursoBase.getCursobCodigo(), cursoBase.getPlan().getIdplan());
+		
+		if(cursoBaseExiste != null){
+			System.out.println("Ya existe un curso con el mismo codigo y plan");
+		}else{
+			CursoConjunto cursoNuevo = new CursoConjunto();
+			CursoConjunto cursoConjuntoExiste;
+			
+			cursoNuevo.setCursoBase(cursoBase);
+			cursoNuevo.setCursocNombre(cursoBase.getCursobNombre());
+			//busca un codigo comun
+			//si existe lo usa sino crea uno nuevo aumentado en uno al mayor codigo existente
+			cursoConjuntoExiste = cursoConjuntoDao.obtenerCursoConjuntoxNombre(cursoBase.getCursobNombre());
+			if(cursoConjuntoExiste != null){				
+				cursoNuevo.setCursocCodcomun(cursoConjuntoExiste.getCursocCodcomun());
+			}else{
+				cursoNuevo.setCursocCodcomun(cursoConjuntoDao.obtenerCodigoMaximo()+1);
+			}
+			Integer idNuevoCurso = cursoConjuntoDao.agregarCursoConjunto(cursoNuevo);
+			System.out.println("--NUEVO CURSO AGREGADO-- "+idNuevoCurso);
+		}
 	}	
 	
 	public CursoBase coverterToCurso(CursoModelForm cursoModelForm){
