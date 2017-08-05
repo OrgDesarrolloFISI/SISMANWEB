@@ -48,7 +48,7 @@ a {
   top: 30%;
   left: 50%;
   margin: -184px 0px 0px -300px;
-  background: rgba(248, 245, 240, 0.7);
+  background: transparent;
  
   border-radius: 5px;
   box-shadow: 0px 1px 20px rgba(0,0,0,0.3),

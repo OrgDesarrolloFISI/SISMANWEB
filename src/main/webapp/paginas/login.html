@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html >
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8"/>
   <title>SISMAN WEB</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
   
-  <link rel="stylesheet" href="../static/css/style_login.css" type="text/css"/></link>
-
+  <link rel="stylesheet" href="../static/css/style_login.css" type="text/css"/>
+  
+  <link rel="stylesheet" href="/sismanweb/static/css/style_login.css"/>
+  <link rel="stylesheet" media="screen" href="../static/css/style_particulas.css"/>
+  <link rel="stylesheet" media="screen" href="/sismanweb/static/css/style_particulas.css"/>
  
   
 </head>
@@ -20,13 +23,21 @@
   <h2>Iniciar Sesion</h2>
   <input name='username' placeholder='Usuario' type='text'/>
   <input id='pw' name='password' placeholder='Contraseña' type='password'/>
-  <div class='remember'>
-    <input  id='remember' name='remember' type='checkbox'/>
-    <label for='remember'></label>Recordarme
-  </div>
+  
   <input type='submit' value='Ingresar'/>
   
 </div>
+<div id="particles-js"></div>
+
+
+
+
+<script src="../static/js/particles.js"></script>
+<script src="/sismanweb/static/js/particles.js"></script>
+
+<script src="../static/js/app_config_particulas.js"></script>
+<script src="/sismanweb/static/js/app_config_particulas.js"></script>
+
 
 </body>
 </html>
