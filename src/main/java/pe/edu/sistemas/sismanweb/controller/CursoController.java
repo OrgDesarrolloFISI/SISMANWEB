@@ -41,16 +41,16 @@ public class CursoController {
 		ModelAndView mav = new ModelAndView("/curso/curso_Form");
 		List<Plan> planesDeEstudio = planService.obtenerPlanes();
 		mav.addObject("listaPlan",planesDeEstudio);
-		mav.addObject("curso",new CursoModelForm());
+		mav.addObject("curso", new CursoModelForm());
 		logger.info("Retornando formulario Curso");		
 		return mav;
 	}
 	
 	@PostMapping("/add")
 	public String agregarCurso(@ModelAttribute("curso") CursoModelForm cursoModelForm){
-		CursoBase cursoBase = cursoService.coverterToCurso(cursoModelForm);
-		//cursoService.insertarCurso(cursoBase);
 		logger.info("Agregando datos de: "+cursoModelForm.getCodigo()+" -- "+cursoModelForm.getNombre());
+		CursoBase cursoBase = cursoService.coverterToCurso(cursoModelForm);
+		cursoService.insertarCurso(cursoBase);		
 		return "redirect:/curso/form";
 	}
 	

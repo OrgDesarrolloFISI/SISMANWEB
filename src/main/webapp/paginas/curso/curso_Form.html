@@ -91,9 +91,9 @@
 							<form th:action="@{/curso/add}" th:object="${curso}" method="post">
 							  		<div class="form-group">
 										<label for="codigo">Codigo Curso (*)</label>
-								    	<input type="text " class="form-control" id="codigo" placeholder="Ingrese Codigo" th:field="*{codigo}" required=""></input>
+								    	<input type="text" class="form-control" id="codigo" placeholder="Ingrese Codigo" th:field="*{codigo}" required="" />
 								    	<label for="nombre">Nombre Curso (*)</label>
-								    	<input type="text " class="form-control" id="nombre" placeholder="Ingrese Nombre" th:field="*{nombre}" required=""></input>
+								    	<input type="text" class="form-control" id="nombre" placeholder="Ingrese Nombre" th:field="*{nombre}" required="" />
 								    	<label for="ciclo">Ciclo (*)</label>
 								    	<select name="ciclo" class="form-control" th:field="*{ciclo}">
 					                        <option value="1">1</option>
@@ -106,10 +106,10 @@
 					                        <option value="8">8</option>
 					                        <option value="9">9</option>
 					                        <option value="10">10</option>
-					                        <option value="0">0</option>
+					                        <option value="0">Electivo</option>
 					            		</select>
 										<label for="creditos">Creditos (*)</label>
-								    	<input type="text " class="form-control" id="creditos" placeholder="Ingrese creditos" th:field="*{creditos}" required=""></input>
+								    	<input type="text" class="form-control" id="creditos" placeholder="Ingrese creditos" th:field="*{creditos}" required=""></input>
 										<label >Plan (*)</label>
 					            		<select name="plan" class="form-control" th:field="*{idPlan}">
 					                        <option th:each="plan : ${listaPlan}" th:value="${plan.idplan}" th:text="${plan.planNombre}" />
