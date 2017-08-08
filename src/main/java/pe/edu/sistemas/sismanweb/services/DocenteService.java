@@ -12,17 +12,22 @@ import pe.edu.sistemas.sismanweb.dao.DepartamentoAcademicoDAO;
 import pe.edu.sistemas.sismanweb.dao.DocenteDAO;
 import pe.edu.sistemas.sismanweb.entidades.Docente;
 import pe.edu.sistemas.sismanweb.entidades.Persona;
+<<<<<<< HEAD
 import pe.edu.sistemas.sismanweb.services.modelform.DocenteModelForm;
+=======
+import pe.edu.sistemas.sismanweb.services.model.FormDocenteModel;
+>>>>>>> ramajose
 
 @Service
 public class DocenteService {
 	
+
 	@Autowired private DocenteDAO docenteDao;	
 	@Autowired private ClaseDocenteDAO claseDao;	
 	@Autowired private CategoriaDocenteDAO categoriaDocenteDao;	
 	@Autowired private DepartamentoAcademicoDAO departamentoAcademicoDao;
 	
-
+	
 	public void insertarDocente(Docente docente){
 		docenteDao.insertarDocente(docente);
 	}
@@ -46,7 +51,6 @@ public class DocenteService {
 	public Docente converterToDocente(DocenteModelForm formDocenteModel){
 		Docente docente = new Docente();
 		Persona persona = new Persona();
-		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
 		persona.setPersonaCodigo(formDocenteModel.getCodigo());
 		persona.setPersonaAppaterno(formDocenteModel.getApPaterno());
 		persona.setPersonaApmaterno(formDocenteModel.getApMaterno());

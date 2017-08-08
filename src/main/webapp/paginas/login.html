@@ -1,43 +1,44 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="utf-8"/>
+<html >
+<head>
+  <meta charset="UTF-8"/>
+  <title>SISMAN WEB</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+  
+  <link rel="stylesheet" href="../static/css/style_login.css" type="text/css"/>
+  
+  <link rel="stylesheet" href="/sismanweb/static/css/style_login.css"/>
+  <link rel="stylesheet" media="screen" href="../static/css/style_particulas.css"/>
+  <link rel="stylesheet" media="screen" href="/sismanweb/static/css/style_particulas.css"/>
+ 
+  
+</head>
 
-    <title>SISMANWEB</title>
+<body>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <div class="titulo">
+    <h1>SISTEMA DE MANTENIMIENTO WEB</h1>
+  </div>
+  <div class='login'>
+  <h2>Iniciar Sesion</h2>
+  <input name='username' placeholder='Usuario' type='text'/>
+  
+  <input id='pw' name='password' placeholder='Contraseña' type='password'/>
+  
+  <input type='submit' value='Ingresar'/>
+  
+</div>
+<div id="particles-js"></div>
 
-    <!-- Custom styles for this template -->
-    <link href="#" th:href="@{/static/css/login.css}" rel="stylesheet" />
-    <link href="#" th:href="@{/static/css/style.css}" rel="stylesheet" />
-    <link rel="stylesheet" href="../../static/css/style.css"/>
-    <link rel="stylesheet" href="/sismanweb/static/css/style.css"/>
 
-  </head>
 
-  <body>
 
-    <div class="container">
+<script src="../static/js/particles.js"></script>
+<script src="/sismanweb/static/js/particles.js"></script>
 
-      <form class="form-signin" action="#" th:action="@{/validar}" th:object="${persona}" method="post">
-        <h2 class="form-signin-heading">Ingresar</h2>
-        <label for="inputEmail" class="sr-only">Username</label>
-        <input type="text" id="inputUsername" class="form-control" placeholder="Username" th:field="*{personaCodigoSistema}"/>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" th:field="*{personaPasswordSistema}"/>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">
-        	<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Entrar
-        </button>
-      </form>
+<script src="../static/js/app_config_particulas.js"></script>
+<script src="/sismanweb/static/js/app_config_particulas.js"></script>
 
-    </div> <!-- /container -->
-    <!--  Footer -->
-      <div id="footer-container">
-          <div class="container">
-            <h3>Area de Desarrollo y Soporte Tecnico</h3>
-          </div>
-      </div>
-      <!-- Fin de Footer-->
+
 </body>
 </html>

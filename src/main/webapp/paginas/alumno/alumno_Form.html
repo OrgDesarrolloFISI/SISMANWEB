@@ -4,139 +4,238 @@
 	<meta charset="UTF-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<title>Gestion Alumno</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>
 	<link rel="stylesheet" href="https://bootswatch.com/sandstone/bootstrap.min.css" type="text/css"/>
+	<link rel="stylesheet" href="../../static/css/style.css" type="text/css"/>
+	
+	<link rel="stylesheet" href="/sismanweb/static/css/style.css" type="text/css"/>
   </head>
 
   <body>
 
-	<nav class="navbar navbar-default">
-			  <div class="container-fluid">
-					<div class="navbar-header">
-			      <a class="navbar-brand" href="#">SISTEMA DE MANTENIMIENTO WEB</a>
-			    </div>
-			    <div class="collapse navbar-collapse" id="ejemplo1">
-			      <ul class="nav navbar-nav navbar-right">
-			        <li><a href="../login.html">CERRAR SESION</a></li>
-			      </ul>
-			    </div>
-			  </div>
-		</nav>
-	<div class="container">
+	
+<!-- **********************************Inicio  barrra lateral**********************************-->
+	<div class="row col-xs-3" >
+		<div class="nav-side-menu">
+			    <div class="brand"><h3>SISTEMA DE MANTENIMIENTO WEB</h3></div>
+			    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+			  
+			        <div class="menu-list">
+			  
+			            <ul id="menu-content" class="menu-content collapse out">
+			                <li>
+			                  <a href="#">
+			                  <i >OPCIONES</i> 
+			                  </a>
+			                </li>
 
-		<h3>OPCIONES</h3>
-		<div class="container well ">
-			<div class="row">
-				<div class="col-xs-2 ">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" href="#cursoBARRA" aria-expanded="false" class="collapsed" >
-									<span class="glyphicon glyphicon-user" aria-expanded="true"></span>CURSOS
-								</a>
-							</h4>
-						</div>
+			                <li  data-toggle="collapse" data-target="#curso" class="collapsed active">
+			                  <a href="#">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-book">&nbsp;CURSOS</span></a>
+			                </li>
+			                <ul class="sub-menu collapse" id="curso">
+			                    <li><a href="curso_Agregar.html" th:href="@{/curso/form}">Registrar</a></li>
+								<li><a href="curso_Ver.html" th:href="@{/curso/all}">Buscar</a></li>
+			                </ul>
 
-						<div class="panel-collapse collapse" id="cursoBARRA" aria-expanded="false">
-							<div class="panel-body">
-									<li><a href="curso_Agregar.html" th:href="@{/curso/form}">Registrar</a></li>
-									<li><a href="curso_Ver.html" th:href="@{/curso/all}">Buscar</a></li>
-							</div>
-						</div>
-					</div>
 
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" href="#alumnoBARRA" aria-expanded="true" >
-									<span class="glyphicon glyphicon-user" aria-expanded="true"></span>ALUMNO
-								</a>
-							</h4>
-						</div>
-						<div class="panel-collapse collapse in" id="alumnoBARRA">
-							<div class="panel-body">
-									<li><a href="alumno_Agregar.html" th:href="@{/alumno/form}">Registrar</a></li>
-									<li><a href="alumno_Ver.html" th:href="@{/alumno/all}">Buscar</a></li>
-							</div>
-						</div>
-					</div>
+			                <li data-toggle="collapse" data-target="#alumno" class="collapsed">
+			                  <a href="#">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-user" >&nbsp;ALUMNO</span></a>
+			                </li>  
+			                <ul class="sub-menu collapse" id="alumno">
+			                  <li><a href="alumno_Agregar.html" th:href="@{/alumno/form}">Registrar</a></li>
+							  <li><a href="alumno_Ver.html" th:href="@{/alumno/all}">Buscar</a></li>
+			                </ul>
 
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" href="#docenteBarra" aria-expanded="false" class="collapsed" >
-									<span class="glyphicon glyphicon-user" aria-expanded="true"></span>DOCENTE
-								</a>
-							</h4>
-						</div>
-						<div class="panel-collapse collapse" id="docenteBarra">
-								<div class="panel-body">
-									<li><a href="docente_Agregar.html" th:href="@{/docente/form}">Registrar</a></li>
-									<li><a href="docente_Ver.html" th:href="@{/docente/all}">Buscar</a></li>
-								</div>
-						</div>
-					</div>
 
-				</div>
+			                <li data-toggle="collapse" data-target="#new" class="collapsed">
+			                  <a href="#">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-apple">&nbsp;DOCENTE</span></a>
+			                </li>
+			                <ul class="sub-menu collapse" id="new">
+			                  <li><a href="docente_Agregar.html" th:href="@{/docente/form}">Registrar</a></li>
+							  <li><a href="docente_Ver.html" th:href="@{/docente/all}">Buscar</a></li>
+			                </ul>
 
-				<div class="col-xs-10 ">
-					<div ><h2>GESTION DE ALUMNOS</h2></div>
-					
-					<div class="panel panel-default well">
-											
-						<ul class="tab-content">
-							
-								<h1>AGREGAR ALUMNO</h1>
-								<form th:action="@{/alumno/add}" th:object="${alumno}"  method="post">
-									<div class="form-group">
-										<label for="codigo">Codigo (*)</label>
-										<input type="text" class="form-control" id="codigo" placeholder="Ingrese Codigo" required="" th:field="*{codigo}" />
-										<label for="nombre">Nombre (*)</label>
-										<input type="text" class="form-control" id="nombre" placeholder="Ingrese Nombre" required="" th:field="*{nombre}" />
-								    	<label for="apellido_paterno">Apellido Paterno(*)</label>
-								    	<input type="text" class="form-control" id="apellido_paterno" placeholder="Ingrese Apellido Paterno" required="" th:field="*{apPaterno}" />
-										<label for="apellido_materno">Apellido Materno(*)</label>
-								    	<input type="text" class="form-control" id="apellido_materno" placeholder="Ingrese Apellido Materno" required="" th:field="*{apMaterno}" />
-										<label for="plan">Plan (*)</label>
-							            <select class="form-control" th:field="*{idPlan}" >
-							                 <option th:each="plan : ${listaPlan}" th:value="${plan.idplan}" th:text="${plan.planNombre}"/>
-							            </select>
-									</div>
 
-									<h2>Datos Opcionales</h2>
-
-									<div class="form-group">
-										<label for="FecNac">Fecha de Nacimiento</label>
-					          			<input type="date" id="FecNac" class="form-control"  ></input>
-										<label >Sexo</label>
-										<select name="Sexo" class="form-control" >
-											<option value="M">MASCULINO</option>
-											<option value="F">FEMENINO</option>
-										</select>
-					          			<label for="DNI">DNI</label>
-								    	<input type="text" class="form-control" id="DNI" placeholder="DNI" />
-									  	<label for="Telefono">Telefono</label>
-								    	<input type="text" class="form-control" id="Telefono" placeholder="Telefono" />
-									  	<label for="Correo">Correo</label>
-								    	<input type="email" class="form-control" id="Correo" placeholder="Introduce Correo" />
-									  	<label for="Direccion">Direccion</label>
-										<input type="text" class="form-control" id="Direccion" placeholder="Direccion" />
-								 	</div>
-									<label>(*) Campos obligatorios</label>
-								 	<button type="submit" class="btn btn-default">Enviar</button>
-								</form>
-							
-							
-						</ul>
-					</div>
-				</div>
-			</div>
+			            </ul>
+			     </div>
 		</div>
 
 	</div>
+	<!-- **********************************Fin barrra lateral**********************************-->
+
+
+
+<!-- **********************************inicio del panel de contenido**********************************-->
+<div class="col-xs-9" align="left">
 	
+	<!-- **********************************Inicio  encabezado**********************************-->
 	
+		
+
+			<div class="col-xs-12 well">
+				<div align="left" class="col-xs-6">
+					<h2 >GESTION DE ALUMNOS</h2>
+					
+					
+				</div>
+				<div align="right" class="col-xs-6">
+				
+					<button class="btn btn-primary" onclick="location='../login.html'">CERRAR SESION</button>
+				</div>
+				
+			</div>
+	<!-- **********************************Fin encabezado**********************************-->
+
+
+
+
+
+
+
+
+
+	
+
+			<!-- **********************************Inicio  Pestañas**********************************-->
+
+				<ul class="nav nav-tabs">
+					 <li class="active gi-2x" ><a href="#individual" data-toggle="tab" aria-expanded="true" >Individual</a></li>
+					 <li class="gi-2x"><a href="#grupal" data-toggle="tab" aria-expanded="false">Grupal</a></li>
+				</ul>
+			<!-- **********************************Fin  Pestañas**********************************-->
+
+
+
+
+
+			<!--********************** Inicio  Contenido de las pestañas**********************-->
+
+				<div id="myTabContent" class="tab-content">
+
+
+
+					<!--********************** Inicio  pestaña individual**********************-->
+
+					<div class="tab-pane fade active in" id="individual">
+						<h3>AGREGAR ALUMNO</h3><hr/>					
+				
+					<form th:action="@{/alumno/agregar}" th:object="${alumno}"  method="post">
+						<div class="form-group">							
+
+							<div class="col-xs-12">
+								<label for="nombre">Nombre (*)</label>
+								<input type="text" class="form-control" id="nombre" placeholder="Ingrese Nombre" pattern="([a-zA-Z]\s*){1,26}" required="" th:field="*{nombre}" />											
+							</div>
+
+							<div class="col-xs-6">
+								<label for="apellido_paterno">Apellido Paterno(*)</label>
+					    		<input type="text" class="form-control" id="apellido_paterno" placeholder="Ingrese Apellido Paterno" required="" pattern="([a-zA-Z]\s*){1,16}" th:field="*{apPaterno}" />
+							</div>
+
+							<div class="col-xs-6">
+								<label for="apellido_materno">Apellido Materno(*)</label>
+					    		<input type="text" class="form-control" id="apellido_materno" placeholder="Ingrese Apellido Materno" required="" pattern="([a-zA-Z]\s*){1,17}" th:field="*{apMaterno}" />
+								
+							</div>
+							<div class="col-xs-6">
+
+								<label for="codigo">Codigo (*)</label>
+								<input type="text" class="form-control" id="codigo" placeholder="Ingrese Codigo" required="" pattern="[a-zA-Z0-9]{1,9}" th:field="*{codigo}" />
+								
+							</div>
+
+							<div class="col-xs-6">
+								<label for="plan">Plan (*)</label>
+					            <select class="form-control" th:field="*{idPlan}" >
+					                 <option th:each="plan : ${listaPlan}" th:value="${plan.idplan}" th:text="${plan.planNombre}"/>
+					            </select>											
+							</div>
+						</div>							
+						
+
+						<div class="form-group">							
+							<div class="col-xs-12">
+								<br></br>
+								<h2>Datos Opcionales</h2><hr/>									
+							</div>
+							<div class="col-xs-3">
+								<br></br>
+								<label for="Telefono">Telefono</label>
+					    		<input type="text" class="form-control" id="Telefono" placeholder="Telefono" th:field="*{telefono}" />
+							</div>
+							<div class="col-xs-3">
+								<br></br>
+								<label for="DNI">DNI</label>
+					    		<input type="text" class="form-control" id="DNI" placeholder="DNI"  pattern="[0-9]{8}" th:field="*{dni}" />
+							</div>
+
+							<div class="col-xs-3">
+								<br></br>
+								<label >Sexo</label>
+								<select name="Sexo" class="form-control" th:field="*{sexo}">
+									<option value="M">MASCULINO</option>
+									<option value="F">FEMENINO</option>
+								</select>
+							</div>
+							<br></br><br></br><br></br>
+							<div class="col-xs-6">
+								<label for="Correo">Correo</label>
+					    		<input type="email" class="form-control" id="Correo" placeholder="Introduce Correo" th:field="*{correo}"/>
+							</div>
+							<div class="col-xs-6">
+								<label for="Direccion">Direccion</label>
+								<input type="text" class="form-control" id="Direccion" placeholder="Direccion" pattern="[a-zA-Z0-9]{1-63}" th:field="*{direccion}"/>
+								<br></br>
+							</div>						  	
+						  	
+						  	
+					 	</div>
+					 	<br></br>
+						<label>(*) Campos obligatorios</label>
+						<br></br>
+					 	<button type="submit" class="btn btn-default btn-block">Enviar</button>
+					</form>		
+					</div>
+					<!--********************** fin pestaña individual**********************-->
+
+
+
+
+
+					<!--********************** Inicio  pestaña grupal**********************-->
+					<div class="tab-pane fade" id="grupal">
+						<form role="form">
+						  
+						  
+						  <div class="form-group">
+						     <input type="file" id="my_file_input" />
+    						<table id='my_file_output'></table>
+						  </div>
+						  
+						  <button type="submit" class="btn btn-default">Enviar</button>
+						</form>
+					</div>
+					<!--********************** Fin pestaña individual**********************-->
+					
+				</div>
+
+						
+				<!--********************** fin  Contenido de las pestañas**********************-->				
+								
+					
+		</div>
+
+		<!-- **********************************fin del panel de contenido**********************************-->
+				
+		
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	
+	<script src="../../static/js/xls.js"></script>
+	<script src="../../static/js/leer_xls.js"></script>
+	
+	<script src="/sismanweb/static/js/xls.js"></script>
+	<script src="/sismanweb/static/js/leer_xls.js"></script>
 
 </body>
 </html>

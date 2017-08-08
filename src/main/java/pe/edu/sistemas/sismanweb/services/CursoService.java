@@ -1,18 +1,25 @@
 package pe.edu.sistemas.sismanweb.services;
 
+<<<<<<< HEAD
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+=======
+>>>>>>> ramajose
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pe.edu.sistemas.sismanweb.dao.CursoBaseDAO;
 import pe.edu.sistemas.sismanweb.dao.CursoConjuntoDAO;
+<<<<<<< HEAD
 import pe.edu.sistemas.sismanweb.dao.PlanDAO;
 import pe.edu.sistemas.sismanweb.entidades.CursoBase;
 import pe.edu.sistemas.sismanweb.entidades.CursoConjunto;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
+=======
+import pe.edu.sistemas.sismanweb.dao.CursoPeriodoDAO;
+>>>>>>> ramajose
 
 @Service
 public class CursoService {
