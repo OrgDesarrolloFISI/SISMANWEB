@@ -48,9 +48,9 @@ public class CursoController {
 	
 	@PostMapping("/add")
 	public String agregarCurso(@ModelAttribute("curso") CursoModelForm cursoModelForm){
-		CursoBase cursoBase = cursoService.coverterToCurso(cursoModelForm);
-		cursoService.insertarCurso(cursoBase);
 		logger.info("Agregando datos de: "+cursoModelForm.getCodigo()+" -- "+cursoModelForm.getNombre());
+		CursoBase cursoBase = cursoService.coverterToCurso(cursoModelForm);
+		cursoService.insertarCurso(cursoBase);		
 		return "redirect:/curso/form";
 	}
 	

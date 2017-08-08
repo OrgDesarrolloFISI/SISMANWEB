@@ -2,6 +2,8 @@ package pe.edu.sistemas.sismanweb.services;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ public class CursoService {
 	@Autowired private CursoConjuntoDAO cursoConjuntoDao;
 	@Autowired private PlanDAO planDao;
 	
+	private static final Log logger = LogFactory.getLog(CursoService.class);
 	
 	public List<CursoBase> obtenerCursos(){
 		return cursoBaseDao.obtenerTodoCursoBase();
@@ -30,7 +33,7 @@ public class CursoService {
 		cursoBaseExiste = cursoBaseDao.obtenerCursoBasexCodigoxPlan(cursoBase.getCursobCodigo(), cursoBase.getPlan().getIdplan());
 		
 		if(cursoBaseExiste != null){
-			System.out.println("Ya existe un curso con el mismo codigo y plan");
+			logger.info("YA EXISTE UN CURSO CON EL MISMO CODIGO Y PLAN");
 		}else{
 			CursoConjunto cursoNuevo = new CursoConjunto();
 			CursoConjunto cursoConjuntoExiste;
@@ -46,7 +49,7 @@ public class CursoService {
 				cursoNuevo.setCursocCodcomun(cursoConjuntoDao.obtenerCodigoMaximo()+1);
 			}
 			Integer idNuevoCurso = cursoConjuntoDao.agregarCursoConjunto(cursoNuevo);
-			System.out.println("--NUEVO CURSO AGREGADO-- "+idNuevoCurso);
+			logger.info("--NUEVO CURSO AGREGADO-- "+idNuevoCurso);
 		}
 	}	
 	
