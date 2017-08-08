@@ -1,5 +1,6 @@
 package pe.edu.sistemas.sismanweb.services;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +46,11 @@ public class DocenteService {
 	public Docente converterToDocente(DocenteModelForm formDocenteModel){
 		Docente docente = new Docente();
 		Persona persona = new Persona();
+		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
 		persona.setPersonaCodigo(formDocenteModel.getCodigo());
 		persona.setPersonaAppaterno(formDocenteModel.getApPaterno());
 		persona.setPersonaApmaterno(formDocenteModel.getApMaterno());
 		persona.setPersonaNombre(formDocenteModel.getNombre());
-		persona.setPersonaFechaNacimiento(formDocenteModel.getFechaNacimiento());
 		persona.setPersonaSexo(formDocenteModel.getSexo());
 		persona.setPersonaDni(formDocenteModel.getDni());
 		persona.setPersonaTelefono(formDocenteModel.getTelefono());
@@ -57,7 +58,7 @@ public class DocenteService {
 		persona.setPersonaDireccion(formDocenteModel.getDireccion());
 		persona.setPersonaCodigoSistema(formDocenteModel.getCodigo());
 		persona.setPersonaPasswordSistema(formDocenteModel.getCodigo());
-		persona.setPersonaPasswordSistema2("d41d8cd98f00b204e9800998ecf8427e");
+		persona.setPersonaPasswordSistema2(" ");
 		docente.setPersona(persona);
 		docente.setDocenteClave("");
 		docente.setDocenteGrupoOcupacional("Profesional");

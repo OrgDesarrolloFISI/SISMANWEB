@@ -32,7 +32,7 @@ public class AlumnoDAOImpl implements AlumnoDAO {
 	private void manejaExcepcion(HibernateException he){
 		tx.rollback();
 		he.printStackTrace();
-		throw new HibernateException("Ocurrió un error en el acceso a datos", he);
+		throw new HibernateException("Ocurriï¿½ un error en el acceso a datos", he);
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class AlumnoDAOImpl implements AlumnoDAO {
 		List<Alumno> listaAlumno = null;
 		try{
 			iniciaOperacion();
-			listaAlumno = (List<Alumno>)session.createQuery("from Alumno").setMaxResults(30).getResultList();	
+			listaAlumno = (List<Alumno>)session.createQuery("from Alumno").getResultList();	
 		}catch(HibernateException he){
 			manejaExcepcion(he);
 		}finally{

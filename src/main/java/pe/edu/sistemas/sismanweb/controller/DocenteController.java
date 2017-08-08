@@ -2,23 +2,24 @@ package pe.edu.sistemas.sismanweb.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import pe.edu.sistemas.sismanweb.entidades.Alumno;
 import pe.edu.sistemas.sismanweb.entidades.Docente;
 import pe.edu.sistemas.sismanweb.services.CategoriaDocenteService;
 import pe.edu.sistemas.sismanweb.services.ClaseDocenteService;
 import pe.edu.sistemas.sismanweb.services.DepartamentoAcademicoService;
 import pe.edu.sistemas.sismanweb.services.DocenteService;
-import pe.edu.sistemas.sismanweb.services.modelform.AlumnoModelForm;
 import pe.edu.sistemas.sismanweb.services.modelform.DocenteModelForm;
 
 @Controller
@@ -27,17 +28,13 @@ public class DocenteController {
 	
 	protected final Log logger = LogFactory.getLog(DocenteController.class);
 	
-	@Autowired
-	DocenteService docenteService;	
+	@Autowired DocenteService docenteService;	
 	
-	@Autowired
-	CategoriaDocenteService categoriaDocenteService;
+	@Autowired CategoriaDocenteService categoriaDocenteService;
 	
-	@Autowired
-	ClaseDocenteService claseService;
+	@Autowired ClaseDocenteService claseService;
 	
-	@Autowired
-	DepartamentoAcademicoService departamentoAcademicoService;
+	@Autowired DepartamentoAcademicoService departamentoAcademicoService;
 	
 	@GetMapping("/all")
 	public ModelAndView verDocentes(){
@@ -60,14 +57,12 @@ public class DocenteController {
 	}
 	
 	@PostMapping("/add")
-	public String agregarDocente(@ModelAttribute("docente") DocenteModelForm docentePersonaModel){
+	public String agregarDocente(@ModelAttribute("docente") DocenteModelForm docentePersonaModel){	
 		Docente docente = docenteService.converterToDocente(docentePersonaModel);
 		docenteService.insertarDocente(docente);
 		logger.info("Agregando datos de: "+ docentePersonaModel.getCodigo()+" -- "+docentePersonaModel.getApPaterno()+" -- "+docentePersonaModel.getApMaterno());
-		return "redirect:/docente/form";
+		return "redirect:/docente/all";			
 	}	
-	
-	
 	
 
 }

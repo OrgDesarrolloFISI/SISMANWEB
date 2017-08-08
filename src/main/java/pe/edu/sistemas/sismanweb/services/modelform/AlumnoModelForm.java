@@ -8,8 +8,7 @@ public class AlumnoModelForm {
 	private String codigo;
 	private String nombre;
 	private String apPaterno;
-	private String apMaterno;	
-	private Date fechaNacimiento;
+	private String apMaterno;
 	private String sexo;
 	private String dni;
 	private String telefono;
@@ -21,14 +20,13 @@ public class AlumnoModelForm {
 	}
 
 	public AlumnoModelForm(int idPlan, String codigo, String nombre, String apPaterno, String apMaterno,
-			Date fechaNacimiento, String sexo, String dni, String telefono, String correo, String direccion) {
+			String sexo, String dni, String telefono, String correo, String direccion) {
 		super();
 		this.idPlan = idPlan;
 		this.codigo = codigo;
 		this.nombre = nombre;
 		this.apPaterno = apPaterno;
 		this.apMaterno = apMaterno;
-		this.fechaNacimiento = fechaNacimiento;
 		this.sexo = sexo;
 		this.dni = dni;
 		this.telefono = telefono;
@@ -74,14 +72,6 @@ public class AlumnoModelForm {
 
 	public void setApMaterno(String apMaterno) {
 		this.apMaterno = apMaterno;
-	}
-
-	public Date getFechaNacimiento() {
-		return fechaNacimiento;
-	}
-
-	public void setFechaNacimiento(Date fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
 	}
 
 	public String getSexo() {

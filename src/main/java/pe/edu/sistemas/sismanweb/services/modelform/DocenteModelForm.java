@@ -2,6 +2,9 @@ package pe.edu.sistemas.sismanweb.services.modelform;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class DocenteModelForm {
 	
 	private short idClase;
@@ -11,7 +14,6 @@ public class DocenteModelForm {
 	private String nombre;
 	private String apPaterno;
 	private String apMaterno;	
-	private Date fechaNacimiento;
 	private String sexo;
 	private String dni;
 	private String telefono;
@@ -23,7 +25,7 @@ public class DocenteModelForm {
 	}
 
 	public DocenteModelForm(short idClase, short idCategoria, int idDepAcad, String codigo, String nombre,
-			String apPaterno, String apMaterno, Date fechaNacimiento, String sexo, String dni, String telefono,
+			String apPaterno, String apMaterno, String sexo, String dni, String telefono,
 			String correo, String direccion) {
 		super();
 		this.idClase = idClase;
@@ -33,7 +35,6 @@ public class DocenteModelForm {
 		this.nombre = nombre;
 		this.apPaterno = apPaterno;
 		this.apMaterno = apMaterno;
-		this.fechaNacimiento = fechaNacimiento;
 		this.sexo = sexo;
 		this.dni = dni;
 		this.telefono = telefono;
@@ -95,14 +96,6 @@ public class DocenteModelForm {
 
 	public void setApMaterno(String apMaterno) {
 		this.apMaterno = apMaterno;
-	}
-
-	public Date getFechaNacimiento() {
-		return fechaNacimiento;
-	}
-
-	public void setFechaNacimiento(Date fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
 	}
 
 	public String getSexo() {

@@ -47,7 +47,6 @@ public class AlumnoService {
 		persona.setPersonaAppaterno(formAlumnoModel.getApPaterno());
 		persona.setPersonaApmaterno(formAlumnoModel.getApMaterno());
 		persona.setPersonaNombre(formAlumnoModel.getNombre());
-		persona.setPersonaFechaNacimiento(formAlumnoModel.getFechaNacimiento());
 		persona.setPersonaSexo(formAlumnoModel.getSexo());
 		persona.setPersonaDni(formAlumnoModel.getDni());
 		persona.setPersonaTelefono(formAlumnoModel.getTelefono());
@@ -55,7 +54,7 @@ public class AlumnoService {
 		persona.setPersonaDireccion(formAlumnoModel.getDireccion());
 		persona.setPersonaCodigoSistema(formAlumnoModel.getCodigo());
 		persona.setPersonaPasswordSistema(formAlumnoModel.getCodigo());
-		persona.setPersonaPasswordSistema2("d41d8cd98f00b204e9800998ecf8427e");
+		persona.setPersonaPasswordSistema2(" ");
 		alumno.setPersona(persona);
 		alumno.setAlumnoActivo(1);
 		alumno.setTipoAlumno(tipoAlumnoDao.obtenerTipoAlumnoxID(1));
