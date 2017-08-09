@@ -101,24 +101,24 @@
 						<!--********************** Inicio  pestaña individual**********************-->
 						
 							<div class="tab-pane fade active in" id="individual">
-								<h2>AGREGAR DOCENTE</h2><hr>
+								<h2>AGREGAR DOCENTE</h2><hr/>
 								<form th:action="@{/docente/add}" th:object="${docente}"  method="post">
 							  		<div class="form-group">
 							  			<div class="col-xs-12">
 							  				<label for="nombre">Nombre (*)</label>
-								    		<input type="text" class="form-control" id="nombre" placeholder="Ingrese Nombre"   pattern="([a-zA-Z]\s*){1,26}" required th:field="*{nombre}" ></input>
+								    		<input type="text" class="form-control" id="nombre" placeholder="Ingrese Nombre"  pattern="([a-zA-Z]\s*){1,26}" required="" th:field="*{nombre}" ></input>
 							  			</div>
 							  			<div class="col-xs-6">
 							  				<label for="Apellido_paterno">Apellido Paterno(*)</label>
-								    		<input type="text" class="form-control" id="Apellido_paterno" placeholder="Ingrese Apellido_p" required pattern="([a-zA-Z]\s*){1,16}" th:field="*{apPaterno}" ></input>
+								    		<input type="text" class="form-control" id="Apellido_paterno" placeholder="Ingrese Apellido_p" required="" pattern="([a-zA-Z]\s*){1,16}" th:field="*{apPaterno}" ></input>
 							  			</div>
 							  			<div class="col-xs-6">
 							  				<label for="Apellido_materno">Apellido Materno(*)</label>
-								    		<input type="text" class="form-control" id="Apellido_materno" placeholder="Ingrese Apellido_m" required pattern="([a-zA-Z]\s*){1,17}" th:field="*{apMaterno}" ></input>
+								    		<input type="text" class="form-control" id="Apellido_materno" placeholder="Ingrese Apellido_m" required="" pattern="([a-zA-Z]\s*){1,17}" th:field="*{apMaterno}" ></input>
 							  			</div>
 							  			<div class="col-xs-6">
 							  				<label for="codigo">Codigo (*)</label>
-								    		<input type="text" class="form-control" id="codigo" placeholder="Ingrese Codigo" required pattern="[a-zA-Z0-9]{1,9}" th:field="*{codigo}" ></input>
+								    		<input type="text" class="form-control" id="codigo" placeholder="Ingrese Codigo" required="" pattern="[a-zA-Z0-9]{1,9}" th:field="*{codigo}" ></input>
 							  			</div>
 							  			<div class="col-xs-6">
 								  			<label for="clase">Clase (*)</label>
@@ -138,17 +138,14 @@
 						                        <option th:each="depAcad : ${depAcadDoc}" th:value="${depAcad.iddepartamentoAcademico}" th:text="${depAcad.departamentoAcademicoNombre}" />
 						            		</select>
 						            		<br></br>
-							  			</div>
-							  			
+							  			</div>							  			
 								  </div>					
-							
-							<h2>DATOS OPCIONALES</h2><hr>
 								  
-								 	<div class="form-group">
-									 	<div class="col-xs-4">
-									 		<label >Fecha de Nacimiento</label>
-						          			<input type="date" name="fechaInicio" class="form-control"  ></input>
-									 	</div>
+								  <div class="form-group">
+								 		<div class="col-xs-12">
+											<br></br>
+											<h2>Datos Opcionales</h2><hr/>									
+										</div>								 	
 									 	<div class="col-xs-4">
 									 		<label >Sexo</label>
 											<select name="Sexo" class="form-control" th:field="*{sexo}">
@@ -172,7 +169,7 @@
 									 		<label for="Direccion">Direccion</label>
 											<input type="text " class="form-control" id="Direccion" placeholder="Direccion" pattern="[a-zA-Z0-9]{1-63}" th:field="*{direccion}" ></input>
 									 	</div>
-								 	</div>
+								 </div>
 
 								 <label>(*) Campos obligatorios</label>
 								 <button type="submit" class="btn btn-default btn-block">Enviar</button>
@@ -192,7 +189,7 @@
 						  
 						  <div class="form-group">
 						    <label for="ejemplo_archivo_1">Adjuntar un archivo</label>
-						    <input type="file" id="ejemplo_archivo_1">
+						    <input type="file" id="ejemplo_archivo_1"/>
 						    <p class="help-block">Ejemplo de texto de ayuda.</p>
 						  </div>
 						  

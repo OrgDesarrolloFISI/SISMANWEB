@@ -2,34 +2,22 @@ package pe.edu.sistemas.sismanweb.controller;
 
 import java.util.List;
 
-<<<<<<< HEAD
-import javax.validation.Valid;
-
-=======
->>>>>>> ramajose
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import pe.edu.sistemas.sismanweb.entidades.Alumno;
 import pe.edu.sistemas.sismanweb.entidades.Docente;
 import pe.edu.sistemas.sismanweb.services.CategoriaDocenteService;
 import pe.edu.sistemas.sismanweb.services.ClaseDocenteService;
 import pe.edu.sistemas.sismanweb.services.DepartamentoAcademicoService;
 import pe.edu.sistemas.sismanweb.services.DocenteService;
-<<<<<<< HEAD
 import pe.edu.sistemas.sismanweb.services.modelform.DocenteModelForm;
-=======
-import pe.edu.sistemas.sismanweb.services.model.FormAlumnoModel;
-import pe.edu.sistemas.sismanweb.services.model.FormDocenteModel;
->>>>>>> ramajose
 
 @Controller
 @RequestMapping("/docente")

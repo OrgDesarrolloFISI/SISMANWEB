@@ -1,6 +1,5 @@
 package pe.edu.sistemas.sismanweb.services;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +11,7 @@ import pe.edu.sistemas.sismanweb.dao.DepartamentoAcademicoDAO;
 import pe.edu.sistemas.sismanweb.dao.DocenteDAO;
 import pe.edu.sistemas.sismanweb.entidades.Docente;
 import pe.edu.sistemas.sismanweb.entidades.Persona;
-<<<<<<< HEAD
 import pe.edu.sistemas.sismanweb.services.modelform.DocenteModelForm;
-=======
-import pe.edu.sistemas.sismanweb.services.model.FormDocenteModel;
->>>>>>> ramajose
 
 @Service
 public class DocenteService {

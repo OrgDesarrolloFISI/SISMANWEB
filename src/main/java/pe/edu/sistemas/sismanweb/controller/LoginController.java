@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,8 +37,13 @@ public class LoginController {
 		if(!resultado.getPersonaCodigoSistema().equals(persona.getPersonaCodigoSistema())){
 			return new RedirectView("/sismanweb/login");			
 		}else{			
-			return new RedirectView("/sismanweb/personas/listarPersonas");
+			return new RedirectView("/sismanweb/home");
 		}	
+	}
+	
+	@RequestMapping(value="/home",method=RequestMethod.GET)
+	public String home(){
+		return "home";
 	}
 	
 }

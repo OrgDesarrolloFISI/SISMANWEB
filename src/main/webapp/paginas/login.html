@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html >
+<html xmlns:th="http://www.thymeleaf.org" lang="es" >
 <head>
   <meta charset="UTF-8"/>
   <title>SISMAN WEB</title>
@@ -19,25 +19,22 @@
   <div class="titulo">
     <h1>SISTEMA DE MANTENIMIENTO WEB</h1>
   </div>
+  
   <div class='login'>
-  <h2>Iniciar Sesion</h2>
-  <input name='username' placeholder='Usuario' type='text'/>
-  
-  <input id='pw' name='password' placeholder='Contraseña' type='password'/>
-  
-  <input type='submit' value='Ingresar'/>
-  
-</div>
-<div id="particles-js"></div>
+    <form th:action="@{/validar}" th:object="${persona}" method="post">
+	  <h2>Iniciar Sesion</h2>
+	  <input name='username' placeholder='Usuario' type='text' th:field="*{personaCodigoSistema}"/>	  
+	  <input id='pw' name='password' placeholder='Contraseña' type='password'/>	  	  
+	  <input type='submit' value='Ingresar'/>
+  	</form>
+  </div>
+  <div id="particles-js"></div>
 
+ <script src="../static/js/particles.js"></script>
+ <script src="/sismanweb/static/js/particles.js"></script>
 
-
-
-<script src="../static/js/particles.js"></script>
-<script src="/sismanweb/static/js/particles.js"></script>
-
-<script src="../static/js/app_config_particulas.js"></script>
-<script src="/sismanweb/static/js/app_config_particulas.js"></script>
+ <script src="../static/js/app_config_particulas.js"></script>
+ <script src="/sismanweb/static/js/app_config_particulas.js"></script>
 
 
 </body>

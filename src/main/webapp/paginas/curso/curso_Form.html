@@ -69,42 +69,37 @@
 
 				<div class="col-xs-9 ">
 					<!-- **********************************Inicio  encabezado**********************************-->
-	
 							<div class="col-xs-12 well">
 								<div align="left" class="col-xs-6">
-									<h2 >GESTION DE CURSOS</h2>
-									
-									
+									<h2 >GESTION DE CURSOS</h2>								
 								</div>
-								<div align="right" class="col-xs-6">
-								
+								<div align="right" class="col-xs-6">								
 									<button class="btn btn-primary" onclick="location='../login.html'">CERRAR SESION</button>
-								</div>
-								
+								</div>								
 							</div>
 					<!-- **********************************Fin encabezado**********************************-->
 
 
 					<!-- **********************************Inicion formulario**********************************-->	
 
-							<h1>AGREGAR CURSO</h1><hr>
+							<h1>AGREGAR CURSO</h1><hr/>
 							<form th:action="@{/curso/add}" th:object="${curso}" method="post" >
-							  		<div class="form-group">
+							  	  <div class="form-group">
 							  		<div class="col-xs-12" >
 							  			<label for="nombre">Nombre de curso(*)</label>
-								    	<input type="text" class="form-control" id="nombre" placeholder="Ingrese Nombre" required pattern="([a-zA-Z0-9]\s*){1,71}" th:field="*{nombre}"></input>
+								    	<input type="text" class="form-control" id="nombre" placeholder="Ingrese Nombre" required="" pattern="([a-zA-Z0-9]\s*){1,71}" th:field="*{nombre}"></input>
 							  		</div>
 							  		<div class="col-xs-6">
 							  			<label for="codigo">Codigo Curso (*)</label>
-								    	<input type="text" class="form-control" id="codigo" placeholder="Ingrese Codigo" required pattern="[a-zA-Z0-9]{1,71}" th:field="*{codigo}"></input>
+								    	<input type="text" class="form-control" id="codigo" placeholder="Ingrese Codigo" required="" pattern="[a-zA-Z0-9]{1,71}" th:field="*{codigo}"></input>
 							  		</div>
 							  		<div class="col-xs-6" >
 							  			<label for="Apellido_materno">Creditos (*)</label>
-								    	<input type="number" class="form-control" id="Apellido_materno" placeholder="N° creditos" required min="0" max="4" th:field="*{creditos}"></input>
+								    	<input type="number" class="form-control" id="Apellido_materno" placeholder="N° creditos" required="" min="0" max="4" th:field="*{creditos}"></input>
 							  		</div>
 							  		<div class="col-xs-6">
 							  			<label for="ciclo">Ciclo (*)</label>
-								    	<input type="number" class="form-control" id="ciclo" placeholder="Ciclo" required min="0" max="10" th:field="*{ciclo}"></input>
+								    	<input type="number" class="form-control" id="ciclo" placeholder="Ciclo" required="" min="0" max="10" th:field="*{ciclo}"></input>
 							  		</div>
 							  		<div class="col-xs-6">
 							  				<label >Plan (*)</label>
@@ -117,7 +112,7 @@
 								 <button type="submit" class="btn btn-default btn-block">Enviar</button>
 							</form>
 
-	<!-- **********************************Fin formulario**********************************-->					
+					<!-- **********************************Fin formulario**********************************-->					
 				
 				</div>
 		
