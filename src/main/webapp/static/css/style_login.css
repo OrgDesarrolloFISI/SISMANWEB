@@ -58,16 +58,43 @@ a {
 }
 
 
-input[type="text"], input[type="password"] {
-  width: 250px;
-  padding: 25px 0px;
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  outline:  2px;
-  color: #46485c;
-  font-size: 15px;
-  border-radius: 5px;
+input[type="text"] {
+ 	width: max-content;
+    padding: 20px 20px;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    outline: 2px;
+    color: #46485c;
+    font-size: 15px;
+    border-radius: 5px;
+    border: 2px solid rgba(110, 105, 119, 0.22);
+    margin-bottom: 30px;
+    background-image: url(http://augenarzt24.at/wp-content/uploads/2014/11/anonymus246.png);
+    background-position: 0px 10px;
+    background-repeat: no-repeat;
+    padding-left: 35px;
+    background-size: 30px 30px;
+  
+}
+input[type="password"] {
+ 	width: max-content;
+    padding: 20px 20px;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    outline: 2px;
+    color: #46485c;
+    font-size: 15px;
+    border-radius: 5px;
+    border: 2px solid rgba(110, 105, 119, 0.22);
+    margin-bottom: 30px;
+    background-image: url(http://www.iconninja.com/files/969/451/746/padlock-icon.png);
+    background-position: 0px 10px;
+    background-repeat: no-repeat;
+    padding-left: 35px;
+    background-size: 30px 30px;
+  
 }
 input[type=checkbox] {
   display: none;
