@@ -14,8 +14,10 @@
 
 
   <body>
-<!-- **********************************Inicio  barrra lateral**********************************-->
- <div class="row col-xs-3" >
+  <div class="contenedor">
+	<div class="principal">
+		  <!-- **********************************Inicio  barrra lateral**********************************-->
+    <div class="row col-xs-3" >
 		<div class="nav-side-menu">
 			    <div class="brand"><h3>SISTEMA DE MANTENIMIENTO WEB</h3></div>
 			    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
@@ -30,7 +32,7 @@
 			                </li>
 
 			                <li  data-toggle="collapse" data-target="#curso" class="collapsed active">
-			                  <a href="#"><i class="fa fa-globe fa-lg"></i>&nbsp;<span class="glyphicon glyphicon-book">&nbsp;CURSOS</span></a>
+			                  <a href="#">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-book">&nbsp;CURSOS</span></a>
 			                </li>
 			                <ul class="sub-menu collapse" id="curso">
 			                    <li><a href="curso_Agregar.html" th:href="@{/curso/form}">Registrar</a></li>
@@ -39,7 +41,7 @@
 
 
 			                <li data-toggle="collapse" data-target="#alumno" class="collapsed">
-			                  <a href="#"><i class="fa fa-globe fa-lg"></i>&nbsp;<span class="glyphicon glyphicon-user" >&nbsp;ALUMNO</span></a>
+			                  <a href="#">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-user" >&nbsp;ALUMNO</span></a>
 			                </li>  
 			                <ul class="sub-menu collapse" id="alumno">
 			                  <li><a href="alumno_Agregar.html" th:href="@{/alumno/form}">Registrar</a></li>
@@ -48,7 +50,7 @@
 
 
 			                <li data-toggle="collapse" data-target="#new" class="collapsed">
-			                  <a href="#"><i class="fa fa-globe fa-lg"></i>&nbsp;<span class="glyphicon glyphicon-apple">&nbsp;DOCENTE</span></a>
+			                  <a href="#">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-apple">&nbsp;DOCENTE</span></a>
 			                </li>
 			                <ul class="sub-menu collapse" id="new">
 			                  <li><a href="docente_Agregar.html" th:href="@{/docente/form}">Registrar</a></li>
@@ -61,7 +63,7 @@
 		</div>
 
 	</div>
-  <!-- **********************************Fin barrra lateral**********************************-->
+    <!-- **********************************Fin barrra lateral**********************************-->
 	<div class="col-xs-9 ">
 	      <!-- **********************************Inicio  encabezado**********************************-->
 					<div class="col-xs-12 well">
@@ -113,16 +115,23 @@
 		            </tr>         
 		        </tbody>
 		 </table>
+		 <div class="espacio_vacio"></div>
 
-<!-- Fin de Paginacion-->
+	<!-- Fin de Paginacion-->
+	</div>
+  	
 	</div>
   <!--  Footer -->
-    <div id="footer-container">
-        <div class="container">
-          <h3>Area de Desarrollo y Soporte Tecnico</h3>
-        </div>
-    </div>
+  <div>
+  	<footer><h2>Area de Desarrollo y Soporte tecnico</h2></footer>
+  </div>
+    
     <!-- Fin de Footer-->
+  
+  </div>
+
+  
+  
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
