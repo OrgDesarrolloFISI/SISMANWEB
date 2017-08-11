@@ -76,9 +76,8 @@
 							
 							
 						</div>
-						<div align="right" class="col-xs-6">
-						
-							<button class="btn btn-primary" onclick="location='../login.html'">CERRAR SESION</button>
+						<div align="right" class="col-xs-6">						
+							<a href="#" th:href="@{/login?logout}"><button class="btn btn-primary" >CERRAR SESION</button></a>
 						</div>
 						
 					</div>
@@ -129,7 +128,7 @@
 							  			<div class="col-xs-6">
 							  				<label for="categoria" >Categoria (*)</label>
 							            	<select id="categoria" name="categoria" class="form-control" th:field="*{idCategoria}" >
-							                        <option th:each="depAcad : ${depAcadDoc}" th:value="${depAcad.iddepartamentoAcademico}" th:text="${depAcad.departamentoAcademicoNombre}" />
+							                        <option th:each="categoria : ${categoriasDoc}" th:value="${categoria.idecategoriaDocente}" th:text="${categoria.categoriaDocenteNombre}" />
 							            	</select>
 							  			</div>
 							  			<div class="col-xs-12">

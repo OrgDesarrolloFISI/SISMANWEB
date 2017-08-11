@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 10/08/2017 03:08:17 PM by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="pe.edu.sistemas.sismanweb.entidades.Usuario" table="usuario" catalog="modelogeneralfisi" optimistic-lock="version">
+        <id name="idUsuario" type="java.lang.Integer">
+            <column name="ID_USUARIO" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="persona" class="pe.edu.sistemas.sismanweb.entidades.Persona" fetch="select">
+            <column name="PERSONA_ID_PERSONA" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tipoUsuario" class="pe.edu.sistemas.sismanweb.entidades.TipoUsuario" fetch="select">
+            <column name="TIPO_USUARIO_IDTIPO_USUARIO" not-null="true" />
+        </many-to-one>
+        <property name="usuarioActivo" type="java.lang.Integer">
+            <column name="USUARIO_ACTIVO" />
+        </property>
+        <property name="sistemaIdSistema" type="int">
+            <column name="SISTEMA_ID_SISTEMA" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
