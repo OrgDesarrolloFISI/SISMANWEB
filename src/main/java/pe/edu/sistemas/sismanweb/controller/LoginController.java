@@ -32,7 +32,7 @@ public class LoginController {
 		logger.info("-- Retornando vista Login --"+error);
 		return mav;
 	}
-
+/*
 	@RequestMapping(value="/validar",method=RequestMethod.POST)
 	public RedirectView validarLogin(@ModelAttribute("persona") Persona persona){
 		Persona resultado = personaService.obtenerPersonaXID(5237); //comprobar nulidad 4504
@@ -43,7 +43,7 @@ public class LoginController {
 			return new RedirectView("/sismanweb/home");
 		}	
 	}
-	
+*/	
 	@RequestMapping(value="/home",method=RequestMethod.GET)
 	public String home(){
 		return "home";
