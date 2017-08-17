@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pe.edu.sistemas.sismanweb.dao.AlumnoDAO;
+import pe.edu.sistemas.sismanweb.dao.PersonaDAO;
 import pe.edu.sistemas.sismanweb.dao.PlanDAO;
 import pe.edu.sistemas.sismanweb.dao.TipoAlumnoDAO;
 import pe.edu.sistemas.sismanweb.entidades.Alumno;
@@ -18,10 +19,17 @@ public class AlumnoService {
 	@Autowired private AlumnoDAO alumnoDao;	
 	@Autowired private PlanDAO planDao;	
 	@Autowired private TipoAlumnoDAO tipoAlumnoDao;
+	@Autowired private PersonaDAO personaDao;
 	
 	
-	public void insertarAlumno(Alumno alumno){
-		alumnoDao.insertarAlumno(alumno);
+	public boolean insertarAlumno(Alumno alumno){
+		Persona persona = personaDao.obtenerPersonaxCodigo(alumno.getPersona().getPersonaCodigo());
+		if(persona!=null){
+			return true;
+		}else{
+			alumnoDao.insertarAlumno(alumno);
+			return false;
+		}		
 	}
 	
 	public void actualizarAlumno(Alumno alumno){

@@ -14,6 +14,6 @@ public interface AlumnoDAO {
 	
 	public List<Alumno> obtenerTodoAlumno();
 	
-	public Alumno obtenerAlumnoxID(Integer idAlumno);		
-
+	public Alumno obtenerAlumnoxID(Integer idAlumno);	
+	
 }

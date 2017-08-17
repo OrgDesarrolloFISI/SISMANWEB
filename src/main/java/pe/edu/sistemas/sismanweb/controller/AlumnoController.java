@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import pe.edu.sistemas.sismanweb.entidades.Alumno;
@@ -39,21 +40,26 @@ public class AlumnoController {
 	}
 	
 	@GetMapping("/form")
-	public ModelAndView formularioAlumno(){
+	public ModelAndView formularioAlumno(@RequestParam(name="existe",required=false) String existe){
 		ModelAndView mav = new ModelAndView("/alumno/alumno_Form");
 		List<Plan> planesDeEstudio = planService.obtenerPlanes();
 		mav.addObject("listaPlan", planesDeEstudio);
 		mav.addObject("alumno", new AlumnoModelForm());
-		logger.info("Retornando formulario Alumno");
+		mav.addObject("existe", existe);
+		logger.info("RETORNANDO FORMULARIO ALUMNO");
 		return mav;
 	}
 	
 	@PostMapping("/add")
 	public String agregarAlumno(@ModelAttribute("alumno") AlumnoModelForm alumnoPersonaModel){
 		Alumno alumno = alumnoService.converterToAlumno(alumnoPersonaModel);
-		alumnoService.insertarAlumno(alumno);
-		logger.info("Agregando datos de: "+ alumnoPersonaModel.getCodigo()+" -- "+alumnoPersonaModel.getIdPlan());
-		return "redirect:/alumno/form";
+		logger.info("AGREGANDO DATOS DE : "+ alumnoPersonaModel.getCodigo()+" -- "+alumnoPersonaModel.getIdPlan());
+		boolean existe = alumnoService.insertarAlumno(alumno);
+		if(existe){
+			logger.info("AGREGAR ALUMNO --- Codigo ya existente");
+			return "redirect:/alumno/form?existe";
+		}
+		return "redirect:/alumno/all";
 	}		
 	
 	

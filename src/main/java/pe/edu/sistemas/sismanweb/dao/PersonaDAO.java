@@ -15,5 +15,7 @@ public interface PersonaDAO {
 	public List<Persona> obtenerTodoPersona();
 
 	public Persona obtenerPersonaxID(Integer idPersona);
+	
+	public Persona obtenerPersonaxCodigo(String codigo);
 
 }

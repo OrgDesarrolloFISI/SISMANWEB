@@ -139,7 +139,7 @@
 
 								<label for="codigo">Codigo (*)</label>
 								<input type="text" class="form-control" id="codigo" placeholder="Ingrese Codigo" required="" pattern="[a-zA-Z0-9]{1,9}" th:field="*{codigo}" />
-								
+								<div th:if="${existe} != null">Este codigo ya existe</div>
 							</div>
 
 							<div class="col-xs-6">

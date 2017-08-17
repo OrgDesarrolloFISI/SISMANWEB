@@ -6,6 +6,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -32,7 +33,7 @@ public class PersonaDAOImpl implements PersonaDAO {
 	private void manejaExcepcion(HibernateException he){
 		tx.rollback();
 		he.printStackTrace();
-		throw new HibernateException("Ocurrió un error en el acceso a datos", he);
+		throw new HibernateException("Ocurriï¿½ un error en el acceso a datos", he);
 	}
 	
 	@Override
@@ -76,17 +77,16 @@ public class PersonaDAOImpl implements PersonaDAO {
 
 	@Override
 	public List<Persona> obtenerTodoPersona() {
-		List<Persona> listaPersonas = null;
+		List<Persona> personas = null;
 		try{
 			iniciaOperacion();
-			listaPersonas = (List<Persona>)session.createQuery("from Persona").setMaxResults(10).getResultList();	
+			personas = (List<Persona>)session.createQuery("from Persona").setMaxResults(10).getResultList();	
 		}catch(HibernateException he){
 			manejaExcepcion(he);
 		}finally{
 			session.close();			
-		}		
-		
-		return listaPersonas;
+		}				
+		return personas;
 	}
 
 	@Override
@@ -101,6 +101,23 @@ public class PersonaDAOImpl implements PersonaDAO {
 			session.close();
 		}
 		return persona;		
+	}
+
+	@Override
+	public Persona obtenerPersonaxCodigo(String codigo) {
+		Persona persona = null;
+		Query query = null;
+		try{
+			iniciaOperacion();
+			query = session.createQuery("from Persona where personaCodigo = :codigo").setMaxResults(1);	
+			query.setParameter("codigo", codigo);
+			persona = (Persona)query.getSingleResult();
+		}catch(HibernateException he){
+			manejaExcepcion(he);
+		}finally{
+			session.close();			
+		}				
+		return persona;
 	}
 	
 
