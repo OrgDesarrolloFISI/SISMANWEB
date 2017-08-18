@@ -47,8 +47,10 @@
 			                  <a href="#">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-book">&nbsp;CURSOS</span></a>
 			                </li>
 			                <ul class="sub-menu collapse" id="curso">
-			                    <li><a href="curso_Agregar.html" th:href="@{/curso/form}">Registrar</a></li>
-								<li><a href="curso_Ver.html" th:href="@{/curso/all}">Buscar</a></li>
+			                
+			                    <li><a href="curso_Agregar.html" th:href="@{/curso/form}">Agregar</a></li>
+								<li><a href="curso_Ver.html" th:href="@{/curso/all}"><span>Mostrar</span></a></li>
+															
 			                </ul>
 
 
@@ -56,7 +58,7 @@
 			                  <a href="#">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-user" >&nbsp;ALUMNO</span></a>
 			                </li>  
 			                <ul class="sub-menu collapse" id="alumno">
-			                  <li><a href="alumno_Agregar.html" th:href="@{/alumno/form}">Registrar</a></li>
+			                  <li><a href="alumno_Agregar.html" th:href="@{/alumno/form}"><span>registrar</span></a></li>
 							  <li><a href="alumno_Ver.html" th:href="@{/alumno/all}">Buscar</a></li>
 			                </ul>
 
@@ -143,34 +145,59 @@
 			        <h4 class="modal-title" id="myModalLabel">Actualizar datos</h4>
 			      </div>
 			      <div class="modal-body">
-			      		<div class="form-group">
-							<div class="col-xs-12">
+			      	<form action="" method="post">
+			      	
+			      		<div class="form-group col-xs-12" >
+							
 								<label for="nombre">Nombre (*)</label>
-								<input type="text" class="form-control" id="nombre" placeholder="Ingrese Nombre" pattern="([a-zA-Z]\s*){1,26}" required=""  />											
-							</div>
-							<div class="col-xs-12">
+								<input type="text" class="form-control" id="nombre" placeholder="Ingrese Nombre" pattern="([a-zA-Z]\s*){1,26}" required=""  />
+								<br/>
 								<label for="apellido_paterno">Apellido Paterno(*)</label>
-					    		<input type="text" class="form-control" id="apellido_paterno" placeholder="Ingrese Apellido Paterno" required="" pattern="([a-zA-Z]\s*){1,16}"  />
-							</div>
-							<div class="col-xs-12">
+								<input type="text" class="form-control" id="apellido_paterno" placeholder="Ingrese Apellido Paterno" required="" pattern="([a-zA-Z]\s*){1,16}"  />
+								<br/>
 								<label for="apellido_materno">Apellido Materno(*)</label>
 					    		<input type="text" class="form-control" id="apellido_materno" placeholder="Ingrese Apellido Materno" required="" pattern="([a-zA-Z]\s*){1,17}"  />
-								
-							</div>
-							<div class="col-xs-12">
+								<br/>
 								<label for="codigo">Codigo (*)</label>
-								<input type="text" class="form-control" id="codigo" placeholder="Ingrese Codigo" required="" pattern="[a-zA-Z0-9]{1,9}"  />								
-							</div>
+								<input type="text" class="form-control" id="codigo" placeholder="Ingrese Codigo" required="" pattern="[a-zA-Z0-9]{1,9}"  />	
+								<br/>
+								<label for="plan ">Plan (*)</label>
+								<input type="text" class="form-control" id="plan" placeholder="Plan " required="" />										
+								
+							
+							<br/>
+							<a href="#" id="show" style="color:black; padding-left: 85%" ><span class="glyphicon glyphicon-chevron-down">Opcionales</span></a>
 							
 							
-						</div>							
-						
+						</div>	
+						<div id="element" style="display: none;" class="form-group col-xs-12" >								
+								
+								<label for="Telefono">Telefono</label>
+							    <input type="text" class="form-control" id="Telefono" placeholder="Telefono"  />
+							    
+							    <label for="DNI">DNI</label>
+					    		<input type="text" class="form-control" id="DNI" placeholder="DNI"  pattern="[0-9]{8}"/>
+					    		
+					    		<label >Sexo</label>
+								<select name="Sexo" class="form-control" >
+									<option value="M">MASCULINO</option>
+									<option value="F">FEMENINO</option>
+								</select>
+								
+								<label for="Correo">Correo</label>
+					    		<input type="email" class="form-control" id="Correo" placeholder="Introduce Correo" />
+					    		
+					    		<label for="Direccion">Direccion</label>
+								<input type="text" class="form-control" id="Direccion" placeholder="Direccion" pattern="[a-zA-Z0-9]{1-63}"/>
+													   
+						</div>						
+						 <button  type="submit" class="btn btn-warning  btn-block" id="actualizadatos" >Actualizar</button>
+			      	</form>
 			      </div>
-			      <br></br>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-warning" id="actualizadatos" >Actualizar</button>
+			     
+			      
+			     
 			        
-			      </div>
 			    </div>
 			  </div>
 			</div>
@@ -191,6 +218,8 @@
 	<script type="text/javascript" src="/sismanweb/static/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript" src="/sismanweb/static/js/table.js"></script>
+    
+     <script type="text/javascript"  src="../../static/js/funciones_form.js" ></script>
     <script type="text/javascript"  src="/sismanweb/static/js/funciones_form.js" ></script>
 
 </body>
