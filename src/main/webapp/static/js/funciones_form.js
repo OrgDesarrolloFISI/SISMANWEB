@@ -1,6 +1,12 @@
 $(document).ready(function(){
 	$("#actualizadatos").click (function() {
-		alertify.success("Datos Actualizados");
+		alertify.confirm("<h3>Esta seguro que desea editar los datos ?</h3>", function (e) {
+            if (e) {
+                  alertify.success("Editado con exito");
+            } else { 
+                        alertify.error("Cancelado");
+            }
+      }); 
 	});
 	
 	 });
