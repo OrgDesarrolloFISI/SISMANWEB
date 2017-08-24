@@ -18,7 +18,7 @@ public class CategoriaDocenteService {
 		return categoriaDocenteDao.obtenerTodoCategoriaDocente();
 	}
 	
-	public CategoriaDocente obtenerCategoriaXID(Short idCategoriaDocente){
+	public CategoriaDocente obtenerCategoriaDocXID(Short idCategoriaDocente){
 		return categoriaDocenteDao.obtenerCategoriaDocentexID(idCategoriaDocente);
 		
 	}

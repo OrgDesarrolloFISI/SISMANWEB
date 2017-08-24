@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pe.edu.sistemas.sismanweb.dao.AlumnoDAO;
-import pe.edu.sistemas.sismanweb.dao.PersonaDAO;
-import pe.edu.sistemas.sismanweb.dao.PlanDAO;
 import pe.edu.sistemas.sismanweb.dao.TipoAlumnoDAO;
 import pe.edu.sistemas.sismanweb.entidades.Alumno;
 import pe.edu.sistemas.sismanweb.entidades.Persona;
@@ -17,13 +15,13 @@ import pe.edu.sistemas.sismanweb.services.modelform.AlumnoModelForm;
 public class AlumnoService {
 	
 	@Autowired private AlumnoDAO alumnoDao;	
-	@Autowired private PlanDAO planDao;	
-	@Autowired private TipoAlumnoDAO tipoAlumnoDao;
-	@Autowired private PersonaDAO personaDao;
+	@Autowired private PlanService planService;	
+	@Autowired private TipoAlumnoService tipoAlumnoService;
+	@Autowired private PersonaService personaService;
 	
 	
 	public boolean insertarAlumno(Alumno alumno){
-		Persona persona = personaDao.obtenerPersonaxCodigo(alumno.getPersona().getPersonaCodigo());
+		Persona persona = personaService.obtenerPersonaxCodigo(alumno.getPersona().getPersonaCodigo());
 		if(persona!=null){
 			return true;
 		}else{
@@ -65,8 +63,8 @@ public class AlumnoService {
 		persona.setPersonaPasswordSistema2(" ");
 		alumno.setPersona(persona);
 		alumno.setAlumnoActivo(1);
-		alumno.setTipoAlumno(tipoAlumnoDao.obtenerTipoAlumnoxID(1));
-		alumno.setPlan(planDao.obtenerPlanxID(formAlumnoModel.getIdPlan()));	
+		alumno.setTipoAlumno(tipoAlumnoService.obtenerTipoAlumnoXID(1));
+		alumno.setPlan(planService.obtenerPlanXID(formAlumnoModel.getIdPlan()));	
 		
 		return alumno;
 	}

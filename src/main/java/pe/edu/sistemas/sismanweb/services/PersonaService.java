@@ -18,6 +18,10 @@ public class PersonaService {
 		personaDao.insertarPersona(persona);
 	}
 	
+	public Persona obtenerPersonaxCodigo(String codigo){
+		return personaDao.obtenerPersonaxCodigo(codigo);
+	}
+	
 	public void actualizarPersona(Persona persona){
 		personaDao.actualizarPersona(persona);
 	}

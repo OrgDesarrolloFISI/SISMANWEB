@@ -5,9 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pe.edu.sistemas.sismanweb.dao.CategoriaDocenteDAO;
-import pe.edu.sistemas.sismanweb.dao.ClaseDocenteDAO;
-import pe.edu.sistemas.sismanweb.dao.DepartamentoAcademicoDAO;
 import pe.edu.sistemas.sismanweb.dao.DocenteDAO;
 import pe.edu.sistemas.sismanweb.entidades.Docente;
 import pe.edu.sistemas.sismanweb.entidades.Persona;
@@ -18,13 +15,20 @@ public class DocenteService {
 	
 
 	@Autowired private DocenteDAO docenteDao;	
-	@Autowired private ClaseDocenteDAO claseDao;	
-	@Autowired private CategoriaDocenteDAO categoriaDocenteDao;	
-	@Autowired private DepartamentoAcademicoDAO departamentoAcademicoDao;
+	@Autowired private PersonaService personaService;
+	@Autowired private ClaseDocenteService claseDocenteService;	
+	@Autowired private CategoriaDocenteService categoriaDocenteService;	
+	@Autowired private DepartamentoAcademicoService departamentoAcademicoService;
 	
 	
-	public void insertarDocente(Docente docente){
-		docenteDao.insertarDocente(docente);
+	public boolean insertarDocente(Docente docente){
+		Persona persona = personaService.obtenerPersonaxCodigo(docente.getPersona().getPersonaCodigo());
+		if(persona!=null){
+			return true;
+		}else{
+			docenteDao.insertarDocente(docente);
+			return false;
+		}
 	}
 	
 	public void actualizarDocente(Docente docente){
@@ -62,9 +66,9 @@ public class DocenteService {
 		docente.setDocenteClave("");
 		docente.setDocenteGrupoOcupacional("Profesional");
 		docente.setDocenteRegular(0);		
-		docente.setClase(claseDao.obtenerClasexID(formDocenteModel.getIdClase()));
-		docente.setCategoriaDocente(categoriaDocenteDao.obtenerCategoriaDocentexID(formDocenteModel.getIdCategoria()));
-		docente.setDepartamentoAcademico(departamentoAcademicoDao.obtenerDepartamentoAcademicoxID(formDocenteModel.getIdDepAcad()));	
+		docente.setClase(claseDocenteService.obtenerClaseDeDocenteXID(formDocenteModel.getIdClase()));
+		docente.setCategoriaDocente(categoriaDocenteService.obtenerCategoriaDocXID(formDocenteModel.getIdCategoria()));
+		docente.setDepartamentoAcademico(departamentoAcademicoService.obtenerDepAcadXID(formDocenteModel.getIdDepAcad()));	
 		
 		return docente;		
 	}
