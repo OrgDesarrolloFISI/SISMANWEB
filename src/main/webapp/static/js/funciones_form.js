@@ -11,11 +11,14 @@ $(document).ready(function(){
 	
 	 });
 
-$(document).ready(function(){
-	  $("#hide").click(function(){
-	    $("#element").hide();
-	  });
-	  $("#show").click(function(){
-	    $("#element").show();
-	  });
+$('#show').click(function(e) {
+	  
+	  // Resetear, por si acaso has estado jugando con la otra propiedad
+	  $('#element').css('visibility', 'visible');
+	  
+	  if( $('#element').is(":visible") ) {
+	    $('#element').css('display', 'none'); 
+	  } else {
+	    $('#element').css('display', 'block');
+	  }
 	});

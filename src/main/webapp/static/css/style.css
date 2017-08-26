@@ -69,10 +69,8 @@ h2{
 
 .nav-cont{
   width: 80%;
-  
-
-
 }
+
 
 .nav-side-menu {
   overflow: auto;
@@ -88,6 +86,10 @@ h2{
   border-radius: 1%;
 
 }
+.titulo {
+	border-left: 0px;
+}
+
 .nav-side-menu .brand {
   background-color: #F8F5F0;
   line-height: 50px;
@@ -168,6 +170,8 @@ h2{
 .nav-side-menu li a i {
   padding-left:40%;
   width: 20px;
+  font-style: inherit;
+  font-size: medium;
   
 }
 .nav-side-menu li:hover {
