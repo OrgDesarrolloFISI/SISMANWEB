@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import pe.edu.sistemas.sismanweb.entidades.Alumno;
-import pe.edu.sistemas.sismanweb.entidades.Plan;
+import pe.edu.sistemas.sismanweb.domain.Alumno;
+import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.AlumnoService;
 import pe.edu.sistemas.sismanweb.services.PersonaService;
 import pe.edu.sistemas.sismanweb.services.PlanService;

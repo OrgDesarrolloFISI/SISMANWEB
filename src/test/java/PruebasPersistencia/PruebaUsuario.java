@@ -7,9 +7,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.UsuarioDAO;
-import pe.edu.sistemas.sismanweb.entidades.Usuario;
+import pe.edu.sistemas.sismanweb.domain.Usuario;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath:applicationContext.xml"})
@@ -20,6 +21,7 @@ public class PruebaUsuario {
 	
 	@Test
 	//@Ignore
+	@Transactional
 	public void buscarUsuario(){
 		List<Usuario> usuario = usuarioDao.obtenerUsuarioxCodSis("12200059");
 		for(Usuario u : usuario){

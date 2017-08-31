@@ -9,7 +9,9 @@
   <property name="hibernate.connection.password"/>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
   <property name="show_sql">false</property>
+  <property name="javax.persistence.validation.mode">none</property>
   
+   
   <mapping resource="pe/edu/sistemas/sismanweb/entidades/Alumno.hbm.xml"/>
   <mapping resource="pe/edu/sistemas/sismanweb/entidades/CategoriaDocente.hbm.xml"/>
   <mapping resource="pe/edu/sistemas/sismanweb/entidades/Clase.hbm.xml"/>
@@ -24,5 +26,6 @@
   <mapping resource="pe/edu/sistemas/sismanweb/entidades/TipoAlumno.hbm.xml"/>
   <mapping resource="pe/edu/sistemas/sismanweb/entidades/Usuario.hbm.xml"/>
   <mapping resource="pe/edu/sistemas/sismanweb/entidades/TipoUsuario.hbm.xml"/>
+  
  </session-factory>
 </hibernate-configuration>

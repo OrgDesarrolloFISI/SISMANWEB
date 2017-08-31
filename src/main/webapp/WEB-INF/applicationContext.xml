@@ -3,22 +3,51 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-						http://www.springframework.org/schema/beans/spring-beans.xsd
-						http://www.springframework.org/schema/context 
-						http://www.springframework.org/schema/context/spring-context-3.2.xsd
-						http://www.springframework.org/schema/mvc
-      					http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
 
+	
 	<!-- Permite el mapeo de los controladores -->
+	<!-- Activa anotaciones -->
 	<mvc:annotation-driven/>
 	<mvc:default-servlet-handler/>
+	
 	<context:component-scan base-package="pe.edu.sistemas.sismanweb.controller" />
 	<context:component-scan base-package="pe.edu.sistemas.sismanweb.daoimpl" />
 	<context:component-scan base-package="pe.edu.sistemas.sismanweb.services" />
 	<context:component-scan base-package="pe.edu.sistemas.sismanweb.configuration" />
 	
-	<bean class="pe.edu.sistemas.sismanweb.daoimpl.HibernateUtil" factory-method="getSessionFactory"/>
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.gjt.mm.mysql.Driver" />
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/modelogeneralfisi" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</bean>
+	
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="packagesToScan" value="pe.edu.sistemas.sismanweb.domain"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.format_sql">false</prop>
+				<prop key="javax.persistence.validation.mode">none</prop>
+			</props>
+
+		</property>
+	</bean>	
+	
+	 
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
 	
 	<!--  
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -44,6 +73,7 @@
 	  <property name="viewNames" value="*.html,*.xhtml" />
 	  -->
 	</bean>
+	
     
 
 </beans>

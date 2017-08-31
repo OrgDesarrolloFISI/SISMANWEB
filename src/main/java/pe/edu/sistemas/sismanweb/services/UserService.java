@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import pe.edu.sistemas.sismanweb.dao.UsuarioDAO;
-import pe.edu.sistemas.sismanweb.entidades.Persona;
-import pe.edu.sistemas.sismanweb.entidades.Usuario;
+import pe.edu.sistemas.sismanweb.domain.Persona;
+import pe.edu.sistemas.sismanweb.domain.Usuario;
 
 @Service
 public class UserService implements UserDetailsService{
@@ -29,7 +29,6 @@ public class UserService implements UserDetailsService{
 		Persona usuario = usuarioRoles.get(0).getPersona();
 		User user = new User(usuario.getPersonaCodigoSistema()
 				, usuario.getPersonaPasswordSistema(), true, true, true, true, authorities);
-		//close session usuarioDao
 		return user;
 	}
 	

@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pe.edu.sistemas.sismanweb.dao.DocenteDAO;
-import pe.edu.sistemas.sismanweb.entidades.Docente;
-import pe.edu.sistemas.sismanweb.entidades.Persona;
+import pe.edu.sistemas.sismanweb.domain.Docente;
+import pe.edu.sistemas.sismanweb.domain.Persona;
 import pe.edu.sistemas.sismanweb.services.modelform.DocenteModelForm;
 
 @Service
@@ -26,25 +26,25 @@ public class DocenteService {
 		if(persona!=null){
 			return true;
 		}else{
-			docenteDao.insertarDocente(docente);
+			docenteDao.save(docente);
 			return false;
 		}
 	}
 	
 	public void actualizarDocente(Docente docente){
-		docenteDao.actualizarDocente(docente);
+		docenteDao.update(docente);
 	}
 	
 	public void eliminarDocente(Docente docente){
-		docenteDao.eliminarDocente(docente);
+		docenteDao.delete(docente);
 	}
 	
 	public List<Docente> obtenerDocentes(){
-		return docenteDao.obtenerTodoDocente();
+		return docenteDao.findAll();
 	}
 	
 	public Docente obtenerDocenteXID(Integer idDocente){
-		return docenteDao.obtenerDocentexID(idDocente);
+		return docenteDao.findById(idDocente);
 	}
 	
 	public Docente converterToDocente(DocenteModelForm formDocenteModel){

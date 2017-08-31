@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pe.edu.sistemas.sismanweb.dao.AlumnoDAO;
-import pe.edu.sistemas.sismanweb.dao.TipoAlumnoDAO;
-import pe.edu.sistemas.sismanweb.entidades.Alumno;
-import pe.edu.sistemas.sismanweb.entidades.Persona;
+import pe.edu.sistemas.sismanweb.domain.Alumno;
+import pe.edu.sistemas.sismanweb.domain.Persona;
 import pe.edu.sistemas.sismanweb.services.modelform.AlumnoModelForm;
 
 @Service
@@ -25,25 +24,25 @@ public class AlumnoService {
 		if(persona!=null){
 			return true;
 		}else{
-			alumnoDao.insertarAlumno(alumno);
+			alumnoDao.save(alumno);
 			return false;
 		}		
 	}
 	
 	public void actualizarAlumno(Alumno alumno){
-		alumnoDao.actualizarAlumno(alumno);
+		alumnoDao.save(alumno);
 	}
 	
 	public void eliminarAlumno(Alumno alumno){
-		alumnoDao.actualizarAlumno(alumno);
+		alumnoDao.update(alumno);
 	}
 
 	public List<Alumno> obtenerAlumnos(){
-		return alumnoDao.obtenerTodoAlumno();
+		return alumnoDao.findAll();
 	}
 	
 	public Alumno obtenerAlumnoxID(Integer idAlumno){
-		return alumnoDao.obtenerAlumnoxID(idAlumno);
+		return alumnoDao.findById(idAlumno);
 	}
 	
 	public Alumno converterToAlumno(AlumnoModelForm formAlumnoModel){

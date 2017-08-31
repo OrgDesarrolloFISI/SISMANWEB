@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pe.edu.sistemas.sismanweb.dao.PlanDAO;
-import pe.edu.sistemas.sismanweb.entidades.Plan;
+import pe.edu.sistemas.sismanweb.domain.Plan;
 
 @Service
 public class PlanService {
@@ -15,11 +15,11 @@ public class PlanService {
 	PlanDAO planDao;
 	
 	public List<Plan> obtenerPlanes(){
-		return planDao.obtenerTodoPlan();
+		return planDao.findAll();
 	}
 	
 	public Plan obtenerPlanXID(Integer idPlan){
-		return planDao.obtenerPlanxID(idPlan);
+		return planDao.findById(idPlan);
 	}
 	
 }

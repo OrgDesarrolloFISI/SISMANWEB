@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pe.edu.sistemas.sismanweb.dao.TipoAlumnoDAO;
-import pe.edu.sistemas.sismanweb.entidades.TipoAlumno;
+import pe.edu.sistemas.sismanweb.domain.TipoAlumno;
 
 @Service
 public class TipoAlumnoService {
@@ -15,11 +15,11 @@ public class TipoAlumnoService {
 	TipoAlumnoDAO tipoAlumnoDao;
 	
 	public List<TipoAlumno> obtenerTiposDeAlumno(){
-		return tipoAlumnoDao.obtenerTodoTipoAlumno();
+		return tipoAlumnoDao.findAll();
 	}
 
 	public TipoAlumno obtenerTipoAlumnoXID(Integer idTipoAlumno){
-		return tipoAlumnoDao.obtenerTipoAlumnoxID(idTipoAlumno);
+		return tipoAlumnoDao.findById(idTipoAlumno);
 	}
 	
 }

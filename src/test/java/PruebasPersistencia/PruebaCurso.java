@@ -8,12 +8,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.CursoBaseDAO;
 import pe.edu.sistemas.sismanweb.dao.CursoConjuntoDAO;
 import pe.edu.sistemas.sismanweb.dao.PlanDAO;
-import pe.edu.sistemas.sismanweb.entidades.CursoBase;
-import pe.edu.sistemas.sismanweb.entidades.CursoConjunto;
+import pe.edu.sistemas.sismanweb.domain.CursoBase;
+import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -28,8 +29,9 @@ public class PruebaCurso {
 
 	@Test
 	@Ignore
+	@Transactional
 	public void seMuestraCursoBase(){
-		List<CursoBase> cursoBase = cursoBaseDao.obtenerTodoCursoBasexNombre("curso");
+		List<CursoBase> cursoBase = cursoBaseDao.findCursoBaseByNombre("curso");
 		
 		System.out.println(cursoBase.size());
 		
@@ -41,7 +43,8 @@ public class PruebaCurso {
 	
 	
 	@Test
-	@Ignore
+	//@Ignore
+	@Transactional()
 	public void agregaCurso(){
 
 		CursoBase cb = new CursoBase();
@@ -49,23 +52,24 @@ public class PruebaCurso {
 		cb.setCursobNombre("miCurso");
 		cb.setCursobCiclo(1);
 		cb.setCursobCreditos(4);
-		cb.setPlan(planDao.obtenerPlanxID(1));
+		cb.setPlan(planDao.findById(1));
 		
 		CursoConjunto cc = new CursoConjunto();
 		cc.setCursoBase(cb);
 		cc.setCursocNombre(cb.getCursobNombre());
 		cc.setCursocCodcomun(1);
 		
-		int id = cursoConjuntoDao.agregarCursoConjunto(cc);
+		int id = cursoConjuntoDao.saveWithReturnId(cc);
 		//int id = cursoBaseDao.agregarCursoBase(cb);
 		System.out.println(id);		
 		
 	}
 	
 	@Test
-	//@Ignore
+	@Ignore
+	@Transactional
 	public void muestraUnCursoBase(){
-		CursoBase cb = cursoBaseDao.obtenerCursoBasexCodigoxPlan("201001",1);
+		CursoBase cb = cursoBaseDao.findCursoBaseByCodigoByPlan("201001",1);
 		if(cb != null){
 			System.out.print(cb.getIdcursoGeneral()+" -- "+cb.getCursobCodigo()+" -- "+cb.getCursobNombre()+" -- "+cb.getCursobCreditos()+" -- "+cb.getPlan().getPlanNombre());
 			System.out.println(" -- " +cb.getCursoConjuntos().size());
@@ -75,8 +79,9 @@ public class PruebaCurso {
 	
 	@Test
 	@Ignore
+	@Transactional
 	public void muestraUnCursoConjunto(){
-		CursoConjunto cc = cursoConjuntoDao.obtenerCursoConjuntoxNombre("base de daTOs");
+		CursoConjunto cc = cursoConjuntoDao.findCursoConjuntoByNombre("base de daTOs");
 		if(cc != null){
 			System.out.print(cc.getIdcursoConjunto()+" -- "+cc.getCursocNombre()+" -- ["+cc.getCursoBase().getIdcursoGeneral()+" :: "+cc.getCursoBase().getCursobNombre()+" :: "
 			+cc.getCursoBase().getCursobCodigo()+" :: "+cc.getCursoBase().getPlan().getIdplan()+"] -- "+cc.getCursocCodcomun());
@@ -86,8 +91,9 @@ public class PruebaCurso {
 	
 	@Test
 	@Ignore
+	@Transactional
 	public void mostrarMaximoCodigo(){
-		Integer codmax = cursoConjuntoDao.obtenerCodigoMaximo();
+		Integer codmax = cursoConjuntoDao.findCodigoMaximo();
 		System.out.println("CODIGO MAXIMO --> "+codmax);
 	}
 	

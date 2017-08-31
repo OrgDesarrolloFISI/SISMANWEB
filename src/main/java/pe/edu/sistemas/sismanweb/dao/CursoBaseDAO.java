@@ -2,23 +2,11 @@ package pe.edu.sistemas.sismanweb.dao;
 
 import java.util.List;
 
-import pe.edu.sistemas.sismanweb.entidades.CursoBase;
+import pe.edu.sistemas.sismanweb.domain.CursoBase;
 
-public interface CursoBaseDAO {
+public interface CursoBaseDAO extends AbstractDAO<CursoBase, Integer> {
 	
-	public void insertarCursoBase (CursoBase cursoBase);
+	public List<CursoBase> findCursoBaseByNombre(String nombre);
 	
-	public void actualizarCursoBase (CursoBase cursoBase);
-	
-	public Integer agregarCursoBase(CursoBase cursoBase);
-	
-//	public void eliminarCursoBase (CursoBase cursoBase);
-	
-	public List<CursoBase> obtenerTodoCursoBase();
-	
-	public CursoBase obtenerCursoBasexID(Integer idCursoBase);
-	
-	public List<CursoBase> obtenerTodoCursoBasexNombre(String nombre);
-	
-	public CursoBase obtenerCursoBasexCodigoxPlan(String codigo, Integer idplan);
+	public CursoBase findCursoBaseByCodigoByPlan(String codigo, Integer idplan);
 }

@@ -3,54 +3,38 @@ package pe.edu.sistemas.sismanweb.daoimpl;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import pe.edu.sistemas.sismanweb.dao.UsuarioDAO;
-import pe.edu.sistemas.sismanweb.entidades.Usuario;
+import pe.edu.sistemas.sismanweb.domain.Usuario;
 
 @Repository
 public class UsuarioDAOImpl implements UsuarioDAO{
 
-	private SessionFactory sessionFactory;
-	private Session session;
-	private Transaction tx;
-	
 	@Autowired
-	public void setSessionFactory(SessionFactory sessionFactory){
-		this.sessionFactory = sessionFactory;		
-	}
+	private SessionFactory sessionFactory;
 	
-	private void iniciaOperacion() throws HibernateException {
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
-	}
-
-	private void manejaExcepcion(HibernateException he){
-		tx.rollback();
-		he.printStackTrace();
-		throw new HibernateException("Ocurrio un error en el acceso a datos", he);
-	}
+	public Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
+    }
 	
 	@Override
+	@SuppressWarnings("unchecked")	
 	public List<Usuario> obtenerUsuarioxCodSis(String codigo) {
 		List<Usuario> usuario = null;
 		Query query = null;
 		try{
-			iniciaOperacion();
-			query = session.createQuery("select u from Usuario as u join u.persona as p where u.sistemaIdSistema=4 and p.personaCodigoSistema=:codigo");
+			//query = session.createQuery("select u from Usuario as u join u.persona as p where u.sistemaIdSistema=4 and p.personaCodigoSistema=:codigo");
+			query = getCurrentSession().createQuery("select u from Usuario as u where u.sistemaIdSistema=4 and u.persona.personaCodigoSistema=:codigo");
 			query.setParameter("codigo", codigo);
-			usuario = (List<Usuario>)query.getResultList();	
+			usuario = (List<Usuario>)query.list();	
 		}catch(HibernateException he){
-			manejaExcepcion(he);
-		}finally{
-			//session.close();			
+			he.printStackTrace();
 		}		
-		
 		return usuario;
 	}
 

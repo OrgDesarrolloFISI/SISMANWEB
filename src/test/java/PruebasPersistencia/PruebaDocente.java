@@ -9,12 +9,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.CursoBaseDAO;
 import pe.edu.sistemas.sismanweb.dao.CursoConjuntoDAO;
-import pe.edu.sistemas.sismanweb.entidades.CursoBase;
-import pe.edu.sistemas.sismanweb.entidades.CursoConjunto;
-import pe.edu.sistemas.sismanweb.entidades.Docente;
+import pe.edu.sistemas.sismanweb.domain.CursoBase;
+import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
+import pe.edu.sistemas.sismanweb.domain.Docente;
 import pe.edu.sistemas.sismanweb.services.DocenteService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,6 +31,7 @@ public class PruebaDocente {
 
 	@Test
 	@Ignore
+	@Transactional
 	public void seMuestraPersonas() {	
 		
 		List<Docente> lista = docenteService.obtenerDocentes();
@@ -48,8 +50,16 @@ public class PruebaDocente {
 	
 	@Test
 	//@Ignore
+	@Transactional
+	public void seAgregaDocente(){
+		
+	}
+	
+	@Test
+	@Ignore
+	@Transactional
 	public void seMuestraCursoBase(){
-		List<CursoBase> cursoBase = cursoBaseDao.obtenerTodoCursoBasexNombre("Curso");
+		List<CursoBase> cursoBase = cursoBaseDao.findCursoBaseByNombre("Curso");
 		
 		System.out.println(cursoBase.size());
 		
@@ -71,7 +81,7 @@ public class PruebaDocente {
 		cc.setCursocNombre(cb.getCursobNombre());
 		cc.setCursocCodcomun(1);
 		
-		int id = cursoConjuntoDao.agregarCursoConjunto(cc);
+		int id = cursoConjuntoDao.saveWithReturnId(cc);
 		//int id = cursoBaseDao.agregarCursoBase(cb);
 		System.out.println(id);
 	
@@ -80,8 +90,9 @@ public class PruebaDocente {
 	
 	@Test
 	@Ignore
+	@Transactional
 	public void agregaCurso(){
-		List<CursoBase> cursoBase = cursoBaseDao.obtenerTodoCursoBasexNombre("Curso");
+		List<CursoBase> cursoBase = cursoBaseDao.findCursoBaseByNombre("Curso");
 		
 		System.out.println(cursoBase.size());
 		
