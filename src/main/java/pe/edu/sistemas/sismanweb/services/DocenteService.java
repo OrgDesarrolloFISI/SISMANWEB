@@ -4,25 +4,31 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import pe.edu.sistemas.sismanweb.dao.CategoriaDocenteDAO;
+import pe.edu.sistemas.sismanweb.dao.ClaseDocenteDAO;
+import pe.edu.sistemas.sismanweb.dao.DepartamentoAcademicoDAO;
 import pe.edu.sistemas.sismanweb.dao.DocenteDAO;
+import pe.edu.sistemas.sismanweb.dao.PersonaDAO;
 import pe.edu.sistemas.sismanweb.domain.Docente;
 import pe.edu.sistemas.sismanweb.domain.Persona;
 import pe.edu.sistemas.sismanweb.services.modelform.DocenteModelForm;
 
 @Service
+@Transactional
 public class DocenteService {
 	
 
 	@Autowired private DocenteDAO docenteDao;	
-	@Autowired private PersonaService personaService;
-	@Autowired private ClaseDocenteService claseDocenteService;	
-	@Autowired private CategoriaDocenteService categoriaDocenteService;	
-	@Autowired private DepartamentoAcademicoService departamentoAcademicoService;
+	@Autowired private PersonaDAO personaDao;
+	@Autowired private ClaseDocenteDAO claseDocenteDao;	
+	@Autowired private CategoriaDocenteDAO categoriaDocenteDao;	
+	@Autowired private DepartamentoAcademicoDAO departamentoAcademicoDao;
 	
 	
 	public boolean insertarDocente(Docente docente){
-		Persona persona = personaService.obtenerPersonaxCodigo(docente.getPersona().getPersonaCodigo());
+		Persona persona = personaDao.findPersonaByCodigo(docente.getPersona().getPersonaCodigo());
 		if(persona!=null){
 			return true;
 		}else{
@@ -66,9 +72,9 @@ public class DocenteService {
 		docente.setDocenteClave("");
 		docente.setDocenteGrupoOcupacional("Profesional");
 		docente.setDocenteRegular(0);		
-		docente.setClase(claseDocenteService.obtenerClaseDeDocenteXID(formDocenteModel.getIdClase()));
-		docente.setCategoriaDocente(categoriaDocenteService.obtenerCategoriaDocXID(formDocenteModel.getIdCategoria()));
-		docente.setDepartamentoAcademico(departamentoAcademicoService.obtenerDepAcadXID(formDocenteModel.getIdDepAcad()));	
+		docente.setClase(claseDocenteDao.findById(formDocenteModel.getIdClase()));
+		docente.setCategoriaDocente(categoriaDocenteDao.findById(formDocenteModel.getIdCategoria()));
+		docente.setDepartamentoAcademico(departamentoAcademicoDao.findById(formDocenteModel.getIdDepAcad()));	
 		
 		return docente;		
 	}

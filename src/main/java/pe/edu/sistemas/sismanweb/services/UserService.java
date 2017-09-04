@@ -11,12 +11,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.UsuarioDAO;
 import pe.edu.sistemas.sismanweb.domain.Persona;
 import pe.edu.sistemas.sismanweb.domain.Usuario;
 
 @Service
+@Transactional
 public class UserService implements UserDetailsService{
 	
 	@Autowired
@@ -24,17 +26,17 @@ public class UserService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		List<Usuario> usuarioRoles = usuarioDao.obtenerUsuarioxCodSis(username);
-		List<GrantedAuthority> authorities = buildAuthorities(usuarioRoles);
-		Persona usuario = usuarioRoles.get(0).getPersona();
+		List<Usuario> usersByPersona = usuarioDao.obtenerUsuarioxCodSis(username);
+		List<GrantedAuthority> authorities = buildAuthorities(usersByPersona);
+		Persona usuario = usersByPersona.get(0).getPersona();
 		User user = new User(usuario.getPersonaCodigoSistema()
 				, usuario.getPersonaPasswordSistema(), true, true, true, true, authorities);
 		return user;
 	}
 	
-	private List<GrantedAuthority> buildAuthorities(List<Usuario> usuarioRoles){
+	private List<GrantedAuthority> buildAuthorities(List<Usuario> usersByPersona){
 		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
-		for(Usuario usu : usuarioRoles){
+		for(Usuario usu : usersByPersona){
 			roles.add(new SimpleGrantedAuthority(usu.getTipoUsuario().getNombreTipoUsuario()));
 		}
 		return roles;

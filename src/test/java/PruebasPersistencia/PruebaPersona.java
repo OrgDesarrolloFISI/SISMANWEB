@@ -93,10 +93,13 @@ public class PruebaPersona {
 	//@Ignore
 	@Transactional
 	public void mostrarAlumnos(){
-		for(Alumno al:alumnoService.obtenerAlumnos()){
+		List<Alumno> result= alumnoService.obtenerAlumnos();
+		for(Alumno al: result){
 			System.out.println(al.getIdAlumno()+" -- "+al.getPersona().getPersonaNombre());
 		}
+		System.out.println("-------------------------------");
 	}
 	
+
 
 }

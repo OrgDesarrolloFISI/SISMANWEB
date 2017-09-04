@@ -7,6 +7,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.AbstractDAO;
 
@@ -26,6 +28,7 @@ public abstract class AbstractDAOImpl<Entity, I extends Serializable> implements
     }
 
 	@Override
+	@Transactional(propagation=Propagation.MANDATORY)
 	public void save(Entity entity) {
 		try{
 			getCurrentSession().save(entity);
@@ -36,6 +39,7 @@ public abstract class AbstractDAOImpl<Entity, I extends Serializable> implements
 
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional(propagation=Propagation.MANDATORY)
 	public I saveWithReturnId(Entity entity) {
 		I result = null;
 		try{
@@ -47,6 +51,7 @@ public abstract class AbstractDAOImpl<Entity, I extends Serializable> implements
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.MANDATORY)
 	public void update(Entity entity) {
 		try{
 			getCurrentSession().update(entity);
@@ -56,6 +61,7 @@ public abstract class AbstractDAOImpl<Entity, I extends Serializable> implements
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.MANDATORY)
 	public void delete(Entity entity) {
 		try{
 			getCurrentSession().delete(entity);
@@ -66,6 +72,7 @@ public abstract class AbstractDAOImpl<Entity, I extends Serializable> implements
 
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional(propagation=Propagation.MANDATORY)
 	public Entity findById(I id) {
 		Entity result = null;
 		try{
@@ -78,6 +85,7 @@ public abstract class AbstractDAOImpl<Entity, I extends Serializable> implements
 
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional(propagation=Propagation.MANDATORY)
 	public List<Entity> findAll() {
 		List<Entity> result = null;
 		try{

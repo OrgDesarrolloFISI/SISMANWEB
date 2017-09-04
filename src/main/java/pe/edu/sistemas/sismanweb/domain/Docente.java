@@ -106,7 +106,7 @@ public class Docente implements java.io.Serializable {
 		this.departamentoAcademico = departamentoAcademico;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.PERSIST,CascadeType.MERGE})
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name = "PERSONA_ID_PERSONA", nullable = false)
 	public Persona getPersona() {
 		return this.persona;

@@ -6,19 +6,22 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.CursoBaseDAO;
 import pe.edu.sistemas.sismanweb.dao.CursoConjuntoDAO;
+import pe.edu.sistemas.sismanweb.dao.PlanDAO;
 import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
 
 @Service
+@Transactional
 public class CursoService {
 	
 	@Autowired private CursoBaseDAO cursoBaseDao;
 	@Autowired private CursoConjuntoDAO cursoConjuntoDao;
-	@Autowired private PlanService planService;
+	@Autowired private PlanDAO planDao;
 	
 	private static final Log logger = LogFactory.getLog(CursoService.class);
 	
@@ -58,7 +61,7 @@ public class CursoService {
 		cursoBase.setCursobNombre(cursoModelForm.getNombre());
 		cursoBase.setCursobCiclo(cursoModelForm.getCiclo());
 		cursoBase.setCursobCreditos(cursoModelForm.getCreditos());
-		cursoBase.setPlan(planService.obtenerPlanXID(cursoModelForm.getIdPlan()));
+		cursoBase.setPlan(planDao.findById(cursoModelForm.getIdPlan()));
 		
 		return cursoBase;
 	}

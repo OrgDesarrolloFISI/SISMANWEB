@@ -13,9 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.CursoBaseDAO;
 import pe.edu.sistemas.sismanweb.dao.CursoConjuntoDAO;
+import pe.edu.sistemas.sismanweb.dao.PlanDAO;
 import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
 import pe.edu.sistemas.sismanweb.domain.Docente;
+import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.DocenteService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,6 +29,8 @@ public class PruebaDocente {
 	@Autowired public CursoBaseDAO cursoBaseDao;
 	
 	@Autowired public CursoConjuntoDAO cursoConjuntoDao;
+	
+	@Autowired public PlanDAO planDao;
 		
 
 	@Test
@@ -49,32 +53,25 @@ public class PruebaDocente {
 	}
 	
 	@Test
-	//@Ignore
+	@Ignore
 	@Transactional
 	public void seAgregaDocente(){
 		
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	@Transactional
 	public void seMuestraCursoBase(){
-		List<CursoBase> cursoBase = cursoBaseDao.findCursoBaseByNombre("Curso");
-		
-		System.out.println(cursoBase.size());
-		
-		for(CursoBase cb: cursoBase){
-			System.out.print(cb.getIdcursoGeneral()+" -- "+cb.getCursobCodigo()+" -- "+cb.getCursobNombre()+" -- "+cb.getCursobCreditos()+" -- "+cb.getPlan().getPlanNombre());
-			System.out.println(" -- " +cb.getCursoConjuntos().size());
-			
-		}	
+		List<Plan> planes = planDao.findAll();
+		System.out.println(planes.size());
 		
 		CursoBase cb = new CursoBase();
 		cb.setCursobCodigo("405");
 		cb.setCursobNombre("miCurso");
 		cb.setCursobCiclo(1);
 		cb.setCursobCreditos(4);
-		cb.setPlan(cursoBase.get(0).getPlan());
+		cb.setPlan(planes.get(0));
 		
 		CursoConjunto cc = new CursoConjunto();
 		cc.setCursoBase(cb);
@@ -91,7 +88,7 @@ public class PruebaDocente {
 	@Test
 	@Ignore
 	@Transactional
-	public void agregaCurso(){
+	public void mostrarCurso(){
 		List<CursoBase> cursoBase = cursoBaseDao.findCursoBaseByNombre("Curso");
 		
 		System.out.println(cursoBase.size());

@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.ClaseDocenteDAO;
 import pe.edu.sistemas.sismanweb.domain.Clase;
 
 @Service
+@Transactional
 public class ClaseDocenteService {
 	
 	@Autowired
