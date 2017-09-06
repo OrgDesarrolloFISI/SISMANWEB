@@ -47,9 +47,9 @@ public class AlumnoService {
 	
 	public List<Alumno> obtenerAlumnos(){
 		List<Alumno> resultado = alumnoDao.findAll();
-		/*for(Alumno al: resultado){
-			System.out.println(al.getPersona().getIdPersona());
-		}	*/	
+		for(Alumno alu: resultado){
+			alu.getPersona().getPersonaNombre();
+		}		
 		return resultado;
 	}
 	

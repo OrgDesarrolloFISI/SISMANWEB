@@ -3,6 +3,8 @@ package pe.edu.sistemas.sismanweb.daoimpl;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.PersonaDAO;
 import pe.edu.sistemas.sismanweb.domain.Persona;
@@ -15,6 +17,7 @@ public class PersonaDAOImpl extends AbstractDAOImpl<Persona, Integer> implements
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.MANDATORY)
 	public Persona findPersonaByCodigo(String codigo) {
 		Persona persona = null;
 		Query query = null;

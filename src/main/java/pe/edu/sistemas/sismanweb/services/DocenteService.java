@@ -11,6 +11,7 @@ import pe.edu.sistemas.sismanweb.dao.ClaseDocenteDAO;
 import pe.edu.sistemas.sismanweb.dao.DepartamentoAcademicoDAO;
 import pe.edu.sistemas.sismanweb.dao.DocenteDAO;
 import pe.edu.sistemas.sismanweb.dao.PersonaDAO;
+import pe.edu.sistemas.sismanweb.domain.Alumno;
 import pe.edu.sistemas.sismanweb.domain.Docente;
 import pe.edu.sistemas.sismanweb.domain.Persona;
 import pe.edu.sistemas.sismanweb.services.modelform.DocenteModelForm;
@@ -46,7 +47,20 @@ public class DocenteService {
 	}
 	
 	public List<Docente> obtenerDocentes(){
-		return docenteDao.findAll();
+		List<Docente> resultado = docenteDao.findAll();
+		for(Docente doc: resultado){
+			doc.getPersona().getPersonaNombre();
+			if(doc.getDepartamentoAcademico()!=null){
+				doc.getDepartamentoAcademico().getDepartamentoAcademicoNombre();
+			}
+			if(doc.getCategoriaDocente()!=null){
+				doc.getCategoriaDocente().getCategoriaDocenteNombre();
+			}
+			if(doc.getClase()!=null){
+				doc.getClase().getClaseNombre();
+			}			
+		}
+		return resultado;
 	}
 	
 	public Docente obtenerDocenteXID(Integer idDocente){

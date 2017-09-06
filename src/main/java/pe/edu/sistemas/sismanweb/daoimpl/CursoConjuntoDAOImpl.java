@@ -3,6 +3,8 @@ package pe.edu.sistemas.sismanweb.daoimpl;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.CursoConjuntoDAO;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
@@ -15,6 +17,7 @@ public class CursoConjuntoDAOImpl extends AbstractDAOImpl<CursoConjunto, Integer
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.MANDATORY)
 	public CursoConjunto findCursoConjuntoByNombre(String nombre) {
 		CursoConjunto cursoConjunto = null;
 		Query query = null;
@@ -29,6 +32,7 @@ public class CursoConjuntoDAOImpl extends AbstractDAOImpl<CursoConjunto, Integer
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.MANDATORY)
 	public Integer findCodigoMaximo() {
 		Integer codigo = null;
 		try{

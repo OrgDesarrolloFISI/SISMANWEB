@@ -5,6 +5,8 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.CursoBaseDAO;
 import pe.edu.sistemas.sismanweb.domain.CursoBase;
@@ -18,6 +20,7 @@ public class CursoBaseDAOImpl extends AbstractDAOImpl<CursoBase, Integer> implem
 	
 	@Override
 	@SuppressWarnings("unchecked")
+	@Transactional(propagation=Propagation.MANDATORY)
 	public List<CursoBase> findCursoBaseByNombre(String nombre) {
 		List<CursoBase> listaCursoBase = null;
 		Query query = null;
@@ -31,6 +34,7 @@ public class CursoBaseDAOImpl extends AbstractDAOImpl<CursoBase, Integer> implem
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.MANDATORY)
 	public CursoBase findCursoBaseByCodigoByPlan(String codigo, Integer idplan) {
 		CursoBase cursoBase = null;
 		Query query = null;

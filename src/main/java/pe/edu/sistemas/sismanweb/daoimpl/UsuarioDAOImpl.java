@@ -8,6 +8,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.UsuarioDAO;
 import pe.edu.sistemas.sismanweb.domain.Usuario;
@@ -24,6 +26,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	
 	@Override
 	@SuppressWarnings("unchecked")	
+	@Transactional(propagation=Propagation.MANDATORY)
 	public List<Usuario> obtenerUsuarioxCodSis(String codigo) {
 		List<Usuario> usuario = null;
 		Query query = null;

@@ -26,7 +26,11 @@ public class CursoService {
 	private static final Log logger = LogFactory.getLog(CursoService.class);
 	
 	public List<CursoBase> obtenerCursos(){
-		return cursoBaseDao.findAll();
+		List<CursoBase> resultado = cursoBaseDao.findAll();
+		for(CursoBase cb : resultado){
+			cb.getPlan().getPlanNombre();
+		}
+		return resultado;
 	}
 	
 	public void insertarCurso(CursoBase cursoBase){
