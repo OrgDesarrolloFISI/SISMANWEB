@@ -1,20 +1,7 @@
 package pe.edu.sistemas.sismanweb.dao;
 
-import java.util.List;
+import pe.edu.sistemas.sismanweb.domain.DepartamentoAcademico;
 
-import pe.edu.sistemas.sismanweb.entidades.DepartamentoAcademico;
-
-public interface DepartamentoAcademicoDAO {
-
-	/*public void insertarDepartamentoAcademico(DepartamentoAcademico departamentoAcademico);
-
-	public void actualizarDepartamentoAcademico(DepartamentoAcademico departamentoAcademico);
-
-	public void eliminarDepartamentoAcademico(DepartamentoAcademico departamentoAcademico);*/
-
-	public List<DepartamentoAcademico> obtenerTodoDepartamentoAcademico();
-
-	public DepartamentoAcademico obtenerDepartamentoAcademicoxID(Integer idDepartamentoAcademico);
-	
+public interface DepartamentoAcademicoDAO extends AbstractDAO<DepartamentoAcademico, Integer>{	
 
 }

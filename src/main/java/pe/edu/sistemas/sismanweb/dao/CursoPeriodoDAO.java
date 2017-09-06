@@ -1,19 +1,7 @@
 package pe.edu.sistemas.sismanweb.dao;
 
-import java.util.List;
+import pe.edu.sistemas.sismanweb.domain.CursoPeriodo;
 
-import pe.edu.sistemas.sismanweb.entidades.CursoPeriodo;
-
-public interface CursoPeriodoDAO {
-
-	public void insertarCursoPeriodo(CursoPeriodo cursoPeriodo);
-
-	public void actualizarCursoPeriodo(CursoPeriodo cursoPeriodo);
-
-//	public void eliminarCursoPeriodo (CursoPeriodo cursoPeriodo);
-
-	public List<CursoPeriodo> obtenerTodoCursoPeriodo();
-
-	public CursoPeriodo obtenerCursoPeriodoxID(Integer idcursoPeriodo);
+public interface CursoPeriodoDAO extends AbstractDAO<CursoPeriodo, Integer> {
 
 }

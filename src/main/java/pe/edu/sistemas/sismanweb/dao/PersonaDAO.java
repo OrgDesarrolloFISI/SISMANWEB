@@ -1,19 +1,9 @@
 package pe.edu.sistemas.sismanweb.dao;
 
-import java.util.List;
+import pe.edu.sistemas.sismanweb.domain.Persona;
 
-import pe.edu.sistemas.sismanweb.entidades.Persona;
-
-public interface PersonaDAO {
-
-	public void insertarPersona(Persona persona);
-
-	public void actualizarPersona(Persona persona);
-
-	public void eliminarPersona(Persona persona);
-
-	public List<Persona> obtenerTodoPersona();
-
-	public Persona obtenerPersonaxID(Integer idPersona);
+public interface PersonaDAO extends AbstractDAO<Persona, Integer>{
+	
+	public Persona findPersonaByCodigo(String codigo);
 
 }

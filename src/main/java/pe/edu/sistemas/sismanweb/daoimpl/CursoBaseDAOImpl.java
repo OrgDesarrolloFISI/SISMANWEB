@@ -3,139 +3,48 @@ package pe.edu.sistemas.sismanweb.daoimpl;
 import java.util.List;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.CursoBaseDAO;
-import pe.edu.sistemas.sismanweb.entidades.CursoBase;
+import pe.edu.sistemas.sismanweb.domain.CursoBase;
 
 @Repository
-public class CursoBaseDAOImpl implements CursoBaseDAO{
-	
-	private SessionFactory sessionFactory;
-	private Session session;
-	private Transaction tx;
-	
-	@Autowired
-	public void setSessionFactory(SessionFactory sessionFactory){
-		this.sessionFactory = sessionFactory;		
-	}
-	
-	private void iniciaOperacion() throws HibernateException {
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
-	}
-
-	private void manejaExcepcion(HibernateException he){
-		tx.rollback();
-		he.printStackTrace();
-		throw new HibernateException("Ocurrio un error en el acceso a datos", he);
-	}
-
-	@Override
-	public void insertarCursoBase(CursoBase cursoBase) {
-		try{
-			iniciaOperacion();
-			session.save(cursoBase);
-			tx.commit();
-		}catch(HibernateException he){
-			manejaExcepcion(he);
-		}finally{
-			session.close();
-		}		
-	}
-
-	@Override
-	public void actualizarCursoBase(CursoBase cursoBase) {
-		try{
-			iniciaOperacion();
-			session.update(cursoBase);
-			tx.commit();
-		}catch(HibernateException he){
-			manejaExcepcion(he);
-		}finally{
-			session.close();
-		}		
-	}
-
-	@Override
-	public List<CursoBase> obtenerTodoCursoBase() {
-		List<CursoBase> listaCursoBase = null;
-		try{
-			iniciaOperacion();
-			listaCursoBase = (List<CursoBase>)session.createQuery("from CursoBase").setMaxResults(10).getResultList();	
-		}catch(HibernateException he){
-			manejaExcepcion(he);
-		}finally{
-			//session.close();			
-		}		
+public class CursoBaseDAOImpl extends AbstractDAOImpl<CursoBase, Integer> implements CursoBaseDAO{
 		
-		return listaCursoBase;
+	protected CursoBaseDAOImpl() {
+		super(CursoBase.class);
 	}
 	
 	@Override
-	public Integer agregarCursoBase(CursoBase cursoBase) {
-		Integer id = null;
-		try{
-			iniciaOperacion();
-			id = (Integer) session.save(cursoBase);
-			tx.commit();
-		}catch(HibernateException he){
-			manejaExcepcion(he);
-		}finally{
-			session.close();
-		}	
-		return id;
-	}
-
-	@Override
-	public CursoBase obtenerCursoBasexID(Integer idCursoBase) {
-		CursoBase cursoBase = null;
-		try{
-			iniciaOperacion();
-			cursoBase = session.get(CursoBase.class, idCursoBase);
-		}catch (HibernateException he) {
-			manejaExcepcion(he);
-		}finally {
-			session.close();
-		}
-		return cursoBase;
-	}
-
-	@Override
-	public List<CursoBase> obtenerTodoCursoBasexNombre(String nombre) {
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation=Propagation.MANDATORY)
+	public List<CursoBase> findCursoBaseByNombre(String nombre) {
 		List<CursoBase> listaCursoBase = null;
 		Query query = null;
 		try{
-			iniciaOperacion();
-			query = session.createQuery("from CursoBase where cursobNombre like '%"+nombre+"%'");
-			listaCursoBase = (List<CursoBase>)query.getResultList();					
+			query = getCurrentSession().createQuery("from CursoBase where cursobNombre like '%"+nombre+"%'");
+			listaCursoBase = (List<CursoBase>)query.list();					
 		}catch (HibernateException he) {
-			manejaExcepcion(he);
-		}finally {
-			//session.close();
+			he.printStackTrace();
 		}
 		return listaCursoBase;
 	}
 
 	@Override
-	public CursoBase obtenerCursoBasexCodigoxPlan(String codigo,Integer idplan) {
+	@Transactional(propagation=Propagation.MANDATORY)
+	public CursoBase findCursoBaseByCodigoByPlan(String codigo, Integer idplan) {
 		CursoBase cursoBase = null;
 		Query query = null;
 		try{
-			iniciaOperacion();
-			query = session.createQuery("from CursoBase where cursobCodigo = :codigo and plan.idplan = :idplan").setMaxResults(1);
+			query = getCurrentSession().createQuery("from CursoBase where cursobCodigo = :codigo and plan.idplan = :idplan").setMaxResults(1);
 			query.setParameter("codigo", codigo);
 			query.setParameter("idplan", idplan);
-			cursoBase = (CursoBase)query.getSingleResult();
+			cursoBase = (CursoBase)query.uniqueResult();
 		}catch (HibernateException he) {
-			manejaExcepcion(he);
-		}finally {
-			//session.close();
+			he.printStackTrace();
 		}
 		return cursoBase;
 	}

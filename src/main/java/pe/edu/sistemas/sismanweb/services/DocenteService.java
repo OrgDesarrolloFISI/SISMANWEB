@@ -4,43 +4,67 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.CategoriaDocenteDAO;
 import pe.edu.sistemas.sismanweb.dao.ClaseDocenteDAO;
 import pe.edu.sistemas.sismanweb.dao.DepartamentoAcademicoDAO;
 import pe.edu.sistemas.sismanweb.dao.DocenteDAO;
-import pe.edu.sistemas.sismanweb.entidades.Docente;
-import pe.edu.sistemas.sismanweb.entidades.Persona;
+import pe.edu.sistemas.sismanweb.dao.PersonaDAO;
+import pe.edu.sistemas.sismanweb.domain.Alumno;
+import pe.edu.sistemas.sismanweb.domain.Docente;
+import pe.edu.sistemas.sismanweb.domain.Persona;
 import pe.edu.sistemas.sismanweb.services.modelform.DocenteModelForm;
 
 @Service
+@Transactional
 public class DocenteService {
 	
 
 	@Autowired private DocenteDAO docenteDao;	
-	@Autowired private ClaseDocenteDAO claseDao;	
+	@Autowired private PersonaDAO personaDao;
+	@Autowired private ClaseDocenteDAO claseDocenteDao;	
 	@Autowired private CategoriaDocenteDAO categoriaDocenteDao;	
 	@Autowired private DepartamentoAcademicoDAO departamentoAcademicoDao;
 	
 	
-	public void insertarDocente(Docente docente){
-		docenteDao.insertarDocente(docente);
+	public boolean insertarDocente(Docente docente){
+		Persona persona = personaDao.findPersonaByCodigo(docente.getPersona().getPersonaCodigo());
+		if(persona!=null){
+			return true;
+		}else{
+			docenteDao.save(docente);
+			return false;
+		}
 	}
 	
 	public void actualizarDocente(Docente docente){
-		docenteDao.actualizarDocente(docente);
+		docenteDao.update(docente);
 	}
 	
 	public void eliminarDocente(Docente docente){
-		docenteDao.eliminarDocente(docente);
+		docenteDao.delete(docente);
 	}
 	
 	public List<Docente> obtenerDocentes(){
-		return docenteDao.obtenerTodoDocente();
+		List<Docente> resultado = docenteDao.findAll();
+		for(Docente doc: resultado){
+			doc.getPersona().getPersonaNombre();
+			if(doc.getDepartamentoAcademico()!=null){
+				doc.getDepartamentoAcademico().getDepartamentoAcademicoNombre();
+			}
+			if(doc.getCategoriaDocente()!=null){
+				doc.getCategoriaDocente().getCategoriaDocenteNombre();
+			}
+			if(doc.getClase()!=null){
+				doc.getClase().getClaseNombre();
+			}			
+		}
+		return resultado;
 	}
 	
 	public Docente obtenerDocenteXID(Integer idDocente){
-		return docenteDao.obtenerDocentexID(idDocente);
+		return docenteDao.findById(idDocente);
 	}
 	
 	public Docente converterToDocente(DocenteModelForm formDocenteModel){
@@ -62,9 +86,9 @@ public class DocenteService {
 		docente.setDocenteClave("");
 		docente.setDocenteGrupoOcupacional("Profesional");
 		docente.setDocenteRegular(0);		
-		docente.setClase(claseDao.obtenerClasexID(formDocenteModel.getIdClase()));
-		docente.setCategoriaDocente(categoriaDocenteDao.obtenerCategoriaDocentexID(formDocenteModel.getIdCategoria()));
-		docente.setDepartamentoAcademico(departamentoAcademicoDao.obtenerDepartamentoAcademicoxID(formDocenteModel.getIdDepAcad()));	
+		docente.setClase(claseDocenteDao.findById(formDocenteModel.getIdClase()));
+		docente.setCategoriaDocente(categoriaDocenteDao.findById(formDocenteModel.getIdCategoria()));
+		docente.setDepartamentoAcademico(departamentoAcademicoDao.findById(formDocenteModel.getIdDepAcad()));	
 		
 		return docente;		
 	}

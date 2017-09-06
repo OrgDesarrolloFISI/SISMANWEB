@@ -26,7 +26,7 @@
 			        <div class="menu-list">
 			  
 			            <ul id="menu-content" class="menu-content collapse out">
-			                <li>
+			                <li style="border-left: none;">
 			                  <a href="#">
 			                  <i >OPCIONES</i> 
 			                  </a>
@@ -74,7 +74,7 @@
 									<h2 >GESTION DE CURSOS</h2>								
 								</div>
 								<div align="right" class="col-xs-6">								
-									<button class="btn btn-primary" onclick="location='../login.html'">CERRAR SESION</button>
+									<a href="#" th:href="@{/logout}"><button class="btn btn-primary">CERRAR SESION</button></a>
 								</div>								
 							</div>
 					<!-- **********************************Fin encabezado**********************************-->
@@ -113,17 +113,15 @@
 							</form>
 
 					<!-- **********************************Fin formulario**********************************-->					
-				
+				<div class="espacio_vacio"></div>
 				</div>
 		
 	
   <!--  Footer -->
-    <div id="footer-container">
-        <div class="container">
-          <h3>Area de Desarrollo y Soporte Tecnico</h3>
-        </div>
-    </div>
-    <!-- Fin de Footer-->
+	     <div >
+		  	<footer ><h2>Area de Desarrollo y Soporte tecnico</h2></footer>
+		 </div>
+<!-- Fin de Footer-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 

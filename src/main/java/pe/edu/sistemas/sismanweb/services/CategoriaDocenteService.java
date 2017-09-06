@@ -4,22 +4,24 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.CategoriaDocenteDAO;
-import pe.edu.sistemas.sismanweb.entidades.CategoriaDocente;
+import pe.edu.sistemas.sismanweb.domain.CategoriaDocente;
 
 @Service
+@Transactional
 public class CategoriaDocenteService {
 	
 	@Autowired
 	CategoriaDocenteDAO categoriaDocenteDao;
 	
 	public List<CategoriaDocente> obtenerCategorias(){
-		return categoriaDocenteDao.obtenerTodoCategoriaDocente();
+		return categoriaDocenteDao.findAll();
 	}
 	
-	public CategoriaDocente obtenerCategoriaXID(Short idCategoriaDocente){
-		return categoriaDocenteDao.obtenerCategoriaDocentexID(idCategoriaDocente);
+	public CategoriaDocente obtenerCategoriaDocXID(Short idCategoriaDocente){
+		return categoriaDocenteDao.findById(idCategoriaDocente);
 		
 	}
 

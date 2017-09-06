@@ -2,15 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es" >
 <head>
   <meta charset="UTF-8"/>
-  <title>SISMAN WEB</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
-  
-  <link rel="stylesheet" href="../static/css/style_login.css" type="text/css"/>
-  
-  <link rel="stylesheet" href="/sismanweb/static/css/style_login.css"/>
-  <link rel="stylesheet" media="screen" href="../static/css/style_particulas.css"/>
-  <link rel="stylesheet" media="screen" href="/sismanweb/static/css/style_particulas.css"/>
- 
+  <title>SISMANWEB</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>  
+  <link rel="stylesheet" href="../static/css/style_login.css" type="text/css"/>  
+  <link rel="stylesheet" href="/sismanweb/static/css/style_login.css" type="text/css"/>
+  <!-- 
+  <link rel="stylesheet" media="screen" href="../static/css/style_particulas.css" type="text/css"/>
+  <link rel="stylesheet" media="screen" href="/sismanweb/static/css/style_particulas.css" type="text/css"/>
+  -->
   
 </head>
 
@@ -21,21 +20,24 @@
   </div>
   
   <div class='login'>
-    <form th:action="@{/validar}" th:object="${persona}" method="post">
+    <form th:action="@{/logincheck}" method="POST">
 	  <h2>Iniciar Sesion</h2>
-	  <input name='username' placeholder='Usuario' type='text' th:field="*{personaCodigoSistema}"/>	  
-	  <input id='pw' name='password' placeholder='Contraseña' type='password'/>	  	  
+	  <input id='username' name='username' placeholder='Usuario' type='text' />	  
+	  <input id='password' name='password' placeholder='Contraseña' type='password' />	  	  
 	  <input type='submit' value='Ingresar'/>
+	  <div th:if="${error} != null">Usuario o contraseña incorrecta</div>
+	  <div th:if="${logout} != null">Usted se ha desconectado</div>
   	</form>
   </div>
   <div id="particles-js"></div>
-
+  
  <script src="../static/js/particles.js"></script>
- <script src="/sismanweb/static/js/particles.js"></script>
+ <script src="/sismanweb/static/js/particles.js" ></script>
 
+<!--  
  <script src="../static/js/app_config_particulas.js"></script>
- <script src="/sismanweb/static/js/app_config_particulas.js"></script>
-
+ <script src="/sismanweb/static/js/app_config_particulas.js" ></script>
+-->
 
 </body>
 </html>

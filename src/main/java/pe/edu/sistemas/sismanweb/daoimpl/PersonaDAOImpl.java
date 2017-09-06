@@ -1,106 +1,34 @@
 package pe.edu.sistemas.sismanweb.daoimpl;
 
-import java.util.List;
-
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.PersonaDAO;
-import pe.edu.sistemas.sismanweb.entidades.Persona;
+import pe.edu.sistemas.sismanweb.domain.Persona;
 
 @Repository
-public class PersonaDAOImpl implements PersonaDAO {
+public class PersonaDAOImpl extends AbstractDAOImpl<Persona, Integer> implements PersonaDAO {
 
-	private SessionFactory sessionFactory;
-	private Session session;
-	private Transaction tx;
-	
-	@Autowired
-	public void setSessionFactory(SessionFactory sessionFactory){
-		this.sessionFactory = sessionFactory;		
-	}
-	
-	private void iniciaOperacion() throws HibernateException {
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
-	}
-
-	private void manejaExcepcion(HibernateException he){
-		tx.rollback();
-		he.printStackTrace();
-		throw new HibernateException("Ocurrió un error en el acceso a datos", he);
-	}
-	
-	@Override
-	public void insertarPersona(Persona persona) throws HibernateException {
-		try{
-			iniciaOperacion();
-			session.save(persona);
-			tx.commit();
-		}catch(HibernateException he){
-			manejaExcepcion(he);
-		}finally{
-			session.close();
-		}		
+	protected PersonaDAOImpl() {
+		super(Persona.class);
 	}
 
 	@Override
-	public void actualizarPersona(Persona persona) {
-		try{
-			iniciaOperacion();
-			session.update(persona);
-			tx.commit();
-		}catch(HibernateException he){
-			manejaExcepcion(he);
-		}finally{
-			session.close();
-		}
-	}
-
-	@Override
-	public void eliminarPersona(Persona persona) {
-		try{
-			iniciaOperacion();
-			session.delete(persona);
-			tx.commit();		
-		}catch(HibernateException he){
-			manejaExcepcion(he);			
-		}finally{
-			session.close();
-		}
-	}
-
-	@Override
-	public List<Persona> obtenerTodoPersona() {
-		List<Persona> listaPersonas = null;
-		try{
-			iniciaOperacion();
-			listaPersonas = (List<Persona>)session.createQuery("from Persona").setMaxResults(10).getResultList();	
-		}catch(HibernateException he){
-			manejaExcepcion(he);
-		}finally{
-			session.close();			
-		}		
-		
-		return listaPersonas;
-	}
-
-	@Override
-	public Persona obtenerPersonaxID(Integer idPersona) {
+	@Transactional(propagation=Propagation.MANDATORY)
+	public Persona findPersonaByCodigo(String codigo) {
 		Persona persona = null;
+		Query query = null;
 		try{
-			iniciaOperacion();
-			persona = session.get(Persona.class, idPersona);
-		}catch (HibernateException he) {
-			manejaExcepcion(he);
-		}finally {
-			session.close();
+			query = getCurrentSession().createQuery("from Persona where personaCodigo = :codigo").setMaxResults(1);	
+			query.setParameter("codigo", codigo);
+			persona = (Persona)query.uniqueResult();
+		}catch(HibernateException he){
+			he.printStackTrace();
 		}
-		return persona;		
+		return persona;
 	}
 	
 

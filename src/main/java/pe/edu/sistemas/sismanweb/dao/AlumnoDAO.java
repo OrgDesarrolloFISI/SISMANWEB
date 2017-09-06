@@ -1,19 +1,7 @@
 package pe.edu.sistemas.sismanweb.dao;
 
-import java.util.List;
+import pe.edu.sistemas.sismanweb.domain.Alumno;
 
-import pe.edu.sistemas.sismanweb.entidades.Alumno;
-
-public interface AlumnoDAO {
-	
-	public void insertarAlumno (Alumno alumno);
-	
-	public void actualizarAlumno (Alumno alumno);
-	
-	public void eliminarAlumno (Alumno alumno);
-	
-	public List<Alumno> obtenerTodoAlumno();
-	
-	public Alumno obtenerAlumnoxID(Integer idAlumno);		
-
+public interface AlumnoDAO extends AbstractDAO<Alumno, Integer>{
+		
 }

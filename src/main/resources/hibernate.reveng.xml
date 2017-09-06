@@ -13,5 +13,7 @@
   <table-filter match-catalog="modelogeneralfisi" match-name="curso_base"/>
   <table-filter match-catalog="modelogeneralfisi" match-name="curso_conjunto"/>
   <table-filter match-catalog="modelogeneralfisi" match-name="curso_periodo"/>
-  <table-filter match-catalog="modelogeneralfisi" match-name="periodo"/>
+  <table-filter match-catalog="modelogeneralfisi" match-name="periodo"/>  
+  <table-filter match-catalog="modelogeneralfisi" match-name="usuario"/>
+  <table-filter match-catalog="modelogeneralfisi" match-name="tipo_usuario"/>
 </hibernate-reverse-engineering>

@@ -6,8 +6,7 @@
 	<title>Gestion Alumno</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>
 	<link rel="stylesheet" href="https://bootswatch.com/sandstone/bootstrap.min.css" type="text/css"/>
-	<link rel="stylesheet" href="../../static/css/style.css" type="text/css"/>
-	
+	<link rel="stylesheet" href="../../static/css/style.css" type="text/css"/>	
 	<link rel="stylesheet" href="/sismanweb/static/css/style.css" type="text/css"/>
   </head>
 
@@ -23,7 +22,7 @@
 			        <div class="menu-list">
 			  
 			            <ul id="menu-content" class="menu-content collapse out">
-			                <li>
+			                <li style="border-left: none;">
 			                  <a href="#">
 			                  <i >OPCIONES</i> 
 			                  </a>
@@ -78,9 +77,8 @@
 					
 					
 				</div>
-				<div align="right" class="col-xs-6">
-				
-					<button class="btn btn-primary" onclick="location='../login.html'">CERRAR SESION</button>
+				<div align="right" class="col-xs-6">				
+					<a href="#" th:href="@{/logout}"><button class="btn btn-primary">CERRAR SESION</button></a>
 				</div>
 				
 			</div>
@@ -119,7 +117,7 @@
 					<div class="tab-pane fade active in" id="individual">
 						<h3>AGREGAR ALUMNO</h3><hr/>					
 				
-					<form th:action="@{/alumno/agregar}" th:object="${alumno}"  method="post">
+					<form th:action="@{/alumno/add}" th:object="${alumno}"  method="post">
 						<div class="form-group">							
 
 							<div class="col-xs-12">
@@ -141,7 +139,7 @@
 
 								<label for="codigo">Codigo (*)</label>
 								<input type="text" class="form-control" id="codigo" placeholder="Ingrese Codigo" required="" pattern="[a-zA-Z0-9]{1,9}" th:field="*{codigo}" />
-								
+								<div th:if="${existe} != null">Este codigo ya existe</div>
 							</div>
 
 							<div class="col-xs-6">
@@ -194,7 +192,8 @@
 						<label>(*) Campos obligatorios</label>
 						<br></br>
 					 	<button type="submit" class="btn btn-default btn-block">Enviar</button>
-					</form>		
+					</form>	
+					<div class="espacio_vacio"></div>	
 					</div>
 					<!--********************** fin pestaña individual**********************-->
 
@@ -208,7 +207,10 @@
 						  
 						  <div class="form-group">
 						     <input type="file" id="my_file_input" />
-    						<table id='my_file_output'></table>
+    						<table class=" table table-striped table-bordered table-hover" >
+    						
+    							<tbody id='my_file_output' ></tbody>
+    						</table>
 						  </div>
 						  
 						  <button type="submit" class="btn btn-default">Enviar</button>
@@ -221,10 +223,16 @@
 						
 				<!--********************** fin  Contenido de las pestañas**********************-->				
 								
-					
+					<div class="espacio_vacio"></div>
 		</div>
 
 		<!-- **********************************fin del panel de contenido**********************************-->
+		
+		<!--  Footer -->
+	     <div >
+		  	<footer ><h2>Area de Desarrollo y Soporte tecnico</h2></footer>
+		 </div>
+		<!-- Fin de Footer-->
 				
 		
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

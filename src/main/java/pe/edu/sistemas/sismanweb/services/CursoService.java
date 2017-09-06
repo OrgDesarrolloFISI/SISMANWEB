@@ -6,15 +6,17 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.CursoBaseDAO;
 import pe.edu.sistemas.sismanweb.dao.CursoConjuntoDAO;
 import pe.edu.sistemas.sismanweb.dao.PlanDAO;
-import pe.edu.sistemas.sismanweb.entidades.CursoBase;
-import pe.edu.sistemas.sismanweb.entidades.CursoConjunto;
+import pe.edu.sistemas.sismanweb.domain.CursoBase;
+import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
 
 @Service
+@Transactional
 public class CursoService {
 	
 	@Autowired private CursoBaseDAO cursoBaseDao;
@@ -24,13 +26,17 @@ public class CursoService {
 	private static final Log logger = LogFactory.getLog(CursoService.class);
 	
 	public List<CursoBase> obtenerCursos(){
-		return cursoBaseDao.obtenerTodoCursoBase();
+		List<CursoBase> resultado = cursoBaseDao.findAll();
+		for(CursoBase cb : resultado){
+			cb.getPlan().getPlanNombre();
+		}
+		return resultado;
 	}
 	
 	public void insertarCurso(CursoBase cursoBase){
 		CursoBase cursoBaseExiste;
 		
-		cursoBaseExiste = cursoBaseDao.obtenerCursoBasexCodigoxPlan(cursoBase.getCursobCodigo(), cursoBase.getPlan().getIdplan());
+		cursoBaseExiste = cursoBaseDao.findCursoBaseByCodigoByPlan(cursoBase.getCursobCodigo(), cursoBase.getPlan().getIdplan());
 		
 		if(cursoBaseExiste != null){
 			logger.info("YA EXISTE UN CURSO CON EL MISMO CODIGO Y PLAN");
@@ -42,13 +48,13 @@ public class CursoService {
 			cursoNuevo.setCursocNombre(cursoBase.getCursobNombre());
 			//busca un codigo comun
 			//si existe lo usa sino crea uno nuevo aumentado en uno al mayor codigo existente
-			cursoConjuntoExiste = cursoConjuntoDao.obtenerCursoConjuntoxNombre(cursoBase.getCursobNombre());
+			cursoConjuntoExiste = cursoConjuntoDao.findCursoConjuntoByNombre(cursoBase.getCursobNombre());
 			if(cursoConjuntoExiste != null){				
 				cursoNuevo.setCursocCodcomun(cursoConjuntoExiste.getCursocCodcomun());
 			}else{
-				cursoNuevo.setCursocCodcomun(cursoConjuntoDao.obtenerCodigoMaximo()+1);
+				cursoNuevo.setCursocCodcomun(cursoConjuntoDao.findCodigoMaximo()+1);
 			}
-			Integer idNuevoCurso = cursoConjuntoDao.agregarCursoConjunto(cursoNuevo);
+			Integer idNuevoCurso = cursoConjuntoDao.saveWithReturnId(cursoNuevo);
 			logger.info("--NUEVO CURSO AGREGADO-- "+idNuevoCurso);
 		}
 	}	
@@ -59,7 +65,7 @@ public class CursoService {
 		cursoBase.setCursobNombre(cursoModelForm.getNombre());
 		cursoBase.setCursobCiclo(cursoModelForm.getCiclo());
 		cursoBase.setCursobCreditos(cursoModelForm.getCreditos());
-		cursoBase.setPlan(planDao.obtenerPlanxID(cursoModelForm.getIdPlan()));
+		cursoBase.setPlan(planDao.findById(cursoModelForm.getIdPlan()));
 		
 		return cursoBase;
 	}
