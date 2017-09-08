@@ -1,9 +1,13 @@
 package pe.edu.sistemas.sismanweb.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import pe.edu.sistemas.sismanweb.domain.Alumno;
 import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.AlumnoService;
@@ -25,6 +34,9 @@ import pe.edu.sistemas.sismanweb.services.modelform.AlumnoModelForm;
 @Controller
 @RequestMapping("/alumno")
 public class AlumnoController {
+	
+	
+	public static final ObjectMapper JSON_MAPPER = new ObjectMapper();
 	
 	protected final Log logger = LogFactory.getLog(AlumnoController.class);
 	
@@ -66,17 +78,39 @@ public class AlumnoController {
 	}	
 	
 	@RequestMapping("/masivo")
-	public boolean agregarAlumnos(@RequestBody List<AlumnoModelForm> listAlumno ){
+	public boolean agregarAlumnos(@RequestBody String listAlumno ){
+		System.out.println(listAlumno);
+		JSONArray ajson = new JSONArray(listAlumno);
+		ArrayList<AlumnoModelForm> aAlumno = new ArrayList<>();
 		
-		System.out.println("hola mundo");
-		logger.info("MOSTRANDO DATOS");
-		for(AlumnoModelForm alumno : listAlumno)
+		for(int i=0; i< ajson.length(); i++)
 		{
-			logger.info("MOSTRANDO DATOS : "+ alumno.getCodigo()+" -- "+alumno.getIdPlan() 
-			+" -- "+ alumno.getCorreo() +" -- "+ alumno.getTelefono());
-			System.out.println("MOSTRANDO DATOS : "+ alumno.getCodigo()+" -- "+alumno.getIdPlan() 
-			+" -- "+ alumno.getCorreo() +" -- "+ alumno.getTelefono());
+			JSONObject s = ajson.getJSONObject(i);
+			AlumnoModelForm alumno;
+			try {
+				alumno = JSON_MAPPER.readValue(s.toString(), AlumnoModelForm.class);
+				System.out.println(alumno.getApMaterno());
+			} catch (JsonParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
+		
+		
+		
+		
+			
+			
+			
+		
+		
 		
 		return true;
 		
