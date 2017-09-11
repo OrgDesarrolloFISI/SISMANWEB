@@ -78,7 +78,7 @@ public class AlumnoController {
 	}	
 	
 	@RequestMapping("/masivo")
-	public boolean agregarAlumnos(@RequestBody String listAlumno ){
+	public String agregarAlumnos(@RequestBody String listAlumno ){
 		System.out.println(listAlumno);
 		JSONArray ajson = new JSONArray(listAlumno);
 		ArrayList<AlumnoModelForm> aAlumno = new ArrayList<>();
@@ -101,18 +101,10 @@ public class AlumnoController {
 				e.printStackTrace();
 			}
 			
+		
 		}
+		return "redirect:/alumno/form";
 		
-		
-		
-		
-			
-			
-			
-		
-		
-		
-		return true;
 		
 	}	
 	
