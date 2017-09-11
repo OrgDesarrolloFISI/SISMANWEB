@@ -72,6 +72,7 @@ public class AlumnoController {
 		return "redirect:/alumno/all";
 	}	
 	
+
 	@PostMapping("/addBulk")
 	public String agregarAlumnos(@RequestBody String listAlumno ){
 		ModelAndView mav = new ModelAndView("/alumno/alumno_Form");
