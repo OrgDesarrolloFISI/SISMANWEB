@@ -1,7 +1,6 @@
 package pe.edu.sistemas.sismanweb.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -10,7 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import pe.edu.sistemas.sismanweb.Util.DeserealizarJSON;
 import pe.edu.sistemas.sismanweb.domain.Alumno;
 import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.AlumnoService;
@@ -36,8 +34,6 @@ import pe.edu.sistemas.sismanweb.services.modelform.AlumnoModelForm;
 public class AlumnoController {
 	
 	
-	public static final ObjectMapper JSON_MAPPER = new ObjectMapper();
-	
 	protected final Log logger = LogFactory.getLog(AlumnoController.class);
 	
 	@Autowired AlumnoService alumnoService;		
@@ -45,7 +41,6 @@ public class AlumnoController {
 	@Autowired PlanService planService;
 			
 	@GetMapping("/all")
-	@Transactional
 	public ModelAndView verAlumnos(){		
 		ModelAndView mav = new ModelAndView("/alumno/alumno_Ver");
 		List<Alumno> alumnos = alumnoService.obtenerAlumnos();
@@ -77,46 +72,32 @@ public class AlumnoController {
 		return "redirect:/alumno/all";
 	}	
 	
-	@RequestMapping("/masivo")
-	public boolean agregarAlumnos(@RequestBody String listAlumno ){
-		System.out.println(listAlumno);
-		JSONArray ajson = new JSONArray(listAlumno);
-		ArrayList<AlumnoModelForm> aAlumno = new ArrayList<>();
+	@PostMapping("/addBulk")
+	public String agregarAlumnos(@RequestBody String listAlumno ){
+		ModelAndView mav = new ModelAndView("/alumno/alumno_Form");
+		logger.info("CADENA RECIBIDA: "+listAlumno);		
+		JSONArray jsonArrayAlumno = new JSONArray(listAlumno);
+		DeserealizarJSON<AlumnoModelForm> deserealizador = new DeserealizarJSON<AlumnoModelForm>(AlumnoModelForm.class);
+		List<AlumnoModelForm> alumnosModel = null;
+		List<Alumno> resultado = null;
+		logger.info("CANTIDAD DE REGISTROS: "+jsonArrayAlumno.length());
 		
-		for(int i=0; i< ajson.length(); i++)
-		{
-			JSONObject s = ajson.getJSONObject(i);
-			AlumnoModelForm alumno;
-			try {
-				alumno = JSON_MAPPER.readValue(s.toString(), AlumnoModelForm.class);
-				System.out.println(alumno.getApMaterno());
-			} catch (JsonParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
+		alumnosModel = deserealizador.deserealiza(jsonArrayAlumno);
 		
+		if(jsonArrayAlumno.length()!=alumnosModel.size()){
+			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO: "+(alumnosModel.size()+1));
+			//mav.addObject("errorRegistro", alumnosModel.size()+1);
+		}else{
+			resultado = alumnoService.saveBulk(alumnosModel);
+			if(!resultado.isEmpty()){
+				logger.warn("EXISTEN "+resultado.size()+" ALUMNOS YA REGISTRADOS");
+				//mav.addObject("errorExiste",resultado.size());
+			}else{
+				//mav.addObject("exito");
+			}				
+		}	
 		
-		
-		
-			
-			
-			
-		
-		
-		
-		return true;
-		
+		return "redirect:/alumno/form";
 	}	
-	
-	
-	
 
 }
