@@ -10340,7 +10340,7 @@
 		 *      } );
 		 *    } );
 		 */
-		"bFilter": true,
+		"bFilter": false,
 	
 	
 		/**

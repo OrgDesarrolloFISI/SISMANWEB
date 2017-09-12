@@ -56,6 +56,7 @@ public class AlumnoController {
 		mav.addObject("listaPlan", planesDeEstudio);
 		mav.addObject("alumno", new AlumnoModelForm());
 		mav.addObject("existe", existe);
+		System.out.println(existe);
 		logger.info("RETORNANDO FORMULARIO ALUMNO");
 		return mav;
 	}
@@ -100,5 +101,33 @@ public class AlumnoController {
 		
 		return "redirect:/alumno/form";
 	}	
+	
+	
+	@GetMapping("/search")
+	public String BuscarAlumnos(@RequestParam(name="slt",required=false) int tipoFiltro,
+			@RequestParam(name="value",required=false) String valorFiltro){
+			
+		//List<AlumnoModelForm> alumnos = AlumnoService.buscarAlumnosxCod(valorFiltro);
+		
+		return "redirect:/alumno/all";
+	}
+	/*
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+            sltFiltro = Integer.parseInt(request.getParameter("slt"));
+            inFiltro = request.getParameter("value");
+            
+            try {
+                List<Alumno> listalumno = Servicios.listaAlumnoFiltro(sltFiltro, inFiltro) ;
+                ObjectMapper mapper = new ObjectMapper();
+                String json = mapper.writeValueAsString(listalumno);
+                response.setContentType("application/json");
+                response.getWriter().write(json);
+                
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(alumnoSvt.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+    }*/
 
 }

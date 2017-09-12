@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -104,5 +105,40 @@ public class AlumnoService {
 		return alumno;
 	}
 	
+	
+	public AlumnoModelForm converterToAlumnoModelForm(Alumno alumno){
+		AlumnoModelForm formAlumnModel = new AlumnoModelForm();
+		Persona persona = alumno.getPersona();
+		formAlumnModel.setIdPlan(alumno.getPlan().getIdplan());
+		formAlumnModel.setNombre(persona.getPersonaNombre());
+		formAlumnModel.setApPaterno(persona.getPersonaAppaterno());
+		formAlumnModel.setApMaterno(persona.getPersonaApmaterno());
+		formAlumnModel.setCodigo(persona.getPersonaCodigo());
+		formAlumnModel.setCorreo(persona.getPersonaCorreo());
+		formAlumnModel.setDireccion(persona.getPersonaDireccion());
+		formAlumnModel.setDni(persona.getPersonaDni());
+		formAlumnModel.setSexo(persona.getPersonaSexo());
+		formAlumnModel.setTelefono(persona.getPersonaTelefono());
+		
+		return formAlumnModel;
+	
+	}
+	
+
+	public List<AlumnoModelForm> buscarAlumnosxCod(String codigo){
+		AlumnoModelForm formAlumnModel;
+		
+		List<AlumnoModelForm> alumnosFormCodigo = new ArrayList<AlumnoModelForm>();
+		
+		List<Alumno> alumnosCodigo = alumnoDao.obtenerAlumnosxCod(codigo);
+		
+		for(Alumno alumno : alumnosCodigo){
+			formAlumnModel = converterToAlumnoModelForm(alumno);
+			alumnosFormCodigo.add(formAlumnModel);
+		}
+		
+		return alumnosFormCodigo;
+		
+	}
 	
 }
