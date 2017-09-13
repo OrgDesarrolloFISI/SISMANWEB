@@ -14,6 +14,7 @@ import pe.edu.sistemas.sismanweb.dao.PersonaDAO;
 import pe.edu.sistemas.sismanweb.domain.Alumno;
 import pe.edu.sistemas.sismanweb.domain.Persona;
 import pe.edu.sistemas.sismanweb.services.AlumnoService;
+import pe.edu.sistemas.sismanweb.services.modelform.AlumnoModelForm;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -90,12 +91,23 @@ public class PruebaPersona {
 	
 	
 	@Test
-	//@Ignore
+	@Ignore
 	@Transactional
 	public void mostrarAlumnos(){
 		List<Alumno> result= alumnoService.obtenerAlumnos();
 		for(Alumno al: result){
 			System.out.println(al.getIdAlumno()+" -- "+al.getPersona().getPersonaNombre());
+		}
+		System.out.println("-------------------------------");
+	}
+	
+	@Test
+	//@Ignore
+	@Transactional
+	public void mostrarAlumnosxParam(){
+		List<AlumnoModelForm> result =  alumnoService.buscarAlumnosxParam("An","2");
+		for(AlumnoModelForm al: result){
+			System.out.println(al.getCodigo()+" -- "+al.getNombre());
 		}
 		System.out.println("-------------------------------");
 	}

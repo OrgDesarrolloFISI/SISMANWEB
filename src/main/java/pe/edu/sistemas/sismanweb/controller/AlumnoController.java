@@ -1,13 +1,13 @@
 package pe.edu.sistemas.sismanweb.controller;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,11 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pe.edu.sistemas.sismanweb.Util.DeserealizarJSON;
 import pe.edu.sistemas.sismanweb.domain.Alumno;
@@ -104,12 +101,12 @@ public class AlumnoController {
 	
 	
 	@GetMapping("/search")
-	public String BuscarAlumnos(@RequestParam(name="slt",required=false) int tipoFiltro,
-			@RequestParam(name="value",required=false) String valorFiltro){
+	public @ResponseBody ResponseEntity<List<AlumnoModelForm>> BuscarAlumnos(@RequestParam(name="slt",required=false) String tipoFiltro,
+		@RequestParam(name="value",required=false) String valorFiltro){
 			
-		//List<AlumnoModelForm> alumnos = AlumnoService.buscarAlumnosxCod(valorFiltro);
+		List<AlumnoModelForm> alumnos = alumnoService.buscarAlumnosxParam(valorFiltro,tipoFiltro);
 		
-		return "redirect:/alumno/all";
+		return new ResponseEntity<List<AlumnoModelForm>>(alumnos,HttpStatus.OK);
 	}
 	/*
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

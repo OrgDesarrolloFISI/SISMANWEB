@@ -125,14 +125,24 @@ public class AlumnoService {
 	}
 	
 
-	public List<AlumnoModelForm> buscarAlumnosxCod(String codigo){
+	public List<AlumnoModelForm> buscarAlumnosxParam(String valor, String filtro){
 		AlumnoModelForm formAlumnModel;
 		
 		List<AlumnoModelForm> alumnosFormCodigo = new ArrayList<AlumnoModelForm>();
+		switch(filtro){
+		case"1":	filtro="personaCodigo";break;
+		case"2":	filtro="personaNombre";break;
+		case"3":	filtro="personaAppaterno";break;
+		case"4":	filtro="personaApmaterno";break;
 		
-		List<Alumno> alumnosCodigo = alumnoDao.obtenerAlumnosxCod(codigo);
+			
+		}
+		
+		List<Alumno> alumnosCodigo = alumnoDao.obtenerAlumnosxCod(valor,filtro);
 		
 		for(Alumno alumno : alumnosCodigo){
+			alumno.getPersona().getPersonaNombre();
+			alumno.getPlan().getPlanNombre();
 			formAlumnModel = converterToAlumnoModelForm(alumno);
 			alumnosFormCodigo.add(formAlumnModel);
 		}
