@@ -1,13 +1,12 @@
 package pe.edu.sistemas.sismanweb.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,10 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import pe.edu.sistemas.sismanweb.Util.DeserealizarJSON;
+import pe.edu.sistemas.sismanweb.Util.Search;
 import pe.edu.sistemas.sismanweb.domain.Alumno;
 import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.AlumnoService;
@@ -36,13 +35,16 @@ public class AlumnoController {
 	@Autowired AlumnoService alumnoService;		
 	@Autowired PersonaService personaService;	
 	@Autowired PlanService planService;
+	
+	List<AlumnoModelForm> alumnos = new ArrayList<AlumnoModelForm>();
 			
 	@GetMapping("/all")
 	public ModelAndView verAlumnos(){		
 		ModelAndView mav = new ModelAndView("/alumno/alumno_Ver");
-		List<Alumno> alumnos = alumnoService.obtenerAlumnos();
-		logger.info("Busqueda -- Retornando modelo y vista "+ " -- Datos: "+ alumnos.size());
-		mav.addObject("listaAlumno", alumnos);
+		mav.addObject("search", new Search());
+			mav.addObject("listaAlumno", alumnos);
+			alumnos=new ArrayList<AlumnoModelForm>();
+			logger.info("SE DEVUELVEN ALUMNOS : " + alumnos.size());
 		return mav;		
 	}
 	
@@ -57,6 +59,7 @@ public class AlumnoController {
 		logger.info("RETORNANDO FORMULARIO ALUMNO");
 		return mav;
 	}
+	
 	
 	@PostMapping("/add")
 	public String agregarAlumno(@ModelAttribute("alumno") AlumnoModelForm alumnoPersonaModel){
@@ -101,30 +104,20 @@ public class AlumnoController {
 	
 	
 	@GetMapping("/search")
-	public @ResponseBody ResponseEntity<List<AlumnoModelForm>> BuscarAlumnos(@RequestParam(name="slt",required=false) String tipoFiltro,
-		@RequestParam(name="value",required=false) String valorFiltro){
+	public String BuscarAlumnos(@ModelAttribute("search") Search search){
+			
+		alumnos = alumnoService.buscarAlumnosxParam(search.getValor(),search.getFiltro());
+		logger.info("SE ENCONTRO ALUMNOS: " + alumnos.size());
+		return "redirect:/alumno/all";
+	}
+	
+	/*@GetMapping("/search")
+	public @ResponseBody ResponseEntity<List<AlumnoModelForm>> BuscarAlumnos(@RequestParam(name="filtro",required=false) String tipoFiltro,
+		@RequestParam(name="valor",required=false) String valorFiltro){
 			
 		List<AlumnoModelForm> alumnos = alumnoService.buscarAlumnosxParam(valorFiltro,tipoFiltro);
 		
 		return new ResponseEntity<List<AlumnoModelForm>>(alumnos,HttpStatus.OK);
-	}
-	/*
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-            sltFiltro = Integer.parseInt(request.getParameter("slt"));
-            inFiltro = request.getParameter("value");
-            
-            try {
-                List<Alumno> listalumno = Servicios.listaAlumnoFiltro(sltFiltro, inFiltro) ;
-                ObjectMapper mapper = new ObjectMapper();
-                String json = mapper.writeValueAsString(listalumno);
-                response.setContentType("application/json");
-                response.getWriter().write(json);
-                
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(alumnoSvt.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-    }*/
+	}*/
 
 }

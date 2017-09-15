@@ -43,7 +43,23 @@ function parseAndSend (event) {
              dataType: "json",  
              data: string_ws,
              success: function(result) {
-                 //alert('SUCCESS');
+                 alert('SUCCESS');
+             }
+           });
+    }
+    
+    
+    function SendDataDocente(){
+    	
+    	//alert(string_ws);
+    	 $.ajax({
+             url: '/sismanweb/docente/addBulk',
+             type: 'POST', 
+             contentType: "application/json; charset=utf-8",
+             dataType: "json",  
+             data: string_ws,
+             success: function(result) {
+                 alert('SUCCESS');
              }
            });
     }

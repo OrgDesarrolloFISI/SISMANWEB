@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.AlumnoDAO;
 import pe.edu.sistemas.sismanweb.domain.Alumno;
-import pe.edu.sistemas.sismanweb.domain.Usuario;
 
 @Repository
 public class AlumnoDAOImpl extends AbstractDAOImpl<Alumno, Integer> implements AlumnoDAO {

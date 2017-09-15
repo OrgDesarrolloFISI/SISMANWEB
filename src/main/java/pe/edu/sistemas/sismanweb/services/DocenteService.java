@@ -1,5 +1,6 @@
 package pe.edu.sistemas.sismanweb.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import pe.edu.sistemas.sismanweb.dao.ClaseDocenteDAO;
 import pe.edu.sistemas.sismanweb.dao.DepartamentoAcademicoDAO;
 import pe.edu.sistemas.sismanweb.dao.DocenteDAO;
 import pe.edu.sistemas.sismanweb.dao.PersonaDAO;
-import pe.edu.sistemas.sismanweb.domain.Alumno;
 import pe.edu.sistemas.sismanweb.domain.Docente;
 import pe.edu.sistemas.sismanweb.domain.Persona;
 import pe.edu.sistemas.sismanweb.services.modelform.DocenteModelForm;
@@ -67,6 +67,20 @@ public class DocenteService {
 		return docenteDao.findById(idDocente);
 	}
 	
+	public List<Docente> saveBulk(List<DocenteModelForm> listaDocenteModel){
+		List<Docente> docentesExistentes = new ArrayList<Docente>();
+		Docente docente = null;
+		Boolean existe;
+		for(int i=0; i< listaDocenteModel.size(); i++){
+			docente = converterToDocente(listaDocenteModel.get(i));
+			existe = insertarDocente(docente);
+			if(existe){
+				docentesExistentes.add(docente);
+			}			
+		}
+		return docentesExistentes;		
+	}
+	
 	public Docente converterToDocente(DocenteModelForm formDocenteModel){
 		Docente docente = new Docente();
 		Persona persona = new Persona();
@@ -92,6 +106,57 @@ public class DocenteService {
 		
 		return docente;		
 	}
+	
+	
+	public DocenteModelForm converterToDocenteModelForm(Docente docente){
+		DocenteModelForm formDocenteModel = new DocenteModelForm();
+		Persona persona = docente.getPersona();
+		formDocenteModel.setIdCategoria((short)1/*docente.getCategoriaDocente().getIdecategoriaDocente()*/);
+		formDocenteModel.setIdClase( (short)1 /*docente.getClase().getIdclase()*/);
+		formDocenteModel.setIdDepAcad((short)1 /*docente.getDepartamentoAcademico().getIddepartamentoAcademico()*/);
+		formDocenteModel.setNombre(persona.getPersonaNombre());
+		formDocenteModel.setApPaterno(persona.getPersonaAppaterno());
+		formDocenteModel.setApMaterno(persona.getPersonaApmaterno());
+		formDocenteModel.setCodigo(persona.getPersonaCodigo());
+		formDocenteModel.setCorreo(persona.getPersonaCorreo());
+		formDocenteModel.setDireccion(persona.getPersonaDireccion());
+		formDocenteModel.setDni(persona.getPersonaDni());
+		formDocenteModel.setSexo(persona.getPersonaSexo());
+		formDocenteModel.setTelefono(persona.getPersonaTelefono());
+		
+		return formDocenteModel;
+	
+	}
+	
+
+	public List<DocenteModelForm> buscarDocentesxParam(String valor, String filtro){
+		DocenteModelForm formDocenteModel;
+		
+		List<DocenteModelForm> docentesFormCodigo = new ArrayList<DocenteModelForm>();
+		switch(filtro){
+		case"1":	filtro="personaCodigo";break;
+		case"2":	filtro="personaNombre";break;
+		case"3":	filtro="personaAppaterno";break;
+		case"4":	filtro="personaApmaterno";break;
+		
+			
+		}
+		
+		List<Docente> docentesCodigo = docenteDao.obtenerDocentesxCod(valor,filtro);
+		
+		for(Docente docente : docentesCodigo){
+			/*docente.getPersona().getPersonaNombre();
+			docente.getCategoriaDocente().getCategoriaDocenteNombre();
+			docente.getClase().getIdclase();
+			docente.getDepartamentoAcademico().getDepartamentoAcademicoNombre();*/
+			formDocenteModel = converterToDocenteModelForm(docente);
+			docentesFormCodigo.add(formDocenteModel);
+		}
+		
+		return docentesFormCodigo;
+		
+	}
+	
 	
 	
 }
