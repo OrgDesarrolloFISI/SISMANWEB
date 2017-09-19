@@ -44,12 +44,14 @@ public class AlumnoService {
 	
 	
 	public void actualizarAlumno(Alumno alumno){
-		alumnoDao.save(alumno);
+		//validar que el codigo no exista en la bbdd
+		//validar el id de objeto para el mismo codigo de la persona buscada
+		alumnoDao.update(alumno);
 	}
 	
 	
 	public void eliminarAlumno(Alumno alumno){
-		alumnoDao.update(alumno);
+		alumnoDao.delete(alumno);
 	}
 
 	
@@ -63,7 +65,10 @@ public class AlumnoService {
 	
 	
 	public Alumno obtenerAlumnoxID(Integer idAlumno){
-		return alumnoDao.findById(idAlumno);
+		Alumno alumno = alumnoDao.findById(idAlumno);
+		alumno.getPersona().getPersonaNombre();
+		alumno.getPlan().getIdplan();
+		return alumno;
 	}
 	
 	public List<Alumno> saveBulk(List<AlumnoModelForm> listaAlumnoModel){
@@ -96,6 +101,7 @@ public class AlumnoService {
 		persona.setPersonaCodigoSistema(formAlumnoModel.getCodigo());
 		persona.setPersonaPasswordSistema(formAlumnoModel.getCodigo());
 		persona.setPersonaPasswordSistema2(" ");
+		alumno.setIdAlumno(formAlumnoModel.getIdAlumno());
 		alumno.setPersona(persona);
 		alumno.setAlumnoActivo(1);
 		alumno.setTipoAlumno(tipoAlumnoDao.findById(1));
@@ -108,6 +114,7 @@ public class AlumnoService {
 	public AlumnoModelForm converterToAlumnoModelForm(Alumno alumno){
 		AlumnoModelForm formAlumnModel = new AlumnoModelForm();
 		Persona persona = alumno.getPersona();
+		formAlumnModel.setIdAlumno(alumno.getIdAlumno());
 		formAlumnModel.setIdPlan(alumno.getPlan().getIdplan());
 		formAlumnModel.setNombre(persona.getPersonaNombre());
 		formAlumnModel.setApPaterno(persona.getPersonaAppaterno());

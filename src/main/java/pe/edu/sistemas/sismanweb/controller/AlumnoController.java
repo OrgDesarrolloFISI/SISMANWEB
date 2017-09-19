@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,19 +43,28 @@ public class AlumnoController {
 	public ModelAndView verAlumnos(){		
 		ModelAndView mav = new ModelAndView("/alumno/alumno_Ver");
 		mav.addObject("search", new Search());
-			mav.addObject("listaAlumno", alumnos);
-			alumnos=new ArrayList<AlumnoModelForm>();
-			logger.info("SE DEVUELVEN ALUMNOS : " + alumnos.size());
+		mav.addObject("listaAlumno", alumnos);
+		alumnos=new ArrayList<AlumnoModelForm>();
+		logger.info("SE DEVUELVEN ALUMNOS : " + alumnos.size());
 		return mav;		
 	}
 	
-	@GetMapping("/form")
-	public ModelAndView formularioAlumno(@RequestParam(name="existe",required=false) String existe){
+	@GetMapping({"/form","/form/{id}"})
+	public ModelAndView formularioAlumno(@RequestParam(name="existe",required=false) String existe,
+			@PathVariable(name="id",required=false)String id){
 		ModelAndView mav = new ModelAndView("/alumno/alumno_Form");
 		List<Plan> planesDeEstudio = planService.obtenerPlanes();
 		mav.addObject("listaPlan", planesDeEstudio);
-		mav.addObject("alumno", new AlumnoModelForm());
+		if(id!=null){
+			AlumnoModelForm alumnoModel;
+			logger.info("EDITAR ALUMNO CON ID: "+id);
+			alumnoModel = alumnoService.converterToAlumnoModelForm((alumnoService.obtenerAlumnoxID(Integer.parseInt(id))));
+			mav.addObject("alumno", alumnoModel);
+		}else{
+			mav.addObject("alumno", new AlumnoModelForm());
+		}
 		mav.addObject("existe", existe);
+		
 		System.out.println(existe);
 		logger.info("RETORNANDO FORMULARIO ALUMNO");
 		return mav;
