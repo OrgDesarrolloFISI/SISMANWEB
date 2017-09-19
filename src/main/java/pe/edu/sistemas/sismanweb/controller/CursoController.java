@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.CursoService;
 import pe.edu.sistemas.sismanweb.services.PlanService;
+import pe.edu.sistemas.sismanweb.services.modelform.AlumnoModelForm;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
 
 @Controller
@@ -37,23 +39,40 @@ public class CursoController {
 	}
 
 	@GetMapping("/form")
-	public ModelAndView formularioCurso(){
+	public ModelAndView formularioCurso(@RequestParam(name="existe",required=false) String existe){
 		ModelAndView mav = new ModelAndView("/curso/curso_Form");
 		List<Plan> planesDeEstudio = planService.obtenerPlanes();
 		mav.addObject("listaPlan",planesDeEstudio);
 		mav.addObject("curso", new CursoModelForm());
+		mav.addObject("existe", existe);
+		System.out.println(existe);
 		logger.info("Retornando formulario Curso");		
 		return mav;
 	}
+	
+	public ModelAndView formularioAlumno(@RequestParam(name="existe",required=false) String existe){
+		ModelAndView mav = new ModelAndView("/alumno/alumno_Form");
+		List<Plan> planesDeEstudio = planService.obtenerPlanes();
+		mav.addObject("listaPlan", planesDeEstudio);
+		mav.addObject("alumno", new AlumnoModelForm());
+		mav.addObject("existe", existe);
+		System.out.println(existe);
+		logger.info("RETORNANDO FORMULARIO ALUMNO");
+		return mav;
+	}
+	
 	
 	@PostMapping("/add")
 	public String agregarCurso(@ModelAttribute("curso") CursoModelForm cursoModelForm){
 		logger.info("Agregando datos de: "+cursoModelForm.getCodigo()+" -- "+cursoModelForm.getNombre());
 		CursoBase cursoBase = cursoService.coverterToCurso(cursoModelForm);
-		cursoService.insertarCurso(cursoBase);		
+		boolean existe = cursoService.insertarCurso(cursoBase);	
+		if(existe){
+			logger.info("AGREGAR CURSO --- Codigo ya existente");
+			return "redirect:/curso/form?existe";
+		}
 		return "redirect:/curso/form";
 	}
 	
-
 	
 }
