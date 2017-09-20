@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,19 +43,28 @@ public class AlumnoController {
 	public ModelAndView verAlumnos(){		
 		ModelAndView mav = new ModelAndView("/alumno/alumno_Ver");
 		mav.addObject("search", new Search());
-			mav.addObject("listaAlumno", alumnos);
-			alumnos=new ArrayList<AlumnoModelForm>();
-			logger.info("SE DEVUELVEN ALUMNOS : " + alumnos.size());
+		mav.addObject("listaAlumno", alumnos);
+		alumnos=new ArrayList<AlumnoModelForm>();
+		logger.info("SE DEVUELVEN ALUMNOS : " + alumnos.size());
 		return mav;		
 	}
 	
-	@GetMapping("/form")
-	public ModelAndView formularioAlumno(@RequestParam(name="existe",required=false) String existe){
+	@GetMapping({"/form","/form/{id}"})
+	public ModelAndView formularioAlumno(@RequestParam(name="existe",required=false) String existe,
+			@PathVariable(name="id",required=false)String id){
 		ModelAndView mav = new ModelAndView("/alumno/alumno_Form");
 		List<Plan> planesDeEstudio = planService.obtenerPlanes();
 		mav.addObject("listaPlan", planesDeEstudio);
-		mav.addObject("alumno", new AlumnoModelForm());
+		if(id!=null){
+			AlumnoModelForm alumnoModel;
+			logger.info("EDITAR ALUMNO CON ID: "+id);
+			alumnoModel = alumnoService.converterToAlumnoModelForm((alumnoService.obtenerAlumnoxID(Integer.parseInt(id))));
+			mav.addObject("alumno", alumnoModel);
+		}else{
+			mav.addObject("alumno", new AlumnoModelForm());
+		}
 		mav.addObject("existe", existe);
+		
 		System.out.println(existe);
 		logger.info("RETORNANDO FORMULARIO ALUMNO");
 		return mav;
@@ -63,14 +73,29 @@ public class AlumnoController {
 	
 	@PostMapping("/add")
 	public String agregarAlumno(@ModelAttribute("alumno") AlumnoModelForm alumnoPersonaModel){
+		
+		//Al parecer si los atributos no se muestran en el front (comoel idAlumno) llegan al back con valor 0 o nulo.
 		Alumno alumno = alumnoService.converterToAlumno(alumnoPersonaModel);
-		logger.info("AGREGANDO DATOS DE : "+ alumnoPersonaModel.getCodigo()+" -- "+alumnoPersonaModel.getIdPlan());
-		boolean existe = alumnoService.insertarAlumno(alumno);
-		if(existe){
-			logger.info("AGREGAR ALUMNO --- Codigo ya existente");
-			return "redirect:/alumno/form?existe";
+		logger.info("AGREGANDO DATOS DE : "+ alumnoPersonaModel.getCodigo()+" -- "+alumnoPersonaModel.getIdPlan() + "--" + alumnoPersonaModel.getIdAlumno());
+		boolean existe;
+		System.out.println(alumnoPersonaModel.getIdAlumno());
+		if(alumnoPersonaModel.getIdAlumno()==0){
+			existe = alumnoService.insertarAlumno(alumno);
+			if(existe){
+				logger.info("AGREGAR ALUMNO --- Codigo ya existente");
+				return "redirect:/alumno/form?existe";
+			}
+		}else{
+			existe = alumnoService.actualizarAlumno(alumno);
+			if(existe){
+				logger.info("ACTUALIZAR ALUMNO --- Codigo ya existente");
+				return "redirect:/alumno/form?existe";
+			}
 		}
+		
 		return "redirect:/alumno/all";
+		
+		
 	}	
 	
 
@@ -110,14 +135,7 @@ public class AlumnoController {
 		logger.info("SE ENCONTRO ALUMNOS: " + alumnos.size());
 		return "redirect:/alumno/all";
 	}
-	
-	/*@GetMapping("/search")
-	public @ResponseBody ResponseEntity<List<AlumnoModelForm>> BuscarAlumnos(@RequestParam(name="filtro",required=false) String tipoFiltro,
-		@RequestParam(name="valor",required=false) String valorFiltro){
-			
-		List<AlumnoModelForm> alumnos = alumnoService.buscarAlumnosxParam(valorFiltro,tipoFiltro);
-		
-		return new ResponseEntity<List<AlumnoModelForm>>(alumnos,HttpStatus.OK);
-	}*/
 
+	
+	//Agregar EDIT
 }

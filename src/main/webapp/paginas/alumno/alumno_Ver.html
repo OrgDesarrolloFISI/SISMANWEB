@@ -145,8 +145,9 @@
 		            <td th:text="${alumno.apMaterno}"></td>
 		            <td th:text="${alumno.codigo}"></td>
 		            <td>
-		              <button class="btn btn-default" data-toggle="modal" data-target="#modalEdicion"><span class="glyphicon glyphicon-pencil" aria-hidden="true" ></span></button>
+		              <a th:href="@{/alumno/form/__${alumno.idAlumno}__}"><button class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true" ></span></button></a>
 		              <button class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+		              <button class="btn btn-info" data-toggle="modal" data-target="#modalEdicion"><span class="glyphicon glyphicon-eye-open" aria-hidden="true" ></span></button>
 		             
 		            </td>
 		            </tr>         
