@@ -44,24 +44,40 @@ public class AlumnoService {
 	
 	
 	public boolean actualizarAlumno(Alumno alumno){
-		Persona persona_codigo = personaDao.findPersonaByCodigo(alumno.getPersona().getPersonaCodigo());
+		alumnoDao.update(alumno);
+		return true;
 		
-			if( persona_codigo!=null && !persona_codigo.getIdPersona().equals(alumno.getPersona().getIdPersona()) ){
-				System.out.println(persona_codigo.getIdPersona());
-				//FALTA EN EL CONVERTOALUMNO, agregar codigo de persona si es que ya existia
+		
+		/*Persona persona_codigo = personaDao.findPersonaByCodigo(alumno.getPersona().getPersonaCodigo());
+		
+		
+		if(persona_codigo!=null){
+			
+			if(persona_codigo.getIdPersona()==alumno.getPersona().getIdPersona() ){
+				
 				System.out.println(alumno.getPersona().getIdPersona());
+				//FALTA EN EL CONVERTOALUMNO, agregar codigo de persona si es que ya existia
+				System.out.println(persona_codigo.getIdPersona());
 				//Significa que hay otro usuario con el mismo codigo
-				System.out.println("El codigo ya existe en otro alumno");
+				System.out.println("El codigo de persona ya existe en otro alumno");
 				return true;
 			}else{
 				//Ocurrio que: 1. No hubo conflicto de codigo 2.- Persona_id = Persona_codigo
-				System.out.println("Alumno actualizado");
+				System.out.println("Alumno actualizado 1");
 				alumnoDao.update(alumno);
 				return false;
-			}	
+				
+			}
+			
+		}else{
+			
+			//Ocurrio que: 1. No hubo conflicto de codigo 2.- Persona_id = Persona_codigo
+			System.out.println("Alumno actualizado 2");
+			alumnoDao.update(alumno);
+			return false;
+			
+		}*/
 		
-		//validar que el codigo no exista en la bbdd
-		//validar el id de objeto para el mismo codigo de la persona buscada = No seria siempre la misma persona?
 	}
 	
 	
@@ -104,6 +120,7 @@ public class AlumnoService {
 	public Alumno converterToAlumno(AlumnoModelForm formAlumnoModel){
 		Alumno alumno = new Alumno();
 		Persona persona = new Persona();
+		persona.setIdPersona(formAlumnoModel.getIdPersona());
 		persona.setPersonaCodigo(formAlumnoModel.getCodigo());
 		persona.setPersonaAppaterno(formAlumnoModel.getApPaterno());
 		persona.setPersonaApmaterno(formAlumnoModel.getApMaterno());
@@ -129,6 +146,7 @@ public class AlumnoService {
 		AlumnoModelForm formAlumnModel = new AlumnoModelForm();
 		Persona persona = alumno.getPersona();
 		formAlumnModel.setIdAlumno(alumno.getIdAlumno());
+		formAlumnModel.setIdPersona(alumno.getPersona().getIdPersona());
 		formAlumnModel.setIdPlan(alumno.getPlan().getIdplan());
 		formAlumnModel.setNombre(persona.getPersonaNombre());
 		formAlumnModel.setApPaterno(persona.getPersonaAppaterno());

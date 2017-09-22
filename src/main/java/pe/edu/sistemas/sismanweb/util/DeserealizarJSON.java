@@ -1,4 +1,4 @@
-package pe.edu.sistemas.sismanweb.Util;
+package pe.edu.sistemas.sismanweb.util;
 
 import java.util.ArrayList;
 import java.util.List;

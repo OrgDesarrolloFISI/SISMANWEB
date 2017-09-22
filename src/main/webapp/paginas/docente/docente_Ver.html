@@ -35,6 +35,7 @@
 			                <ul class="sub-menu collapse" id="curso">
 			                    <li><a href="curso_Agregar.html" th:href="@{/curso/form}">Registrar</a></li>
 								<li><a href="curso_Ver.html" th:href="@{/curso/all}">Buscar</a></li>
+								<li><a href="curso_Conjunto.html" th:href="@{/curso/conjunto}"><span>Conjunto</span></a></li>
 			                </ul>
 
 
@@ -87,7 +88,7 @@
 					<form  th:object="${search}"  class="form-inline" th:action="@{/docente/search}" id="frmFiltro" name="frmFiltro">
 						Filtro:
 						<div class="form-group">
-							<select name="sltFiltro" id="sltFiltro"  Onchange="Active()" th:field="*{filtro}" >
+							<select name="sltFiltro" id="sltFiltro"  th:field="*{filtro}" >
 								<option value="0" selected="selected">Seleccionar</option>
 								<option value="1">Codigo</option>
 								<option value="2">Nombre</option>
@@ -99,7 +100,7 @@
 							<input type="text" id="inFiltro" name="inFiltro" size="12"  disabled="disabled" th:field="*{valor}" ></input>
 						</div>
 						<div class="form-group">
-							<button type="submit" id="btnFiltro" name="btnFiltro" size="12"  >ENVIAR</button>
+							<button type="submit" id="btnFiltro" name="btnFiltro" size="12" disabled="disabled" >ENVIAR</button>
 						</div>
 					</form>
 				</div>
@@ -158,7 +159,7 @@
     
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript" src="/sismanweb/static/js/table.js"></script>
-    	<script src="/sismanweb/static/js/util.js"></script>
+    	<script src="/sismanweb/static/js/funciones_form.js"></script>
 
 </body>
 </html>

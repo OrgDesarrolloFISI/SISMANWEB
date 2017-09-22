@@ -2,7 +2,9 @@ package pe.edu.sistemas.sismanweb.services.modelform;
 
 public class AlumnoModelForm {
 	
+	
 	private int idAlumno;
+	private int idPersona;
 	private int idPlan;
 	private String codigo;
 	private String nombre;
@@ -18,10 +20,11 @@ public class AlumnoModelForm {
 		
 	}
 
-	public AlumnoModelForm(int idAlumno,int idPlan, String codigo, String nombre, String apPaterno, String apMaterno,
+	public AlumnoModelForm(int idAlumno, int idPersona, int idPlan, String codigo, String nombre, String apPaterno, String apMaterno,
 			String sexo, String dni, String telefono, String correo, String direccion) {
 		super();
 		this.idAlumno = idAlumno;
+		this.idPersona = idPersona;
 		this.idPlan = idPlan;
 		this.codigo = codigo;
 		this.nombre = nombre;
@@ -34,12 +37,22 @@ public class AlumnoModelForm {
 		this.direccion = direccion;
 	}
 
+	
+
 	public int getIdAlumno() {
 		return idAlumno;
 	}
 
 	public void setIdAlumno(int idAlumno) {
 		this.idAlumno = idAlumno;
+	}
+	
+	public int getIdPersona() {
+		return idPersona;
+	}
+
+	public void setIdPersona(int idPersona) {
+		this.idPersona = idPersona;
 	}
 
 	public int getIdPlan() {

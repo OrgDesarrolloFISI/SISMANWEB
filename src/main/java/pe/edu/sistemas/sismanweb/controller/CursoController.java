@@ -19,6 +19,7 @@ import pe.edu.sistemas.sismanweb.services.CursoService;
 import pe.edu.sistemas.sismanweb.services.PlanService;
 import pe.edu.sistemas.sismanweb.services.modelform.AlumnoModelForm;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
+import pe.edu.sistemas.sismanweb.util.VariablesGlobales;
 
 @Controller
 @RequestMapping("/curso")
@@ -31,7 +32,7 @@ public class CursoController {
 	
 	@GetMapping("/all")
 	public ModelAndView verCursos(){
-		ModelAndView mav = new ModelAndView("/curso/curso_Ver");
+		ModelAndView mav = new ModelAndView(VariablesGlobales.CURSO_VIEW);
 		List<CursoBase> cursos = cursoService.obtenerCursos();
 		logger.info("Busqueda -- Retornando modelo y vista "+ " -- Datos: "+ cursos.size());
 		mav.addObject("listaCursos",cursos);
@@ -40,7 +41,7 @@ public class CursoController {
 
 	@GetMapping("/form")
 	public ModelAndView formularioCurso(@RequestParam(name="existe",required=false) String existe){
-		ModelAndView mav = new ModelAndView("/curso/curso_Form");
+		ModelAndView mav = new ModelAndView(VariablesGlobales.CURSO_FORM);
 		List<Plan> planesDeEstudio = planService.obtenerPlanes();
 		mav.addObject("listaPlan",planesDeEstudio);
 		mav.addObject("curso", new CursoModelForm());
@@ -49,18 +50,6 @@ public class CursoController {
 		logger.info("Retornando formulario Curso");		
 		return mav;
 	}
-	
-	public ModelAndView formularioAlumno(@RequestParam(name="existe",required=false) String existe){
-		ModelAndView mav = new ModelAndView("/alumno/alumno_Form");
-		List<Plan> planesDeEstudio = planService.obtenerPlanes();
-		mav.addObject("listaPlan", planesDeEstudio);
-		mav.addObject("alumno", new AlumnoModelForm());
-		mav.addObject("existe", existe);
-		System.out.println(existe);
-		logger.info("RETORNANDO FORMULARIO ALUMNO");
-		return mav;
-	}
-	
 	
 	@PostMapping("/add")
 	public String agregarCurso(@ModelAttribute("curso") CursoModelForm cursoModelForm){
@@ -73,6 +62,13 @@ public class CursoController {
 		}
 		return "redirect:/curso/form";
 	}
+
 	
-	
+	@GetMapping("/conjunto")
+	public ModelAndView gestionarConjuntoCurso(){
+		ModelAndView mav = new ModelAndView(VariablesGlobales.CURSO_CONJUNTO);
+		logger.info("RETORNANDO VISTA CURSO CONJUNTO");
+		return mav;
+	}
+
 }

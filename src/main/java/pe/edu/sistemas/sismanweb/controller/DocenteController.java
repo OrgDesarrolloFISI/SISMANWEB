@@ -16,14 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import pe.edu.sistemas.sismanweb.Util.DeserealizarJSON;
-import pe.edu.sistemas.sismanweb.Util.Search;
 import pe.edu.sistemas.sismanweb.domain.Docente;
 import pe.edu.sistemas.sismanweb.services.CategoriaDocenteService;
 import pe.edu.sistemas.sismanweb.services.ClaseDocenteService;
 import pe.edu.sistemas.sismanweb.services.DepartamentoAcademicoService;
 import pe.edu.sistemas.sismanweb.services.DocenteService;
 import pe.edu.sistemas.sismanweb.services.modelform.DocenteModelForm;
+import pe.edu.sistemas.sismanweb.util.DeserealizarJSON;
+import pe.edu.sistemas.sismanweb.util.Search;
+import pe.edu.sistemas.sismanweb.util.VariablesGlobales;
 
 @Controller
 @RequestMapping("/docente")
@@ -40,7 +41,7 @@ public class DocenteController {
 	
 	@GetMapping("/all")
 	public ModelAndView verDocentes(){
-		ModelAndView mav = new ModelAndView("/docente/docente_Ver");
+		ModelAndView mav = new ModelAndView(VariablesGlobales.DOCENTE_VIEW);
 		mav.addObject("search", new Search());
 		mav.addObject("listaDocente", docentes);
 		docentes=new ArrayList<DocenteModelForm>();
@@ -50,7 +51,7 @@ public class DocenteController {
 	
 	@GetMapping("/form")
 	public ModelAndView formularioDocente(@RequestParam(name="existe",required=false) String existe){
-		ModelAndView mav = new ModelAndView("/docente/docente_Form");
+		ModelAndView mav = new ModelAndView(VariablesGlobales.ALUMNO_FORM);
 		mav.addObject("clasesDoc",claseService.obtenerClasesDeDocentes());
 		mav.addObject("categoriasDoc",categoriaDocenteService.obtenerCategorias());
 		mav.addObject("depAcadDoc",departamentoAcademicoService.obtenerDepAcademicos());
@@ -74,7 +75,7 @@ public class DocenteController {
 	
 	@PostMapping("/addBulk")
 	public String agregarDocentes(@RequestBody String listDocente ){
-		ModelAndView mav = new ModelAndView("/docente/docente_Form");
+		ModelAndView mav = new ModelAndView(VariablesGlobales.DOCENTE_FORM);
 		logger.info("CADENA RECIBIDA: "+listDocente);		
 		JSONArray jsonArrayDocente = new JSONArray(listDocente);
 		DeserealizarJSON<DocenteModelForm> deserealizador = new DeserealizarJSON<DocenteModelForm>(DocenteModelForm.class);

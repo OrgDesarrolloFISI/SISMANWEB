@@ -44,5 +44,7 @@ public class AlumnoDAOImpl extends AbstractDAOImpl<Alumno, Integer> implements A
 		}		
 		return alumno;
 	}
+	
+
 
 }

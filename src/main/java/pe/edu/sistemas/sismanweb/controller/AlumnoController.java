@@ -17,14 +17,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import pe.edu.sistemas.sismanweb.Util.DeserealizarJSON;
-import pe.edu.sistemas.sismanweb.Util.Search;
+import javassist.compiler.ast.Variable;
 import pe.edu.sistemas.sismanweb.domain.Alumno;
 import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.AlumnoService;
 import pe.edu.sistemas.sismanweb.services.PersonaService;
 import pe.edu.sistemas.sismanweb.services.PlanService;
 import pe.edu.sistemas.sismanweb.services.modelform.AlumnoModelForm;
+import pe.edu.sistemas.sismanweb.util.DeserealizarJSON;
+import pe.edu.sistemas.sismanweb.util.Search;
+import pe.edu.sistemas.sismanweb.util.VariablesGlobales;
 
 @Controller
 @RequestMapping("/alumno")
@@ -41,7 +43,7 @@ public class AlumnoController {
 			
 	@GetMapping("/all")
 	public ModelAndView verAlumnos(){		
-		ModelAndView mav = new ModelAndView("/alumno/alumno_Ver");
+		ModelAndView mav = new ModelAndView(VariablesGlobales.ALUMNO_VIEW);
 		mav.addObject("search", new Search());
 		mav.addObject("listaAlumno", alumnos);
 		alumnos=new ArrayList<AlumnoModelForm>();
@@ -74,34 +76,31 @@ public class AlumnoController {
 	@PostMapping("/add")
 	public String agregarAlumno(@ModelAttribute("alumno") AlumnoModelForm alumnoPersonaModel){
 		
-		//Al parecer si los atributos no se muestran en el front (comoel idAlumno) llegan al back con valor 0 o nulo.
+		//Al parecer si los atributos no se muestran en el front (como el idAlumno) llegan al back con valor 0 o nulo.
 		Alumno alumno = alumnoService.converterToAlumno(alumnoPersonaModel);
-		logger.info("AGREGANDO DATOS DE : "+ alumnoPersonaModel.getCodigo()+" -- "+alumnoPersonaModel.getIdPlan() + "--" + alumnoPersonaModel.getIdAlumno());
+		logger.info("DATOS RECIBIDOS : "+ alumnoPersonaModel.getCodigo()+" -- IDALUMNO:"+alumnoPersonaModel.getIdAlumno() + " -- IDPERSONA:" +alumnoPersonaModel.getIdPersona() );
 		boolean existe;
-		System.out.println(alumnoPersonaModel.getIdAlumno());
 		if(alumnoPersonaModel.getIdAlumno()==0){
 			existe = alumnoService.insertarAlumno(alumno);
 			if(existe){
 				logger.info("AGREGAR ALUMNO --- Codigo ya existente");
 				return "redirect:/alumno/form?existe";
 			}
+			logger.info("ALUMNO AGREGADO");
 		}else{
 			existe = alumnoService.actualizarAlumno(alumno);
 			if(existe){
-				logger.info("ACTUALIZAR ALUMNO --- Codigo ya existente");
-				return "redirect:/alumno/form?existe";
+				logger.info("ALUMNO ACTUALIZADO");
+				return "redirect:/alumno/form";
 			}
-		}
-		
-		return "redirect:/alumno/all";
-		
-		
+		}		
+		return "redirect:/alumno/all";	
 	}	
 	
 
 	@PostMapping("/addBulk")
 	public String agregarAlumnos(@RequestBody String listAlumno ){
-		ModelAndView mav = new ModelAndView("/alumno/alumno_Form");
+		ModelAndView mav = new ModelAndView(VariablesGlobales.ALUMNO_FORM);
 		logger.info("CADENA RECIBIDA: "+listAlumno);		
 		JSONArray jsonArrayAlumno = new JSONArray(listAlumno);
 		DeserealizarJSON<AlumnoModelForm> deserealizador = new DeserealizarJSON<AlumnoModelForm>(AlumnoModelForm.class);
@@ -122,8 +121,7 @@ public class AlumnoController {
 			}else{
 				//mav.addObject("exito");
 			}				
-		}	
-		
+		}			
 		return "redirect:/alumno/form";
 	}	
 	

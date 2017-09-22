@@ -38,8 +38,9 @@
 							class="glyphicon glyphicon-book">&nbsp;CURSOS</span></a></li>
 					<ul class="sub-menu collapse" id="curso">
 
-						<li><a href="curso_Agregar.html" th:href="@{/curso/form}">Agregar</a></li>
-						<li><a href="curso_Ver.html" th:href="@{/curso/all}"><span>Mostrar</span></a></li>
+						<li><a href="curso_Agregar.html" th:href="@{/curso/form}">Registrar</a></li>
+						<li><a href="curso_Ver.html" th:href="@{/curso/all}"><span>Buscar</span></a></li>
+						<li><a href="curso_Conjunto.html" th:href="@{/curso/conjunto}"><span>Conjunto</span></a></li>
 
 					</ul>
 
@@ -107,7 +108,7 @@
 					<form  th:object="${search}"  class="form-inline" th:action="@{/alumno/search}" id="frmFiltro" name="frmFiltro">
 						Filtro:
 						<div class="form-group">
-							<select name="sltFiltro" id="sltFiltro" Onchange="Active()" th:field="*{filtro}" >
+							<select name="sltFiltro" id="sltFiltro" th:field="*{filtro}" >
 								<option value="0" selected="selected">Seleccionar</option>
 								<option value="1">Codigo</option>
 								<option value="2">Nombre</option>
@@ -119,7 +120,7 @@
 							<input type="text" id="inFiltro" name="inFiltro" size="12"   disabled="disabled" th:field="*{valor}" ></input>
 						</div>
 						<div class="form-group">
-							<button type="submit" id="btnFiltro" name="btnFiltro" size="12"  >ENVIAR</button>
+						<button type="submit" id="btnFiltro" name="btnFiltro" size="12" disabled="disabled" >ENVIAR</button>
 						</div>
 					</form>
 				</div>

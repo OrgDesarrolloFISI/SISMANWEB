@@ -22,3 +22,23 @@ $('#show').click(function(e) {
 	    $('#element').css('display', 'block');
 	  }
 	});
+
+
+$('#sltFiltro').change(function(){
+	if($(this).val() !== "0"){
+		$('#inFiltro').val('');
+		//$('#inFiltro').removeAttr('disabled');
+		$('#inFiltro').prop('disabled', false);
+		$('#btnFiltro').prop('disabled', false);
+		
+		
+	}else{
+		$('#inFiltro').val('');
+		$('#inFiltro').prop('disabled', true);
+		$('#btnFiltro').prop('disabled', true);
+		//$('#inFiltro').attr('disabled','disabled');
+
+	}
+	
+});
+
