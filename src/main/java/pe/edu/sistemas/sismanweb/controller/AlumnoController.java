@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javassist.compiler.ast.Variable;
 import pe.edu.sistemas.sismanweb.domain.Alumno;
+import pe.edu.sistemas.sismanweb.domain.Persona;
 import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.AlumnoService;
 import pe.edu.sistemas.sismanweb.services.PersonaService;
@@ -54,7 +55,7 @@ public class AlumnoController {
 	@GetMapping({"/form","/form/{id}"})
 	public ModelAndView formularioAlumno(@RequestParam(name="existe",required=false) String existe,
 			@PathVariable(name="id",required=false)String id){
-		ModelAndView mav = new ModelAndView("/alumno/alumno_Form");
+		ModelAndView mav = new ModelAndView(VariablesGlobales.ALUMNO_FORM);
 		List<Plan> planesDeEstudio = planService.obtenerPlanes();
 		mav.addObject("listaPlan", planesDeEstudio);
 		if(id!=null){
@@ -67,7 +68,6 @@ public class AlumnoController {
 		}
 		mav.addObject("existe", existe);
 		
-		System.out.println(existe);
 		logger.info("RETORNANDO FORMULARIO ALUMNO");
 		return mav;
 	}
@@ -76,7 +76,6 @@ public class AlumnoController {
 	@PostMapping("/add")
 	public String agregarAlumno(@ModelAttribute("alumno") AlumnoModelForm alumnoPersonaModel){
 		
-		//Al parecer si los atributos no se muestran en el front (como el idAlumno) llegan al back con valor 0 o nulo.
 		Alumno alumno = alumnoService.converterToAlumno(alumnoPersonaModel);
 		logger.info("DATOS RECIBIDOS : "+ alumnoPersonaModel.getCodigo()+" -- IDALUMNO:"+alumnoPersonaModel.getIdAlumno() + " -- IDPERSONA:" +alumnoPersonaModel.getIdPersona() );
 		boolean existe;
@@ -88,8 +87,12 @@ public class AlumnoController {
 			}
 			logger.info("ALUMNO AGREGADO");
 		}else{
-			existe = alumnoService.actualizarAlumno(alumno);
+			Persona persona_codigo = personaService.obtenerPersonaxCodigo(alumno.getPersona().getPersonaCodigo());
+			existe = alumnoService.actualizarAlumno(alumno, persona_codigo);
 			if(existe){
+				logger.info("LA ACTUALIZACION NO PROCEDE");
+				return "redirect:/alumno/form/"+alumno.getIdAlumno()+"?existe";
+			}else{
 				logger.info("ALUMNO ACTUALIZADO");
 				return "redirect:/alumno/form";
 			}

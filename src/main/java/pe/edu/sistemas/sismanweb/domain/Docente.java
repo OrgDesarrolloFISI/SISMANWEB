@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "docente", catalog = "modelogeneralfisi")
 public class Docente implements java.io.Serializable {
 
-	private Integer iddocente;
+	private Integer idDocente;
 	private CategoriaDocente categoriaDocente;
 	private Clase clase;
 	private DepartamentoAcademico departamentoAcademico;
@@ -68,12 +68,12 @@ public class Docente implements java.io.Serializable {
 	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "IDDOCENTE", unique = true, nullable = false)
-	public Integer getIddocente() {
-		return this.iddocente;
+	public Integer getIdDocente() {
+		return this.idDocente;
 	}
 
-	public void setIddocente(Integer iddocente) {
-		this.iddocente = iddocente;
+	public void setIdDocente(Integer idDocente) {
+		this.idDocente = idDocente;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

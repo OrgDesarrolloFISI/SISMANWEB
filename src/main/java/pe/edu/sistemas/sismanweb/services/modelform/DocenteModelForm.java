@@ -7,6 +7,8 @@ import javax.validation.constraints.Size;
 
 public class DocenteModelForm {
 	
+	private int idDocente;
+	private int idPersona;
 	private short idClase;
 	private short idCategoria;
 	private int idDepAcad;
@@ -24,10 +26,12 @@ public class DocenteModelForm {
 		
 	}
 
-	public DocenteModelForm(short idClase, short idCategoria, int idDepAcad, String codigo, String nombre,
+	public DocenteModelForm(int idDocente, int idPersona, short idClase, short idCategoria, int idDepAcad, String codigo, String nombre,
 			String apPaterno, String apMaterno, String sexo, String dni, String telefono,
 			String correo, String direccion) {
 		super();
+		this.idDocente = idDocente;
+		this.idPersona = idPersona;
 		this.idClase = idClase;
 		this.idCategoria = idCategoria;
 		this.idDepAcad = idDepAcad;
@@ -40,6 +44,22 @@ public class DocenteModelForm {
 		this.telefono = telefono;
 		this.correo = correo;
 		this.direccion = direccion;
+	}
+
+	public int getIdDocente() {
+		return idDocente;
+	}
+
+	public void setIdDocente(int idDocente) {
+		this.idDocente = idDocente;
+	}
+
+	public int getIdPersona() {
+		return idPersona;
+	}
+
+	public void setIdPersona(int idPersona) {
+		this.idPersona = idPersona;
 	}
 
 	public short getIdClase() {

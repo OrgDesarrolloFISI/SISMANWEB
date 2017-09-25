@@ -43,21 +43,12 @@ public class AlumnoService {
 	}
 	
 	
-	public boolean actualizarAlumno(Alumno alumno){
-		alumnoDao.update(alumno);
-		return true;
-		
-		
-		/*Persona persona_codigo = personaDao.findPersonaByCodigo(alumno.getPersona().getPersonaCodigo());
-		
-		
+	public boolean actualizarAlumno(Alumno alumno, Persona persona_codigo){
 		if(persona_codigo!=null){
 			
-			if(persona_codigo.getIdPersona()==alumno.getPersona().getIdPersona() ){
-				
-				System.out.println(alumno.getPersona().getIdPersona());
-				//FALTA EN EL CONVERTOALUMNO, agregar codigo de persona si es que ya existia
+			if(persona_codigo.getIdPersona().intValue()!=alumno.getPersona().getIdPersona().intValue() ){
 				System.out.println(persona_codigo.getIdPersona());
+				System.out.println(alumno.getPersona().getIdPersona());
 				//Significa que hay otro usuario con el mismo codigo
 				System.out.println("El codigo de persona ya existe en otro alumno");
 				return true;
@@ -66,18 +57,13 @@ public class AlumnoService {
 				System.out.println("Alumno actualizado 1");
 				alumnoDao.update(alumno);
 				return false;
-				
 			}
-			
 		}else{
-			
 			//Ocurrio que: 1. No hubo conflicto de codigo 2.- Persona_id = Persona_codigo
 			System.out.println("Alumno actualizado 2");
 			alumnoDao.update(alumno);
 			return false;
-			
-		}*/
-		
+		}
 	}
 	
 	
