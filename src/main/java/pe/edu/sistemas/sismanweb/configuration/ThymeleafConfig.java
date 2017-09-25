@@ -15,7 +15,8 @@ public class ThymeleafConfig {
 		resolver.setPrefix("/paginas/");
 		resolver.setSuffix(".html");
 		resolver.setTemplateMode("HTML5");
-		resolver.setOrder(1);
+		resolver.setCharacterEncoding("UTF-8");
+		resolver.setCacheable(false);
 		return resolver;
 	}
 	

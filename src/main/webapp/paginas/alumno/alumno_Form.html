@@ -70,8 +70,8 @@
 	
 	<!-- **********************************Inicio  encabezado**********************************-->
 	
-		
-
+			<p th:utext="#{home.welcome}"></p>
+	
 			<div class="col-xs-12 well">
 				<div align="left" class="col-xs-6">
 					<h2 >GESTION DE ALUMNOS</h2>
@@ -124,8 +124,8 @@
 							<div class="col-xs-6">
 
 								<label for="codigo">Codigo (*)</label>
-								<input type="text" class="form-control" id="codigo" placeholder="Ingrese Codigo" required="" pattern="[a-zA-Z0-9]{1,9}" th:field="*{codigo}" />
-								<div th:if="${existe} != null">Este codigo ya existe</div>
+								<input type="text" class="form-control" id="codigo" placeholder="Ingrese Codigo" required="" pattern="[a-zA-Z0-9]{1,9}" th:field="*{codigo}" />								
+								<p th:if="${existe} != null">Este codigo ya existe</p>
 							</div>
 
 							<div class="col-xs-6">

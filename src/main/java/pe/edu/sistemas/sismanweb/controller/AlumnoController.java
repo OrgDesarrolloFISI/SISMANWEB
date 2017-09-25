@@ -137,6 +137,4 @@ public class AlumnoController {
 		return "redirect:/alumno/all";
 	}
 
-	
-	//Agregar EDIT
 }
