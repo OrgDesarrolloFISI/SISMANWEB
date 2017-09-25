@@ -17,16 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import pe.edu.sistemas.sismanweb.domain.Alumno;
 import pe.edu.sistemas.sismanweb.domain.Docente;
 import pe.edu.sistemas.sismanweb.domain.Persona;
-import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.CategoriaDocenteService;
 import pe.edu.sistemas.sismanweb.services.ClaseDocenteService;
 import pe.edu.sistemas.sismanweb.services.DepartamentoAcademicoService;
 import pe.edu.sistemas.sismanweb.services.DocenteService;
 import pe.edu.sistemas.sismanweb.services.PersonaService;
-import pe.edu.sistemas.sismanweb.services.modelform.AlumnoModelForm;
 import pe.edu.sistemas.sismanweb.services.modelform.DocenteModelForm;
 import pe.edu.sistemas.sismanweb.util.DeserealizarJSON;
 import pe.edu.sistemas.sismanweb.util.Search;
@@ -82,7 +79,8 @@ public class DocenteController {
 	@PostMapping("/add")
 	public String agregarDocente(@ModelAttribute("docente") DocenteModelForm docentePersonaModel){	
 		Docente docente = docenteService.converterToDocente(docentePersonaModel);
-		logger.info("AGREGANDO DATOS DE: "+ docentePersonaModel.getCodigo()+" -- "+docentePersonaModel.getApPaterno()+" -- "+docentePersonaModel.getApMaterno());
+		logger.info("AGREGANDO DATOS DE: "+ docentePersonaModel.getCodigo()+" -- IDDOCENTE:"+docentePersonaModel.getIdDocente()+" -- IDPERSONA:"+docentePersonaModel.getIdPersona());
+		logger.info("AGREGANDO DATOS DE: CATEGORIA: "+ docentePersonaModel.getIdCategoria()+" -- CLASE:"+docentePersonaModel.getIdClase()+" -- DEPACAD:"+docentePersonaModel.getIdDepAcad());
 		boolean existe;
 		if(docentePersonaModel.getIdDocente()==0){
 			existe = docenteService.insertarDocente(docente);
@@ -92,8 +90,8 @@ public class DocenteController {
 			}
 			logger.info("DOCENTE AGREGADO");
 		}else{
-			//Persona persona_codigo = personaService.obtenerPersonaxCodigo(docente.getPersona().getPersonaCodigo());
-			existe = docenteService.actualizarDocente(docente);
+			Persona persona_codigo = personaService.obtenerPersonaxCodigo(docente.getPersona().getPersonaCodigo());
+			existe = docenteService.actualizarDocente(docente, persona_codigo);
 			if(existe){
 				logger.info("LA ACTUALIZACION NO PROCEDE");
 				return "redirect:/docente/form/"+docente.getIdDocente()+"?existe";

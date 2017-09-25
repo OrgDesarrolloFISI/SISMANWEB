@@ -12,8 +12,6 @@ import pe.edu.sistemas.sismanweb.dao.ClaseDocenteDAO;
 import pe.edu.sistemas.sismanweb.dao.DepartamentoAcademicoDAO;
 import pe.edu.sistemas.sismanweb.dao.DocenteDAO;
 import pe.edu.sistemas.sismanweb.dao.PersonaDAO;
-import pe.edu.sistemas.sismanweb.domain.CategoriaDocente;
-import pe.edu.sistemas.sismanweb.domain.Clase;
 import pe.edu.sistemas.sismanweb.domain.Docente;
 import pe.edu.sistemas.sismanweb.domain.Persona;
 import pe.edu.sistemas.sismanweb.services.modelform.DocenteModelForm;
@@ -41,10 +39,10 @@ public class DocenteService {
 	}
 	
 	
-	public boolean actualizarDocente(Docente docente){
-		docenteDao.update(docente);
-		return false;
-		/*if(persona_codigo!=null){
+	public boolean actualizarDocente(Docente docente, Persona persona_codigo){
+		/*docenteDao.update(docente);
+		return false;*/
+		if(persona_codigo!=null){
 			
 			if(persona_codigo.getIdPersona().intValue()!=docente.getPersona().getIdPersona().intValue() ){
 				//Significa que hay otro usuario con el mismo codigo
@@ -57,11 +55,11 @@ public class DocenteService {
 				return false;
 			}
 		}else{
-			//Ocurrio que: 1. No hubo conflicto de codigo 2.- Persona_id = Persona_codigo
+			//Ocurrio que: 1. No hubo conflicto de codigo
 			System.out.println("Docente actualizado 2");
 			docenteDao.update(docente);
 			return false;
-		}*/
+		}
 	}
 	
 	public void eliminarDocente(Docente docente){
@@ -87,7 +85,7 @@ public class DocenteService {
 	
 	public Docente obtenerDocenteXID(Integer idDocente){
 		Docente docente = docenteDao.findById(idDocente);			
-		docente.getPersona().getIdPersona();
+		docente.getPersona().getPersonaNombre();
 
 		if(docente.getDepartamentoAcademico()!=null){
 			docente.getDepartamentoAcademico().getDepartamentoAcademicoNombre();
@@ -131,6 +129,7 @@ public class DocenteService {
 		persona.setPersonaCodigoSistema(formDocenteModel.getCodigo());
 		persona.setPersonaPasswordSistema(formDocenteModel.getCodigo());
 		persona.setPersonaPasswordSistema2(" ");
+		docente.setIdDocente(formDocenteModel.getIdDocente());
 		docente.setPersona(persona);
 		docente.setDocenteClave("");
 		docente.setDocenteGrupoOcupacional("Profesional");

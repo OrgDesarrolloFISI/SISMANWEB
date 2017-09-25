@@ -59,7 +59,7 @@ public class AlumnoService {
 				return false;
 			}
 		}else{
-			//Ocurrio que: 1. No hubo conflicto de codigo 2.- Persona_id = Persona_codigo
+			//Ocurrio que: 1. No hubo conflicto de codigo
 			System.out.println("Alumno actualizado 2");
 			alumnoDao.update(alumno);
 			return false;

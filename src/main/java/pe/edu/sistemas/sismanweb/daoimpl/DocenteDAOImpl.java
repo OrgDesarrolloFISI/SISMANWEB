@@ -16,19 +16,10 @@ import pe.edu.sistemas.sismanweb.domain.Docente;
 
 @Repository
 public class DocenteDAOImpl extends AbstractDAOImpl<Docente, Integer> implements DocenteDAO {
-	
-	@Autowired
-	private SessionFactory sessionFactory;
 
 	protected DocenteDAOImpl() {
 		super(Docente.class);
-		// TODO Auto-generated constructor stub
 	}
-	
-
-	public Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
-    }
 	
 	@Override
 	@SuppressWarnings("unchecked")	

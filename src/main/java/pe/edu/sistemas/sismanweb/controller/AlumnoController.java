@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javassist.compiler.ast.Variable;
 import pe.edu.sistemas.sismanweb.domain.Alumno;
 import pe.edu.sistemas.sismanweb.domain.Persona;
 import pe.edu.sistemas.sismanweb.domain.Plan;

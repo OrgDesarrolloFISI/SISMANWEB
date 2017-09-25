@@ -16,17 +16,10 @@ import pe.edu.sistemas.sismanweb.domain.Alumno;
 
 @Repository
 public class AlumnoDAOImpl extends AbstractDAOImpl<Alumno, Integer> implements AlumnoDAO {
-	
-	@Autowired
-	private SessionFactory sessionFactory;
 
 	protected AlumnoDAOImpl() {
 		super(Alumno.class);
 	}	
-	
-	public Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
-    }
 	
 	@Override
 	@SuppressWarnings("unchecked")	
