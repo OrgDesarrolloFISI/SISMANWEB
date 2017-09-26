@@ -147,9 +147,18 @@ public class DocenteService {
 		Persona persona = docente.getPersona();
 		formDocenteModel.setIdDocente(docente.getIdDocente());
 		formDocenteModel.setIdPersona(docente.getPersona().getIdPersona());
-		formDocenteModel.setIdCategoria((short)1/*docente.getCategoriaDocente().getIdecategoriaDocente()*/);
-		formDocenteModel.setIdClase( (short)1 /*docente.getClase().getIdclase()*/);
-		formDocenteModel.setIdDepAcad((short)1 /*docente.getDepartamentoAcademico().getIddepartamentoAcademico()*/);
+		if(docente.getCategoriaDocente()!=null){
+			formDocenteModel.setIdCategoria(docente.getCategoriaDocente().getIdecategoriaDocente());
+		}
+//		formDocenteModel.setIdCategoria((short)1/*docente.getCategoriaDocente().getIdecategoriaDocente()*/);
+		if(docente.getClase()!=null){
+			formDocenteModel.setIdClase(docente.getClase().getIdclase());
+		}
+		//formDocenteModel.setIdClase( (short)1 /*docente.getClase().getIdclase()*/);
+		if(docente.getDepartamentoAcademico()!=null){
+			formDocenteModel.setIdDepAcad((docente.getDepartamentoAcademico().getIddepartamentoAcademico()));
+		}
+		//formDocenteModel.setIdDepAcad((short)1 /*docente.getDepartamentoAcademico().getIddepartamentoAcademico()*/);
 		formDocenteModel.setNombre(persona.getPersonaNombre());
 		formDocenteModel.setApPaterno(persona.getPersonaAppaterno());
 		formDocenteModel.setApMaterno(persona.getPersonaApmaterno());
