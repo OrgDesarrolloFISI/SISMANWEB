@@ -36,7 +36,7 @@ public class DeserealizarJSON<Model> {
 				listModel.add(model);
 			} catch (Exception e) {
 				logger.error("OCURRIO UN ERROR EN EL REGISTRO: "+(i+1));
-				//e.printStackTrace();
+				e.printStackTrace();
 				return listModel;
 			}
 		}			

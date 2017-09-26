@@ -40,8 +40,6 @@ public class DocenteService {
 	
 	
 	public boolean actualizarDocente(Docente docente, Persona persona_codigo){
-		/*docenteDao.update(docente);
-		return false;*/
 		if(persona_codigo!=null){
 			
 			if(persona_codigo.getIdPersona().intValue()!=docente.getPersona().getIdPersona().intValue() ){
@@ -116,7 +114,9 @@ public class DocenteService {
 	public Docente converterToDocente(DocenteModelForm formDocenteModel){
 		Docente docente = new Docente();
 		Persona persona = new Persona();
-		persona.setIdPersona(formDocenteModel.getIdPersona());
+		if(formDocenteModel.getIdPersona()!=0){
+			persona.setIdPersona(formDocenteModel.getIdPersona());
+		}
 		persona.setPersonaCodigo(formDocenteModel.getCodigo());
 		persona.setPersonaAppaterno(formDocenteModel.getApPaterno());
 		persona.setPersonaApmaterno(formDocenteModel.getApMaterno());
@@ -129,7 +129,7 @@ public class DocenteService {
 		persona.setPersonaCodigoSistema(formDocenteModel.getCodigo());
 		persona.setPersonaPasswordSistema(formDocenteModel.getCodigo());
 		persona.setPersonaPasswordSistema2(" ");
-		docente.setIdDocente(formDocenteModel.getIdDocente());
+		docente.setIddocente(formDocenteModel.getIdDocente());
 		docente.setPersona(persona);
 		docente.setDocenteClave("");
 		docente.setDocenteGrupoOcupacional("Profesional");
@@ -145,20 +145,17 @@ public class DocenteService {
 	public DocenteModelForm converterToDocenteModelForm(Docente docente){
 		DocenteModelForm formDocenteModel = new DocenteModelForm();
 		Persona persona = docente.getPersona();
-		formDocenteModel.setIdDocente(docente.getIdDocente());
+		formDocenteModel.setIdDocente(docente.getIddocente());
 		formDocenteModel.setIdPersona(docente.getPersona().getIdPersona());
 		if(docente.getCategoriaDocente()!=null){
 			formDocenteModel.setIdCategoria(docente.getCategoriaDocente().getIdecategoriaDocente());
 		}
-//		formDocenteModel.setIdCategoria((short)1/*docente.getCategoriaDocente().getIdecategoriaDocente()*/);
 		if(docente.getClase()!=null){
 			formDocenteModel.setIdClase(docente.getClase().getIdclase());
 		}
-		//formDocenteModel.setIdClase( (short)1 /*docente.getClase().getIdclase()*/);
 		if(docente.getDepartamentoAcademico()!=null){
 			formDocenteModel.setIdDepAcad((docente.getDepartamentoAcademico().getIddepartamentoAcademico()));
 		}
-		//formDocenteModel.setIdDepAcad((short)1 /*docente.getDepartamentoAcademico().getIddepartamentoAcademico()*/);
 		formDocenteModel.setNombre(persona.getPersonaNombre());
 		formDocenteModel.setApPaterno(persona.getPersonaAppaterno());
 		formDocenteModel.setApMaterno(persona.getPersonaApmaterno());
@@ -190,10 +187,17 @@ public class DocenteService {
 		List<Docente> docentesCodigo = docenteDao.obtenerDocentesxCod(valor,filtro);
 		
 		for(Docente docente : docentesCodigo){
-			/*docente.getPersona().getPersonaNombre();
-			docente.getCategoriaDocente().getCategoriaDocenteNombre();
-			docente.getClase().getIdclase();
-			docente.getDepartamentoAcademico().getDepartamentoAcademicoNombre();*/
+			docente.getPersona().getPersonaNombre();
+			
+			if(docente.getDepartamentoAcademico()!=null){
+				docente.getDepartamentoAcademico().getDepartamentoAcademicoNombre();
+			}
+			if(docente.getCategoriaDocente()!=null){
+				docente.getCategoriaDocente().getCategoriaDocenteNombre();
+			}
+			if(docente.getClase()!=null){
+				docente.getClase().getClaseNombre();
+			}
 			formDocenteModel = converterToDocenteModelForm(docente);
 			docentesFormCodigo.add(formDocenteModel);
 		}

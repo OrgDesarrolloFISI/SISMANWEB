@@ -121,6 +121,7 @@ public class AlumnoController {
 				logger.warn("EXISTEN "+resultado.size()+" ALUMNOS YA REGISTRADOS");
 				//mav.addObject("errorExiste",resultado.size());
 			}else{
+				logger.info("SE REGISTRO EXITOSAMENTE ALUMNOS");
 				//mav.addObject("exito");
 			}				
 		}			

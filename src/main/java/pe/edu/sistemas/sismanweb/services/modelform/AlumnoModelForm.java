@@ -2,7 +2,6 @@ package pe.edu.sistemas.sismanweb.services.modelform;
 
 public class AlumnoModelForm {
 	
-	
 	private int idAlumno;
 	private int idPersona;
 	private int idPlan;
