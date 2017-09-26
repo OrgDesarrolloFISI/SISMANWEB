@@ -106,7 +106,9 @@ public class AlumnoService {
 	public Alumno converterToAlumno(AlumnoModelForm formAlumnoModel){
 		Alumno alumno = new Alumno();
 		Persona persona = new Persona();
-		persona.setIdPersona(formAlumnoModel.getIdPersona());
+		if(formAlumnoModel.getIdPersona()!=0){
+			persona.setIdPersona(formAlumnoModel.getIdPersona());
+		}
 		persona.setPersonaCodigo(formAlumnoModel.getCodigo());
 		persona.setPersonaAppaterno(formAlumnoModel.getApPaterno());
 		persona.setPersonaApmaterno(formAlumnoModel.getApMaterno());

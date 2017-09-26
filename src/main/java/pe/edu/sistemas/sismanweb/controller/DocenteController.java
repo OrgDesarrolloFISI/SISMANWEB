@@ -94,7 +94,7 @@ public class DocenteController {
 			existe = docenteService.actualizarDocente(docente, persona_codigo);
 			if(existe){
 				logger.info("LA ACTUALIZACION NO PROCEDE");
-				return "redirect:/docente/form/"+docente.getIdDocente()+"?existe";
+				return "redirect:/docente/form/"+docente.getIddocente()+"?existe";
 			}else{
 				logger.info("DOCENTE ACTUALIZADO");
 				return "redirect:/docente/form";

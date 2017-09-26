@@ -116,7 +116,9 @@ public class DocenteService {
 	public Docente converterToDocente(DocenteModelForm formDocenteModel){
 		Docente docente = new Docente();
 		Persona persona = new Persona();
-		persona.setIdPersona(formDocenteModel.getIdPersona());
+		if(formDocenteModel.getIdPersona()!=0){
+			persona.setIdPersona(formDocenteModel.getIdPersona());
+		}
 		persona.setPersonaCodigo(formDocenteModel.getCodigo());
 		persona.setPersonaAppaterno(formDocenteModel.getApPaterno());
 		persona.setPersonaApmaterno(formDocenteModel.getApMaterno());
@@ -129,7 +131,7 @@ public class DocenteService {
 		persona.setPersonaCodigoSistema(formDocenteModel.getCodigo());
 		persona.setPersonaPasswordSistema(formDocenteModel.getCodigo());
 		persona.setPersonaPasswordSistema2(" ");
-		docente.setIdDocente(formDocenteModel.getIdDocente());
+		docente.setIddocente(formDocenteModel.getIdDocente());
 		docente.setPersona(persona);
 		docente.setDocenteClave("");
 		docente.setDocenteGrupoOcupacional("Profesional");
@@ -145,7 +147,7 @@ public class DocenteService {
 	public DocenteModelForm converterToDocenteModelForm(Docente docente){
 		DocenteModelForm formDocenteModel = new DocenteModelForm();
 		Persona persona = docente.getPersona();
-		formDocenteModel.setIdDocente(docente.getIdDocente());
+		formDocenteModel.setIdDocente(docente.getIddocente());
 		formDocenteModel.setIdPersona(docente.getPersona().getIdPersona());
 		formDocenteModel.setIdCategoria((short)1/*docente.getCategoriaDocente().getIdecategoriaDocente()*/);
 		formDocenteModel.setIdClase( (short)1 /*docente.getClase().getIdclase()*/);
