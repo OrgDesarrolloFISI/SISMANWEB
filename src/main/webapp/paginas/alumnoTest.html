@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+	<div th:fragment="contentAlumno" id="myTabContent" class="tab-content" >
+
+		<!-- **********************************Inicio  Pestañas**********************************-->
+
+		<ul class="nav nav-tabs">
+			<li class="active gi-2x"><a href="#individual" data-toggle="tab"
+				aria-expanded="true">Individual</a></li>
+			<li class="gi-2x"><a href="#grupal" data-toggle="tab"
+				aria-expanded="false">Grupal</a></li>
+		</ul>
+		<!-- **********************************Fin  Pestañas**********************************-->
+
+
+		<!--********************** Inicio  Contenido de las pestañas**********************-->
+
+		<div id="myTabContent" class="tab-content">
+
+			<!--********************** Inicio  pestaña individual**********************-->
+
+			<div class="tab-pane fade active in" id="individual">
+				<h3>AGREGAR ALUMNO</h3>
+				<hr />
+
+				<form th:action="@{/alumno/add}" th:object="${alumno}" method="post">
+					<div class="form-group">
+
+						<div class="col-xs-12">
+							<label for="nombre">Nombre (*)</label> <input type="text"
+								class="form-control" id="nombre" placeholder="Ingrese Nombre"
+								pattern="([a-zA-Z]\s*){1,26}" required="" th:field="*{nombre}" />
+							<input type="hidden" th:field="*{idAlumno}" /> <input
+								type="hidden" th:field="*{idPersona}" />
+						</div>
+
+						<div class="col-xs-6">
+							<label for="apellido_paterno">Apellido Paterno(*)</label> <input
+								type="text" class="form-control" id="apellido_paterno"
+								placeholder="Ingrese Apellido Paterno" required=""
+								pattern="([a-zA-Z]\s*){1,16}" th:field="*{apPaterno}" />
+						</div>
+
+						<div class="col-xs-6">
+							<label for="apellido_materno">Apellido Materno(*)</label> <input
+								type="text" class="form-control" id="apellido_materno"
+								placeholder="Ingrese Apellido Materno" required=""
+								pattern="([a-zA-Z]\s*){1,17}" th:field="*{apMaterno}" />
+
+						</div>
+						<div class="col-xs-6">
+
+							<label for="codigo">Codigo (*)</label> <input type="text"
+								class="form-control" id="codigo" placeholder="Ingrese Codigo"
+								required="" pattern="[a-zA-Z0-9]{1,9}" th:field="*{codigo}" />
+							<p th:if="${existe} != null">Este codigo ya existe</p>
+						</div>
+
+						<div class="col-xs-6">
+							<label for="plan">Plan (*)</label> <select class="form-control"
+								th:field="*{idPlan}">
+								<option th:each="plan : ${listaPlan}" th:value="${plan.idplan}"
+									th:text="${plan.planNombre}" />
+							</select>
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<div class="col-xs-12">
+							<br></br>
+							<h2>Datos Opcionales</h2>
+							<hr />
+						</div>
+						<div class="col-xs-3">
+							<br></br> <label for="Telefono">Telefono</label> <input
+								type="text" class="form-control" id="Telefono"
+								placeholder="Telefono" th:field="*{telefono}" />
+						</div>
+						<div class="col-xs-3">
+							<br></br> <label for="DNI">DNI</label> <input type="text"
+								class="form-control" id="DNI" placeholder="DNI"
+								pattern="[0-9]{8}" th:field="*{dni}" />
+						</div>
+
+						<div class="col-xs-3">
+							<br></br> <label>Sexo</label> <select name="Sexo"
+								class="form-control" th:field="*{sexo}">
+								<option value="M">MASCULINO</option>
+								<option value="F">FEMENINO</option>
+							</select>
+						</div>
+						<br></br> <br></br> <br></br>
+						<div class="col-xs-6">
+							<label for="Correo">Correo</label> <input type="email"
+								class="form-control" id="Correo" placeholder="Introduce Correo"
+								th:field="*{correo}" />
+						</div>
+						<div class="col-xs-6">
+							<label for="Direccion">Direccion</label> <input type="text"
+								class="form-control" id="Direccion" placeholder="Direccion"
+								pattern="[a-zA-Z0-9]{1-63}" th:field="*{direccion}" /> <br></br>
+						</div>
+					</div>
+
+					<br></br> <label>(*) Campos obligatorios</label> <br></br>
+					<button type="submit" class="btn btn-default btn-block">Enviar</button>
+				</form>
+				<div class="espacio_vacio"></div>
+			</div>
+			<!--********************** fin pestaña individual**********************-->
+
+			<!--********************** Inicio  pestaña grupal**********************-->
+			<div class="tab-pane fade" id="grupal">
+
+				<form role="form">
+
+					<div class="form-group">
+
+						<input type="file" onchange="parseAndSend(event)"
+							value="Parse and send XSLS file" />
+						<!-- REVISAR
+						     <div th:text="${errorRegistro} != null ? 'Existen'+${errorRegistro}"></div>
+						     <div th:text="${errorExiste} != null ? 'Existen'+${errorExiste}"></div>
+    						  -->
+					</div>
+					<a th:href="@{/alumno/all}">
+						<button type="button" onclick="SendDataAlumno()">Enviar</button>
+					</a>
+				</form>
+
+			</div>
+			<!--********************** Fin pestaña individual**********************-->
+
+		</div>
+		<!--********************** fin  Contenido de las pestañas**********************-->
+
+	</div>
+</body>
+</html>
+
+
+
+
+
+

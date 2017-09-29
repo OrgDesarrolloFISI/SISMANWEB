@@ -12,7 +12,7 @@ public class ThymeleafConfig {
 	@Bean 
 	public ServletContextTemplateResolver templateResolver() {
 		ServletContextTemplateResolver resolver = new ServletContextTemplateResolver();
-		resolver.setPrefix("/paginas/");
+		resolver.setPrefix("/paginas/"); //tambien se puede usar classpath:/paginas/
 		resolver.setSuffix(".html");
 		resolver.setTemplateMode("HTML5");
 		resolver.setCharacterEncoding("UTF-8");

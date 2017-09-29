@@ -42,8 +42,9 @@
 			                  <a href="#">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-user" >&nbsp;ALUMNO</span></a>
 			                </li>  
 			                <ul class="sub-menu collapse" id="alumno">
-			                  <li><a href="alumno_Agregar.html" th:href="@{/alumno/form}">Registrar</a></li>
-							  <li><a href="alumno_Ver.html" th:href="@{/alumno/all}">Buscar</a></li>
+			                  <li><a href="alumno_Agregar.html" th:href="@{/alumno/form}">Registro Individual</a></li>
+			                  <li><a href="alumno_Agregar.html" th:href="@{/alumno/form}">Registro Grupal</a></li>
+							  <li><a href="alumno_Ver.html" th:href="@{/alumno/all}">Búsqueda</a></li>
 			                </ul>
 
 
@@ -82,12 +83,13 @@
 				
 			</div>
 	<!-- **********************************Fin encabezado**********************************-->
-
-			
-						
-				<!--********************** fin  Contenido de las pestañas**********************-->				
-								
-					<div class="espacio_vacio"></div>
+							
+							
+			<div th:insert="~{/paginas/alumnoTest :: contentAlumno}">CONTENIDO</div>				
+							
+							
+							
+							
 		</div>
 
 		<!-- **********************************fin del panel de contenido**********************************-->

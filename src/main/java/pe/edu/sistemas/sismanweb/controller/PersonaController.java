@@ -36,7 +36,7 @@ public class PersonaController {
 	
 	@ModelAttribute("modulo")
 	public String modulo(){
-		return "alumno";
+		return "docentes";
 	}
 	
 	@GetMapping("/layout")
