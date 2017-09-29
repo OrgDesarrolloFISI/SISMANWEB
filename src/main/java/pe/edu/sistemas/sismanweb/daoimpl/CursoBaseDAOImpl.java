@@ -48,5 +48,24 @@ public class CursoBaseDAOImpl extends AbstractDAOImpl<CursoBase, Integer> implem
 		}
 		return cursoBase;
 	}
+	
+	@Override
+	@SuppressWarnings("unchecked")	
+	@Transactional(propagation=Propagation.MANDATORY)
+	public List<CursoBase> findCursoBaseSinConjunto(){
+		List<CursoBase> listBase= null;
+		Query query = null;
+		try{
+		query = getCurrentSession().createQuery("select b FROM CursoConjunto c RIGHT JOIN c.cursoBase b  WHERE b.idcursoGeneral NOT IN (select b.cursoBase.idcursoGeneral from CursoConjunto b  ) ");
+		
+			listBase = (List<CursoBase>)query.list();	
+		}catch(HibernateException he){
+			he.printStackTrace();
+		}
+		return listBase;
+	}
+	
+	
+	
 
 }

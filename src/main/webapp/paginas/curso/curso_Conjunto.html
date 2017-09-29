@@ -79,7 +79,24 @@
       		<h3>CONJUNTO CURSOS</h3><hr></hr>
   
 		  <!-- Inicio de Paginacion-->
-		  
+		  	<form th:action="@{/curso/addConjunto}"  th:object="${cursobc}" method="post">
+		  	<div class="form-group col-xs-6 well">
+		  		<select class="form-control" size="15" th:field="*{idCursoBase}" >
+		  			
+		  			<option th:each="cursob : ${listaCursoB}" th:value="${cursob.idcursoGeneral}" th:text="${cursob.cursobNombre+' -- Plan: ' + cursob.plan.planNombre}"/>
+		  		</select>
+		  	</div>
+		  	<div class="form-group col-xs-6 well" >
+		  		<select class="form-control" size="15" id="sltConjunto" th:field="*{idCursoConjunto}" >
+		  		<option value='0'>NUEVO GRUPO</option>
+		  		<option th:each="cursoc : ${listaCursoC}" th:value="${cursoc.idcursoConjunto}" th:text="${cursoc.cursocNombre+' '+cursoc.idcursoConjunto+' -- Escuela: ' + #strings.substring(cursoc.cursoBase.plan.planNombre, 5)}"/>
+		  		</select>
+		  		
+		  	</div>
+		  	<p th:if="${exito} != null">Se agrego el curso al conjunto</p>
+		  	<button type="submit" class="btn btn-default btn-block">Enviar</button>
+		  	</form>
+		  	
 			 <div class="espacio_vacio"></div>
 		<!-- Fin de Paginacion-->
   </div>

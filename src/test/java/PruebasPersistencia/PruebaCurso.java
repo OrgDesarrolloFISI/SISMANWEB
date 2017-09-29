@@ -43,7 +43,7 @@ public class PruebaCurso {
 	
 	
 	@Test
-	//@Ignore
+	@Ignore
 	@Transactional()
 	public void agregaCurso(){
 
@@ -97,6 +97,33 @@ public class PruebaCurso {
 		System.out.println("CODIGO MAXIMO --> "+codmax);
 	}
 	
+	@Test
+	@Ignore
+	@Transactional
+	public void muestraCursosSinConjunto(){
+		List<CursoBase> cc = cursoBaseDao.findCursoBaseSinConjunto();
+		if(cc != null){
+			for(CursoBase c: cc){
+				System.out.println(c.getIdcursoGeneral() + ", nombre del curso: " + c.getCursobNombre() + " -- ");
+			}
+			
+			
+		}else System.out.println("Es nulo");		
+		
+	}
 	
+	@Test
+	@Transactional
+	public void muestraCursosConjunto(){
+		List<CursoConjunto> cc = cursoConjuntoDao.findCursosConjuntos();
+		if(cc != null){
+			for(CursoConjunto c: cc){
+				System.out.println(c.getIdcursoConjunto() + ", nombre del curso: " + c.getCursocNombre() + " -- ");
+			}
+			
+			
+		}else System.out.println("Es nulo");		
+		
+	}
 
 }

@@ -42,8 +42,10 @@ function parseAndSend (event) {
              contentType: "application/json; charset=utf-8",
              dataType: "json",  
              data: string_ws,
-             success: function(result) {
-                 alert('SUCCESS');
+             success: function(data) {
+            	 if(data){
+                     window.location.replace("http://sitioweb.com");
+                   }
              }
            });
     }

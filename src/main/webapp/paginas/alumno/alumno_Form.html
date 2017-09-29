@@ -101,7 +101,7 @@
 					<div class="tab-pane fade active in" id="individual">
 						<h3>AGREGAR ALUMNO</h3><hr/>					
 				
-					<form th:action="@{/alumno/add}" th:object="${alumno}"  method="post">
+					<form th:action="@{/alumno/addConjunto}" th:object="${alumno}"  method="post">
 						<div class="form-group">							
 
 							<div class="col-xs-12">
@@ -196,9 +196,9 @@
 						     <div th:text="${errorExiste} != null ? 'Existen'+${errorExiste}"></div>
     						  -->
 						  </div>
-						  <a th:href="@{/alumno/all}">
+						 <!-- >a th:href="@{/alumno/all}"-->
 						  <button type="button"  onclick="SendDataAlumno()">Enviar</button>
-						  </a>
+						  <!-- /a-->
 						</form>
 						
 					</div>

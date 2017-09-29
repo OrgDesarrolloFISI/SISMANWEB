@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.CursoBaseDAO;
+import pe.edu.sistemas.sismanweb.dao.CursoConjuntoDAO;
 import pe.edu.sistemas.sismanweb.dao.PlanDAO;
 import pe.edu.sistemas.sismanweb.domain.CursoBase;
+import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
 
 @Service
@@ -18,6 +20,7 @@ import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
 public class CursoService {
 	
 	@Autowired private CursoBaseDAO cursoBaseDao;
+	@Autowired private CursoConjuntoDAO cursoConjuntoDao;
 	@Autowired private PlanDAO planDao;
 	
 	private static final Log logger = LogFactory.getLog(CursoService.class);
@@ -46,6 +49,26 @@ public class CursoService {
 		}
 	}
 	
+	public boolean insertarCursoConjunto(CursoBase cursoBase, Integer idConjunto){
+			CursoConjunto cursoConjunto = null;
+			if(idConjunto==0){
+				cursoConjunto = new CursoConjunto();
+				cursoConjunto.setCursocCodcomun(findCodigoMaximo()+1);
+				cursoConjunto.setCursoBase(cursoBase);
+				cursoConjunto.setCursocNombre(cursoBase.getCursobNombre());
+			return true;
+			}else{
+				cursoConjunto = findCursoCById(idConjunto);
+				cursoConjunto.setCursoBase(cursoBase);
+				cursoConjunto.setIdcursoConjunto(null);
+			return false;
+			}
+		
+		
+	}
+	
+	
+	
 	public CursoBase coverterToCurso(CursoModelForm cursoModelForm){
 		CursoBase cursoBase = new CursoBase();
 		cursoBase.setCursobCodigo(cursoModelForm.getCodigo());
@@ -56,5 +79,35 @@ public class CursoService {
 		
 		return cursoBase;
 	}
-
+	
+	
+	public List<CursoBase> findCursoBaseSinConjunto(){
+		List<CursoBase> listBase = cursoBaseDao.findCursoBaseSinConjunto();
+		for(CursoBase b: listBase){
+			b.getPlan().getPlanNombre();
+		}
+		return listBase;
+	}
+	
+	public List<CursoConjunto> findCursosConjuntos(){
+		List<CursoConjunto> listConjunto = cursoConjuntoDao.findCursosConjuntos();
+		for(CursoConjunto b: listConjunto){
+			b.getCursoBase().getPlan().getPlanNombre();
+		}
+		return listConjunto;
+	}
+	
+	public CursoBase findCursoBById(Integer idcurso){
+		CursoBase cursob = cursoBaseDao.findById(idcurso);
+		return cursob;
+	}
+	
+	public CursoConjunto findCursoCById(Integer idcurso){
+		CursoConjunto cursoc = cursoConjuntoDao.findById(idcurso);
+		return cursoc;
+	}
+	
+	public Integer findCodigoMaximo(){
+		return cursoConjuntoDao.findCodigoMaximo();
+	}
 }
