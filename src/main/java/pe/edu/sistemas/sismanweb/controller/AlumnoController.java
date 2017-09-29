@@ -47,8 +47,8 @@ public class AlumnoController {
 		ModelAndView mav = new ModelAndView(VariablesGlobales.ALUMNO_VIEW);
 		mav.addObject("search", new Search());
 		mav.addObject("listaAlumno", alumnos);
-		alumnos=new ArrayList<AlumnoModelForm>();
 		logger.info("SE DEVUELVEN ALUMNOS : " + alumnos.size());
+		alumnos=new ArrayList<AlumnoModelForm>();
 		return mav;		
 	}
 	

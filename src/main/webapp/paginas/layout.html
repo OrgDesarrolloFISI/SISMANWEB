@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+  <head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>Gestion Alumno</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>
+	<link rel="stylesheet" href="https://bootswatch.com/sandstone/bootstrap.min.css" type="text/css"/>
+	<link rel="stylesheet" href="/sismanweb/static/css/style.css" type="text/css"/>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css"/>
+  </head>
+
+  <body>
+
+	
+<!-- **********************************Inicio  barrra lateral**********************************-->
+	<div class="row col-xs-3" >
+		<div class="nav-side-menu">
+			    <div class="brand"><h3>SISTEMA DE MANTENIMIENTO WEB</h3></div>
+			    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+			  
+			        <div class="menu-list">
+			  
+			            <ul id="menu-content" class="menu-content collapse out">
+			                <li style="border-left: none;">
+			                  <a href="#">
+			                  <i >OPCIONES</i> 
+			                  </a>
+			                </li>
+
+			                <li  data-toggle="collapse" data-target="#curso" class="collapsed active">
+			                  <a href="#">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-book">&nbsp;CURSOS</span></a>
+			                </li>
+			                <ul class="sub-menu collapse" id="curso">
+			                    <li><a href="curso_Agregar.html" th:href="@{/curso/form}">Registrar</a></li>
+								<li><a href="curso_Ver.html" th:href="@{/curso/all}">Buscar</a></li>
+								<li><a href="curso_Conjunto.html" th:href="@{/curso/conjunto}"><span>Conjunto</span></a></li>
+			                </ul>
+
+
+			                <li data-toggle="collapse" data-target="#alumno" class="collapsed">
+			                  <a href="#">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-user" >&nbsp;ALUMNO</span></a>
+			                </li>  
+			                <ul class="sub-menu collapse" id="alumno">
+			                  <li><a href="alumno_Agregar.html" th:href="@{/alumno/form}">Registro Individual</a></li>
+			                  <li><a href="alumno_Agregar.html" th:href="@{/alumno/form}">Registro Grupal</a></li>
+							  <li><a href="alumno_Ver.html" th:href="@{/alumno/all}">Búsqueda</a></li>
+			                </ul>
+
+
+			                <li data-toggle="collapse" data-target="#new" class="collapsed">
+			                  <a href="#">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-apple">&nbsp;DOCENTE</span></a>
+			                </li>
+			                <ul class="sub-menu collapse" id="new">
+			                  <li><a href="docente_Agregar.html" th:href="@{/docente/form}">Registrar</a></li>
+							  <li><a href="docente_Ver.html" th:href="@{/docente/all}">Buscar</a></li>
+			                </ul>
+
+
+			            </ul>
+			     </div>
+		</div>
+
+	</div>
+	<!-- **********************************Fin barrra lateral**********************************-->
+
+
+
+<!-- **********************************inicio del panel de contenido**********************************-->
+		<div class="col-xs-9" align="left">
+	
+	<!-- **********************************Inicio  encabezado**********************************-->
+	
+			<p th:utext="#{home.welcome}"></p>
+	
+			<div class="col-xs-12 well">
+				<div align="left" class="col-xs-6">
+					<h2 >GESTION DE <span th:text="${#strings.toUpperCase(modulo)}">MODULO</span></h2>
+				</div>
+				<div align="right" class="col-xs-6">				
+					<a href="#" th:href="@{/logout}"><button class="btn btn-primary">CERRAR SESION</button></a>
+				</div>
+				
+			</div>
+	<!-- **********************************Fin encabezado**********************************-->
+							
+							
+			<div th:insert="~{/paginas/alumnoTest :: contentAlumno}">CONTENIDO</div>				
+							
+							
+							
+							
+		</div>
+
+		<!-- **********************************fin del panel de contenido**********************************-->
+		
+		<!--  Footer -->
+	     <div >
+		  	<footer ><h2>Area de Desarrollo y Soporte tecnico</h2></footer>
+		 </div>
+		<!-- Fin de Footer-->
+				
+		
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.11.3/xlsx.core.min.js"></script> 
+
+
+	  
+	<script type="text/javascript" src="/sismanweb/static/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" src="/sismanweb/static/js/table.js"></script>
+	
+
+	<script src="/sismanweb/static/js/excel.js"></script>
+	
+
+</body>
+</html>
