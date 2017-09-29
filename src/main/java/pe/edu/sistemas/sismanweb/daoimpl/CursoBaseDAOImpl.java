@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.CursoBaseDAO;
+import pe.edu.sistemas.sismanweb.domain.Alumno;
 import pe.edu.sistemas.sismanweb.domain.CursoBase;
 
 @Repository
@@ -64,8 +65,22 @@ public class CursoBaseDAOImpl extends AbstractDAOImpl<CursoBase, Integer> implem
 		}
 		return listBase;
 	}
-	
-	
-	
+
+	@Override
+	@SuppressWarnings("unchecked")	
+	@Transactional(propagation=Propagation.MANDATORY)
+	public List<CursoBase> obtenerCursosxCod(String valor, String filtro) {
+		List<CursoBase> curso = null;
+		Query query = null;
+		
+		try{
+			query = getCurrentSession().createQuery("select c from CursoBase as c where c." + filtro + " LIKE '%"+valor+"%'");
+			
+		curso = (List<CursoBase>)query.list();	
+		}catch(HibernateException he){
+			he.printStackTrace();
+		}		
+		return curso;
+	}
 
 }

@@ -113,12 +113,27 @@ public class PruebaCurso {
 	}
 	
 	@Test
+	@Ignore
 	@Transactional
 	public void muestraCursosConjunto(){
 		List<CursoConjunto> cc = cursoConjuntoDao.findCursosConjuntos();
 		if(cc != null){
 			for(CursoConjunto c: cc){
 				System.out.println(c.getIdcursoConjunto() + ", nombre del curso: " + c.getCursocNombre() + " -- ");
+			}
+			
+			
+		}else System.out.println("Es nulo");		
+		
+	}
+	
+	@Test
+	@Transactional
+	public void muestraCursosPlan(){
+		List<CursoBase> cb = cursoBaseDao.obtenerCursosxCod("2009", "plan.planNombre" );
+		if(cb != null){
+			for(CursoBase c: cb){
+				System.out.println(c.getIdcursoGeneral() + ", nombre del curso: " + c.getCursobNombre() + " -- ");
 			}
 			
 			

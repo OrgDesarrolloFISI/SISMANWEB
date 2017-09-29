@@ -3,6 +3,7 @@ package pe.edu.sistemas.sismanweb.services.modelform;
 public class CursoModelForm {
 	
 	private int idPlan;
+	private String planNombre;
 	private String codigo;
 	private String nombre;
 	private int ciclo;
@@ -12,15 +13,24 @@ public class CursoModelForm {
 		
 	}
 	
-	public CursoModelForm(int idPlan, String codigo, String nombre, int ciclo, int creditos) {
+	public CursoModelForm(int idPlan, String planNombre, String codigo, String nombre, int ciclo, int creditos) {
 		super();
 		this.idPlan = idPlan;
+		this.planNombre = planNombre;
 		this.codigo = codigo;
 		this.nombre = nombre;
 		this.ciclo = ciclo;
 		this.creditos = creditos;
 	}	
 	
+	public String getPlanNombre() {
+		return planNombre;
+	}
+
+	public void setPlanNombre(String planNombre) {
+		this.planNombre = planNombre;
+	}
+
 	public int getIdPlan() {
 		return idPlan;
 	}

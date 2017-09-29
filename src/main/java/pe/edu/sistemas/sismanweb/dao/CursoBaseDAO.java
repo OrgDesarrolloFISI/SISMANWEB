@@ -10,5 +10,7 @@ public interface CursoBaseDAO extends AbstractDAO<CursoBase, Integer> {
 	
 	public CursoBase findCursoBaseByCodigoByPlan(String codigo, Integer idplan);
 	
+	public List<CursoBase> obtenerCursosxCod(String valor, String filtro);
+	
 	public List<CursoBase> findCursoBaseSinConjunto();
 }

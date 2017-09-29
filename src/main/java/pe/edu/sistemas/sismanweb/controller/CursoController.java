@@ -1,5 +1,6 @@
 package pe.edu.sistemas.sismanweb.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -21,6 +22,7 @@ import pe.edu.sistemas.sismanweb.services.PlanService;
 import pe.edu.sistemas.sismanweb.services.modelform.AlumnoModelForm;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoBCModelForm;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
+import pe.edu.sistemas.sismanweb.util.Search;
 import pe.edu.sistemas.sismanweb.util.VariablesGlobales;
 
 @Controller
@@ -32,13 +34,16 @@ public class CursoController {
 	@Autowired CursoService cursoService;	
 	@Autowired PlanService  planService;
 	
+	List<CursoModelForm> cursos = new ArrayList<CursoModelForm>();
+	
 	@GetMapping("/all")
 	public ModelAndView verCursos(){
 		ModelAndView mav = new ModelAndView(VariablesGlobales.CURSO_VIEW);
-		List<CursoBase> cursos = cursoService.obtenerCursos();
-		logger.info("Busqueda -- Retornando modelo y vista "+ " -- Datos: "+ cursos.size());
-		mav.addObject("listaCursos",cursos);
-		return mav;
+		mav.addObject("search", new Search());
+		mav.addObject("listaCurso", cursos);
+		logger.info("SE DEVUELVEN CURSOS : " + cursos.size());
+		cursos=new ArrayList<CursoModelForm>();
+		return mav;	
 	}
 
 	@GetMapping("/form")
@@ -103,6 +108,14 @@ public class CursoController {
 			return "redirect:/curso/conjunto";
 		}
 		
+	}
+	
+	@GetMapping("/search")
+	public String BuscarCursos(@ModelAttribute("search") Search search){
+			
+		cursos = cursoService.buscarCursosxParam(search.getValor(),search.getFiltro());
+		logger.info("SE ENCONTRO CURSOS: " + cursos.size());
+		return "redirect:/curso/all";
 	}
 	
 	

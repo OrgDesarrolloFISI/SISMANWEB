@@ -1,5 +1,6 @@
 package pe.edu.sistemas.sismanweb.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -11,8 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import pe.edu.sistemas.sismanweb.dao.CursoBaseDAO;
 import pe.edu.sistemas.sismanweb.dao.CursoConjuntoDAO;
 import pe.edu.sistemas.sismanweb.dao.PlanDAO;
+import pe.edu.sistemas.sismanweb.domain.Alumno;
 import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
+import pe.edu.sistemas.sismanweb.domain.Persona;
+import pe.edu.sistemas.sismanweb.domain.Plan;
+import pe.edu.sistemas.sismanweb.services.modelform.AlumnoModelForm;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
 
 @Service
@@ -109,5 +114,48 @@ public class CursoService {
 	
 	public Integer findCodigoMaximo(){
 		return cursoConjuntoDao.findCodigoMaximo();
+	}
+	
+	
+	public CursoModelForm converterToCursoModelForm(CursoBase curso){
+		CursoModelForm formCursoModel = new CursoModelForm();
+		Plan plan = curso.getPlan();
+		formCursoModel.setCiclo(curso.getCursobCiclo());
+		formCursoModel.setCodigo(curso.getCursobCodigo());
+		formCursoModel.setCreditos(curso.getCursobCreditos());
+		formCursoModel.setIdPlan(plan.getIdplan());
+		formCursoModel.setNombre(curso.getCursobNombre());
+		formCursoModel.setPlanNombre(plan.getPlanNombre());
+		
+		
+		return formCursoModel;
+	
+	}
+	
+	
+	
+	
+	public List<CursoModelForm> buscarCursosxParam(String valor, String filtro){
+		CursoModelForm formCursoModel;
+		
+		List<CursoModelForm> cursosFormCodigo = new ArrayList<CursoModelForm>();
+		switch(filtro){
+		case"1":	filtro="cursobCodigo";break;
+		case"2":	filtro="cursobNombre";break;
+		case"3":	filtro="plan.planNombre";break;
+		
+			
+		}
+		
+		List<CursoBase> cursosCodigo = cursoBaseDao.obtenerCursosxCod(valor,filtro);
+		
+		for(CursoBase curso : cursosCodigo){
+			curso.getPlan().getPlanNombre();
+			formCursoModel = converterToCursoModelForm(curso);
+			cursosFormCodigo.add(formCursoModel);
+		}
+		
+		return cursosFormCodigo;
+		
 	}
 }
