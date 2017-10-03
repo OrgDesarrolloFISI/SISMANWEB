@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import pe.edu.sistemas.sismanweb.domain.Persona;
 import pe.edu.sistemas.sismanweb.services.PersonaService;
+import pe.edu.sistemas.sismanweb.services.modelform.AlumnoModelForm;
 
 @Controller
 @RequestMapping("/pruebas")
@@ -36,7 +37,12 @@ public class PersonaController {
 	
 	@ModelAttribute("modulo")
 	public String modulo(){
-		return "docentes";
+		return "personas";
+	}
+	
+	@ModelAttribute("alumno")
+	public AlumnoModelForm alumnoModel(){
+		return new AlumnoModelForm();
 	}
 	
 	@GetMapping("/layout")
