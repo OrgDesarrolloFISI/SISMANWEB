@@ -5,13 +5,15 @@
 <body>
 	<div th:fragment="contentAlumno" id="myTabContent" class="tab-content" >
 
-		<!-- **********************************Inicio  Pestañas**********************************
+		<!-- **********************************Inicio  Pestañas**********************************-->
 
 		<ul class="nav nav-tabs">
-			<li class="active gi-2x"><a href="#individual" data-toggle="tab" aria-expanded="true">Individual</a></li>
-			<li class="gi-2x"><a href="#grupal" data-toggle="tab" aria-expanded="false">Grupal</a></li>
+			<li class="active gi-2x"><a href="#individual" data-toggle="tab"
+				aria-expanded="true">Individual</a></li>
+			<li class="gi-2x"><a href="#grupal" data-toggle="tab"
+				aria-expanded="false">Grupal</a></li>
 		</ul>
-		**********************************Fin  Pestañas**********************************-->
+		<!-- **********************************Fin  Pestañas**********************************-->
 
 
 		<!--********************** Inicio  Contenido de las pestañas**********************-->
@@ -20,7 +22,7 @@
 
 			<!--********************** Inicio  pestaña individual**********************-->
 
-			<div id="individual">
+			<div class="tab-pane fade active in" id="individual">
 				<h3>AGREGAR ALUMNO</h3>
 				<hr />
 
@@ -112,7 +114,7 @@
 			<!--********************** fin pestaña individual**********************-->
 
 			<!--********************** Inicio  pestaña grupal**********************-->
-			<div id="grupal">
+			<div class="tab-pane fade" id="grupal">
 
 				<form role="form">
 

@@ -50,4 +50,8 @@ public class PersonaController {
 		return "layout";
 	}
 
+	@GetMapping("/frag")
+	public String frag(){
+		return "layout/alumnoTest :: contentAlumno";
+	}
 }
