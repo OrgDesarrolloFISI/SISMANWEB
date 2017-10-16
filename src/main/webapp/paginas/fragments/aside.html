@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+	<div class="nav-side-menu">
+		<div class="brand">
+			<h3>SISTEMA DE MANTENIMIENTO DE DATOS WEB</h3>
+		</div>
+		<i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+		<div class="menu-list">
+
+			<ul id="menu-content" class="menu-content collapse out">
+				<li style="border-left: none;">
+					<a href="#"><i>OPCIONES</i></a>
+				</li>
+
+				<li data-toggle="collapse" data-target="#curso"	class="collapsed active">
+					<a href="#">&nbsp;&nbsp;&nbsp;<span	class="glyphicon glyphicon-book">&nbsp;CURSO</span></a>
+				</li>
+
+				<ul class="sub-menu collapse" id="curso">
+					<li><a href="curso_Agregar.html" th:href="@{/curso/form}">Registro</a></li>
+					<li><a href="curso_Ver.html" th:href="@{/curso/all}">Buscador</a></li>
+					<li><a href="curso_Conjunto.html" th:href="@{/curso/conjunto}"><span>Asignar Equivalente</span></a></li>
+				</ul>
+
+				<li data-toggle="collapse" data-target="#alumno" class="collapsed">
+					<a href="#">&nbsp;&nbsp;&nbsp;<span	class="glyphicon glyphicon-user">&nbsp;ALUMNO</span></a>
+				</li>
+
+				<ul class="sub-menu collapse" id="alumno">
+					<li><a href="alumno_Agregar.html" th:href="@{/alumno/form}">Registro Individual</a></li>
+					<li><a href="alumno_Agregar.html" th:href="@{/alumno/form}">Registro Grupal</a></li>
+					<li><a href="alumno_Ver.html" th:href="@{/alumno/all}">Buscador</a></li>
+				</ul>
+
+				<li data-toggle="collapse" data-target="#new" class="collapsed">
+					<a href="#">&nbsp;&nbsp;&nbsp;<span	class="glyphicon glyphicon-apple">&nbsp;DOCENTE</span></a>
+				</li>
+
+				<ul class="sub-menu collapse" id="new">
+					<li><a href="docente_Agregar.html" th:href="@{/docente/form}">Registro Individual</a></li>
+					<li><a href="docente_Agregar.html" th:href="@{/docente/form}">Registro Grupal</a></li>
+					<li><a href="docente_Ver.html" th:href="@{/docente/all}">Buscador</a></li>
+				</ul>
+
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

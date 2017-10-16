@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+	<!-- <p th:utext="#{home.welcome}"></p> -->
+	<div class="col-xs-12 well">
+		<div align="left" class="col-xs-6">
+			<h2>
+				MODULO DE <span th:text="${#strings.toUpperCase(modulo)}">ENTIDAD</span>
+			</h2>
+		</div>
+		<div align="right" class="col-xs-6">
+			<a href="#" th:href="@{/logout}"><button class="btn btn-primary">CERRAR SESION</button></a>
+		</div>
+	</div>
+</body>
+</html>

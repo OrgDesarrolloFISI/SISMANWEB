@@ -40,6 +40,11 @@ public class PersonaController {
 		return "personas";
 	}
 	
+	@ModelAttribute("fragmento")
+	public String fragmento(){
+		return "contentAlumnoIndividual";
+	}
+	
 	@ModelAttribute("alumno")
 	public AlumnoModelForm alumnoModel(){
 		return new AlumnoModelForm();
