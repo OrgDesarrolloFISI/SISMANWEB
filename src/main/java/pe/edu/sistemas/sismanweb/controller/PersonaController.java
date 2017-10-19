@@ -6,6 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pe.edu.sistemas.sismanweb.domain.Persona;
 import pe.edu.sistemas.sismanweb.services.PersonaService;
 import pe.edu.sistemas.sismanweb.services.modelform.AlumnoModelForm;
+import pe.edu.sistemas.sismanweb.util.Search;
 
 @Controller
 @RequestMapping("/pruebas")
@@ -37,12 +39,7 @@ public class PersonaController {
 	
 	@ModelAttribute("modulo")
 	public String modulo(){
-		return "personas";
-	}
-	
-	@ModelAttribute("fragmento")
-	public String fragmento(){
-		return "contentAlumnoIndividual";
+		return "alumnoTest";
 	}
 	
 	@ModelAttribute("alumno")
@@ -50,13 +47,22 @@ public class PersonaController {
 		return new AlumnoModelForm();
 	}
 	
-	@GetMapping("/layout")
-	public String layout(){
+	@GetMapping("/layout/alumno1")
+	public String layoutAlumno1(Model model){		
+		model.addAttribute("fragmento", "contentAlumnoIndividual");
 		return "layout";
 	}
-
-	@GetMapping("/frag")
-	public String frag(){
-		return "layout/alumnoTest :: contentAlumno";
+	
+	@GetMapping("/layout/alumno2")
+	public String layoutAlumno2(Model model){		
+		model.addAttribute("fragmento", "contentAlumnoGrupal");
+		return "layout";
+	}
+	
+	@GetMapping("/layout/alumno3")
+	public String layoutAlumno3(Model model){		
+		model.addAttribute("search", new Search());
+		model.addAttribute("fragmento", "contentAlumnoBuscador");
+		return "layout";
 	}
 }

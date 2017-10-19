@@ -12,5 +12,7 @@ public class VariablesGlobales {
 	public static final String CURSO_FORM="/curso/curso_Form";
 	
 	public static final String CURSO_CONJUNTO="/curso/curso_Conjunto";
+	
+	public static final String LAYOUT="layout";
 
 }

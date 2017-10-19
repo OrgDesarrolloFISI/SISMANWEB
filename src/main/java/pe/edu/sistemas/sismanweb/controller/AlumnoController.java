@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import pe.edu.sistemas.sismanweb.domain.Alumno;
@@ -41,35 +41,40 @@ public class AlumnoController {
 	@Autowired PlanService planService;
 	
 	List<AlumnoModelForm> alumnos = new ArrayList<AlumnoModelForm>();
+	
+	@ModelAttribute("modulo")
+	public String modulo(){
+		return "alumno/alumno";
+	}
 			
 	@GetMapping("/all")
-	public ModelAndView verAlumnos(){		
-		ModelAndView mav = new ModelAndView(VariablesGlobales.ALUMNO_VIEW);
-		mav.addObject("search", new Search());
-		mav.addObject("listaAlumno", alumnos);
+	public String verAlumnos(Model model){
+		model.addAttribute("fragmento", "contentAlumnoBuscador");
+		model.addAttribute("search", new Search());
+		model.addAttribute("listaAlumno", alumnos);
 		logger.info("SE DEVUELVEN ALUMNOS : " + alumnos.size());
 		alumnos=new ArrayList<AlumnoModelForm>();
-		return mav;		
+		return VariablesGlobales.LAYOUT;		
 	}
 	
 	@GetMapping({"/form","/form/{id}"})
-	public ModelAndView formularioAlumno(@RequestParam(name="existe",required=false) String existe,
+	public String formularioAlumno(Model model,@RequestParam(name="existe",required=false) String existe,
 			@PathVariable(name="id",required=false)String id){
-		ModelAndView mav = new ModelAndView(VariablesGlobales.ALUMNO_FORM);
+		model.addAttribute("fragmento", "contentAlumnoIndividual");
 		List<Plan> planesDeEstudio = planService.obtenerPlanes();
-		mav.addObject("listaPlan", planesDeEstudio);
+		model.addAttribute("listaPlan", planesDeEstudio);
 		if(id!=null){
 			AlumnoModelForm alumnoModel;
 			logger.info("EDITAR ALUMNO CON ID: "+id);
 			alumnoModel = alumnoService.converterToAlumnoModelForm((alumnoService.obtenerAlumnoxID(Integer.parseInt(id))));
-			mav.addObject("alumno", alumnoModel);
+			model.addAttribute("alumno", alumnoModel);
 		}else{
-			mav.addObject("alumno", new AlumnoModelForm());
+			model.addAttribute("alumno", new AlumnoModelForm());
 		}
-		mav.addObject("existe", existe);
+		model.addAttribute("existe", existe);
 		
 		logger.info("RETORNANDO FORMULARIO ALUMNO");
-		return mav;
+		return VariablesGlobales.LAYOUT;
 	}
 	
 	
@@ -103,7 +108,6 @@ public class AlumnoController {
 
 	@PostMapping("/addBulk")
 	public String agregarAlumnos(@RequestBody String listAlumno ){
-		ModelAndView mav = new ModelAndView(VariablesGlobales.ALUMNO_FORM);
 		logger.info("CADENA RECIBIDA: "+listAlumno);		
 		JSONArray jsonArrayAlumno = new JSONArray(listAlumno);
 		DeserealizarJSON<AlumnoModelForm> deserealizador = new DeserealizarJSON<AlumnoModelForm>(AlumnoModelForm.class);

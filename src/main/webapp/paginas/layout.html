@@ -4,17 +4,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title th:text="${'Modulo de '+modulo}">Gestion Entidad</title>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+<link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
 	type="text/css" />
-<link rel="stylesheet"
-	href="https://bootswatch.com/sandstone/bootstrap.min.css"
+<link rel="stylesheet"	href="https://bootswatch.com/sandstone/bootstrap.min.css"
 	type="text/css" />
-<link rel="stylesheet" 
-	href="/sismanweb/static/css/style.css"
+<link rel="stylesheet" 	href="/sismanweb/static/css/style.css"
 	type="text/css" />
-<link rel="stylesheet"
-	href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css"
+<link rel="stylesheet"	href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css"
 	type="text/css" />
 </head>
 
@@ -36,7 +32,7 @@
 		<!-- **********************************FCabecera******************************-->
 
 		<!-- **********************************IMain**********************************-->
-		<div th:replace="alumnoTest :: ${fragmento}">CONTENT</div>
+		<div th:replace="${modulo} :: ${fragmento}">CONTENT</div>
 		<!-- **********************************FMain**********************************-->
 
 	</div>
@@ -55,10 +51,7 @@
 	<script type="text/javascript" src="/sismanweb/static/js/jquery.dataTables.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
 	<script type="text/javascript" src="/sismanweb/static/js/table.js"></script>
-
-
-	<script src="/sismanweb/static/js/excel.js"></script>
-
+	
 
 </body>
 </html>
