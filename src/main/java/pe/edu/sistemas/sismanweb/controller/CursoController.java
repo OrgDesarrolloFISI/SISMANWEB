@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,6 @@ import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
 import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.CursoService;
 import pe.edu.sistemas.sismanweb.services.PlanService;
-import pe.edu.sistemas.sismanweb.services.modelform.AlumnoModelForm;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoBCModelForm;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
 import pe.edu.sistemas.sismanweb.util.Search;
@@ -36,26 +36,32 @@ public class CursoController {
 	
 	List<CursoModelForm> cursos = new ArrayList<CursoModelForm>();
 	
+	@ModelAttribute("modulo")
+	public String modulo(){
+		return "curso/curso";
+	}
+	
 	@GetMapping("/all")
-	public ModelAndView verCursos(){
-		ModelAndView mav = new ModelAndView(VariablesGlobales.CURSO_VIEW);
-		mav.addObject("search", new Search());
-		mav.addObject("listaCurso", cursos);
+	public String verCursos(Model model){
+		model.addAttribute("fragmento","contentCursoBuscador");
+		model.addAttribute("search", new Search());
+		model.addAttribute("listaCurso", cursos);
 		logger.info("SE DEVUELVEN CURSOS : " + cursos.size());
 		cursos=new ArrayList<CursoModelForm>();
-		return mav;	
+		return VariablesGlobales.LAYOUT;	
 	}
 
 	@GetMapping("/form")
-	public ModelAndView formularioCurso(@RequestParam(name="existe",required=false) String existe){
+	public String formularioCurso(Model model, @RequestParam(name="existe",required=false) String existe){
 		ModelAndView mav = new ModelAndView(VariablesGlobales.CURSO_FORM);
 		List<Plan> planesDeEstudio = planService.obtenerPlanes();
-		mav.addObject("listaPlan",planesDeEstudio);
-		mav.addObject("curso", new CursoModelForm());
-		mav.addObject("existe", existe);
+		model.addAttribute("fragmento","contentCursoRegistro");
+		model.addAttribute("listaPlan",planesDeEstudio);
+		model.addAttribute("curso", new CursoModelForm());
+		model.addAttribute("existe", existe);
 		System.out.println(existe);
 		logger.info("Retornando formulario Curso");		
-		return mav;
+		return VariablesGlobales.LAYOUT;
 	}
 	
 	@PostMapping("/add")
@@ -72,20 +78,19 @@ public class CursoController {
 
 	
 	@GetMapping("/conjunto")
-	public ModelAndView gestionarConjuntoCurso(@RequestParam(name="exito",required=false) String exito){
-		ModelAndView mav = new ModelAndView(VariablesGlobales.CURSO_CONJUNTO);
+	public String gestionarConjuntoCurso(Model model, @RequestParam(name="exito",required=false) String exito){
 		List<CursoBase> listaBase = null;
 		List<CursoConjunto> listaConjunto = null;
 		listaBase = cursoService.findCursoBaseSinConjunto();
 		logger.info("CANTIDAD DE CURSOS BASES SIN CONJUNTO: " + listaBase.size());
 		listaConjunto = cursoService.findCursosConjuntos();
-		mav.addObject("listaCursoB",listaBase);
-		mav.addObject("listaCursoC",listaConjunto);
-		mav.addObject("cursobc",new CursoBCModelForm());
-		mav.addObject("exito", exito);
-		
+		model.addAttribute("fragmento","contentCursoEquivalencia");
+		model.addAttribute("listaCursoB",listaBase);
+		model.addAttribute("listaCursoC",listaConjunto);
+		model.addAttribute("cursobc",new CursoBCModelForm());
+		model.addAttribute("exito", exito);		
 		logger.info("RETORNANDO VISTA CURSO CONJUNTO");
-		return mav;
+		return VariablesGlobales.LAYOUT;
 	}
 	
 	@PostMapping("/addConjunto")
@@ -111,8 +116,7 @@ public class CursoController {
 	}
 	
 	@GetMapping("/search")
-	public String BuscarCursos(@ModelAttribute("search") Search search){
-			
+	public String BuscarCursos(@ModelAttribute("search") Search search){			
 		cursos = cursoService.buscarCursosxParam(search.getValor(),search.getFiltro());
 		logger.info("SE ENCONTRO CURSOS: " + cursos.size());
 		return "redirect:/curso/all";

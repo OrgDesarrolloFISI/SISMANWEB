@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import pe.edu.sistemas.sismanweb.domain.Alumno;
 import pe.edu.sistemas.sismanweb.domain.Persona;
@@ -71,16 +70,14 @@ public class AlumnoController {
 		}else{
 			model.addAttribute("alumno", new AlumnoModelForm());
 		}
-		model.addAttribute("existe", existe);
-		
+		model.addAttribute("existe", existe);		
 		logger.info("RETORNANDO FORMULARIO ALUMNO");
 		return VariablesGlobales.LAYOUT;
 	}
 	
 	
 	@PostMapping("/add")
-	public String agregarAlumno(@ModelAttribute("alumno") AlumnoModelForm alumnoPersonaModel){
-		
+	public String agregarAlumno(@ModelAttribute("alumno") AlumnoModelForm alumnoPersonaModel){		
 		Alumno alumno = alumnoService.converterToAlumno(alumnoPersonaModel);
 		logger.info("DATOS RECIBIDOS : "+ alumnoPersonaModel.getCodigo()+" -- IDALUMNO:"+alumnoPersonaModel.getIdAlumno() + " -- IDPERSONA:" +alumnoPersonaModel.getIdPersona() );
 		boolean existe;
@@ -105,6 +102,12 @@ public class AlumnoController {
 		return "redirect:/alumno/all";	
 	}	
 	
+	@GetMapping("/bulk")
+	public String bulkAlumnos(Model model){
+		model.addAttribute("fragmento", "contentAlumnoGrupal");
+		logger.info("RETORNANDO VISTA CARGA MASIVA -- ALUMNO");
+		return VariablesGlobales.LAYOUT;		
+	}
 
 	@PostMapping("/addBulk")
 	public String agregarAlumnos(@RequestBody String listAlumno ){
@@ -135,8 +138,7 @@ public class AlumnoController {
 	
 	
 	@GetMapping("/search")
-	public String BuscarAlumnos(@ModelAttribute("search") Search search){
-			
+	public String BuscarAlumnos(@ModelAttribute("search") Search search){			
 		alumnos = alumnoService.buscarAlumnosxParam(search.getValor(),search.getFiltro());
 		logger.info("SE ENCONTRO ALUMNOS: " + alumnos.size());
 		return "redirect:/alumno/all";

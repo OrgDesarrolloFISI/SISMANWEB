@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,36 +44,42 @@ public class DocenteController {
 	
 	List<DocenteModelForm> docentes = new ArrayList<DocenteModelForm>();
 	
+	@ModelAttribute("modulo")
+	public String modulo(){
+		return "docente/docente";
+	}
+	
+	
 	@GetMapping("/all")
-	public ModelAndView verDocentes(){
-		ModelAndView mav = new ModelAndView(VariablesGlobales.DOCENTE_VIEW);
-		mav.addObject("search", new Search());
-		mav.addObject("listaDocente", docentes);
-		docentes=new ArrayList<DocenteModelForm>();
+	public String verDocentes(Model model){
+		model.addAttribute("fragmento","contentDocenteBuscador");
+		model.addAttribute("search", new Search());
+		model.addAttribute("listaDocente", docentes);
 		logger.info("SE DEVUELVEN DOCENTES : " + docentes.size());
-	return mav;	
+		docentes=new ArrayList<DocenteModelForm>();
+		return VariablesGlobales.LAYOUT;	
 	}
 	
 	@GetMapping({"/form","/form/{id}"})
-	public ModelAndView formularioDocente(@RequestParam(name="existe",required=false) String existe,
+	public String formularioDocente(Model model,@RequestParam(name="existe",required=false) String existe,
 			@PathVariable(name="id",required=false)String id){
-		ModelAndView mav = new ModelAndView(VariablesGlobales.DOCENTE_FORM);
-		mav.addObject("clasesDoc",claseService.obtenerClasesDeDocentes());
-		mav.addObject("categoriasDoc",categoriaDocenteService.obtenerCategorias());
-		mav.addObject("depAcadDoc",departamentoAcademicoService.obtenerDepAcademicos());
+		model.addAttribute("fragmento","contentDocenteIndividual");
+		model.addAttribute("clasesDoc",claseService.obtenerClasesDeDocentes());
+		model.addAttribute("categoriasDoc",categoriaDocenteService.obtenerCategorias());
+		model.addAttribute("depAcadDoc",departamentoAcademicoService.obtenerDepAcademicos());
 		
 		if(id!=null){
 			DocenteModelForm docenteModel;
 			logger.info("EDITAR DOCENTE CON ID: "+id);
 			docenteModel = docenteService.converterToDocenteModelForm((docenteService.obtenerDocenteXID(Integer.parseInt(id))));
-			mav.addObject("docente", docenteModel);
+			model.addAttribute("docente", docenteModel);
 		}else{
-			mav.addObject("docente", new DocenteModelForm());
+			model.addAttribute("docente", new DocenteModelForm());
 		}
-		mav.addObject("existe", existe);
+		model.addAttribute("existe", existe);
 		
 		logger.info("RETORNANDO FORMULARIO DOCENTE");
-		return mav;
+		return VariablesGlobales.LAYOUT;
 	}
 	
 	
@@ -103,9 +110,15 @@ public class DocenteController {
 		return "redirect:/docente/all";	
 	}
 	
+	@GetMapping("/bulk")
+	public String bulkDocentes(Model model){
+		model.addAttribute("fragmento", "contentDocenteGrupal");
+		logger.info("RETORNANDO VISTA CARGA MASIVA -- DOCENTE");
+		return VariablesGlobales.LAYOUT;		
+	}
+	
 	@PostMapping("/addBulk")
 	public String agregarDocentes(@RequestBody String listDocente ){
-		ModelAndView mav = new ModelAndView(VariablesGlobales.DOCENTE_FORM);
 		logger.info("CADENA RECIBIDA: "+listDocente);		
 		JSONArray jsonArrayDocente = new JSONArray(listDocente);
 		DeserealizarJSON<DocenteModelForm> deserealizador = new DeserealizarJSON<DocenteModelForm>(DocenteModelForm.class);
@@ -129,7 +142,7 @@ public class DocenteController {
 			}				
 		}	
 		
-		return "redirect:/docente/form";
+		return "redirect:/docente/all";
 	}	
 	
 	
