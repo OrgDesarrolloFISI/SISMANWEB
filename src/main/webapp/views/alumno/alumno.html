@@ -101,10 +101,12 @@
 				<input type="file" onchange="parseAndSend(event)"
 					value="Parse and send XSLS file" />
 			</div>
-
-			<a th:href="@{/alumno/all}">
-				<button type="button" onclick="SendDataAlumno()">Enviar</button>
-			</a>
+			
+			<button id="botonExcel" type="button" onclick="SendDataAlumno()">Enviar Excel</button>
+			
+			<button id="enviar">Enviar</button>
+			
+			<div id="cargaExterna">Esto cambiara</div>
 
 		</form>
 	</div>
@@ -184,6 +186,13 @@
 		<div class="espacio_vacio"></div>
 	</div>
 	<!--**********************FBuscador********************** -->
+	
+	
+	<!--**********************IAviso********************** -->
+	<div th:fragment="contentAlumnoAviso">
+		<p>Esto es un AVISO</p>
+	</div>
+	<!--**********************FAviso********************** -->
 
 </body>
 </html>

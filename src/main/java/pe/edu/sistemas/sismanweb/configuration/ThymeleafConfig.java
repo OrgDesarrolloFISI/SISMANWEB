@@ -12,7 +12,7 @@ public class ThymeleafConfig {
 	@Bean 
 	public SpringResourceTemplateResolver templateResolver() {
 		SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
-		resolver.setPrefix("/paginas/"); //tambien se puede usar classpath:/paginas/
+		resolver.setPrefix("/views/"); //tambien se puede usar classpath:/paginas/
 		resolver.setSuffix(".html");
 		resolver.setTemplateMode("HTML5");
 		resolver.setCharacterEncoding("UTF-8");

@@ -2,7 +2,7 @@
 var json_ws;
 var string_ws;
 
-function parseAndSend (event) {
+	function parseAndSend (event) {
 	 
         loadBinaryFile(event,function(data){
         	
@@ -36,18 +36,47 @@ function parseAndSend (event) {
     function SendDataAlumno(){
     	
     	//alert(string_ws);
-    	 $.ajax({
+    	$.ajax({
              url: '/sismanweb/alumno/addBulk',
              type: 'POST', 
              contentType: "application/json; charset=utf-8",
-             dataType: "json",  
+             // el tipo de información que se espera de respuesta
+             dataType: "html",
+             // la información a enviar
+             // (también es posible utilizar una cadena de datos)
              data: string_ws,
+             // código a ejecutar si la petición es satisfactoria;
+             // la respuesta es pasada como argumento a la función
              success: function(data) {
+            	 
+            	 alert("se entrego datos");
+            	 $("#cargaExterna").html(data);
+            	 /*
             	 if(data){
                      window.location.replace("http://sitioweb.com");
-                   }
-             }
+                     alert("se entrego datos"+data.state());
+                   }*/
+             },
+             // código a ejecutar si la petición falla;
+             // son pasados como argumentos a la función
+             // el objeto de la petición en crudo y código de estatus de la petición
+             error : function(xhr, status) {
+                 alert('Disculpe, existio un problema');
+                 alert("se entrego datos"+xhr+status);
+             },
+             
            });
+    	
+    	/*
+    	$(document).ready(function()
+    	{
+    		$("#botonExcel").click(function(){
+    	        	$.post("/sismanweb/alumno/addBulk", string_ws, function(htmlexterno){
+    	        		$("#cargaExterna").html(htmlexterno);
+    	    		});
+    		});
+    	});
+    	*/
     }
     
     

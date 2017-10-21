@@ -133,7 +133,7 @@ public class AlumnoController {
 				//mav.addObject("exito");
 			}				
 		}			
-		return "redirect:/alumno/form";
+		return "alumno/alumno :: contentAlumnoAviso";
 	}	
 	
 	
