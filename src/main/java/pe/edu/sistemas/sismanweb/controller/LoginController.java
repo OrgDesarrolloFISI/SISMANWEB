@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import pe.edu.sistemas.sismanweb.domain.Persona;
 import pe.edu.sistemas.sismanweb.services.PersonaService;
+import pe.edu.sistemas.sismanweb.util.VariablesGlobales;
 
 @Controller
 public class LoginController {
@@ -43,8 +45,11 @@ public class LoginController {
 	}
 */	
 	@RequestMapping(value="/home",method=RequestMethod.GET)
-	public String home(){
-		return "home";
+	public String home(Model model){
+		model.addAttribute("titulo","Inicio");
+		model.addAttribute("modulo","home");
+		model.addAttribute("fragmento","main");
+		return VariablesGlobales.LAYOUT;
 	}
 	
 }

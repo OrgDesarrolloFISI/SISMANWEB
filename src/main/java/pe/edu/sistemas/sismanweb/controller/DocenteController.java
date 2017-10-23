@@ -44,6 +44,11 @@ public class DocenteController {
 	
 	List<DocenteModelForm> docentes = new ArrayList<DocenteModelForm>();
 	
+	@ModelAttribute("titulo")
+	public String titulo(){
+		return "Modulo docente";
+	}
+	
 	@ModelAttribute("modulo")
 	public String modulo(){
 		return "docente/docente";
@@ -130,19 +135,17 @@ public class DocenteController {
 		
 		if(jsonArrayDocente.length()!=docentesModel.size()){
 			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO: "+(docentesModel.size()+1));
-			//mav.addObject("errorRegistro", DocentesModel.size()+1);
+			return "docente/docente :: contentDocenteAvisoError";
 		}else{
 			resultado = docenteService.saveBulk(docentesModel);
 			if(!resultado.isEmpty()){
 				logger.warn("EXISTEN "+resultado.size()+" DOCENTES YA REGISTRADOS");
-				//mav.addObject("errorExiste",resultado.size());
+				return "docente/docente :: contentDocenteAvisoExisten";
 			}else{
 				logger.info("SE REGISTRO EXITOSAMENTE DOCENTES");
-				//mav.addObject("exito");
+				return "docente/docente :: contentDocenteAvisoExito";
 			}				
 		}	
-		
-		return "redirect:/docente/all";
 	}	
 	
 	

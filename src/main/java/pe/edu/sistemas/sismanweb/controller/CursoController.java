@@ -36,6 +36,11 @@ public class CursoController {
 	
 	List<CursoModelForm> cursos = new ArrayList<CursoModelForm>();
 	
+	@ModelAttribute("titulo")
+	public String titulo(){
+		return "Modulo curso";
+	}
+	
 	@ModelAttribute("modulo")
 	public String modulo(){
 		return "curso/curso";

@@ -41,6 +41,11 @@ public class AlumnoController {
 	
 	List<AlumnoModelForm> alumnos = new ArrayList<AlumnoModelForm>();
 	
+	@ModelAttribute("titulo")
+	public String titulo(){
+		return "Modulo alumno";
+	}
+	
 	@ModelAttribute("modulo")
 	public String modulo(){
 		return "alumno/alumno";
@@ -110,7 +115,7 @@ public class AlumnoController {
 	}
 
 	@PostMapping("/addBulk")
-	public String agregarAlumnos(@RequestBody String listAlumno ){
+	public String agregarAlumnos(Model model,@RequestBody String listAlumno ){
 		logger.info("CADENA RECIBIDA: "+listAlumno);		
 		JSONArray jsonArrayAlumno = new JSONArray(listAlumno);
 		DeserealizarJSON<AlumnoModelForm> deserealizador = new DeserealizarJSON<AlumnoModelForm>(AlumnoModelForm.class);
@@ -121,19 +126,18 @@ public class AlumnoController {
 		alumnosModel = deserealizador.deserealiza(jsonArrayAlumno);
 		
 		if(jsonArrayAlumno.length()!=alumnosModel.size()){
-			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO: "+(alumnosModel.size()+1));
-			//mav.addObject("errorRegistro", alumnosModel.size()+1);
+			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO NRO "+(alumnosModel.size()+1));
+			return "alumno/alumno :: contentAlumnoAvisoError";
 		}else{
 			resultado = alumnoService.saveBulk(alumnosModel);
 			if(!resultado.isEmpty()){
 				logger.warn("EXISTEN "+resultado.size()+" ALUMNOS YA REGISTRADOS");
-				//mav.addObject("errorExiste",resultado.size());
+				return "alumno/alumno :: contentAlumnoAvisoExisten";
 			}else{
 				logger.info("SE REGISTRO EXITOSAMENTE ALUMNOS");
-				//mav.addObject("exito");
+				return "alumno/alumno :: contentAlumnoAvisoExito";
 			}				
 		}			
-		return "alumno/alumno :: contentAlumnoAviso";
 	}	
 	
 	

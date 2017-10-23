@@ -13,11 +13,9 @@ var string_ws;
             var worksheet = workbook.Sheets[first_sheet_name]; 
             
             json_ws = XLSX.utils.sheet_to_json(worksheet);
-            string_ws = JSON.stringify(json_ws);            
             
-            //alert(string_ws);
+            string_ws = JSON.stringify(json_ws);
             
-            //MostrarDatosAlumnos(json_ws);
         });
     }
 
@@ -34,8 +32,6 @@ var string_ws;
     
     
     function SendDataAlumno(){
-    	
-    	//alert(string_ws);
     	$.ajax({
              url: '/sismanweb/alumno/addBulk',
              type: 'POST', 
@@ -47,22 +43,15 @@ var string_ws;
              data: string_ws,
              // código a ejecutar si la petición es satisfactoria;
              // la respuesta es pasada como argumento a la función
-             success: function(data) {
-            	 
-            	 alert("se entrego datos");
+             success: function(data) {            	             	 
+            	 console.log("se entrego datos");
             	 $("#cargaExterna").html(data);
-            	 /*
-            	 if(data){
-                     window.location.replace("http://sitioweb.com");
-                     alert("se entrego datos"+data.state());
-                   }*/
              },
              // código a ejecutar si la petición falla;
              // son pasados como argumentos a la función
              // el objeto de la petición en crudo y código de estatus de la petición
              error : function(xhr, status) {
-                 alert('Disculpe, existio un problema');
-                 alert("se entrego datos"+xhr+status);
+                 alert('Disculpe, existio un problema -- '+xhr+" -- "+status);
              },
              
            });
@@ -81,27 +70,20 @@ var string_ws;
     
     
     function SendDataDocente(){
-    	
-    	//alert(string_ws);
     	 $.ajax({
              url: '/sismanweb/docente/addBulk',
              type: 'POST', 
              contentType: "application/json; charset=utf-8",
-             dataType: "json",  
+             dataType: "html",  
              data: string_ws,
-             success: function(result) {
-                 alert('SUCCESS');
-             }
+             success: function(data) {            	             	 
+            	 console.log("se entrego datos");
+            	 $("#cargaExterna").html(data);
+             },
+             error : function(xhr, status) {
+                 alert('Disculpe, existio un problema -- '+xhr+" -- "+status);
+             },
            });
     }
-    
-   /* function MostrarDatosAlumnos(data){
-    	
-    	if(data!=null){
-    		$( "table.tabla_alumnos" ).html( "" );
-    	}
-    	
-    	
-    }*/
     
  

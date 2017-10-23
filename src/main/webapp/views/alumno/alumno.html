@@ -97,6 +97,7 @@
 	<!--**********************IRegistroGrupal********************** -->
 	<div th:fragment="contentAlumnoGrupal">
 		<form role="form">
+		
 			<div class="form-group">
 				<input type="file" onchange="parseAndSend(event)"
 					value="Parse and send XSLS file" />
@@ -104,9 +105,7 @@
 			
 			<button id="botonExcel" type="button" onclick="SendDataAlumno()">Enviar Excel</button>
 			
-			<button id="enviar">Enviar</button>
-			
-			<div id="cargaExterna">Esto cambiara</div>
+			<div id="cargaExterna"></div>
 
 		</form>
 	</div>
@@ -189,8 +188,16 @@
 	
 	
 	<!--**********************IAviso********************** -->
-	<div th:fragment="contentAlumnoAviso">
-		<p>Esto es un AVISO</p>
+	<div th:fragment="contentAlumnoAvisoExito">
+		<p>Se registraron alumnos exitosamente</p>
+	</div>
+	
+	<div th:fragment="contentAlumnoAvisoExisten">
+		<p>Existen alumno registrados</p>
+	</div>
+	
+	<div th:fragment="contentAlumnoAvisoError">
+		<p>Hubo un error al registrar</p>
 	</div>
 	<!--**********************FAviso********************** -->
 
