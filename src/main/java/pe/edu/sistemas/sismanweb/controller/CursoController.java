@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
@@ -58,7 +57,6 @@ public class CursoController {
 
 	@GetMapping("/form")
 	public String formularioCurso(Model model, @RequestParam(name="existe",required=false) String existe){
-		ModelAndView mav = new ModelAndView(VariablesGlobales.CURSO_FORM);
 		List<Plan> planesDeEstudio = planService.obtenerPlanes();
 		model.addAttribute("fragmento","contentCursoRegistro");
 		model.addAttribute("listaPlan",planesDeEstudio);

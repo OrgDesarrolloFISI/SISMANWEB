@@ -1,10 +1,5 @@
 package pe.edu.sistemas.sismanweb.services.modelform;
 
-import java.util.Date;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 public class DocenteModelForm {
 	
 	private int idDocente;

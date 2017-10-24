@@ -72,23 +72,22 @@
 					<hr />
 				</div>
 
-				<div class="col-xs-3">
+				<div class="col-xs-4">
 					<br/> <label for="Telefono">Telefono</label> <input type="text"
 						class="form-control" id="Telefono" placeholder="Telefono"
 						pattern="[0-9]{7-10}" th:field="*{telefono}"></input>
 				</div>
-				<div class="col-xs-3">
+				<div class="col-xs-4">
 					<br/> <label for="DNI">DNI</label> <input type="text"
 						class="form-control" id="DNI" placeholder="DNI" pattern="[0-9]{8}"
 						th:field="*{dni}"></input>
 				</div>
-				<div class="col-xs-3">
-					<br/> <label>Sexo</label> <select name="Sexo" class="form-control"
-						th:field="*{sexo}">
-						<option value="M">MASCULINO</option>
-						<option value="F">FEMENINO</option>
+				<div class="col-xs-4">
+					<br/> <label for="Sexo">Sexo</label> <input type="text"
+						class="form-control" id="Sexo" placeholder="M / F" 
+						th:field="*{sexo}" />
 					</select>
-				</div>		
+				</div>	
 				<br/> <br/> <br/> 		
 				<div class="col-xs-6">
 					<label for="Correo">Correo</label> <input type="email"
@@ -103,7 +102,9 @@
 				</div>
 			</div>
 
-			<button type="submit" class="btn btn-default btn-block">REGISTRAR</button>
+			<div class="text-center">
+			<button type="submit" class="btn btn-default" style="width: 30%;" th:text="${docente.codigo != null ? 'Actualizar' : 'Registrar'}" >Botón</button>
+			</div>	
 		</form>
 
 		<div class="espacio_vacio"></div>
@@ -209,6 +210,21 @@
 	
 	<div th:fragment="contentDocenteAvisoError">
 		<p>Hubo un error al registrar</p>
+	</div>
+	
+	<div th:fragment="contentDocenteAvisoExitoIndiv">		
+		<div class="text-center">
+		<p class="lead">Docente registrado exitosamente!</p>
+		<a href="#" th:href="@{/docente/form}"><button type="button" class="btn btn-primary">Volver a registro</button></a>
+		<a href="#" th:href="@{/docente/all}"><button type="button" class="btn btn-primary">Ir al buscador</button></a>
+		</div>		
+	</div>
+	
+	<div th:fragment="contentDocenteAvisoEdicionIndiv">		
+		<div class="text-center">
+		<p class="lead">Docente actualizado exitosamente!</p>
+		<a href="#" th:href="@{/docente/all}"><button type="button" class="btn btn-primary">Ir al buscador</button></a>
+		</div>		
 	</div>
 	<!--**********************FAviso********************** -->
 
