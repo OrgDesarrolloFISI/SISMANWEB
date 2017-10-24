@@ -110,6 +110,7 @@ public class AlumnoController {
 	@GetMapping("/bulk")
 	public String bulkAlumnos(Model model){
 		model.addAttribute("fragmento", "contentAlumnoGrupal");
+		model.addAttribute("listaPlanes", planService.obtenerPlanes());
 		logger.info("RETORNANDO VISTA CARGA MASIVA -- ALUMNO");
 		return VariablesGlobales.LAYOUT;		
 	}
@@ -127,15 +128,24 @@ public class AlumnoController {
 		
 		if(jsonArrayAlumno.length()!=alumnosModel.size()){
 			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO NRO "+(alumnosModel.size()+1));
-			return "alumno/alumno :: contentAlumnoAvisoError";
+			return "alumno/alumno :: contentAlumnoAvisoErrorGrup";
 		}else{
+			try{
 			resultado = alumnoService.saveBulk(alumnosModel);
+			
+			}catch(Exception e){
+				logger.warn("ERROR AL REGISTRAR");
+				return "alumno/alumno :: contentAlumnoAvisoErrorPlanGrup";
+			}
+			model.addAttribute("cantidadAlumnosGuardados",(jsonArrayAlumno.length()-resultado.size()));
 			if(!resultado.isEmpty()){
-				logger.warn("EXISTEN "+resultado.size()+" ALUMNOS YA REGISTRADOS");
-				return "alumno/alumno :: contentAlumnoAvisoExisten";
+				model.addAttribute("listaAlumnosRepetidos", resultado);
+				logger.warn("EXISTEN "+resultado.size() +" ALUMNOS YA REGISTRADOS");
+				return "alumno/alumno :: contentAlumnoAvisoExistenGrup";
+				
 			}else{
 				logger.info("SE REGISTRO EXITOSAMENTE ALUMNOS");
-				return "alumno/alumno :: contentAlumnoAvisoExito";
+				return "alumno/alumno :: contentAlumnoAvisoExitoGrup";
 			}				
 		}			
 	}	

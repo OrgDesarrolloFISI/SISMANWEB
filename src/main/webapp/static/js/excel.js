@@ -2,6 +2,7 @@
 var json_ws;
 var string_ws;
 
+
 	function parseAndSend (event) {
 	 
         loadBinaryFile(event,function(data){
@@ -45,6 +46,7 @@ var string_ws;
              // la respuesta es pasada como argumento a la función
              success: function(data) {            	             	 
             	 console.log("se entrego datos");
+            	 $("#fileData").val("");
             	 $("#cargaExterna").html(data);
              },
              // código a ejecutar si la petición falla;
@@ -55,6 +57,10 @@ var string_ws;
              },
              
            });
+    	
+    	
+    	
+    	
     	
     	/*
     	$(document).ready(function()
