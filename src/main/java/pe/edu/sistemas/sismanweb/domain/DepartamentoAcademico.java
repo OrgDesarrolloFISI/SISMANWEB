@@ -18,6 +18,8 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "DEPARTAMENTO_ACADEMICO", catalog = "modeloGeneralFisi", uniqueConstraints = @UniqueConstraint(columnNames = "DEPARTAMENTO_ACADEMICO_NOMBRE"))
 public class DepartamentoAcademico implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private int iddepartamentoAcademico;
 	private String departamentoAcademicoNombre;
 	private Set<Docente> docentes = new HashSet<Docente>(0);

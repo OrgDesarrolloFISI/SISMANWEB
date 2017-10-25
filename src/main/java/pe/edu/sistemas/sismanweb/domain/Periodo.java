@@ -20,6 +20,8 @@ import javax.persistence.TemporalType;
 @Table(name = "PERIODO", catalog = "modeloGeneralFisi")
 public class Periodo implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private int idperiodo;
 	private String periodoNombre;
 	private Date periodoFechaInicio;

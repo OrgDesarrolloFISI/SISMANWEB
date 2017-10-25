@@ -21,6 +21,8 @@ import javax.persistence.Table;
 @Table(name = "CURSO_CONJUNTO", catalog = "modeloGeneralFisi")
 public class CursoConjunto implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Integer idcursoConjunto;
 	private CursoBase cursoBase;
 	private String cursocNombre;

@@ -18,6 +18,8 @@ import javax.persistence.Table;
 @Table(name = "CURSO_PERIODO", catalog = "modeloGeneralFisi")
 public class CursoPeriodo implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Integer idcursoPeriodo;
 	private CursoConjunto cursoConjunto;
 	private Periodo periodo;

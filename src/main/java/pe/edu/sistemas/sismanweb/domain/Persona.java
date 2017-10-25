@@ -22,6 +22,8 @@ import javax.persistence.TemporalType;
 @Table(name = "PERSONA", catalog = "modeloGeneralFisi")
 public class Persona implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Integer idPersona;
 	private String personaCodigo;
 	private String personaNombre;

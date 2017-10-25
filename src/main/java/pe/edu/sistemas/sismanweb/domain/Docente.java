@@ -20,6 +20,8 @@ import javax.persistence.Table;
 @Table(name = "DOCENTE", catalog = "modeloGeneralFisi")
 public class Docente implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Integer iddocente;
 	private CategoriaDocente categoriaDocente;
 	private Clase clase;

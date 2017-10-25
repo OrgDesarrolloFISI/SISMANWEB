@@ -18,6 +18,8 @@ import javax.persistence.Table;
 @Table(name = "USUARIO", catalog = "modeloGeneralFisi")
 public class Usuario implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Integer idUsuario;
 	private Persona persona;
 	private TipoUsuario tipoUsuario;

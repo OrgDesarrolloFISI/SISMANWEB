@@ -19,6 +19,8 @@ import javax.persistence.Table;
 @Table(name = "PLAN", catalog = "modeloGeneralFisi")
 public class Plan implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Integer idplan;
 	private int escuelaIdescuela;
 	private String planNombre;
