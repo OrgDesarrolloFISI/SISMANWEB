@@ -67,12 +67,12 @@ public class AlumnoController {
 		model.addAttribute("fragmento", "contentAlumnoIndividual");
 		List<Plan> planesDeEstudio = planService.obtenerPlanes();
 		model.addAttribute("listaPlan", planesDeEstudio);
-		if(id!=null){
+		if(id!=null){ // formulario con datos a editar
 			AlumnoModelForm alumnoModel;
 			logger.info("EDITAR ALUMNO CON ID: "+id);
 			alumnoModel = alumnoService.converterToAlumnoModelForm((alumnoService.obtenerAlumnoxID(Integer.parseInt(id))));
 			model.addAttribute("alumno", alumnoModel);
-		}else{
+		}else{		  // formaulario vacio	
 			model.addAttribute("alumno", new AlumnoModelForm());
 		}
 		model.addAttribute("existe", existe);		
@@ -82,18 +82,20 @@ public class AlumnoController {
 	
 	
 	@PostMapping("/add")
-	public String agregarAlumno(@ModelAttribute("alumno") AlumnoModelForm alumnoPersonaModel){		
+	public String agregarAlumno(Model model, @ModelAttribute("alumno") AlumnoModelForm alumnoPersonaModel){		
 		Alumno alumno = alumnoService.converterToAlumno(alumnoPersonaModel);
 		logger.info("DATOS RECIBIDOS : "+ alumnoPersonaModel.getCodigo()+" -- IDALUMNO:"+alumnoPersonaModel.getIdAlumno() + " -- IDPERSONA:" +alumnoPersonaModel.getIdPersona() );
 		boolean existe;
-		if(alumnoPersonaModel.getIdAlumno()==0){
+		if(alumnoPersonaModel.getIdAlumno()==0){ // agregar alumno
 			existe = alumnoService.insertarAlumno(alumno);
 			if(existe){
 				logger.info("AGREGAR ALUMNO --- Codigo ya existente");
 				return "redirect:/alumno/form?existe";
 			}
 			logger.info("ALUMNO AGREGADO");
-		}else{
+			model.addAttribute("fragmento", "contentAlumnoAvisoExitoIndiv");
+			return VariablesGlobales.LAYOUT;	
+		}else{									// editar alumno
 			Persona persona_codigo = personaService.obtenerPersonaxCodigo(alumno.getPersona().getPersonaCodigo());
 			existe = alumnoService.actualizarAlumno(alumno, persona_codigo);
 			if(existe){
@@ -101,10 +103,10 @@ public class AlumnoController {
 				return "redirect:/alumno/form/"+alumno.getIdAlumno()+"?existe";
 			}else{
 				logger.info("ALUMNO ACTUALIZADO");
-				return "redirect:/alumno/form";
+				model.addAttribute("fragmento", "contentAlumnoAvisoEdicionIndiv");
+				return VariablesGlobales.LAYOUT;
 			}
-		}		
-		return "redirect:/alumno/all";	
+		}				
 	}	
 	
 	@GetMapping("/bulk")

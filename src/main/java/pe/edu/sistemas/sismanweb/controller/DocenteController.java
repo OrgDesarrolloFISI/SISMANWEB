@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import pe.edu.sistemas.sismanweb.domain.Docente;
 import pe.edu.sistemas.sismanweb.domain.Persona;
@@ -73,35 +72,36 @@ public class DocenteController {
 		model.addAttribute("categoriasDoc",categoriaDocenteService.obtenerCategorias());
 		model.addAttribute("depAcadDoc",departamentoAcademicoService.obtenerDepAcademicos());
 		
-		if(id!=null){
+		if(id!=null){		// formulario con datos a editar
 			DocenteModelForm docenteModel;
 			logger.info("EDITAR DOCENTE CON ID: "+id);
 			docenteModel = docenteService.converterToDocenteModelForm((docenteService.obtenerDocenteXID(Integer.parseInt(id))));
 			model.addAttribute("docente", docenteModel);
-		}else{
+		}else{				// formaulario vacio
 			model.addAttribute("docente", new DocenteModelForm());
 		}
-		model.addAttribute("existe", existe);
-		
+		model.addAttribute("existe", existe);		
 		logger.info("RETORNANDO FORMULARIO DOCENTE");
 		return VariablesGlobales.LAYOUT;
 	}
 	
 	
 	@PostMapping("/add")
-	public String agregarDocente(@ModelAttribute("docente") DocenteModelForm docentePersonaModel){	
+	public String agregarDocente(Model model, @ModelAttribute("docente") DocenteModelForm docentePersonaModel){	
 		Docente docente = docenteService.converterToDocente(docentePersonaModel);
-		logger.info("AGREGANDO DATOS DE: "+ docentePersonaModel.getCodigo()+" -- IDDOCENTE:"+docentePersonaModel.getIdDocente()+" -- IDPERSONA:"+docentePersonaModel.getIdPersona());
+		logger.info("DATOS RECIBIDOS: "+ docentePersonaModel.getCodigo()+" -- IDDOCENTE:"+docentePersonaModel.getIdDocente()+" -- IDPERSONA:"+docentePersonaModel.getIdPersona());
 		logger.info("AGREGANDO DATOS DE: CATEGORIA: "+ docentePersonaModel.getIdCategoria()+" -- CLASE:"+docentePersonaModel.getIdClase()+" -- DEPACAD:"+docentePersonaModel.getIdDepAcad());
 		boolean existe;
-		if(docentePersonaModel.getIdDocente()==0){
+		if(docentePersonaModel.getIdDocente()==0){ // agregar docente
 			existe = docenteService.insertarDocente(docente);
 			if(existe){
 				logger.info("AGREGAR DOCENTE --- Codigo ya existente");
 				return "redirect:/docente/form?existe";
 			}
 			logger.info("DOCENTE AGREGADO");
-		}else{
+			model.addAttribute("fragmento", "contentDocenteAvisoExitoIndiv");
+			return VariablesGlobales.LAYOUT;
+		}else{										// editar docente
 			Persona persona_codigo = personaService.obtenerPersonaxCodigo(docente.getPersona().getPersonaCodigo());
 			existe = docenteService.actualizarDocente(docente, persona_codigo);
 			if(existe){
@@ -109,10 +109,10 @@ public class DocenteController {
 				return "redirect:/docente/form/"+docente.getIddocente()+"?existe";
 			}else{
 				logger.info("DOCENTE ACTUALIZADO");
-				return "redirect:/docente/form";
+				model.addAttribute("fragmento", "contentDocenteAvisoEdicionIndiv");
+				return VariablesGlobales.LAYOUT;
 			}
-		}		
-		return "redirect:/docente/all";	
+		}	
 	}
 	
 	@GetMapping("/bulk")

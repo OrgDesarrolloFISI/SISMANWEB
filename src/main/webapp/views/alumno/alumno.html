@@ -55,21 +55,20 @@
 					<hr/>
 				</div>
 
-				<div class="col-xs-3">
+				<div class="col-xs-4">
 					<br/> <label for="Telefono">Telefono</label> <input type="text"
 						class="form-control" id="Telefono" placeholder="Telefono"
 						th:field="*{telefono}" />
 				</div>
-				<div class="col-xs-3">
+				<div class="col-xs-4">
 					<br/> <label for="DNI">DNI</label> <input type="text"
 						class="form-control" id="DNI" placeholder="DNI" pattern="[0-9]{8}"
 						th:field="*{dni}" />
 				</div>
-				<div class="col-xs-3">
-					<br/> <label>Sexo</label> <select name="Sexo"	class="form-control" 
-						th:field="*{sexo}">
-						<option value="M">MASCULINO</option>
-						<option value="F">FEMENINO</option>
+				<div class="col-xs-4">
+					<br/> <label for="Sexo">Sexo</label> <input type="text"
+						class="form-control" id="Sexo" placeholder="M / F" 
+						th:field="*{sexo}" />
 					</select>
 				</div>
 				<br/> <br/> <br/> 
@@ -85,8 +84,10 @@
 					<br/>
 				</div>
 			</div>
-
-			<button type="submit" class="btn btn-default btn-block">REGISTRAR</button>
+			
+			<div class="text-center">
+			<button type="submit" class="btn btn-default" style="width: 30%;" th:text="${alumno.codigo != null ? 'Actualizar' : 'Registrar'}" >Botón</button>
+			</div>			
 		</form>
 
 		<div class="espacio_vacio"></div>
@@ -290,6 +291,21 @@
 	<div th:fragment="contentAlumnoAvisoErrorPlanGrup" class="text-center">
 		<p class="lead">Hubo un error en la especificacion de un "idPlan", por favor verifique que todos los "idPlan" pertenecen a los mostrados en la pagina principal</p>
 		
+	</div>
+	
+	<div th:fragment="contentAlumnoAvisoExitoIndiv">		
+		<div class="text-center">
+		<p class="lead">Alumno registrado exitosamente!</p>
+		<a href="#" th:href="@{/alumno/form}"><button type="button" class="btn btn-primary">Volver a registro</button></a>
+		<a href="#" th:href="@{/alumno/all}"><button type="button" class="btn btn-primary">Ir al buscador</button></a>
+		</div>		
+	</div>
+	
+	<div th:fragment="contentAlumnoAvisoEdicionIndiv">		
+		<div class="text-center">
+		<p class="lead">Alumno actualizado exitosamente!</p>
+		<a href="#" th:href="@{/alumno/all}"><button type="button" class="btn btn-primary">Ir al buscador</button></a>
+		</div>		
 	</div>
 	<!--**********************FAviso********************** -->
 
