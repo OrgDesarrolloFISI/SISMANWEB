@@ -114,16 +114,84 @@
 	<!--**********************IRegistroGrupal********************** -->
 	<div th:fragment="contentDocenteGrupal">
 		<form role="form">
-		
+			<p class="lead">Seleccione su archivo ( .csv, .xls, .xlsx):</p>
+			
 			<div class="form-group">
-				<input type="file" onchange="parseAndSend(event)"
+				<input id="fileData" type="file" onchange="parseAndSend(event)"
 					value="Parse and send XSLS file" />
 			</div>
 			
-			<button type="button" onclick="SendDataDocente()">Enviar</button>
+			<button id="botonExcel" type="button" onclick="SendDataDocente()">Enviar Excel</button>
 			
-			<div id="cargaExterna"></div>
+			<div id="cargaExterna" class="text-center" >
+				
+				<p class="lead">Las cabeceras de los documentos para este apartado deben ser especificados de la siguiente manera:</p>
+				<div>
+				<img style="border: 2px solid; border-radius: 6px; width: 80%; margin: 0 auto;" src="../static/imgs/plantilla_docentes.png"  th:src="@{/static/imgs/plantilla_docentes.png}">
+				</div>
+			<br/>
+			<br/>
+			<p class="lead ">Los datos "codigo", "nombre", "apPaterno", "apMaterno", "idClase", "idCategoria" y "idDepAcad" son obligatorios en el documento, el resto de datos pueden ser obviados.</p>
+			<p class="lead">Para los atributos "idClase", "idCategoria" y "idDepAcad" se tienen los siguientes valores numericos que se corresponden con las clases:</p>
 			
+			<div class="form-group">
+			<div class="col-xs-4">
+			<table style="width: 30%;" class="table table-striped table-bordered "
+							>
+					<thead>
+						<tr>
+							<th>idClase</th>
+							<th>Nombre de Clase Docente</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+						<tr  th:each="clase : ${listaClases}">
+							<td  th:text="${clase.idclase}"></td>
+							<td  th:text="${clase.claseNombre}"></td>
+						</tr>
+					</tbody>
+					</table>
+			</div>
+			<div class="col-xs-4">
+			<table  style="width: 30%;" class="table table-striped table-bordered "
+							>
+					<thead>
+						<tr>
+							<th>idCategoria</th>
+							<th>Nombre de Categoria Docente</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+						<tr  th:each="categoria : ${listaCategorias}">
+							<td  th:text="${categoria.idecategoriaDocente}"></td>
+							<td  th:text="${categoria.categoriaDocenteNombre}"></td>
+						</tr>
+					</tbody>
+					</table>
+			</div>
+			<div class="col-xs-4">		
+			<table  style="width: 30%; " class="table table-striped table-bordered "
+							>
+					<thead>
+						<tr>
+							<th>idDepAcad</th>
+							<th>Nombre de Departamento Academico</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+						<tr  th:each="depAcad : ${listaDepAcad}">
+							<td  th:text="${depAcad.iddepartamentoAcademico}"></td>
+							<td  th:text="${depAcad.departamentoAcademicoNombre}"></td>
+						</tr>
+					</tbody>
+					</table>
+			</div>
+			</div>
+			</div>
+
 		</form>
 	</div>
 	<!--**********************FRegistroGrupal********************** -->
@@ -162,7 +230,7 @@
 
 
 		<div class="panel-body">
-			<table id="example" class="table table-striped table-bordered"
+			<table id="dataTable" class="table table-striped table-bordered"
 				cellspacing="0" width="100%" th:object="${listaDocente}">
 				<thead>
 					<tr>
@@ -200,16 +268,49 @@
 	
 	
 	<!--**********************IAviso********************** -->
-	<div th:fragment="contentDocenteAvisoExito">
-		<p>Se registraron docentes exitosamente</p>
+	<div th:fragment="contentDocenteAvisoExitoGrup"  class="text-center">
+		<p class="lead">Se registraron docentes exitosamente:</p>
+		<br/>
+		<p class="lead" th:text=${cantidadDocentesGuardados}></p>
 	</div>
 	
-	<div th:fragment="contentDocenteAvisoExisten">
-		<p>Existen docentes registrados</p>
+	<div th:fragment="contentDocenteAvisoExistenGrup">
+		
+		<p class=" text-center lead">Se pudo registrar la siguiente cantidad de docentes:</p>
+		<p class="text-center lead" th:text=${cantidadDocentesGuardados}></p>
+		<br/>
+		<p class="lead">Existen docentes con codigos ya existentes que no se registraron: </p>
+		<div class="panel-body">
+			<table id="dataTable" class="table table-striped table-bordered"
+				cellspacing="0" width="100%" th:object="${listaDocentesRepetidos}">
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>ApellidoPaterno</th>
+						<th>ApellidoMaterno</th>
+						<th>Codigo</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="docente : ${listaDocentesRepetidos}">
+						<td th:text="${docente.persona.personaNombre}"></td>
+						<td th:text="${docente.persona.personaAppaterno}"></td>
+						<td th:text="${docente.persona.personaApmaterno}"></td>
+						<td th:text="${docente.persona.personaCodigo}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 	
-	<div th:fragment="contentDocenteAvisoError">
-		<p>Hubo un error al registrar</p>
+	<div th:fragment="contentDocenteAvisoErrorGrup"  class="text-center">
+		<p class="lead">Hubo un error en la especificaci&oacute;n de cabeceras del documento subido, por favor revise que todas las cabeceras tengan el mismo nombre e igualdad en mayusculas y minusculas</p>
+		
+	</div>
+	
+	<div th:fragment="contentDocenteAvisoIdsGrup"  class="text-center">
+		<p class="lead">Hubo un error en la especificaci&oacute;n de un "idClase", "idCategoria" o "idDepAcad", por favor verifique que no existan espacios vacios.</p>
+		
 	</div>
 	
 	<div th:fragment="contentDocenteAvisoExitoIndiv">		

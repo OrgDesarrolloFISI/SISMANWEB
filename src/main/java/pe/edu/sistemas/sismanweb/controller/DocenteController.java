@@ -118,12 +118,15 @@ public class DocenteController {
 	@GetMapping("/bulk")
 	public String bulkDocentes(Model model){
 		model.addAttribute("fragmento", "contentDocenteGrupal");
+		model.addAttribute("listaClases", claseService.obtenerClasesDeDocentes());
+		model.addAttribute("listaCategorias", categoriaDocenteService.obtenerCategorias());
+		model.addAttribute("listaDepAcad", departamentoAcademicoService.obtenerDepAcademicos());
 		logger.info("RETORNANDO VISTA CARGA MASIVA -- DOCENTE");
 		return VariablesGlobales.LAYOUT;		
 	}
 	
 	@PostMapping("/addBulk")
-	public String agregarDocentes(@RequestBody String listDocente ){
+	public String agregarDocentes(Model model, @RequestBody String listDocente ){
 		logger.info("CADENA RECIBIDA: "+listDocente);		
 		JSONArray jsonArrayDocente = new JSONArray(listDocente);
 		DeserealizarJSON<DocenteModelForm> deserealizador = new DeserealizarJSON<DocenteModelForm>(DocenteModelForm.class);
@@ -135,15 +138,24 @@ public class DocenteController {
 		
 		if(jsonArrayDocente.length()!=docentesModel.size()){
 			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO: "+(docentesModel.size()+1));
-			return "docente/docente :: contentDocenteAvisoError";
+			return "docente/docente :: contentDocenteAvisoErrorGrup";
+			
 		}else{
-			resultado = docenteService.saveBulk(docentesModel);
+			try{
+				resultado = docenteService.saveBulk(docentesModel);
+				
+				}catch(Exception e){
+					logger.warn("ERROR EN LOS ID's");
+					return "docente/docente :: contentDocenteAvisoIdsGrup";
+				}
+				model.addAttribute("cantidadDocentesGuardados",(jsonArrayDocente.length()-resultado.size()));
 			if(!resultado.isEmpty()){
+				model.addAttribute("listaDocentesRepetidos", resultado);
 				logger.warn("EXISTEN "+resultado.size()+" DOCENTES YA REGISTRADOS");
-				return "docente/docente :: contentDocenteAvisoExisten";
+				return "docente/docente :: contentDocenteAvisoExistenGrup";
 			}else{
 				logger.info("SE REGISTRO EXITOSAMENTE DOCENTES");
-				return "docente/docente :: contentDocenteAvisoExito";
+				return "docente/docente :: contentDocenteAvisoExitoGrup";
 			}				
 		}	
 	}	

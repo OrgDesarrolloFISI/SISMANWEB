@@ -136,7 +136,7 @@ public class AlumnoController {
 			resultado = alumnoService.saveBulk(alumnosModel);
 			
 			}catch(Exception e){
-				logger.warn("ERROR AL REGISTRAR");
+				logger.warn("ERROR EN LOS ID's");
 				return "alumno/alumno :: contentAlumnoAvisoErrorPlanGrup";
 			}
 			model.addAttribute("cantidadAlumnosGuardados",(jsonArrayAlumno.length()-resultado.size()));

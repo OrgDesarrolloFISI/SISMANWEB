@@ -98,7 +98,8 @@
 	<!--**********************IRegistroGrupal********************** -->
 	<div th:fragment="contentAlumnoGrupal" >
 		<form role="form">
-		
+			<p class="lead">Seleccione su archivo ( .csv, .xls, .xlsx):</p>
+			
 			<div class="form-group">
 				<input id="fileData" type="file" onchange="parseAndSend(event)"
 					value="Parse and send XSLS file" />
@@ -106,46 +107,16 @@
 			
 			<button id="botonExcel" type="button" onclick="SendDataAlumno()">Enviar Excel</button>
 			
-			<div id="cargaExterna">
+			<div id="cargaExterna" class="text-center" >
 				
-				<p class="text-center lead">Las cabeceras de los documentos para este apartado deben ser especificados de la siguiente manera:</p>
-				
-				<div class="panel-body">
-					<table  class="table table-striped table-bordered"
-							cellspacing="0" width="100%" >
-					<thead>
-						<tr>
-							<th>idPlan*</th>
-							<th>codigo*</th>
-							<th>nombre*</th>
-							<th>apPaterno*</th>
-							<th>apMaterno*</th>
-							<th>sexo</th>
-							<th>dni</th>
-							<th>telefono</th>
-							<th>correo</th>
-							<th>direccion</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr >
-							<td>---</td>
-							<td >---</td>
-							<td >---</td>
-							<td >---</td>
-							<td>---</td>
-							<td>---</td>
-							<td>---</td>
-							<td>---</td>
-							<td>---</td>
-							<td>---</td>
-						</tr>
-					</tbody>
-					</table>
+				<p class="lead">Las cabeceras de los documentos para este apartado deben ser especificados de la siguiente manera:</p>
+				<div>
+				<img style="border: 2px solid; border-radius: 6px; width: 80%; margin: 0 auto;" src="../static/imgs/plantilla_alumnos.png"  th:src="@{/static/imgs/plantilla_alumnos.png}">
 				</div>
-			
-			<p class="text-center lead ">Los datos acompa&ntilde;ados de un (*) son obligatorios en el documento, el resto de datos pueden ser obviados.</p>
-			<p class="text-center lead">Para el atributo "idPlan" se tienen los siguientes valores numericos que se corresponden con los planes:</p>
+			<br/>
+			<br/>
+			<p class="lead ">Los datos "idPlan", "codigo, "nombre", "apPaterno" y "apMaterno" son obligatorios en el documento, el resto de datos pueden ser obviados.</p>
+			<p class="lead">Para el atributo "idPlan" se tienen los siguientes valores numericos que se corresponden con los planes:</p>
 			<div style="text-align:center;">
 			<table  border="1"  style="width: 15%; margin: 0 auto;" class="table table-striped table-bordered "
 							>
@@ -284,12 +255,12 @@
 	</div>
 	
 	<div th:fragment="contentAlumnoAvisoErrorGrup" class="text-center">
-		<p class="lead">Hubo un error en la especificación de cabeceras del documento subido, por favor revise que todas las cabeceras tengan el mismo nombre e igualdad en mayusculas y minusculas</p>
+		<p class="lead">Hubo un error en la especificaci&oacute;n de cabeceras del documento subido, por favor revise que todas las cabeceras tengan el mismo nombre e igualdad en mayusculas y minusculas</p>
 		
 	</div>
 	
 	<div th:fragment="contentAlumnoAvisoErrorPlanGrup" class="text-center">
-		<p class="lead">Hubo un error en la especificacion de un "idPlan", por favor verifique que todos los "idPlan" pertenecen a los mostrados en la pagina principal</p>
+		<p class="lead">Hubo un error en la especificaci&oacute;n de un "idPlan", por favor verifique que todos los "idPlan" pertenecen a los mostrados en la pagina principal</p>
 		
 	</div>
 	
