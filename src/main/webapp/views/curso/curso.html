@@ -46,7 +46,9 @@
 				</div>
 			</div>
 			
-			<button type="submit" class="btn btn-default btn-block">REGISTRAR</button>
+			<div class="text-center">
+			<button type="submit" class="btn btn-default" style="width: 30%;" >Registrar</button>
+			</div>
 		</form>
 
 		<div class="espacio_vacio"></div>
@@ -60,14 +62,16 @@
 		<hr />
 
 		<form th:action="@{/curso/addConjunto}" th:object="${cursobc}"
-			method="post">
-			<div class="form-group col-xs-6 well">
-				<h3>CURSOS SIN ASOCIAR:</h3>
+			method="post">	
+			<p class="lead" >Seleccione un curso de cada panel:</p>
+					
+			<div class="form-group col-xs-6 well text-center">
+				<h3>CURSOS SIN ASOCIAR</h3>
 			</div>
-			<div class="form-group col-xs-6 well">
-				<h3>GRUPO DE CURSOS:</h3>
+			<div class="form-group col-xs-6 well text-center">
+				<h3>GRUPO DE CURSOS</h3>
 			</div>
-
+			
 			<div class="form-group col-xs-6 well">
 				<select class="form-control" size="15" th:field="*{idCursoBase}">
 					<option th:each="cursob : ${listaCursoB}"
@@ -85,9 +89,10 @@
 						th:text="${cursoc.cursocNombre+' '+cursoc.idcursoConjunto+' -- Escuela: ' + #strings.substring(cursoc.cursoBase.plan.planNombre, 5)}" />
 				</select>
 			</div>
-
-			<p th:if="${exito} != null">Se agrego el curso al conjunto</p>
-			<button type="submit" class="btn btn-default btn-block">Asociar Curso</button>
+			
+			<div class="text-center">
+			<button type="submit" class="btn btn-default" style="width: 30%;" >Asociar</button>
+			</div>
 		</form>
 
 		<div class="espacio_vacio"></div>
@@ -160,6 +165,28 @@
 		<div class="espacio_vacio"></div>
 	</div>
 	<!--**********************FBuscador********************** -->
+	
+	<!--**********************IAviso********************** -->
+	<div th:fragment="contentCursoAvisoExitoReg">
+		<div class="text-center">
+		<p class="lead">Curso registrado exitosamente!</p>
+		<a href="#" th:href="@{/curso/form}"><button type="button" class="btn btn-primary">Volver a registro</button></a>
+		<a href="#" th:href="@{/curso/all}"><button type="button" class="btn btn-primary">Ir al buscador</button></a>
+		</div>	
+	</div>
+	
+	<div th:fragment="contentCursoAvisoExitoEquiv">
+		<div class="text-center">
+		<p class="lead">Curso asociado exitosamente!</p>
+		<a href="#" th:href="@{/curso/conjunto}"><button type="button" class="btn btn-primary">Asociar otro curso</button></a>
+		<a href="#" th:href="@{/curso/all}"><button type="button" class="btn btn-primary">Ir al buscador</button></a>
+		</div>	
+	</div>
+	
+	<div th:fragment="contentCursoAvisoError">
+		<p>Hubo un error al asociar</p>
+	</div>
+	<!--**********************FAviso********************** -->
 
 </body>
 </html>
