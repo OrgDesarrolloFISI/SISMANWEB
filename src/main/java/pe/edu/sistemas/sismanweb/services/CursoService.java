@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.CursoBaseDAO;
@@ -18,7 +19,7 @@ import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
 
 @Service
-@Transactional
+
 public class CursoService {
 	
 	@Autowired private CursoBaseDAO cursoBaseDao;
@@ -27,7 +28,7 @@ public class CursoService {
 	
 	private static final Log logger = LogFactory.getLog(CursoService.class);
 	
-	public List<CursoBase> obtenerCursos(){
+	public List<CursoBase> obtenerCursosBase(){
 		List<CursoBase> resultado = cursoBaseDao.findAll();
 		for(CursoBase cb : resultado){
 			cb.getPlan().getPlanNombre();
@@ -51,26 +52,86 @@ public class CursoService {
 		}
 	}
 	
+	@Transactional
 	public boolean insertarCursoConjunto(CursoBase cursoBase, Integer idConjunto){
-			CursoConjunto cursoConjunto = null;
-			if(idConjunto==0){
-				cursoConjunto = new CursoConjunto();
+			CursoConjunto cursoConjunto = new CursoConjunto();;
+			if(idConjunto==0){ // crea nuevo grupo en curso conjunto
 				cursoConjunto.setCursocCodcomun(findCodigoMaximo()+1);
 				cursoConjunto.setCursoBase(cursoBase);
 				cursoConjunto.setCursocNombre(cursoBase.getCursobNombre());
-			return true;
-			}else{
-				cursoConjunto = findCursoCById(idConjunto);
+				cursoConjuntoDao.save(cursoConjunto);
+				return true;
+			}else{			   // agrega curso base a curso conjunto
+				CursoConjunto aux = findCursoCById(idConjunto);
+				cursoConjunto.setCursocNombre(aux.getCursocNombre());
+				cursoConjunto.setCursocCodcomun(aux.getCursocCodcomun());
 				cursoConjunto.setCursoBase(cursoBase);
-				cursoConjunto.setIdcursoConjunto(null);
-			return false;
-			}
-		
-		
+				logger.info("CURSO CONJUNTO -- "+cursoConjunto.getIdcursoConjunto()+" :: "
+						+cursoConjunto.getCursocNombre());
+				cursoConjuntoDao.save(cursoConjunto);
+				return false;
+			}		
 	}
 	
+	@Transactional
+	public List<CursoBase> findCursoBaseSinConjunto(){
+		List<CursoBase> listBase = cursoBaseDao.findCursoBaseSinConjunto();
+		for(CursoBase b: listBase){
+			b.getPlan().getPlanNombre();
+		}
+		return listBase;
+	}
+	
+	@Transactional
+	public List<CursoConjunto> findCursosConjuntos(){
+		List<CursoConjunto> listConjunto = cursoConjuntoDao.findCursosConjuntos();
+		for(CursoConjunto b: listConjunto){
+			b.getCursoBase().getPlan().getPlanNombre();
+		}
+		return listConjunto;
+	}
+	
+	@Transactional
+	public CursoBase findCursoBById(Integer idcurso){
+		CursoBase cursob = cursoBaseDao.findById(idcurso);
+		return cursob;
+	}
+	
+	@Transactional
+	public CursoConjunto findCursoCById(Integer idcurso){
+		CursoConjunto cursoc = cursoConjuntoDao.findById(idcurso);
+		return cursoc;
+	}
+	
+	@Transactional
+	public Integer findCodigoMaximo(){
+		return cursoConjuntoDao.findCodigoMaximo();
+	}	
 	
 	
+	@Transactional
+	public List<CursoModelForm> buscarCursosxParam(String valor, String filtro){
+		CursoModelForm formCursoModel;
+		
+		List<CursoModelForm> cursosFormCodigo = new ArrayList<CursoModelForm>();
+		switch(filtro){
+			case"1":	filtro="cursobCodigo";break;
+			case"2":	filtro="cursobNombre";break;
+			case"3":	filtro="plan.planNombre";break;			
+		}
+		
+		List<CursoBase> cursosCodigo = cursoBaseDao.obtenerCursosxCod(valor,filtro);
+		
+		for(CursoBase curso : cursosCodigo){
+			curso.getPlan().getPlanNombre();
+			formCursoModel = converterToCursoModelForm(curso);
+			cursosFormCodigo.add(formCursoModel);
+		}
+		
+		return cursosFormCodigo;	
+	}
+	
+	@Transactional
 	public CursoBase coverterToCurso(CursoModelForm cursoModelForm){
 		CursoBase cursoBase = new CursoBase();
 		cursoBase.setCursobCodigo(cursoModelForm.getCodigo());
@@ -82,38 +143,6 @@ public class CursoService {
 		return cursoBase;
 	}
 	
-	
-	public List<CursoBase> findCursoBaseSinConjunto(){
-		List<CursoBase> listBase = cursoBaseDao.findCursoBaseSinConjunto();
-		for(CursoBase b: listBase){
-			b.getPlan().getPlanNombre();
-		}
-		return listBase;
-	}
-	
-	public List<CursoConjunto> findCursosConjuntos(){
-		List<CursoConjunto> listConjunto = cursoConjuntoDao.findCursosConjuntos();
-		for(CursoConjunto b: listConjunto){
-			b.getCursoBase().getPlan().getPlanNombre();
-		}
-		return listConjunto;
-	}
-	
-	public CursoBase findCursoBById(Integer idcurso){
-		CursoBase cursob = cursoBaseDao.findById(idcurso);
-		return cursob;
-	}
-	
-	public CursoConjunto findCursoCById(Integer idcurso){
-		CursoConjunto cursoc = cursoConjuntoDao.findById(idcurso);
-		return cursoc;
-	}
-	
-	public Integer findCodigoMaximo(){
-		return cursoConjuntoDao.findCodigoMaximo();
-	}
-	
-	
 	public CursoModelForm converterToCursoModelForm(CursoBase curso){
 		CursoModelForm formCursoModel = new CursoModelForm();
 		Plan plan = curso.getPlan();
@@ -122,37 +151,9 @@ public class CursoService {
 		formCursoModel.setCreditos(curso.getCursobCreditos());
 		formCursoModel.setIdPlan(plan.getIdplan());
 		formCursoModel.setNombre(curso.getCursobNombre());
-		formCursoModel.setPlanNombre(plan.getPlanNombre());
-		
-		
-		return formCursoModel;
-	
+		formCursoModel.setPlanNombre(plan.getPlanNombre());		
+		return formCursoModel;	
 	}
 	
 	
-	
-	
-	public List<CursoModelForm> buscarCursosxParam(String valor, String filtro){
-		CursoModelForm formCursoModel;
-		
-		List<CursoModelForm> cursosFormCodigo = new ArrayList<CursoModelForm>();
-		switch(filtro){
-		case"1":	filtro="cursobCodigo";break;
-		case"2":	filtro="cursobNombre";break;
-		case"3":	filtro="plan.planNombre";break;
-		
-			
-		}
-		
-		List<CursoBase> cursosCodigo = cursoBaseDao.obtenerCursosxCod(valor,filtro);
-		
-		for(CursoBase curso : cursosCodigo){
-			curso.getPlan().getPlanNombre();
-			formCursoModel = converterToCursoModelForm(curso);
-			cursosFormCodigo.add(formCursoModel);
-		}
-		
-		return cursosFormCodigo;
-		
-	}
 }

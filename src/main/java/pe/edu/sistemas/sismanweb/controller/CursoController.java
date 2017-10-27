@@ -62,13 +62,13 @@ public class CursoController {
 		model.addAttribute("listaPlan",planesDeEstudio);
 		model.addAttribute("curso", new CursoModelForm());
 		model.addAttribute("existe", existe);
-		System.out.println(existe);
+		logger.info("Valor Parametro 'existe' : "+ existe);
 		logger.info("Retornando formulario Curso");		
 		return VariablesGlobales.LAYOUT;
 	}
 	
 	@PostMapping("/add")
-	public String agregarCurso(@ModelAttribute("curso") CursoModelForm cursoModelForm){
+	public String agregarCurso(Model model,@ModelAttribute("curso") CursoModelForm cursoModelForm){
 		logger.info("Agregando datos de: "+cursoModelForm.getCodigo()+" -- "+cursoModelForm.getNombre());
 		CursoBase cursoBase = cursoService.coverterToCurso(cursoModelForm);
 		boolean existe = cursoService.insertarCurso(cursoBase);	
@@ -76,12 +76,13 @@ public class CursoController {
 			logger.info("AGREGAR CURSO --- Codigo ya existente");
 			return "redirect:/curso/form?existe";
 		}
-		return "redirect:/curso/form";
+		model.addAttribute("fragmento", "contentCursoAvisoExitoReg");
+		return VariablesGlobales.LAYOUT;
 	}
 
 	
 	@GetMapping("/conjunto")
-	public String gestionarConjuntoCurso(Model model, @RequestParam(name="exito",required=false) String exito){
+	public String gestionarConjuntoCurso(Model model){
 		List<CursoBase> listaBase = null;
 		List<CursoConjunto> listaConjunto = null;
 		listaBase = cursoService.findCursoBaseSinConjunto();
@@ -91,13 +92,12 @@ public class CursoController {
 		model.addAttribute("listaCursoB",listaBase);
 		model.addAttribute("listaCursoC",listaConjunto);
 		model.addAttribute("cursobc",new CursoBCModelForm());
-		model.addAttribute("exito", exito);		
-		logger.info("RETORNANDO VISTA CURSO CONJUNTO");
+		logger.info("RETORNANDO VISTA CURSO -- CONJUNTO");
 		return VariablesGlobales.LAYOUT;
 	}
 	
 	@PostMapping("/addConjunto")
-	public String agregarCursoAConjunto(@ModelAttribute("cursobc") CursoBCModelForm cursoBCModelForm){
+	public String agregarCursoAConjunto(Model model, @ModelAttribute("cursobc") CursoBCModelForm cursoBCModelForm){
 		logger.info("RECIBIEND -- Conjunto : " + cursoBCModelForm.getIdCursoConjunto() + " Base: " + cursoBCModelForm.getIdCursoBase());
 		Integer idBase = cursoBCModelForm.getIdCursoBase();
 		Integer idConjunto = cursoBCModelForm.getIdCursoConjunto();
@@ -106,14 +106,16 @@ public class CursoController {
 			cursoBase = cursoService.findCursoBById(idBase);
 			boolean exito = cursoService.insertarCursoConjunto(cursoBase, idConjunto);
 			if(exito){
-				logger.info("CREANDO NUEVO GRUPO PARA EL CURSO");
+				logger.info("SE CREO NUEVO GRUPO PARA EL CURSO");
 			}else{
-				logger.info("AGREGANDO CURSO BASE AL CONJUNTO");
+				logger.info("SE AGREGO CURSO BASE A UN CONJUNTO");
 			}
-			return "redirect:/curso/conjunto?exito";
+			model.addAttribute("fragmento", "contentCursoAvisoExitoEquiv");
+			return VariablesGlobales.LAYOUT;
 		}else{
 			logger.info("ALGUNO DE LOS VALORES ES NULO");
-			return "redirect:/curso/conjunto";
+			model.addAttribute("fragmento", "contentCursoAvisoError");
+			return VariablesGlobales.LAYOUT;
 		}
 		
 	}
