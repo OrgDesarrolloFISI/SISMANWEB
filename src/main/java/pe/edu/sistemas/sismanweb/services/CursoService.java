@@ -19,7 +19,7 @@ import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
 
 @Service
-
+@Transactional
 public class CursoService {
 	
 	@Autowired private CursoBaseDAO cursoBaseDao;
@@ -52,7 +52,7 @@ public class CursoService {
 		}
 	}
 	
-	@Transactional
+	
 	public boolean insertarCursoConjunto(CursoBase cursoBase, Integer idConjunto){
 			CursoConjunto cursoConjunto = new CursoConjunto();;
 			if(idConjunto==0){ // crea nuevo grupo en curso conjunto
@@ -73,7 +73,6 @@ public class CursoService {
 			}		
 	}
 	
-	@Transactional
 	public List<CursoBase> findCursoBaseSinConjunto(){
 		List<CursoBase> listBase = cursoBaseDao.findCursoBaseSinConjunto();
 		for(CursoBase b: listBase){
@@ -82,7 +81,6 @@ public class CursoService {
 		return listBase;
 	}
 	
-	@Transactional
 	public List<CursoConjunto> findCursosConjuntos(){
 		List<CursoConjunto> listConjunto = cursoConjuntoDao.findCursosConjuntos();
 		for(CursoConjunto b: listConjunto){
@@ -91,25 +89,21 @@ public class CursoService {
 		return listConjunto;
 	}
 	
-	@Transactional
 	public CursoBase findCursoBById(Integer idcurso){
 		CursoBase cursob = cursoBaseDao.findById(idcurso);
 		return cursob;
 	}
 	
-	@Transactional
 	public CursoConjunto findCursoCById(Integer idcurso){
 		CursoConjunto cursoc = cursoConjuntoDao.findById(idcurso);
 		return cursoc;
 	}
 	
-	@Transactional
 	public Integer findCodigoMaximo(){
 		return cursoConjuntoDao.findCodigoMaximo();
 	}	
 	
 	
-	@Transactional
 	public List<CursoModelForm> buscarCursosxParam(String valor, String filtro){
 		CursoModelForm formCursoModel;
 		
@@ -131,7 +125,6 @@ public class CursoService {
 		return cursosFormCodigo;	
 	}
 	
-	@Transactional
 	public CursoBase coverterToCurso(CursoModelForm cursoModelForm){
 		CursoBase cursoBase = new CursoBase();
 		cursoBase.setCursobCodigo(cursoModelForm.getCodigo());

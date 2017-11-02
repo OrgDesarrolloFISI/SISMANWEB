@@ -77,7 +77,7 @@ public class CursoController {
 			return "redirect:/curso/form?existe";
 		}
 		model.addAttribute("fragmento", "contentCursoAvisoExitoReg");
-		return VariablesGlobales.LAYOUT;
+		return "curso/curso";
 	}
 
 	
@@ -111,11 +111,11 @@ public class CursoController {
 				logger.info("SE AGREGO CURSO BASE A UN CONJUNTO");
 			}
 			model.addAttribute("fragmento", "contentCursoAvisoExitoEquiv");
-			return VariablesGlobales.LAYOUT;
+			return "curso/curso";
 		}else{
 			logger.info("ALGUNO DE LOS VALORES ES NULO");
 			model.addAttribute("fragmento", "contentCursoAvisoError");
-			return VariablesGlobales.LAYOUT;
+			return "curso/curso";
 		}
 		
 	}

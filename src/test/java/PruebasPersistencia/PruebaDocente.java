@@ -60,7 +60,7 @@ public class PruebaDocente {
 	}
 	
 	@Test
-	//@Ignore
+	@Ignore
 	@Transactional
 	public void seMuestraCursoBase(){
 		List<Plan> planes = planDao.findAll();
@@ -89,6 +89,23 @@ public class PruebaDocente {
 	@Ignore
 	@Transactional
 	public void mostrarCurso(){
+		List<CursoBase> cursoBase = cursoBaseDao.findCursoBaseByNombre("Curso");
+		
+		System.out.println(cursoBase.size());
+		
+		for(CursoBase cb: cursoBase){
+			System.out.print(cb.getIdcursoGeneral()+" -- "+cb.getCursobCodigo()+" -- "+cb.getCursobNombre()+" -- "+cb.getCursobCreditos()+" -- "+cb.getPlan().getPlanNombre());
+			System.out.println(" -- " +cb.getCursoConjuntos().size());
+			
+		}	
+		
+		
+	}
+	
+	@Test
+	@Ignore
+	@Transactional
+	public void PlanVsDepAcad(){
 		List<CursoBase> cursoBase = cursoBaseDao.findCursoBaseByNombre("Curso");
 		
 		System.out.println(cursoBase.size());

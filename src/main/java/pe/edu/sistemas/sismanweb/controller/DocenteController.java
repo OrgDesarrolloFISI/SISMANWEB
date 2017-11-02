@@ -100,7 +100,7 @@ public class DocenteController {
 			}
 			logger.info("DOCENTE AGREGADO");
 			model.addAttribute("fragmento", "contentDocenteAvisoExitoIndiv");
-			return VariablesGlobales.LAYOUT;
+			return "docente/docente";
 		}else{										// editar docente
 			Persona persona_codigo = personaService.obtenerPersonaxCodigo(docente.getPersona().getPersonaCodigo());
 			existe = docenteService.actualizarDocente(docente, persona_codigo);
@@ -110,7 +110,7 @@ public class DocenteController {
 			}else{
 				logger.info("DOCENTE ACTUALIZADO");
 				model.addAttribute("fragmento", "contentDocenteAvisoEdicionIndiv");
-				return VariablesGlobales.LAYOUT;
+				return "docente/docente";
 			}
 		}	
 	}
@@ -138,7 +138,7 @@ public class DocenteController {
 		
 		if(jsonArrayDocente.length()!=docentesModel.size()){
 			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO: "+(docentesModel.size()+1));
-			return "docente/docente :: contentDocenteAvisoErrorGrup";
+			return "docente/docenteGrupal :: contentDocenteAvisoErrorGrup";
 			
 		}else{
 			try{
@@ -146,16 +146,16 @@ public class DocenteController {
 				
 				}catch(Exception e){
 					logger.warn("ERROR EN LOS ID's");
-					return "docente/docente :: contentDocenteAvisoIdsGrup";
+					return "docente/docenteGrupal :: contentDocenteAvisoIdsGrup";
 				}
 				model.addAttribute("cantidadDocentesGuardados",(jsonArrayDocente.length()-resultado.size()));
 			if(!resultado.isEmpty()){
 				model.addAttribute("listaDocentesRepetidos", resultado);
 				logger.warn("EXISTEN "+resultado.size()+" DOCENTES YA REGISTRADOS");
-				return "docente/docente :: contentDocenteAvisoExistenGrup";
+				return "docente/docenteGrupal :: contentDocenteAvisoExistenGrup";
 			}else{
 				logger.info("SE REGISTRO EXITOSAMENTE DOCENTES");
-				return "docente/docente :: contentDocenteAvisoExitoGrup";
+				return "docente/docenteGrupal :: contentDocenteAvisoExitoGrup";
 			}				
 		}	
 	}	

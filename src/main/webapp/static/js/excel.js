@@ -84,6 +84,7 @@ var string_ws;
              data: string_ws,
              success: function(data) {            	             	 
             	 console.log("se entrego datos");
+            	 $("#fileData").val("");
             	 $("#cargaExterna").html(data);
              },
              error : function(xhr, status) {

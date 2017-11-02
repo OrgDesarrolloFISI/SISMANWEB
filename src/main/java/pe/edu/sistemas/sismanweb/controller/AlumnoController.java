@@ -72,7 +72,7 @@ public class AlumnoController {
 			logger.info("EDITAR ALUMNO CON ID: "+id);
 			alumnoModel = alumnoService.converterToAlumnoModelForm((alumnoService.obtenerAlumnoxID(Integer.parseInt(id))));
 			model.addAttribute("alumno", alumnoModel);
-		}else{		  // formaulario vacio	
+		}else{		  // formulario vacio	
 			model.addAttribute("alumno", new AlumnoModelForm());
 		}
 		model.addAttribute("existe", existe);		
@@ -104,7 +104,7 @@ public class AlumnoController {
 			}else{
 				logger.info("ALUMNO ACTUALIZADO");
 				model.addAttribute("fragmento", "contentAlumnoAvisoEdicionIndiv");
-				return VariablesGlobales.LAYOUT;
+				return "alumno/alumno";	
 			}
 		}				
 	}	
@@ -130,24 +130,24 @@ public class AlumnoController {
 		
 		if(jsonArrayAlumno.length()!=alumnosModel.size()){
 			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO NRO "+(alumnosModel.size()+1));
-			return "alumno/alumno :: contentAlumnoAvisoErrorGrup";
+			return "alumno/alumnoGrupal :: contentAlumnoAvisoErrorGrup";
 		}else{
 			try{
 			resultado = alumnoService.saveBulk(alumnosModel);
 			
 			}catch(Exception e){
 				logger.warn("ERROR EN LOS ID's");
-				return "alumno/alumno :: contentAlumnoAvisoErrorPlanGrup";
+				return "alumno/alumnoGrupal :: contentAlumnoAvisoErrorPlanGrup";
 			}
 			model.addAttribute("cantidadAlumnosGuardados",(jsonArrayAlumno.length()-resultado.size()));
 			if(!resultado.isEmpty()){
 				model.addAttribute("listaAlumnosRepetidos", resultado);
 				logger.warn("EXISTEN "+resultado.size() +" ALUMNOS YA REGISTRADOS");
-				return "alumno/alumno :: contentAlumnoAvisoExistenGrup";
+				return "alumno/alumnoGrupal :: contentAlumnoAvisoExistenGrup";
 				
 			}else{
 				logger.info("SE REGISTRO EXITOSAMENTE ALUMNOS");
-				return "alumno/alumno :: contentAlumnoAvisoExitoGrup";
+				return "alumno/alumnoGrupal :: contentAlumnoAvisoExitoGrup";
 			}				
 		}			
 	}	
