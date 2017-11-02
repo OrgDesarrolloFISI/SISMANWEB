@@ -52,7 +52,7 @@ public class CursoController {
 		model.addAttribute("listaCurso", cursos);
 		logger.info("SE DEVUELVEN CURSOS : " + cursos.size());
 		cursos=new ArrayList<CursoModelForm>();
-		return VariablesGlobales.LAYOUT;	
+		return "curso/buscador";	
 	}
 
 	@GetMapping("/form")
@@ -64,7 +64,7 @@ public class CursoController {
 		model.addAttribute("existe", existe);
 		logger.info("Valor Parametro 'existe' : "+ existe);
 		logger.info("Retornando formulario Curso");		
-		return VariablesGlobales.LAYOUT;
+		return "curso/registroIndiv";
 	}
 	
 	@PostMapping("/add")
@@ -93,7 +93,7 @@ public class CursoController {
 		model.addAttribute("listaCursoC",listaConjunto);
 		model.addAttribute("cursobc",new CursoBCModelForm());
 		logger.info("RETORNANDO VISTA CURSO -- CONJUNTO");
-		return VariablesGlobales.LAYOUT;
+		return "curso/equivalencia";
 	}
 	
 	@PostMapping("/addConjunto")

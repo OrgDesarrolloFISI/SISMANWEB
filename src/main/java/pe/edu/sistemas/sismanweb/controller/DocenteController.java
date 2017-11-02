@@ -61,7 +61,7 @@ public class DocenteController {
 		model.addAttribute("listaDocente", docentes);
 		logger.info("SE DEVUELVEN DOCENTES : " + docentes.size());
 		docentes=new ArrayList<DocenteModelForm>();
-		return VariablesGlobales.LAYOUT;	
+		return "docente/buscador";	
 	}
 	
 	@GetMapping({"/form","/form/{id}"})
@@ -82,7 +82,7 @@ public class DocenteController {
 		}
 		model.addAttribute("existe", existe);		
 		logger.info("RETORNANDO FORMULARIO DOCENTE");
-		return VariablesGlobales.LAYOUT;
+		return "docente/registroIndiv";
 	}
 	
 	
@@ -122,7 +122,7 @@ public class DocenteController {
 		model.addAttribute("listaCategorias", categoriaDocenteService.obtenerCategorias());
 		model.addAttribute("listaDepAcad", departamentoAcademicoService.obtenerDepAcademicos());
 		logger.info("RETORNANDO VISTA CARGA MASIVA -- DOCENTE");
-		return VariablesGlobales.LAYOUT;		
+		return "docente/registroGrupal";		
 	}
 	
 	@PostMapping("/addBulk")

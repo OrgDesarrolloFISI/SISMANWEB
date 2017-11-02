@@ -58,7 +58,7 @@ public class AlumnoController {
 		model.addAttribute("listaAlumno", alumnos);
 		logger.info("SE DEVUELVEN ALUMNOS : " + alumnos.size());
 		alumnos=new ArrayList<AlumnoModelForm>();
-		return VariablesGlobales.LAYOUT;		
+		return "alumno/buscador";		
 	}
 	
 	@GetMapping({"/form","/form/{id}"})
@@ -77,7 +77,7 @@ public class AlumnoController {
 		}
 		model.addAttribute("existe", existe);		
 		logger.info("RETORNANDO FORMULARIO ALUMNO");
-		return VariablesGlobales.LAYOUT;
+		return "alumno/registroIndiv";
 	}
 	
 	
@@ -94,7 +94,7 @@ public class AlumnoController {
 			}
 			logger.info("ALUMNO AGREGADO");
 			model.addAttribute("fragmento", "contentAlumnoAvisoExitoIndiv");
-			return VariablesGlobales.LAYOUT;	
+			return "alumno/alumno";	
 		}else{									// editar alumno
 			Persona persona_codigo = personaService.obtenerPersonaxCodigo(alumno.getPersona().getPersonaCodigo());
 			existe = alumnoService.actualizarAlumno(alumno, persona_codigo);
@@ -114,7 +114,7 @@ public class AlumnoController {
 		model.addAttribute("fragmento", "contentAlumnoGrupal");
 		model.addAttribute("listaPlanes", planService.obtenerPlanes());
 		logger.info("RETORNANDO VISTA CARGA MASIVA -- ALUMNO");
-		return VariablesGlobales.LAYOUT;		
+		return "alumno/registroGrupal";		
 	}
 
 	@PostMapping("/addBulk")

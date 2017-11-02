@@ -6,6 +6,8 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 
+import nz.net.ultraq.thymeleaf.LayoutDialect;
+
 @Configuration 
 public class ThymeleafConfig {
 
@@ -24,6 +26,7 @@ public class ThymeleafConfig {
 	public SpringTemplateEngine templateEngine() {
 		SpringTemplateEngine engine = new SpringTemplateEngine();
 		engine.setTemplateResolver(templateResolver());
+		engine.addDialect(new LayoutDialect());
 		return engine;
 	}
 	

@@ -65,4 +65,10 @@ public class PersonaController {
 		model.addAttribute("fragmento", "contentAlumnoBuscador");
 		return "layout";
 	}
+	
+	@GetMapping("/layout/dashboard")
+	public String dashboard(Model model){		
+		return "plain-page";
+	}
+	
 }
