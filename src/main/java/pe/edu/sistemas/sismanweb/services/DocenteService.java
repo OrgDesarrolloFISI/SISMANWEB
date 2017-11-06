@@ -180,7 +180,7 @@ public class DocenteService {
 		case"2":	filtro="personaNombre";break;
 		case"3":	filtro="personaAppaterno";break;
 		case"4":	filtro="personaApmaterno";break;
-		
+		//default:	filtro="idPersona";	
 			
 		}
 		

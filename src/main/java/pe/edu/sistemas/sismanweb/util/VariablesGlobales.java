@@ -13,6 +13,6 @@ public class VariablesGlobales {
 	
 	public static final String CURSO_CONJUNTO="/curso/curso_Conjunto";
 	
-	public static final String LAYOUT="layout";
+	public static final String HOME="home";
 
 }

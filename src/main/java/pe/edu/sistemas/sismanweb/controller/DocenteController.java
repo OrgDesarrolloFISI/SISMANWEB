@@ -27,7 +27,6 @@ import pe.edu.sistemas.sismanweb.services.PersonaService;
 import pe.edu.sistemas.sismanweb.services.modelform.DocenteModelForm;
 import pe.edu.sistemas.sismanweb.util.DeserealizarJSON;
 import pe.edu.sistemas.sismanweb.util.Search;
-import pe.edu.sistemas.sismanweb.util.VariablesGlobales;
 
 @Controller
 @RequestMapping("/docente")
@@ -45,20 +44,16 @@ public class DocenteController {
 	
 	@ModelAttribute("titulo")
 	public String titulo(){
-		return "Modulo docente";
-	}
-	
-	@ModelAttribute("modulo")
-	public String modulo(){
-		return "docente/docente";
-	}
-	
+		return "Docente";
+	}	
 	
 	@GetMapping("/all")
 	public String verDocentes(Model model){
-		model.addAttribute("fragmento","contentDocenteBuscador");
 		model.addAttribute("search", new Search());
-		model.addAttribute("listaDocente", docentes);
+		model.addAttribute("clasesDoc",claseService.obtenerClasesDeDocentes());
+		model.addAttribute("categoriasDoc",categoriaDocenteService.obtenerCategorias());
+		model.addAttribute("depAcadDoc",departamentoAcademicoService.obtenerDepAcademicos());
+		model.addAttribute("listaDocente", docentes);		
 		logger.info("SE DEVUELVEN DOCENTES : " + docentes.size());
 		docentes=new ArrayList<DocenteModelForm>();
 		return "docente/buscador";	
@@ -67,7 +62,6 @@ public class DocenteController {
 	@GetMapping({"/form","/form/{id}"})
 	public String formularioDocente(Model model,@RequestParam(name="existe",required=false) String existe,
 			@PathVariable(name="id",required=false)String id){
-		model.addAttribute("fragmento","contentDocenteIndividual");
 		model.addAttribute("clasesDoc",claseService.obtenerClasesDeDocentes());
 		model.addAttribute("categoriasDoc",categoriaDocenteService.obtenerCategorias());
 		model.addAttribute("depAcadDoc",departamentoAcademicoService.obtenerDepAcademicos());
@@ -99,8 +93,8 @@ public class DocenteController {
 				return "redirect:/docente/form?existe";
 			}
 			logger.info("DOCENTE AGREGADO");
-			model.addAttribute("fragmento", "contentDocenteAvisoExitoIndiv");
-			return "docente/docente";
+			//model.addAttribute("fragmento", "contentDocenteAvisoExitoIndiv");
+			return "redirect:/docente/search/"+docentePersonaModel.getCodigo();
 		}else{										// editar docente
 			Persona persona_codigo = personaService.obtenerPersonaxCodigo(docente.getPersona().getPersonaCodigo());
 			existe = docenteService.actualizarDocente(docente, persona_codigo);
@@ -109,15 +103,14 @@ public class DocenteController {
 				return "redirect:/docente/form/"+docente.getIddocente()+"?existe";
 			}else{
 				logger.info("DOCENTE ACTUALIZADO");
-				model.addAttribute("fragmento", "contentDocenteAvisoEdicionIndiv");
-				return "docente/docente";
+				//model.addAttribute("fragmento", "contentDocenteAvisoEdicionIndiv");
+				return "redirect:/docente/search/"+docentePersonaModel.getCodigo();
 			}
 		}	
 	}
 	
 	@GetMapping("/bulk")
 	public String bulkDocentes(Model model){
-		model.addAttribute("fragmento", "contentDocenteGrupal");
 		model.addAttribute("listaClases", claseService.obtenerClasesDeDocentes());
 		model.addAttribute("listaCategorias", categoriaDocenteService.obtenerCategorias());
 		model.addAttribute("listaDepAcad", departamentoAcademicoService.obtenerDepAcademicos());
@@ -138,7 +131,7 @@ public class DocenteController {
 		
 		if(jsonArrayDocente.length()!=docentesModel.size()){
 			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO: "+(docentesModel.size()+1));
-			return "docente/docenteGrupal :: contentDocenteAvisoErrorGrup";
+			return "docente/avisosGrupal :: contentDocenteAvisoErrorGrup";
 			
 		}else{
 			try{
@@ -146,25 +139,29 @@ public class DocenteController {
 				
 				}catch(Exception e){
 					logger.warn("ERROR EN LOS ID's");
-					return "docente/docenteGrupal :: contentDocenteAvisoIdsGrup";
+					return "docente/avisosGrupal :: contentDocenteAvisoIdsGrup";
 				}
 				model.addAttribute("cantidadDocentesGuardados",(jsonArrayDocente.length()-resultado.size()));
 			if(!resultado.isEmpty()){
 				model.addAttribute("listaDocentesRepetidos", resultado);
 				logger.warn("EXISTEN "+resultado.size()+" DOCENTES YA REGISTRADOS");
-				return "docente/docenteGrupal :: contentDocenteAvisoExistenGrup";
+				return "docente/avisosGrupal :: contentDocenteAvisoExistenGrup";
 			}else{
 				logger.info("SE REGISTRO EXITOSAMENTE DOCENTES");
-				return "docente/docenteGrupal :: contentDocenteAvisoExitoGrup";
+				return "docente/avisosGrupal :: contentDocenteAvisoExitoGrup";
 			}				
 		}	
 	}	
 	
 	
-	@GetMapping("/search")
-	public String BuscarDocentes(@ModelAttribute("search") Search search){
-			
-		docentes = docenteService.buscarDocentesxParam(search.getValor(),search.getFiltro());
+	@GetMapping({"/search","/search/{cod}"})
+	public String BuscarDocentes(@ModelAttribute("search") Search search,
+			@PathVariable(name="cod",required=false) String codigo){		
+		if(codigo != null){
+			docentes = docenteService.buscarDocentesxParam(codigo,"1");
+		}else{
+			docentes = docenteService.buscarDocentesxParam(search.getValor(),search.getFiltro());			
+		}		
 		logger.info("SE ENCONTRO DocenteS: " + docentes.size());
 		return "redirect:/docente/all";
 	}

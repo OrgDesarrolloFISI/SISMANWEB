@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" data-layout-decorate="~{fragments/layout}">
 <head>
-	<title>Alumno</title>
+	<title th:text="${titulo}">Titulo</title>
 </head>
 <body>
 <div class="right_col" role="main" data-layout-fragment="content">
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Alumno</h3>
+                <h3 th:text="${titulo}">Titulo</h3>
             </div>
         </div>
 

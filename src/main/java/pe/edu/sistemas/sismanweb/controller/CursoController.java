@@ -22,7 +22,6 @@ import pe.edu.sistemas.sismanweb.services.PlanService;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoBCModelForm;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
 import pe.edu.sistemas.sismanweb.util.Search;
-import pe.edu.sistemas.sismanweb.util.VariablesGlobales;
 
 @Controller
 @RequestMapping("/curso")
@@ -37,17 +36,10 @@ public class CursoController {
 	
 	@ModelAttribute("titulo")
 	public String titulo(){
-		return "Modulo curso";
+		return "Curso";
 	}
-	
-	@ModelAttribute("modulo")
-	public String modulo(){
-		return "curso/curso";
-	}
-	
 	@GetMapping("/all")
 	public String verCursos(Model model){
-		model.addAttribute("fragmento","contentCursoBuscador");
 		model.addAttribute("search", new Search());
 		model.addAttribute("listaCurso", cursos);
 		logger.info("SE DEVUELVEN CURSOS : " + cursos.size());
@@ -58,7 +50,6 @@ public class CursoController {
 	@GetMapping("/form")
 	public String formularioCurso(Model model, @RequestParam(name="existe",required=false) String existe){
 		List<Plan> planesDeEstudio = planService.obtenerPlanes();
-		model.addAttribute("fragmento","contentCursoRegistro");
 		model.addAttribute("listaPlan",planesDeEstudio);
 		model.addAttribute("curso", new CursoModelForm());
 		model.addAttribute("existe", existe);
@@ -77,7 +68,7 @@ public class CursoController {
 			return "redirect:/curso/form?existe";
 		}
 		model.addAttribute("fragmento", "contentCursoAvisoExitoReg");
-		return "curso/curso";
+		return "curso/avisosCurso";
 	}
 
 	
@@ -111,11 +102,11 @@ public class CursoController {
 				logger.info("SE AGREGO CURSO BASE A UN CONJUNTO");
 			}
 			model.addAttribute("fragmento", "contentCursoAvisoExitoEquiv");
-			return "curso/curso";
+			return "curso/avisosCurso";
 		}else{
 			logger.info("ALGUNO DE LOS VALORES ES NULO");
 			model.addAttribute("fragmento", "contentCursoAvisoError");
-			return "curso/curso";
+			return "curso/avisosCurso";
 		}
 		
 	}

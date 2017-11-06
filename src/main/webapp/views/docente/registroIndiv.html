@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" data-layout-decorate="~{fragments/layout}">
 <head>
-    <title>Docente</title>
+    <title th:text="${titulo}">Titulo</title>
 </head>
 
 <body>
@@ -9,7 +9,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Docente</h3>
+                <h3 th:text="${titulo}">Titulo</h3>
             </div>
         </div>
 

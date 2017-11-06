@@ -26,7 +26,6 @@ import pe.edu.sistemas.sismanweb.services.PlanService;
 import pe.edu.sistemas.sismanweb.services.modelform.AlumnoModelForm;
 import pe.edu.sistemas.sismanweb.util.DeserealizarJSON;
 import pe.edu.sistemas.sismanweb.util.Search;
-import pe.edu.sistemas.sismanweb.util.VariablesGlobales;
 
 @Controller
 @RequestMapping("/alumno")
@@ -43,18 +42,13 @@ public class AlumnoController {
 	
 	@ModelAttribute("titulo")
 	public String titulo(){
-		return "Modulo alumno";
-	}
+		return "Alumno";
+	}	
 	
-	@ModelAttribute("modulo")
-	public String modulo(){
-		return "alumno/alumno";
-	}
-			
 	@GetMapping("/all")
 	public String verAlumnos(Model model){
-		model.addAttribute("fragmento", "contentAlumnoBuscador");
 		model.addAttribute("search", new Search());
+		model.addAttribute("listaPlan", planService.obtenerPlanes());
 		model.addAttribute("listaAlumno", alumnos);
 		logger.info("SE DEVUELVEN ALUMNOS : " + alumnos.size());
 		alumnos=new ArrayList<AlumnoModelForm>();
@@ -64,7 +58,6 @@ public class AlumnoController {
 	@GetMapping({"/form","/form/{id}"})
 	public String formularioAlumno(Model model,@RequestParam(name="existe",required=false) String existe,
 			@PathVariable(name="id",required=false)String id){
-		model.addAttribute("fragmento", "contentAlumnoIndividual");
 		List<Plan> planesDeEstudio = planService.obtenerPlanes();
 		model.addAttribute("listaPlan", planesDeEstudio);
 		if(id!=null){ // formulario con datos a editar
@@ -93,8 +86,8 @@ public class AlumnoController {
 				return "redirect:/alumno/form?existe";
 			}
 			logger.info("ALUMNO AGREGADO");
-			model.addAttribute("fragmento", "contentAlumnoAvisoExitoIndiv");
-			return "alumno/alumno";	
+			//model.addAttribute("fragmento", "contentAlumnoAvisoExitoIndiv");
+			return "redirect:/alumno/search/"+alumnoPersonaModel.getCodigo();	
 		}else{									// editar alumno
 			Persona persona_codigo = personaService.obtenerPersonaxCodigo(alumno.getPersona().getPersonaCodigo());
 			existe = alumnoService.actualizarAlumno(alumno, persona_codigo);
@@ -103,8 +96,8 @@ public class AlumnoController {
 				return "redirect:/alumno/form/"+alumno.getIdAlumno()+"?existe";
 			}else{
 				logger.info("ALUMNO ACTUALIZADO");
-				model.addAttribute("fragmento", "contentAlumnoAvisoEdicionIndiv");
-				return "alumno/alumno";	
+				//model.addAttribute("fragmento", "contentAlumnoAvisoEdicionIndiv");
+				return "redirect:/alumno/search/"+alumnoPersonaModel.getCodigo();	
 			}
 		}				
 	}	
@@ -130,32 +123,37 @@ public class AlumnoController {
 		
 		if(jsonArrayAlumno.length()!=alumnosModel.size()){
 			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO NRO "+(alumnosModel.size()+1));
-			return "alumno/alumnoGrupal :: contentAlumnoAvisoErrorGrup";
+			return "alumno/avisosGrupal :: contentAlumnoAvisoErrorGrup";
 		}else{
 			try{
 			resultado = alumnoService.saveBulk(alumnosModel);
 			
 			}catch(Exception e){
 				logger.warn("ERROR EN LOS ID's");
-				return "alumno/alumnoGrupal :: contentAlumnoAvisoErrorPlanGrup";
+				return "alumno/avisosGrupal :: contentAlumnoAvisoErrorPlanGrup";
 			}
 			model.addAttribute("cantidadAlumnosGuardados",(jsonArrayAlumno.length()-resultado.size()));
 			if(!resultado.isEmpty()){
 				model.addAttribute("listaAlumnosRepetidos", resultado);
 				logger.warn("EXISTEN "+resultado.size() +" ALUMNOS YA REGISTRADOS");
-				return "alumno/alumnoGrupal :: contentAlumnoAvisoExistenGrup";
+				return "alumno/avisosGrupal :: contentAlumnoAvisoExistenGrup";
 				
 			}else{
 				logger.info("SE REGISTRO EXITOSAMENTE ALUMNOS");
-				return "alumno/alumnoGrupal :: contentAlumnoAvisoExitoGrup";
+				return "alumno/avisosGrupal :: contentAlumnoAvisoExitoGrup";
 			}				
 		}			
 	}	
 	
 	
-	@GetMapping("/search")
-	public String BuscarAlumnos(@ModelAttribute("search") Search search){			
-		alumnos = alumnoService.buscarAlumnosxParam(search.getValor(),search.getFiltro());
+	@GetMapping({"/search","/search/{cod}"})
+	public String BuscarAlumnos(@ModelAttribute("search") Search search, 
+			@PathVariable(name="cod",required=false) String codigo){
+		if(codigo != null){
+			alumnos = alumnoService.buscarAlumnosxParam(codigo,"1");
+		}else{
+			alumnos = alumnoService.buscarAlumnosxParam(search.getValor(),search.getFiltro());
+		}		
 		logger.info("SE ENCONTRO ALUMNOS: " + alumnos.size());
 		return "redirect:/alumno/all";
 	}

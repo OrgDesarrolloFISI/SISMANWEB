@@ -47,9 +47,7 @@ public class LoginController {
 	@RequestMapping(value="/home",method=RequestMethod.GET)
 	public String home(Model model){
 		model.addAttribute("titulo","Inicio");
-		model.addAttribute("modulo","home");
-		model.addAttribute("fragmento","main");
-		return VariablesGlobales.LAYOUT;
+		return VariablesGlobales.HOME;
 	}
 	
 }
