@@ -1,3 +1,7 @@
+$(document).ready(function() {
+    $('#dataTable').dataTable();
+} );
+
 $(document).ready(function(){
 	$("#actualizadatos").click (function() {
 		alertify.confirm("<h3>Esta seguro que desea editar los datos ?</h3>", function (e) {

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import pe.edu.sistemas.sismanweb.domain.Persona;
 import pe.edu.sistemas.sismanweb.services.PersonaService;
 import pe.edu.sistemas.sismanweb.util.VariablesGlobales;
 
@@ -22,16 +21,27 @@ public class LoginController {
 	@Autowired
 	PersonaService personaService;
 	
+	@RequestMapping(value="/",method=RequestMethod.GET)
+	public String index(Model model){
+		return "redirect:/login";
+	}
+	
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public ModelAndView mostrarlogin(@RequestParam(name="error",required=false) String error,
 			@RequestParam(name="logout",required=false) String logout){
 		ModelAndView mav = new ModelAndView("login");
-		mav.addObject("persona", new Persona());
 		mav.addObject("error", error);
 		mav.addObject("logout", logout);
 		logger.info("-- Retornando vista Login --"+error);
 		return mav;
 	}
+	
+	@RequestMapping(value="/home",method=RequestMethod.GET)
+	public String home(Model model){
+		model.addAttribute("titulo","Inicio");
+		return VariablesGlobales.HOME;
+	}
+	
 /*
 	@RequestMapping(value="/validar",method=RequestMethod.POST)
 	public RedirectView validarLogin(@ModelAttribute("persona") Persona persona){
@@ -43,11 +53,6 @@ public class LoginController {
 			return new RedirectView("/sismanweb/home");
 		}	
 	}
-*/	
-	@RequestMapping(value="/home",method=RequestMethod.GET)
-	public String home(Model model){
-		model.addAttribute("titulo","Inicio");
-		return VariablesGlobales.HOME;
-	}
+*/		
 	
 }

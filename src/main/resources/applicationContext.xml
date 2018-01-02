@@ -12,8 +12,9 @@
 	
 	<!-- Activa anotaciones @Controller-->
 	<mvc:annotation-driven/>
+	<!-- Servlet por defecto que mapea recursos estaticos -->
 	<mvc:default-servlet-handler/>	
-	
+	 
 	<context:component-scan base-package="pe.edu.sistemas.sismanweb.controller" />
 	<context:component-scan base-package="pe.edu.sistemas.sismanweb.daoimpl" />
 	<context:component-scan base-package="pe.edu.sistemas.sismanweb.services" />
