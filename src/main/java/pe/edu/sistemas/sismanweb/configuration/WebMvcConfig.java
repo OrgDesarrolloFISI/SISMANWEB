@@ -6,7 +6,6 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 
 @Configuration
 public class WebMvcConfig {
-
 	@Bean
 	public MessageSource messageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
