@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" data-layout-decorate="~{fragments/layout}">
+<head>
+    <title>Curso</title>
+</head>
+
+<body>
+
+<div class="right_col" role="main" data-layout-fragment="content">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3 th:text="${titulo}">Titulo</h3>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+							<h3>Buscar Cursos Base sin conjunto</h3>
+							<div>
+								<form th:object="${search}" class="form-inline"
+									th:action="@{/curso/searchB}" id="frmFiltro" name="frmFiltro">
+									Filtro:
+									<div class="form-group">
+										<select name="sltFiltro" id="sltFiltro" th:field="*{filtro}">
+											<option value="0" selected="selected">Seleccionar</option>
+											<option value="1">Codigo</option>
+											<option value="2">Nombre</option>
+											<option value="3">Escuela o Plan</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<input type="text" id="inFiltro" name="inFiltro" size="12"
+											disabled="disabled" th:field="*{valor}"></input>
+									</div>
+									<div class="form-group">
+										<button type="submit" id="btnFiltro" name="btnFiltro"
+											size="12" disabled="disabled">BUSCAR</button>
+									</div>
+								</form>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+                    <div class="x_content">
+							<table id="dataTable" class="table table-striped table-bordered">
+								<thead>
+									<tr>
+										<th>Codigo</th>
+										<th>Nombre</th>
+										<th>Ciclo</th>
+										<th>Plan</th>
+										<th>Accion</th>
+									</tr>
+								</thead>
+									<tr th:each="cursob : ${listaCursoB}">
+										<td th:text="${cursob.cursobCodigo}"></td>
+										<td th:text="${cursob.cursobNombre}"></td>
+										<td th:text="${cursob.cursobCiclo}"></td>
+										<td th:text="${cursob.plan.planNombre}"></td>
+										<td class="text-center"><a th:href="@{/curso/allCursoC/__${cursob.idcursoGeneral}__}"><button
+														class="btn btn-primary">
+														<span class="fa fa-arrow-right"
+															 title="Buscar Curso Conjunto" aria-hidden="true"></span>
+													</button></a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+

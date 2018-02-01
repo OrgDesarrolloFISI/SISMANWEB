@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.CursoConjuntoDAO;
+import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
 
 @Repository
@@ -58,6 +59,24 @@ public class CursoConjuntoDAOImpl extends AbstractDAOImpl<CursoConjunto, Integer
 			he.printStackTrace();
 		}
 		return listConjunto;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")	
+	@Transactional(propagation=Propagation.MANDATORY)
+	public List<CursoConjunto> findCursosConjuntosxParams(String valor, String filtro) {
+		List<CursoConjunto> listConjunto= null;
+		Query query = null;
+		try{
+		query = getCurrentSession().createQuery("select c FROM CursoConjunto c "
+				+ " WHERE c." + filtro + " LIKE '%"+valor+"%' group by cursocCodcomun ");
+		
+			listConjunto = (List<CursoConjunto>)query.list();	
+		}catch(HibernateException he){
+			he.printStackTrace();
+		}
+		return listConjunto;
+	
 	}
 	
 	

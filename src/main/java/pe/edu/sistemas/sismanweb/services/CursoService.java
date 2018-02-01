@@ -90,6 +90,7 @@ public class CursoService {
 	
 	public CursoBase findCursoBById(Integer idcurso){
 		CursoBase cursob = cursoBaseDao.findById(idcurso);
+		cursob.getPlan().getPlanNombre();
 		return cursob;
 	}
 	
@@ -145,6 +146,31 @@ public class CursoService {
 		formCursoModel.setNombre(curso.getCursobNombre());
 		formCursoModel.setPlanNombre(plan.getPlanNombre());		
 		return formCursoModel;	
+	}
+
+	public List<CursoBase> findCursoBaseSinConjuntoxParams(String valor, String filtro) {
+		switch(filtro){
+		case"1":	filtro="cursobCodigo";break;
+		case"2":	filtro="cursobNombre";break;
+		case"3":	filtro="plan.planNombre";break;			
+	}
+		List<CursoBase> listBase = cursoBaseDao.findCursoBaseSinConjuntoxParams(valor, filtro); 
+		for(CursoBase b: listBase){
+			b.getPlan().getPlanNombre();
+		}
+		return listBase;
+	}
+
+	public List<CursoConjunto> findCursosConjuntosxParams(String valor, String filtro) {
+		switch(filtro){
+		case"1":	filtro="cursocNombre";break;
+		case"2":	filtro="cursoBase.plan.planNombre";break;			
+	}
+		List<CursoConjunto> listConjunto = cursoConjuntoDao.findCursosConjuntosxParams(valor, filtro);
+		for(CursoConjunto c: listConjunto){
+			c.getCursoBase().getPlan().getPlanNombre();
+		}
+		return listConjunto;
 	}
 	
 	

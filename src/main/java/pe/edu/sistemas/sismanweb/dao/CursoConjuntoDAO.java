@@ -12,4 +12,6 @@ public interface CursoConjuntoDAO extends AbstractDAO<CursoConjunto, Integer>{
 	
 	public List<CursoConjunto> findCursosConjuntos();
 
+	public List<CursoConjunto> findCursosConjuntosxParams(String valor, String filtro);
+
 }

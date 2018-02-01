@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +33,12 @@ public class CursoController {
 	@Autowired CursoService cursoService;	
 	@Autowired PlanService  planService;
 	
+	boolean flagB = false;
+	boolean flagC = false;
+	
 	List<CursoModelForm> cursos = new ArrayList<CursoModelForm>();
+	List<CursoBase> cursosb = new ArrayList<CursoBase>();
+	List<CursoConjunto> cursosc = new ArrayList<CursoConjunto>();
 	
 	@ModelAttribute("titulo")
 	public String titulo(){
@@ -46,6 +52,82 @@ public class CursoController {
 		cursos=new ArrayList<CursoModelForm>();
 		return "curso/buscador";	
 	}
+	
+	@GetMapping("/allCursoB")
+	public String verCursosBaseSinConjunto(Model model){
+		model.addAttribute("search", new Search());
+		
+		if(!flagB){
+			cursosb = cursoService.findCursoBaseSinConjunto();
+		}
+		flagB = false;
+		model.addAttribute("listaCursoB", cursosb);
+		logger.info("SE DEVUELVEN CURSOS SIN CONJUNTO : " + cursosb.size());
+		cursosb=new ArrayList<CursoBase>();
+		return "curso/cursosBase";	
+	}
+	
+	@GetMapping("/allCursoC/{idB}")
+	public String verCursosConjunto(Model model, @PathVariable(name="idB",required=true)String idBase){
+		model.addAttribute("search", new Search());
+		
+		if(!flagC){
+		cursosc = cursoService.findCursosConjuntos();
+		}
+		flagC = false;
+		CursoBase cursoB = cursoService.findCursoBById(Integer.parseInt(idBase));
+		model.addAttribute("cursoB", cursoB );
+		model.addAttribute("listaCursoC", cursosc);
+		logger.info("SE DEVUELVEN CURSOS : " + cursosc.size());
+		cursosc=new ArrayList<CursoConjunto>();
+		return "curso/cursosConjunto";	
+	}
+	
+	@GetMapping("/confirmEq/{idB}/{idC}")  //Confirmar equivalencia
+	public String confirmarEquivalencia(Model model, @PathVariable(name="idB",required=true)String idBase,
+			@PathVariable(name="idC",required=true)String idConjunto){
+		CursoConjunto cursoC;
+		CursoBase cursoB = cursoService.findCursoBById(Integer.parseInt(idBase));
+		
+		if(Integer.parseInt(idConjunto) != 0)
+		 cursoC = cursoService.findCursoCById(Integer.parseInt(idConjunto));
+		else
+		 cursoC = new CursoConjunto(null, "NUEVO CURSO", 0);
+			
+		model.addAttribute("cursobc",new CursoBCModelForm(cursoB.getIdcursoGeneral(), cursoC.getIdcursoConjunto()));
+		model.addAttribute("cursoB", cursoB);
+		model.addAttribute("cursoC", cursoC);
+		logger.info("SE MUESTRA INFORMACION DE CURSO base y conjunto  " + cursoB.getCursobNombre() + " " + cursoC.getCursocNombre());
+		
+		return "curso/confirmacionEq";	
+	}
+	
+	
+	
+	@PostMapping("/addConjunto")
+	public String agregarCursoAConjunto(Model model, @ModelAttribute("cursobc") CursoBCModelForm cursoBCModelForm){
+		logger.info("RECIBIEND -- Conjunto : " + cursoBCModelForm.getIdCursoConjunto() + " Base: " + cursoBCModelForm.getIdCursoBase());
+		Integer idBase = cursoBCModelForm.getIdCursoBase();
+		Integer idConjunto = cursoBCModelForm.getIdCursoConjunto();
+		CursoBase cursoBase = null;
+		if(idBase !=null && idConjunto!=null){
+			cursoBase = cursoService.findCursoBById(idBase);
+			boolean exito = cursoService.insertarCursoConjunto(cursoBase, idConjunto);
+			if(exito){
+				logger.info("SE CREO NUEVO GRUPO PARA EL CURSO");
+			}else{
+				logger.info("SE AGREGO CURSO BASE A UN CONJUNTO");
+			}
+			model.addAttribute("fragmento", "contentCursoAvisoExitoEquiv");
+			return "curso/avisosCurso";
+		}else{
+			logger.info("ALGUNO DE LOS VALORES ES NULO");
+			model.addAttribute("fragmento", "contentCursoAvisoError");
+			return "curso/avisosCurso";
+		}
+		
+	}
+	
 
 	@GetMapping("/form")
 	public String formularioCurso(Model model, @RequestParam(name="existe",required=false) String existe){
@@ -87,29 +169,7 @@ public class CursoController {
 		return "curso/equivalencia";
 	}
 	
-	@PostMapping("/addConjunto")
-	public String agregarCursoAConjunto(Model model, @ModelAttribute("cursobc") CursoBCModelForm cursoBCModelForm){
-		logger.info("RECIBIEND -- Conjunto : " + cursoBCModelForm.getIdCursoConjunto() + " Base: " + cursoBCModelForm.getIdCursoBase());
-		Integer idBase = cursoBCModelForm.getIdCursoBase();
-		Integer idConjunto = cursoBCModelForm.getIdCursoConjunto();
-		CursoBase cursoBase = null;
-		if(idBase !=null && idConjunto!=null){
-			cursoBase = cursoService.findCursoBById(idBase);
-			boolean exito = cursoService.insertarCursoConjunto(cursoBase, idConjunto);
-			if(exito){
-				logger.info("SE CREO NUEVO GRUPO PARA EL CURSO");
-			}else{
-				logger.info("SE AGREGO CURSO BASE A UN CONJUNTO");
-			}
-			model.addAttribute("fragmento", "contentCursoAvisoExitoEquiv");
-			return "curso/avisosCurso";
-		}else{
-			logger.info("ALGUNO DE LOS VALORES ES NULO");
-			model.addAttribute("fragmento", "contentCursoAvisoError");
-			return "curso/avisosCurso";
-		}
-		
-	}
+
 	
 	@GetMapping("/search")
 	public String BuscarCursos(@ModelAttribute("search") Search search){			
@@ -118,6 +178,21 @@ public class CursoController {
 		return "redirect:/curso/all";
 	}
 	
+	@GetMapping("/searchB")
+	public String BuscarCursoBaseSinCnjunto(@ModelAttribute("search") Search search){	
+		flagB = true;
+		cursosb = cursoService.findCursoBaseSinConjuntoxParams(search.getValor(),search.getFiltro());
+		logger.info("SE ENCONTRO CURSOS BASE SIN CONJUNTO: " + cursosb.size());
+		return "redirect:/curso/allCursoB";
+	}
+	
+	@GetMapping("/searchC/{idB}")
+	public String BuscarCursoConjunto(@ModelAttribute("search") Search search, @PathVariable(name="idB",required=true)String idBase){		
+		flagC = true;
+		cursosc = cursoService.findCursosConjuntosxParams(search.getValor(),search.getFiltro());
+		logger.info("SE ENCONTRO CURSOS BASE SIN CONJUNTO: " + cursosb.size());
+		return "redirect:/curso/allCursoC/" + idBase;
+	}
 	
 	
 
