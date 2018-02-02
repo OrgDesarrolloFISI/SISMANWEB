@@ -94,6 +94,11 @@ public class CursoController {
 		else{
 		 cursoC = new CursoConjunto(null, "NUEVO CURSO", 0);
 		 cursoC.setIdcursoConjunto(0);
+		 Plan plan=new Plan();
+		 plan.setPlanNombre(cursoB.getPlan().getPlanNombre());
+		 CursoBase cursob2=new CursoBase();
+		 cursob2.setPlan(plan);
+		 cursoC.setCursoBase(cursob2);
 		}
 			
 		model.addAttribute("cursobc",new CursoBCModelForm(cursoB.getIdcursoGeneral(), cursoC.getIdcursoConjunto()));
@@ -118,7 +123,7 @@ public class CursoController {
 			
 			if (cursoService.verificarBaseConjuntoRepetido(idBase)){
 				logger.info("Curso base con conjunto ya existente");
-				model.addAttribute("fragmento", "contentCursoAvisoError");
+				model.addAttribute("fragmento", "contentCursoAvisoBaseRepetida");
 			}
 			else{	
 				cursoBase = cursoService.findCursoBById(idBase);

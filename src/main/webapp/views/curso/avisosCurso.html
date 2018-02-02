@@ -29,10 +29,15 @@
 										curso</button></a> <a href="#" th:href="@{/curso/all}"><button
 										type="button" class="btn btn-primary">Ir al buscador</button></a>
 							</div>
-
+				
 							<div th:if="${fragmento == 'contentCursoAvisoError'}"
 								class="text-center">
-								<p>Hubo un error al asociar</p>
+								<p class="lead">Hubo un error al asociar</p>
+							</div>
+							
+							<div th:if="${fragmento == 'contentCursoAvisoBaseRepetida'}"
+								class="text-center">
+								<p class="lead">ERROR: El curso base ya se encuentra registrado en un conjunto</p>
 							</div>
 
 

@@ -22,7 +22,8 @@
                     <div class="x_title">
 							<h3>Buscar Cursos Conjunto</h3>
 							<div>
-								<br/>
+
+								<div class="row">
 								<div class="col-md-3 col-sm-6 col-xs-12 text-center">
 									<label >Curso Base: </label>
 									<label th:text=${cursoB.cursobNombre}></label>
@@ -46,8 +47,9 @@
 										</button>
 									</a>
 								</div>	
+								</div>
 												
-								<br/>
+
 								<form th:object="${search}" class="form-inline"
 									th:action="@{/curso/searchC/__${cursoB.idcursoGeneral}__}" id="frmFiltro" name="frmFiltro">
 									Filtro:
