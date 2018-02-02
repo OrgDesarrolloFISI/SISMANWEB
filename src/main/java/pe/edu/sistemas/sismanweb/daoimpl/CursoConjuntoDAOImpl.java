@@ -78,6 +78,20 @@ public class CursoConjuntoDAOImpl extends AbstractDAOImpl<CursoConjunto, Integer
 		return listConjunto;
 	
 	}
+
+	@Override
+	public CursoConjunto buscarBaseConjuntoRepetida(Integer idBase) {
+		CursoConjunto cursoConjunto = null;
+		Query query = null;
+		try{
+			query = getCurrentSession().createQuery("from CursoConjunto where cursoBase.idcursoGeneral = :idBase").setMaxResults(1);
+			query.setParameter("idBase", idBase);
+			cursoConjunto = (CursoConjunto)query.uniqueResult();
+		}catch (HibernateException he) {
+			he.printStackTrace();
+		}
+		return cursoConjunto;	
+	}
 	
 	
 

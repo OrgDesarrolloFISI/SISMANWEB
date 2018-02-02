@@ -91,8 +91,10 @@ public class CursoController {
 		
 		if(Integer.parseInt(idConjunto) != 0)
 		 cursoC = cursoService.findCursoCById(Integer.parseInt(idConjunto));
-		else
+		else{
 		 cursoC = new CursoConjunto(null, "NUEVO CURSO", 0);
+		 cursoC.setIdcursoConjunto(0);
+		}
 			
 		model.addAttribute("cursobc",new CursoBCModelForm(cursoB.getIdcursoGeneral(), cursoC.getIdcursoConjunto()));
 		model.addAttribute("cursoB", cursoB);
@@ -110,15 +112,25 @@ public class CursoController {
 		Integer idBase = cursoBCModelForm.getIdCursoBase();
 		Integer idConjunto = cursoBCModelForm.getIdCursoConjunto();
 		CursoBase cursoBase = null;
+		logger.info("iDBase: "+idBase);
+		logger.info("iDConjunto: "+idConjunto);
 		if(idBase !=null && idConjunto!=null){
-			cursoBase = cursoService.findCursoBById(idBase);
-			boolean exito = cursoService.insertarCursoConjunto(cursoBase, idConjunto);
-			if(exito){
-				logger.info("SE CREO NUEVO GRUPO PARA EL CURSO");
-			}else{
-				logger.info("SE AGREGO CURSO BASE A UN CONJUNTO");
+			
+			if (cursoService.verificarBaseConjuntoRepetido(idBase)){
+				logger.info("Curso base con conjunto ya existente");
+				model.addAttribute("fragmento", "contentCursoAvisoError");
 			}
-			model.addAttribute("fragmento", "contentCursoAvisoExitoEquiv");
+			else{	
+				cursoBase = cursoService.findCursoBById(idBase);
+				boolean exito = cursoService.insertarCursoConjunto(cursoBase, idConjunto);
+				if(exito){
+					logger.info("SE CREO NUEVO GRUPO PARA EL CURSO");
+				}
+				else{
+					logger.info("SE AGREGO CURSO BASE A UN CONJUNTO");
+				}
+				model.addAttribute("fragmento", "contentCursoAvisoExitoEquiv");
+			}
 			return "curso/avisosCurso";
 		}else{
 			logger.info("ALGUNO DE LOS VALORES ES NULO");

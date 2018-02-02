@@ -172,6 +172,14 @@ public class CursoService {
 		}
 		return listConjunto;
 	}
+
+	public boolean verificarBaseConjuntoRepetido(Integer idBase) {
+		 CursoConjunto cursoc=cursoConjuntoDao.buscarBaseConjuntoRepetida(idBase);
+		 if(cursoc ==null){
+			 return false;
+		 }
+		return true;
+	}
 	
 	
 }
