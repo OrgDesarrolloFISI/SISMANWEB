@@ -86,12 +86,18 @@ public class CursoController {
 	@GetMapping("/confirmEq/{idB}/{idC}")  //Confirmar equivalencia
 	public String confirmarEquivalencia(Model model, @PathVariable(name="idB",required=true)String idBase,
 			@PathVariable(name="idC",required=true)String idConjunto){
-		CursoConjunto cursoC;
+		CursoConjunto cursoC = null;
 		CursoBase cursoB = cursoService.findCursoBById(Integer.parseInt(idBase));
 		
 		if(Integer.parseInt(idConjunto) != 0)
 		 cursoC = cursoService.findCursoCById(Integer.parseInt(idConjunto));
-		else{
+		 
+			if(cursoC == null){
+				model.addAttribute("fragmento", "contentCursoAvisoCursoCNoExiste");
+				return "curso/avisosCurso";
+			}
+			
+		else{ //NUEVO CURSO
 		 cursoC = new CursoConjunto(null, "NUEVO CURSO", 0);
 		 cursoC.setIdcursoConjunto(0);
 		 Plan plan=new Plan();

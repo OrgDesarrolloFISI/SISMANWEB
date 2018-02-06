@@ -14,5 +14,7 @@ public class VariablesGlobales {
 	public static final String CURSO_CONJUNTO="/curso/curso_Conjunto";
 	
 	public static final String HOME="home";
+	
+	public static final String ERROR404="/error/404";
 
 }

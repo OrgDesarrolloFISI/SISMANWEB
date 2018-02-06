@@ -42,6 +42,10 @@ public class LoginController {
 		return VariablesGlobales.HOME;
 	}
 	
+	@RequestMapping(value="/error",method=RequestMethod.GET)
+	public String error404(Model model){
+		return VariablesGlobales.ERROR404;
+	}
 /*
 	@RequestMapping(value="/validar",method=RequestMethod.POST)
 	public RedirectView validarLogin(@ModelAttribute("persona") Persona persona){

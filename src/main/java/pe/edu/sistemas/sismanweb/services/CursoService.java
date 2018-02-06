@@ -96,7 +96,8 @@ public class CursoService {
 	
 	public CursoConjunto findCursoCById(Integer idcurso){
 		CursoConjunto cursoc = cursoConjuntoDao.findById(idcurso);
-		cursoc.getCursoBase().getPlan().getPlanNombre();
+		if(cursoc!=null)
+			cursoc.getCursoBase().getPlan().getPlanNombre();
 		return cursoc;
 	}
 	
