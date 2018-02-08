@@ -89,14 +89,14 @@ public class CursoController {
 		CursoConjunto cursoC = null;
 		CursoBase cursoB = cursoService.findCursoBById(Integer.parseInt(idBase));
 		
-		if(Integer.parseInt(idConjunto) != 0)
+		if(Integer.parseInt(idConjunto) != 0){
 		 cursoC = cursoService.findCursoCById(Integer.parseInt(idConjunto));
 		 
 			if(cursoC == null){
 				model.addAttribute("fragmento", "contentCursoAvisoCursoCNoExiste");
 				return "curso/avisosCurso";
 			}
-			
+		}	
 		else{ //NUEVO CURSO
 		 cursoC = new CursoConjunto(null, "NUEVO CURSO", 0);
 		 cursoC.setIdcursoConjunto(0);
