@@ -46,3 +46,12 @@ $('#sltFiltro').change(function(){
 	
 });
 
+function check_text(input) {  
+    if (input.validity.patternMismatch){  
+        input.setCustomValidity("Debe ingresar solo LETRAS");  
+    }  
+    else {  
+        input.setCustomValidity("");  
+    }                 
+}
+

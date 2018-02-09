@@ -6,6 +6,7 @@
 
 <body>
 <div class="right_col" role="main" data-layout-fragment="content">
+	
     <div class="">
         <div class="page-title">
             <div class="title_left">
@@ -33,7 +34,7 @@
 									<div class="col-xs-12">
 										<label for="nombre">Nombre</label> <input type="text"
 											class="form-control" id="nombre" placeholder="Ingrese Nombre"
-											pattern="([a-zA-Z]\s*){1,26}" required="required"
+											pattern="([a-zA-Z]\s*){1,26}"required oninput="check_text(this);"
 											th:field="*{nombre}" /> <input type="hidden"
 											th:field="*{idAlumno}" /> <input type="hidden"
 											th:field="*{idPersona}" />
@@ -41,13 +42,13 @@
 									<div class="col-xs-6">
 										<label for="apellido_paterno">Apellido Paterno</label> <input
 											type="text" class="form-control" id="apellido_paterno"
-											placeholder="Ingrese Apellido Paterno" required="required"
+											placeholder="Ingrese Apellido Paterno" required oninput="check_text(this);"
 											pattern="([a-zA-Z]\s*){1,16}" th:field="*{apPaterno}" />
 									</div>
 									<div class="col-xs-6">
 										<label for="apellido_materno">Apellido Materno</label> <input
 											type="text" class="form-control" id="apellido_materno"
-											placeholder="Ingrese Apellido Materno" required="required"
+											placeholder="Ingrese Apellido Materno" required oninput="check_text(this);"
 											pattern="([a-zA-Z]\s*){1,17}" th:field="*{apMaterno}" />
 									</div>
 									<div class="col-xs-6">
