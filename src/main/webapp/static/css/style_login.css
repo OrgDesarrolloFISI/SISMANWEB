@@ -15,8 +15,17 @@ h1 {
   font-size: 3.1rem;
   font-weight: 600;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   text-shadow: black 0.1em 0.1em 0.4em;
+}
+h3 {
+  color: rgb(243, 241, 222);
+  font-size: 3.1rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 0px;
+  text-shadow: black 0.1em 0.1em 0.4em;
+  margin: 0px 0px 0px 0px;
 }
 
 h2 {
@@ -24,7 +33,7 @@ h2 {
   font-size: 25px;
   font-weight: 600;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 }
 
 @media screen and (max-width: 2024px){
@@ -32,18 +41,58 @@ h2 {
 	width:100%;
 	}
 	h1{
-	width:100%
+	width:100%;
+	margin-bottom: 0px;
 	}
 	
 }
 
 
-@media screen and (max-width: 550px){
+@media screen and (max-width: 590px){
 	
 h1{
-	font-size: 1.2rem;
+	font-size: 2.5rem;
 	width:100%;
 	text-shadow: black 0.2em 0.1em 0.4em;
+	margin-bottom: 0px;
+}
+h3{
+	font-size: 2.5rem;
+	width:100%;
+	text-shadow: black 0.2em 0.1em 0.4em;
+	margin-bottom: 0px;
+}
+}
+
+@media screen and (max-width: 450px){
+	
+h1{
+	font-size: 2.0rem;
+	width:100%;
+	text-shadow: black 0.2em 0.1em 0.4em;
+	margin-bottom: 0px;
+}
+h3{
+	font-size: 2.0rem;
+	width:100%;
+	text-shadow: black 0.2em 0.1em 0.4em;
+	margin-bottom: 0px;
+}
+}
+
+@media screen and (max-width: 400px){
+	
+h1{
+	font-size: 1.7rem;
+	width:100%;
+	text-shadow: black 0.2em 0.1em 0.4em;
+	margin-bottom: 0px;
+}
+h3{
+	font-size: 1.7rem;
+	width:100%;
+	text-shadow: black 0.2em 0.1em 0.4em;
+	margin-bottom: 0px;
 }
 }
 
@@ -74,7 +123,7 @@ a {
   left: 50%;
   margin: -184px 0px 0px -300px;
   background: transparent;
- 
+  margin-bottom: 0px;
   border-radius: 5px;
   box-shadow: 0px 1px 20px rgba(0,0,0,0.3),
   

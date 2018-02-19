@@ -17,8 +17,7 @@
 			cantidad de docentes:</p>
 		<p class="text-center lead" th:text=${cantidadDocentesGuardados}></p>
 		<br />
-		<p class="lead">Existen docentes con codigos ya existentes que no
-			se registraron:</p>
+		<p class="lead">En el archivo se encontro Docentes con codigos que ya fueron registrados en la base de datos ,por lo que no se registraran:</p>
 		<div class="panel-body">
 			<table id="dataTable" class="table table-striped table-bordered"
 				th:object="${listaDocentesRepetidos}">
