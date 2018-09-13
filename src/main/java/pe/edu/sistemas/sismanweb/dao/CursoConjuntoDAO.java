@@ -12,6 +12,8 @@ public interface CursoConjuntoDAO extends AbstractDAO<CursoConjunto, Integer>{
 	
 	public List<CursoConjunto> findCursosConjuntos();
 
+	public CursoConjunto findCursoConjuntoByCodigoCursoByNombrePlan(String codigoCurso, String nombreplan);
+	
 	public List<CursoConjunto> findCursosConjuntosxParams(String valor, String filtro);
 
 	public CursoConjunto buscarBaseConjuntoRepetida(Integer idBase);

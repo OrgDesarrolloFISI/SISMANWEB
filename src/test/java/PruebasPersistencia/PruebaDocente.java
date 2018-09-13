@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.CursoBaseDAO;
 import pe.edu.sistemas.sismanweb.dao.CursoConjuntoDAO;
+import pe.edu.sistemas.sismanweb.dao.DocenteDAO;
 import pe.edu.sistemas.sismanweb.dao.PlanDAO;
 import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
@@ -25,6 +26,8 @@ import pe.edu.sistemas.sismanweb.services.DocenteService;
 public class PruebaDocente {
 	
 	@Autowired public DocenteService docenteService;
+	
+	@Autowired public DocenteDAO docenteDao;
 	
 	@Autowired public CursoBaseDAO cursoBaseDao;
 	
@@ -119,7 +122,21 @@ public class PruebaDocente {
 		
 	}
 	
-	
+	@Test
+	@Ignore
+	@Transactional
+	public void mostrarDocentePorNombresYApellidos(){
+		String nombres="DAVID SANTOS";
+		String apellidoPaterno="MAURICIO";
+		String apellidoMaterno="SANCHEZ";
+		
+		Docente d=docenteDao.findDocenteByNombreByApellidoPatByApellidoMat(nombres, apellidoPaterno, apellidoMaterno);
+		
+		if (d==null)
+			System.out.println("No se encontró el docente");
+		else
+			System.out.println("El codigo del docente es "+d.getIddocente());
+	}
 	
 	
 

@@ -28,7 +28,7 @@ public class AlumnoDAOImpl extends AbstractDAOImpl<Alumno, Integer> implements A
 			//query = session.createQuery("select u from Usuario as u join u.persona as p where u.sistemaIdSistema=4 and p.personaCodigoSistema=:codigo");
 			query = getCurrentSession().createQuery("select a from Alumno as a where a.persona." + filtro + " LIKE '%"+valor+"%'");
 			//query.setParameter("codigo", codigo);
-			alumno = (List<Alumno>)query.list();	
+			alumno = (List<Alumno>)query.list();
 		}catch(HibernateException he){
 			he.printStackTrace();
 		}		

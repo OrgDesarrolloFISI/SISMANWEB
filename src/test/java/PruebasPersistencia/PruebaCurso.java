@@ -12,9 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.CursoBaseDAO;
 import pe.edu.sistemas.sismanweb.dao.CursoConjuntoDAO;
+import pe.edu.sistemas.sismanweb.dao.CursoPeriodoDAO;
 import pe.edu.sistemas.sismanweb.dao.PlanDAO;
 import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
+import pe.edu.sistemas.sismanweb.domain.CursoPeriodo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -26,6 +28,8 @@ public class PruebaCurso {
 	
 	@Autowired private PlanDAO planDao;
 		
+	@Autowired private CursoPeriodoDAO cursoPeriodoDao;
+	
 
 	@Test
 	@Ignore
@@ -128,6 +132,7 @@ public class PruebaCurso {
 	}
 	
 	@Test
+	@Ignore
 	@Transactional
 	public void muestraCursosPlan(){
 		List<CursoBase> cb = cursoBaseDao.obtenerCursosxCod("2009", "plan.planNombre" );
@@ -140,5 +145,32 @@ public class PruebaCurso {
 		}else System.out.println("Es nulo");		
 		
 	}
+	
+	@Test
+	@Ignore
+	@Transactional
+	public void muestraCodigoCursoConjunto(){
+		String codigoCurso="201210";
+		String nombrePlan="2009-Sistemas";
+		CursoConjunto cc=cursoConjuntoDao.findCursoConjuntoByCodigoCursoByNombrePlan(codigoCurso, nombrePlan);
+		if(cc==null)
+			System.out.println("No se encontró el cursoconjunto");
+		else
+			System.out.println("El codigo del cursoconjunto es "+cc.getCursocCodcomun());
+		
+	}
 
+	@Test
+	@Ignore
+	@Transactional
+	public void muestraCodigoCursoPeriodo(){
+		String codigoCurso="201210";
+		String nombreplan="2009-Sistemas";
+		String periodoNombre="20172";
+		CursoPeriodo cp=cursoPeriodoDao.findCursoPeriodoByAll(codigoCurso, nombreplan, periodoNombre);
+		if(cp==null)
+			System.out.println("No se encontró el cursoconjunto");
+		else
+			System.out.println("El codigo del cursoconjunto es "+cp.getIdcursoPeriodo());
+	}
 }

@@ -3,6 +3,8 @@ package pe.edu.sistemas.sismanweb.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
+
 public interface AbstractDAO<Entity, I extends Serializable> {
 	
 	public void save(Entity entity);
@@ -16,5 +18,5 @@ public interface AbstractDAO<Entity, I extends Serializable> {
 	public Entity findById(I id);
 	
 	public List<Entity> findAll();
-
+	
 }

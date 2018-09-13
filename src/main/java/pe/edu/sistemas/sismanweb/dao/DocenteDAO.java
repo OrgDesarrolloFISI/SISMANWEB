@@ -8,4 +8,5 @@ public interface DocenteDAO extends AbstractDAO<Docente, Integer>{
 	
 	public List<Docente> obtenerDocentesxCod(String valor, String filtro);
 
+	public Docente findDocenteByNombreByApellidoPatByApellidoMat(String nombres, String apellidoPaterno, String apellidoMaterno);
 }

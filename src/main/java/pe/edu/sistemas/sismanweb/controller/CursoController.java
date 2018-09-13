@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,16 +13,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
+import pe.edu.sistemas.sismanweb.domain.CursoPeriodo;
 import pe.edu.sistemas.sismanweb.domain.Plan;
+import pe.edu.sistemas.sismanweb.services.CursoPeriodoService;
 import pe.edu.sistemas.sismanweb.services.CursoService;
 import pe.edu.sistemas.sismanweb.services.PlanService;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoBCModelForm;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
+import pe.edu.sistemas.sismanweb.services.modelform.CursoPeriodoModelForm;
+import pe.edu.sistemas.sismanweb.util.DeserealizarJSON;
 import pe.edu.sistemas.sismanweb.util.Search;
 
 @Controller
@@ -32,6 +38,7 @@ public class CursoController {
 	
 	@Autowired CursoService cursoService;	
 	@Autowired PlanService  planService;
+	@Autowired CursoPeriodoService cursoPeriodoService;
 	
 	boolean flagB = false;
 	boolean flagC = false;
@@ -217,6 +224,47 @@ public class CursoController {
 		return "redirect:/curso/allCursoC/" + idBase;
 	}
 	
+	@GetMapping("/bulk")
+	public String bulkCursos(Model model){
+		/*model.addAttribute("listaPlanes", planService.obtenerPlanes());
+		logger.info("RETORNANDO VISTA CARGA MASIVA -- CURSOS");*/
+		return "curso/registroGrupal";		
+	}
+	
+	@PostMapping("/addBulk")
+	public String agregarCursos(Model model, @RequestBody String listCursos ){
+		logger.info("CADENA RECIBIDA: "+listCursos);
+		JSONArray jsonArrayCursoPeriodo = new JSONArray(listCursos);
+		DeserealizarJSON<CursoPeriodoModelForm> deserealizador = new DeserealizarJSON<CursoPeriodoModelForm>(CursoPeriodoModelForm.class);
+		List<CursoPeriodoModelForm> cursoPeriodoModel = null;
+		List<CursoPeriodo> resultado = null;
+		logger.info("CANTIDAD DE REGISTROS: "+jsonArrayCursoPeriodo.length());
+		
+		cursoPeriodoModel = deserealizador.deserealiza(jsonArrayCursoPeriodo);
+		
+		if(jsonArrayCursoPeriodo.length()!=cursoPeriodoModel.size()){	//Cada error que exista envía un fragmento para activarlo en la página
+																		//Los errores aún no se han modificado para cursos(sigue con lo de docentes).
+			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO: "+(cursoPeriodoModel.size()+1));//Error 1
+			return "curso/avisosGrupal :: contentCursoAvisoErrorGrup";
+		}else{
+			try{
+				resultado = cursoPeriodoService.saveBulk(cursoPeriodoModel);
+				
+				}catch(Exception e){	//Error 2
+					logger.warn("ERROR EN LOS ID's");
+					return "curso/avisosGrupal :: contentCursoAvisoIdsGrup";
+				}
+				model.addAttribute("cantidadCursosGuardados",(jsonArrayCursoPeriodo.length()-resultado.size()));
+			if(!resultado.isEmpty()){
+				model.addAttribute("listaDocentesRepetidos", resultado);
+				logger.warn("EXISTEN "+resultado.size()+" DOCENTES YA REGISTRADOS");	//Error 3
+				return "docente/avisosGrupal :: contentDocenteAvisoExistenGrup";
+			}else{
+				logger.info("SE REGISTRO EXITOSAMENTE DOCENTES");		//Éxito
+				return "curso/avisosGrupal :: contentCursoAvisoExitoGrup";
+			}				
+		}	
+	}
 	
 
 }

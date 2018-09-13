@@ -93,4 +93,22 @@ var string_ws;
            });
     }
     
+    function SendDataCurso(){
+   	 $.ajax({
+            url: '/sismanweb/curso/addBulk',
+            type: 'POST', 
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",  
+            data: string_ws,
+            success: function(data) {            	             	 
+           	 console.log("se entrego datos");
+           	 $("#fileData").val("");
+           	 $("#cargaExterna").html(data);
+            },
+            error : function(xhr, status) {
+                alert('Disculpe, existio un problema -- '+xhr+" -- "+status);
+            },
+          });
+   }
+    
  

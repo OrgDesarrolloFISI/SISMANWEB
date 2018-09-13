@@ -93,6 +93,25 @@ public class CursoConjuntoDAOImpl extends AbstractDAOImpl<CursoConjunto, Integer
 		return cursoConjunto;	
 	}
 	
-	
+	@Override
+	@SuppressWarnings("unchecked")	
+	@Transactional(propagation=Propagation.MANDATORY)
+	public CursoConjunto findCursoConjuntoByCodigoCursoByNombrePlan(String codigoCurso, String nombreplan) {
+		CursoConjunto cursoConjunto = null;
+		Query query = null;
+		try{
+			query = getCurrentSession()
+					.createQuery(" from CursoConjunto"
+								+" WHERE cursoBase.cursobCodigo= :codigocurso"
+								+" AND cursoBase.plan.planNombre= :nombreplan")
+					.setMaxResults(1);
+			query.setParameter("codigocurso", codigoCurso);
+			query.setParameter("nombreplan", nombreplan);
+			cursoConjunto = (CursoConjunto)query.uniqueResult();
+		}catch (HibernateException he) {
+			he.printStackTrace();
+		}
+		return cursoConjunto;
+	}
 
 }
