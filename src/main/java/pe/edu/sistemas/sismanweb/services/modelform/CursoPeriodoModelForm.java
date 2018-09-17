@@ -1,10 +1,10 @@
 package pe.edu.sistemas.sismanweb.services.modelform;
 
 public class CursoPeriodoModelForm {
-	String codCurso;
-	String cursoPeriodoNombre;
-	String Periodo;
-	String planNombre;
+	String codCurso;			//2010802
+	String cursoPeriodoNombre;	//PROYECTO DE TESIS
+	String Periodo;				//20182
+	String planNombre;			//2014-Sistemas
 	
 	public CursoPeriodoModelForm(){};
 	

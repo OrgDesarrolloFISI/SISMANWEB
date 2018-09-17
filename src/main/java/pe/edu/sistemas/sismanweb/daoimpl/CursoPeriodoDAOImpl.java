@@ -18,7 +18,7 @@ public class CursoPeriodoDAOImpl extends AbstractDAOImpl<CursoPeriodo, Integer> 
 	public CursoPeriodo findCursoPeriodoByAll(String codigoCurso, String nombreplan, String periodoNombre){
 		CursoPeriodo cursoPeriodo = null;
 		Query query = null;
-		try{	//Falta probar
+		try{
 			query = getCurrentSession()
 					.createQuery(" from CursoPeriodo"
 								+" WHERE cursoConjunto.cursoBase.cursobCodigo= :codigocurso"
@@ -34,5 +34,26 @@ public class CursoPeriodoDAOImpl extends AbstractDAOImpl<CursoPeriodo, Integer> 
 			he.printStackTrace();
 		}
 		return cursoPeriodo;
+	}
+
+	@Override
+	public boolean existsCursoPeriodoBy(String nombreCurso, int idPeriodo) {
+		boolean existe= false;
+		
+		Query query = null;
+		try{
+			query = getCurrentSession()
+					.createQuery(" from CursoPeriodo"
+								+" WHERE cursoPeriodoNombre= :nombreCurso"
+								+" AND periodo.idperiodo= :idPeriodo")
+					.setMaxResults(1);
+			query.setParameter("nombreCurso", nombreCurso);
+			query.setParameter("idPeriodo", idPeriodo);
+			
+			existe=((CursoPeriodo)query.uniqueResult()==null)?false:true;
+		}catch (HibernateException he) {
+			he.printStackTrace();
+		}
+		return existe;
 	}
 }

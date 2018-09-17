@@ -5,4 +5,6 @@ import pe.edu.sistemas.sismanweb.domain.CursoPeriodo;
 public interface CursoPeriodoDAO extends AbstractDAO<CursoPeriodo, Integer> {
 
 	public CursoPeriodo findCursoPeriodoByAll(String codigoCurso, String nombreplan, String periodoNombre);
+	
+	public boolean existsCursoPeriodoBy(String nombreCurso, int idPeriodo);
 }

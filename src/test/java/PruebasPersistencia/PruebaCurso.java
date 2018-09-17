@@ -17,6 +17,7 @@ import pe.edu.sistemas.sismanweb.dao.PlanDAO;
 import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
 import pe.edu.sistemas.sismanweb.domain.CursoPeriodo;
+import pe.edu.sistemas.sismanweb.services.CursoPeriodoService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -147,10 +148,9 @@ public class PruebaCurso {
 	}
 	
 	@Test
-	@Ignore
 	@Transactional
 	public void muestraCodigoCursoConjunto(){
-		String codigoCurso="201210";
+		String codigoCurso="201203M";
 		String nombrePlan="2009-Sistemas";
 		CursoConjunto cc=cursoConjuntoDao.findCursoConjuntoByCodigoCursoByNombrePlan(codigoCurso, nombrePlan);
 		if(cc==null)
@@ -164,9 +164,9 @@ public class PruebaCurso {
 	@Ignore
 	@Transactional
 	public void muestraCodigoCursoPeriodo(){
-		String codigoCurso="201210";
+		String codigoCurso="201203M";
 		String nombreplan="2009-Sistemas";
-		String periodoNombre="20172";
+		String periodoNombre="20182";
 		CursoPeriodo cp=cursoPeriodoDao.findCursoPeriodoByAll(codigoCurso, nombreplan, periodoNombre);
 		if(cp==null)
 			System.out.println("No se encontró el cursoconjunto");
