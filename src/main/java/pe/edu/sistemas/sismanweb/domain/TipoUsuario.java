@@ -1,5 +1,5 @@
 package pe.edu.sistemas.sismanweb.domain;
-// Generated 15-sep-2018 12:40:27 by Hibernate Tools 4.3.5.Final
+// Generated 18/09/2018 05:06:44 PM by Hibernate Tools 4.3.1.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,6 +23,7 @@ public class TipoUsuario implements java.io.Serializable {
 	private String nombreTipoUsuario;
 	private String tipoUsuarioDescripcion;
 	private Set<Usuario> usuarios = new HashSet<Usuario>(0);
+	private Set<Usuario> usuarios_1 = new HashSet<Usuario>(0);
 
 	public TipoUsuario() {
 	}
@@ -31,10 +32,12 @@ public class TipoUsuario implements java.io.Serializable {
 		this.nombreTipoUsuario = nombreTipoUsuario;
 	}
 
-	public TipoUsuario(String nombreTipoUsuario, String tipoUsuarioDescripcion, Set<Usuario> usuarios) {
+	public TipoUsuario(String nombreTipoUsuario, String tipoUsuarioDescripcion, Set<Usuario> usuarios,
+			Set<Usuario> usuarios_1) {
 		this.nombreTipoUsuario = nombreTipoUsuario;
 		this.tipoUsuarioDescripcion = tipoUsuarioDescripcion;
 		this.usuarios = usuarios;
+		this.usuarios_1 = usuarios_1;
 	}
 
 	@Id
@@ -74,6 +77,15 @@ public class TipoUsuario implements java.io.Serializable {
 
 	public void setUsuarios(Set<Usuario> usuarios) {
 		this.usuarios = usuarios;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tipoUsuario")
+	public Set<Usuario> getUsuarios_1() {
+		return this.usuarios_1;
+	}
+
+	public void setUsuarios_1(Set<Usuario> usuarios_1) {
+		this.usuarios_1 = usuarios_1;
 	}
 
 }

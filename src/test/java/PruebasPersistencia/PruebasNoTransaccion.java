@@ -3,6 +3,7 @@ package PruebasPersistencia;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import pe.edu.sistemas.sismanweb.dao.PeriodoDAO;
 import pe.edu.sistemas.sismanweb.domain.CategoriaDocente;
+import pe.edu.sistemas.sismanweb.domain.Periodo;
 import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.CategoriaDocenteService;
 import pe.edu.sistemas.sismanweb.services.PlanService;
@@ -33,6 +36,7 @@ public class PruebasNoTransaccion {
 	 */
 	
 	@Test
+	@Ignore
 	@Transactional
 	public void seMuestraCategoriasDocente(){
 		List<CategoriaDocente> resultado = categoriaDocenteService.obtenerCategorias();
@@ -47,8 +51,23 @@ public class PruebasNoTransaccion {
 	}
 	
 	@Test
+	@Ignore
 	@Transactional
 	public void seMuestraPlanes(){
+		List<Plan> resultado = planService.obtenerPlanes();
+		int i = 0;
+		for(Plan pl: resultado){
+			System.out.println(pl.getPlanNombre()+" -- "+pl.getEscuelaIdescuela());
+			i++;
+		}		
+		Assert.assertEquals(i, resultado.size());		
+	}
+	
+	@Autowired PeriodoDAO periodoDao;
+	@Test
+	@Transactional
+	public void obtenerPlan(){
+		Periodo p = periodoDao.findById(Integer.parseInt("2018"));
 		List<Plan> resultado = planService.obtenerPlanes();
 		int i = 0;
 		for(Plan pl: resultado){

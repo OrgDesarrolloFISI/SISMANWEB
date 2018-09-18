@@ -26,6 +26,7 @@ import pe.edu.sistemas.sismanweb.domain.CursoPeriodo;
 import pe.edu.sistemas.sismanweb.domain.Docente;
 import pe.edu.sistemas.sismanweb.domain.Grupo;
 import pe.edu.sistemas.sismanweb.domain.HorarioClase;
+import pe.edu.sistemas.sismanweb.domain.Periodo;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoMasivoModel;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoPeriodoModelForm;
 
@@ -141,7 +142,7 @@ public class CursoPeriodoService {
 			horarioClase.setHoraFin(horaFin);
 			horarioClase.setHorarioClasePeriodo(cmm.getNombrePeriodo());
 			horarioClase.setHorarioClaseTipo(cmm.getTipoClase());
-			horarioClase.setnombreAula(cmm.getAula());
+			horarioClase.setNombreAula(cmm.getAula());
 			horarioClaseDAO.save(horarioClase);
 			
 		}
@@ -152,8 +153,9 @@ public class CursoPeriodoService {
 	public CursoPeriodo converterToCursoPeriodo(CursoPeriodoModelForm formCursoPeriodoModel){
 		CursoPeriodo cursoPeriodo = new CursoPeriodo();
 		CursoConjunto cc=cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(formCursoPeriodoModel.getCodCurso(), formCursoPeriodoModel.getPlanNombre());
+		Periodo p = periodoDAO.findById(Integer.parseInt(formCursoPeriodoModel.getPeriodo()));
 		
-		cursoPeriodo.setPeriodo(periodoDAO.findById(Integer.parseInt(formCursoPeriodoModel.getPeriodo())));
+		cursoPeriodo.setPeriodo(p);
 		cursoPeriodo.setCursoConjunto(cc);
 		cursoPeriodo.setCursoPeriodoNombre(formCursoPeriodoModel.getCursoPeriodoNombre());
 		
@@ -175,7 +177,7 @@ public class CursoPeriodoService {
 		String[] seccionesHora = fecha.split(":");	//Suponiendo que la entrada es HH:MM:SS solo usaremos HH y MM
 		hora.setHours(Integer.parseInt(seccionesHora[0]));
 		hora.setMinutes(Integer.parseInt(seccionesHora[1]));
-		hora.setSeconds(0);	//Esto se puede cambiar
+		hora.setSeconds(0);	//Esto se puede cambiar y recibir seccionesHora[2]
 		System.out.println("\tDespues de convertir: "+hora.toString());
 		return hora;
 	}

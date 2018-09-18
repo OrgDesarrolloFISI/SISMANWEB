@@ -13,11 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 import pe.edu.sistemas.sismanweb.dao.CursoBaseDAO;
 import pe.edu.sistemas.sismanweb.dao.CursoConjuntoDAO;
 import pe.edu.sistemas.sismanweb.dao.CursoPeriodoDAO;
+import pe.edu.sistemas.sismanweb.dao.PeriodoDAO;
 import pe.edu.sistemas.sismanweb.dao.PlanDAO;
 import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
 import pe.edu.sistemas.sismanweb.domain.CursoPeriodo;
-import pe.edu.sistemas.sismanweb.services.CursoPeriodoService;
+import pe.edu.sistemas.sismanweb.domain.Periodo;
+import pe.edu.sistemas.sismanweb.services.modelform.CursoPeriodoModelForm;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -172,5 +174,37 @@ public class PruebaCurso {
 			System.out.println("No se encontró el cursoconjunto");
 		else
 			System.out.println("El codigo del cursoconjunto es "+cp.getIdcursoPeriodo());
+	}
+	
+	@Autowired CursoPeriodoDAO cursoPeriodoDAO;
+	@Autowired CursoConjuntoDAO cursoConjuntoDAO;
+	@Autowired PeriodoDAO periodoDAO;
+	@Test
+	@Transactional
+	public void agregarCursoPeriodo(){
+		//CursoMasivoModel cmm = listacursoMasivoModel.get(i);
+		CursoPeriodo cursoPeriodo = null;
+		
+		//System.out.println(cmm.toString());
+		//Puede ocurrir error si es que el modelo recibido es nulo
+		CursoPeriodoModelForm cpmf=new CursoPeriodoModelForm("201204", "SISTEMAS INTELIGENTES", "20182", "2009-Sistemas");
+		
+		if(!cursoPeriodoDAO.existsCursoPeriodoBy("SISTEMAS INTELIGENTES", Integer.parseInt("20182"))) {
+			//cursoPeriodo = converterToCursoPeriodo(cpmf);
+			cursoPeriodo = new CursoPeriodo();
+			CursoConjunto cc=cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(cpmf.getCodCurso(), cpmf.getPlanNombre());
+			Periodo p = periodoDAO.findById(Integer.parseInt(cpmf.getPeriodo()));
+			cursoPeriodo.setIdcursoPeriodo(1);
+			cursoPeriodo.setPeriodo(p);
+			cursoPeriodo.setCursoConjunto(cc);
+			cursoPeriodo.setCursoPeriodoNombre(cpmf.getCursoPeriodoNombre());
+			
+			System.out.println("Info del cursoPeriodo: "+cursoPeriodo.getCursoPeriodoNombre()+". PeriodoID: "+cursoPeriodo.getPeriodo().getIdperiodo()+
+					".CursoConjuntoID: "+cursoPeriodo.getCursoConjunto().getCursocCodcomun()+".");
+			
+			/*existe = *///insertarCursoPeriodo(cursoPeriodo);
+			cursoPeriodoDAO.save(cursoPeriodo);
+			System.out.println("Se agregó 1 curso");
+		}
 	}
 }

@@ -1,5 +1,5 @@
 package pe.edu.sistemas.sismanweb.domain;
-// Generated 15-sep-2018 12:40:27 by Hibernate Tools 4.3.5.Final
+// Generated 18/09/2018 05:06:44 PM by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -38,8 +38,10 @@ public class Persona implements java.io.Serializable {
 	private String personaPasswordSistema;
 	private String personaPasswordSistema2;
 	private Set<Usuario> usuarios = new HashSet<Usuario>(0);
+	private Set<Usuario> usuarios_1 = new HashSet<Usuario>(0);
 	private Set<Alumno> alumnos = new HashSet<Alumno>(0);
 	private Set<Docente> docentes = new HashSet<Docente>(0);
+	private Set<Docente> docentes_1 = new HashSet<Docente>(0);
 
 	public Persona() {
 	}
@@ -53,8 +55,8 @@ public class Persona implements java.io.Serializable {
 	public Persona(String personaCodigo, String personaNombre, String personaAppaterno, String personaApmaterno,
 			String personaTelefono, String personaCorreo, String personaDireccion, String personaDni,
 			Date personaFechaNacimiento, String personaSexo, String personaEstadoCivil, String personaCodigoSistema,
-			String personaPasswordSistema, String personaPasswordSistema2, Set<Usuario> usuarios, Set<Alumno> alumnos,
-			Set<Docente> docentes) {
+			String personaPasswordSistema, String personaPasswordSistema2, Set<Usuario> usuarios,
+			Set<Usuario> usuarios_1, Set<Alumno> alumnos, Set<Docente> docentes, Set<Docente> docentes_1) {
 		this.personaCodigo = personaCodigo;
 		this.personaNombre = personaNombre;
 		this.personaAppaterno = personaAppaterno;
@@ -70,8 +72,10 @@ public class Persona implements java.io.Serializable {
 		this.personaPasswordSistema = personaPasswordSistema;
 		this.personaPasswordSistema2 = personaPasswordSistema2;
 		this.usuarios = usuarios;
+		this.usuarios_1 = usuarios_1;
 		this.alumnos = alumnos;
 		this.docentes = docentes;
+		this.docentes_1 = docentes_1;
 	}
 
 	@Id
@@ -223,6 +227,15 @@ public class Persona implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "persona")
+	public Set<Usuario> getUsuarios_1() {
+		return this.usuarios_1;
+	}
+
+	public void setUsuarios_1(Set<Usuario> usuarios_1) {
+		this.usuarios_1 = usuarios_1;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "persona")
 	public Set<Alumno> getAlumnos() {
 		return this.alumnos;
 	}
@@ -238,6 +251,15 @@ public class Persona implements java.io.Serializable {
 
 	public void setDocentes(Set<Docente> docentes) {
 		this.docentes = docentes;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "persona")
+	public Set<Docente> getDocentes_1() {
+		return this.docentes_1;
+	}
+
+	public void setDocentes_1(Set<Docente> docentes_1) {
+		this.docentes_1 = docentes_1;
 	}
 
 }

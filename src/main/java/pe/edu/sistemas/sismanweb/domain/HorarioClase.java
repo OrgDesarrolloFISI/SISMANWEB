@@ -1,5 +1,5 @@
 package pe.edu.sistemas.sismanweb.domain;
-// Generated 15-sep-2018 12:40:27 by Hibernate Tools 4.3.5.Final
+// Generated 18/09/2018 05:06:44 PM by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -118,11 +118,11 @@ public class HorarioClase implements java.io.Serializable {
 	}
 
 	@Column(name = "AULA", length = 45)
-	public String getnombreAula() {
+	public String getNombreAula() {
 		return this.nombreAula;
 	}
 
-	public void setnombreAula(String nombreAula) {
+	public void setNombreAula(String nombreAula) {
 		this.nombreAula = nombreAula;
 	}
 

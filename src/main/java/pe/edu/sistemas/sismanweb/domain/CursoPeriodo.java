@@ -1,5 +1,5 @@
 package pe.edu.sistemas.sismanweb.domain;
-// Generated 15-sep-2018 12:40:27 by Hibernate Tools 4.3.5.Final
+// Generated 18/09/2018 05:06:44 PM by Hibernate Tools 4.3.1.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -55,7 +55,7 @@ public class CursoPeriodo implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CURSO_PERIODO_CURSOC_CODCOMUN", nullable = false)
+	@JoinColumn(name = "CURSO_PERIODO_CURSOC_CODCOMUN", nullable = false, referencedColumnName="CURSOC_CODCOMUN")
 	public CursoConjunto getCursoConjunto() {
 		return this.cursoConjunto;
 	}
