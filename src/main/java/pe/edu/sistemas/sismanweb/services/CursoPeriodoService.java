@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pe.edu.sistemas.sismanweb.dao.AulaDAO;
+import pe.edu.sistemas.sismanweb.dao.CursoBaseDAO;
 import pe.edu.sistemas.sismanweb.dao.CursoConjuntoDAO;
 import pe.edu.sistemas.sismanweb.dao.CursoPeriodoDAO;
 import pe.edu.sistemas.sismanweb.dao.DocenteDAO;
@@ -21,6 +22,7 @@ import pe.edu.sistemas.sismanweb.dao.GrupoDAO;
 import pe.edu.sistemas.sismanweb.dao.HorarioClaseDAO;
 import pe.edu.sistemas.sismanweb.dao.PeriodoDAO;
 import pe.edu.sistemas.sismanweb.domain.Aula;
+import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
 import pe.edu.sistemas.sismanweb.domain.CursoPeriodo;
 import pe.edu.sistemas.sismanweb.domain.Docente;
@@ -43,7 +45,8 @@ public class CursoPeriodoService {
 	@Autowired private GrupoDAO grupoDAO;
 	@Autowired private HorarioClaseDAO horarioClaseDAO;
 	@Autowired private PeriodoDAO periodoDAO;
-	
+	@Autowired private CursoBaseDAO cursoBaseDAO;
+	@Autowired private CursoService cursoServ; 
 	@Autowired private DocenteDAO docenteDAO;
 	
 	public /*List<CursoPeriodo>*/void saveBulk(List<CursoMasivoModel> listacursoMasivoModel){
@@ -51,6 +54,7 @@ public class CursoPeriodoService {
 		
 		
 		Boolean existe;
+		logger.info("Paso por aqui 4");
 		for(int i=0; i< listacursoMasivoModel.size(); i++){		//AGREGO LOS CURSOPERIODO
 			CursoMasivoModel cmm = listacursoMasivoModel.get(i);
 			CursoPeriodo cursoPeriodo = null;
@@ -68,7 +72,7 @@ public class CursoPeriodoService {
 				//cursosExistentes.add(cursoPeriodo);		
 			//}			
 		}
-		
+		logger.info("Paso por aqui 5");
 		/*
 		for (int i = 0; i < listacursoMasivoModel.size(); i++) {//AGREGO LOS GRUPOS (Necesito de que ya exista CursoPeriodo)
 			Grupo grupo=new Grupo();
@@ -126,6 +130,11 @@ public class CursoPeriodoService {
 			
 			Date horaInicio=convertirStringADate(cmm.getHoraInicio());	
 			Date horaFin=convertirStringADate(cmm.getHoraFinal());
+			if(docente!=null) {
+				System.out.println(docente.getPersona().getPersonaNombre());
+			}else{
+				System.out.println("NOOOOOOOOOOOOOOOOOO EXISTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+			}
 			
 			grupo.setCursoPeriodo(cp);
 			grupo.setGrupoNumero(cmm.getGrupoNumero());
@@ -144,15 +153,26 @@ public class CursoPeriodoService {
 			horarioClase.setHorarioClaseTipo(cmm.getTipoClase());
 			horarioClase.setNombreAula(cmm.getAula());
 			horarioClaseDAO.save(horarioClase);
-			
+			logger.info("Paso por aqui el REGISTRO"+i+"AAAAAAAAAAAAAAAAAAAAA");
 		}
-		
+		logger.info("Paso por aqui 6666666");
 		//return cursosExistentes;	//Debería ser void
 	}
 	
 	public CursoPeriodo converterToCursoPeriodo(CursoPeriodoModelForm formCursoPeriodoModel){
 		CursoPeriodo cursoPeriodo = new CursoPeriodo();
 		CursoConjunto cc=cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(formCursoPeriodoModel.getCodCurso(), formCursoPeriodoModel.getPlanNombre());
+		if(cc==null) {
+			List<CursoBase> cb= cursoBaseDAO.findCursoBaseByNombre(formCursoPeriodoModel.getCursoPeriodoNombre());
+			CursoBase cursoBase=null;
+			if(cb!=null) {
+				//Crear nuevo CursoConjunto
+				cursoBase=cb.get(0);
+				cursoServ.insertarCursoConjunto(cursoBase, 0);
+				cc=cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(formCursoPeriodoModel.getCodCurso(), formCursoPeriodoModel.getPlanNombre());
+			}
+		}
+		
 		Periodo p = periodoDAO.findById(Integer.parseInt(formCursoPeriodoModel.getPeriodo()));
 		
 		cursoPeriodo.setPeriodo(p);

@@ -242,12 +242,14 @@ public class CursoController {
 		logger.info("CANTIDAD DE REGISTROS: "+jsonArrayCursoPeriodo.length());
 		
 		cursoMasivoModel = deserealizador.deserealiza(jsonArrayCursoPeriodo);
-		
+		logger.info("Paso por aqui 1");
 		if(jsonArrayCursoPeriodo.length()!=cursoMasivoModel.size()){	//Cada error que exista envía un fragmento para activarlo en la página
 																		//Los errores aún no se han modificado para cursos(sigue con lo de docentes).
+			logger.info("Paso por aqui 2");
 			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO: "+(cursoMasivoModel.size()+1));//Error 1
 			return "curso/avisosGrupal :: contentCursoAvisoErrorGrup";
 		}else{
+			logger.info("Paso por aqui 3");
 			try{
 				/*resultado = */cursoPeriodoService.saveBulk(cursoMasivoModel);
 				
@@ -255,15 +257,16 @@ public class CursoController {
 					logger.warn("ERROR EN LOS ID's");
 					return "curso/avisosGrupal :: contentCursoAvisoIdsGrup";
 				}
-				model.addAttribute("cantidadCursosGuardados",(jsonArrayCursoPeriodo.length()-resultado.size()));
-			if(!resultado.isEmpty()){
+				//model.addAttribute("cantidadCursosGuardados",(jsonArrayCursoPeriodo.length()-resultado.size()));
+			/*if(!resultado.isEmpty()){
 				model.addAttribute("listaDocentesRepetidos", resultado);
 				logger.warn("EXISTEN "+resultado.size()+" DOCENTES YA REGISTRADOS");	//Error 3
 				return "docente/avisosGrupal :: contentDocenteAvisoExistenGrup";
 			}else{
 				logger.info("SE REGISTRO EXITOSAMENTE DOCENTES");		//Éxito
 				return "curso/avisosGrupal :: contentCursoAvisoExitoGrup";
-			}				
+			}*/		
+			return "curso/avisosGrupal";
 		}	
 	}
 	
