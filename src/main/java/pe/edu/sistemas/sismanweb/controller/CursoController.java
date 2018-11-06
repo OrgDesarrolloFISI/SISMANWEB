@@ -224,16 +224,17 @@ public class CursoController {
 		logger.info("SE ENCONTRO CURSOS BASE SIN CONJUNTO: " + cursosb.size());
 		return "redirect:/curso/allCursoC/" + idBase;
 	}
-	
-	@GetMapping("/bulk")
-	public String bulkCursos(Model model){
+	 /*-----------*/
+	/*Cursos base*/
+   /*-----------*/
+	@GetMapping("/bulkCursoBase")
+	public String bulkCursosBase(Model model){
 		/*model.addAttribute("listaPlanes", planService.obtenerPlanes());
 		logger.info("RETORNANDO VISTA CARGA MASIVA -- CURSOS");*/
-		return "curso/registroGrupal";		
+		return "curso/registroGrupalBase";		
 	}
-	
-	@PostMapping("/addBulk")
-	public String agregarCursos(Model model, @RequestBody String listCursos ){
+	@PostMapping("/addBulkBase")
+	public String agregarCursosBase(Model model, @RequestBody String listCursos ){
 		logger.info("CADENA RECIBIDA: "+listCursos);
 		JSONArray jsonArrayCursoPeriodo = new JSONArray(listCursos);
 		DeserealizarJSON<CursoMasivoModel> deserealizador = new DeserealizarJSON<CursoMasivoModel>(CursoMasivoModel.class);
@@ -270,5 +271,46 @@ public class CursoController {
 		}	
 	}
 	
-
+	
+	/*--------------*/
+   /*Cursos Periodo*/
+  /*--------------*/
+	@GetMapping("/bulk")
+	public String bulkCursos(Model model){
+		/*model.addAttribute("listaPlanes", planService.obtenerPlanes());
+		logger.info("RETORNANDO VISTA CARGA MASIVA -- CURSOS");*/
+		return "curso/registroGrupal";		
+	}
+	
+	@PostMapping("/addBulk")
+	public String agregarCursos(Model model, @RequestBody String listCursos ){
+		logger.info("CADENA RECIBIDA: "+listCursos);
+		JSONArray jsonArrayCursoPeriodo = new JSONArray(listCursos);
+		DeserealizarJSON<CursoMasivoModel> deserealizador = new DeserealizarJSON<CursoMasivoModel>(CursoMasivoModel.class);
+		List<CursoMasivoModel> cursoMasivoModel = null;
+		List<CursoPeriodo> resultado = null;
+		logger.info("CANTIDAD DE REGISTROS: "+jsonArrayCursoPeriodo.length());
+		
+		cursoMasivoModel = deserealizador.deserealiza(jsonArrayCursoPeriodo);
+		if(jsonArrayCursoPeriodo.length()!=cursoMasivoModel.size()){	//Cada error que exista envía un fragmento para activarlo en la página
+			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO: "+(cursoMasivoModel.size()+1));//Error 1
+			System.out.println("ENVIANDO MENSAJE DE ERROR EN REGISTRO: "+(cursoMasivoModel.size()+1));
+			return "curso/avisosGrupal :: contentCursoAvisoErrorGrup";
+		}else{
+				resultado = cursoPeriodoService.saveBulk(cursoMasivoModel);
+				model.addAttribute("cantidadCursosGuardados",(jsonArrayCursoPeriodo.length()-resultado.size()));
+			if(!resultado.isEmpty()){
+				logger.warn("NO SE PUDIERON REGISTRAR  "+resultado.size()+" CURSOPERIODO");	//Error 3
+				System.out.println("NO SE PUDIERON REGISTRAR  "+resultado.size()+" CURSOPERIODO");
+				model.addAttribute("listaCursosNoAgregados", resultado);
+				return "curso/avisosGrupal :: contentCursoAvisoExistenProb";
+			}else{
+				logger.info("SE REGISTRO EXITOSAMENTE DOCENTES");		//Éxito
+				System.out.println("SE REGISTRO EXITOSAMENTE DOCENTES");
+				return "curso/avisosGrupal :: contentCursoAvisoExitoGrup";
+			}
+		}
+		
+	}
+	
 }

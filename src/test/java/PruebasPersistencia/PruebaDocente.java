@@ -126,9 +126,9 @@ public class PruebaDocente {
 	@Ignore
 	@Transactional
 	public void mostrarDocentePorNombresYApellidos(){
-		String nombres="DAVID SANTOS";
-		String apellidoPaterno="MAURICIO";
-		String apellidoMaterno="SANCHEZ";
+		String nombres="ROLANDO ALBERTO";
+		String apellidoPaterno="MAGUIÑA";
+		String apellidoMaterno="PEREZ";
 		
 		Docente d=docenteDao.findDocenteByNombreByApellidoPatByApellidoMat(nombres, apellidoPaterno, apellidoMaterno);
 		

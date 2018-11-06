@@ -38,167 +38,155 @@ public class CursoPeriodoService {
 
 	protected final Log logger = LogFactory.getLog(AlumnoService.class);
 	public static final ObjectMapper JSON_MAPPER = new ObjectMapper();
-	
-	@Autowired private AulaDAO aulaDAO;
-	@Autowired private CursoConjuntoDAO cursoConjuntoDAO;
-	@Autowired private CursoPeriodoDAO cursoPeriodoDAO;
-	@Autowired private GrupoDAO grupoDAO;
-	@Autowired private HorarioClaseDAO horarioClaseDAO;
-	@Autowired private PeriodoDAO periodoDAO;
-	@Autowired private CursoBaseDAO cursoBaseDAO;
-	@Autowired private CursoService cursoServ; 
-	@Autowired private DocenteDAO docenteDAO;
-	
-	public /*List<CursoPeriodo>*/void saveBulk(List<CursoMasivoModel> listacursoMasivoModel){
-		List<CursoPeriodo> cursosExistentes = new ArrayList<CursoPeriodo>();
-		
-		
-		Boolean existe;
-		logger.info("Paso por aqui 4");
-		for(int i=0; i< listacursoMasivoModel.size(); i++){		//AGREGO LOS CURSOPERIODO
+
+	@Autowired
+	private AulaDAO aulaDAO;
+	@Autowired
+	private CursoConjuntoDAO cursoConjuntoDAO;
+	@Autowired
+	private CursoPeriodoDAO cursoPeriodoDAO;
+	@Autowired
+	private GrupoDAO grupoDAO;
+	@Autowired
+	private HorarioClaseDAO horarioClaseDAO;
+	@Autowired
+	private PeriodoDAO periodoDAO;
+	@Autowired
+	private CursoBaseDAO cursoBaseDAO;
+	@Autowired
+	private CursoService cursoServ;
+	@Autowired
+	private DocenteDAO docenteDAO;
+
+	public  List<CursoPeriodo> /*void*/ saveBulk(List<CursoMasivoModel> listacursoMasivoModel) {
+		List<CursoPeriodo> cursosConProblemas = new ArrayList<CursoPeriodo>();
+		boolean seAgrego=false;
+
+		for (int i = 0; i < listacursoMasivoModel.size(); i++) { // AGREGO LOS CURSOPERIODO
 			CursoMasivoModel cmm = listacursoMasivoModel.get(i);
 			CursoPeriodo cursoPeriodo = null;
-			
+
 			System.out.println(cmm.toString());
-			//Puede ocurrir error si es que el modelo recibido es nulo
-			CursoPeriodoModelForm cpmf=new CursoPeriodoModelForm(cmm.getCodCurso(), cmm.getDescCurso(), cmm.getPeriodoNombre(), cmm.getNombrePlan());
-			if(!cursoPeriodoDAO.existsCursoPeriodoBy(cmm.getDescCurso(), Integer.parseInt(cmm.getPeriodoNombre()))) {
+			// Puede ocurrir error si es que el modelo recibido es nulo
+			CursoPeriodoModelForm cpmf = new CursoPeriodoModelForm(cmm.getCodCurso(), cmm.getDescCurso(),
+					cmm.getPeriodoNombre(), cmm.getNombrePlan());
+			if (!cursoPeriodoDAO.existsCursoPeriodoBy(cmm.getDescCurso(), Integer.parseInt(cmm.getPeriodoNombre()))) {
 				cursoPeriodo = converterToCursoPeriodo(cpmf);
-				/*existe = */insertarCursoPeriodo(cursoPeriodo);
-				System.out.println("Se agregó 1 curso");
+				seAgrego = insertarCursoPeriodo(cursoPeriodo);
+				if(!seAgrego){ 
+					 cursosConProblemas.add(cursoPeriodo);
+					 System.out.println("No se agregó el cursoPeriodo en "+(i+1));
+				 }else {
+					 System.out.println("Se agregó 1 cursoPeriodo en "+(i+1));
+				 }
 			}
-			//Faltaría cambiar la estructura de salida
-			//if(existe){				//Esto se usaba para devolver los que ya existían
-				//cursosExistentes.add(cursoPeriodo);		
-			//}			
-		}
-		logger.info("Paso por aqui 5");
-		/*
-		for (int i = 0; i < listacursoMasivoModel.size(); i++) {//AGREGO LOS GRUPOS (Necesito de que ya exista CursoPeriodo)
-			Grupo grupo=new Grupo();
-			CursoMasivoModel cmm = listacursoMasivoModel.get(i);
-			List<HorarioClase> horarioClases= horarioClaseDAO.findHorarioClaseByGrupo(cmm.getGrupoNumero());
-			CursoPeriodo cp=cursoPeriodoDAO.findCursoPeriodoByAll(cmm.getCodCurso(), cmm.getNombrePlan(), cmm.getPeriodoNombre());
-			grupo.setCursoPeriodo(cp);
-			grupo.setGrupoNumero(cmm.getGrupoNumero());
-			grupo.setHorarioClases(new HashSet<HorarioClase>(horarioClases));
-			grupoDAO.save(grupo);
-			
-		}
-		
-		for (int i = 0; i < listacursoMasivoModel.size(); i++) {//AGREGO HORARIOCLASE (Necesito de que ya exista grupo)
-			HorarioClase horarioClase=null;
-			CursoMasivoModel cmm = listacursoMasivoModel.get(i);
-			Aula aula= aulaDAO.findByNombreAula(cmm.getAula());
-			Docente docente = docenteDAO.findDocenteByNombreByApellidoPatByApellidoMat
-					(cmm.getDocenteNombre(), cmm.getDocenteApPaterno(), cmm.getDocenteApMaterno());
-			//Reusar con el agregar grupos
-			CursoPeriodo cp=cursoPeriodoDAO.findCursoPeriodoByAll(cmm.getCodCurso(), cmm.getNombrePlan(), cmm.getPeriodoNombre());
-			Grupo grupo=grupoDAO.findByidcursoPeriodoBygrupoNumero(cp.getIdcursoPeriodo(), cmm.getGrupoNumero());
-			Date horaInicio=null;	//Buscar convertir de String a Date
-			Date horaFin=null;
-			
-			//horarioClase.setIdhorarioClase(0); Se pone automático
-			horarioClase.setAula(aula);
-			horarioClase.setDia(cmm.getDia());
-			horarioClase.setDocente(docente);
-			horarioClase.setGrupo(grupo);
-			horarioClase.setHoraInicio(horaInicio);
-			horarioClase.setHoraFin(horaFin);
-			horarioClase.setHorarioClasePeriodo(cmm.getNombrePeriodo());
-			horarioClase.setHorarioClaseTipo(cmm.getTipoClase());
-			horarioClase.setnombreAula(cmm.getAula());
-			
-			
-			horarioClaseDAO.save(horarioClase);
-			
-		}*/
-		
-		for (int i = 0; i < listacursoMasivoModel.size(); i++) {//AGREGO HORARIOCLASE Y GRUPO
-			Grupo grupo=new Grupo();
-			HorarioClase horarioClase=new HorarioClase();
-			CursoMasivoModel cmm = listacursoMasivoModel.get(i);
-			
-			List<HorarioClase> horarioClases= horarioClaseDAO.findHorarioClaseByGrupo(cmm.getGrupoNumero());
-			
-			CursoPeriodo cp=cursoPeriodoDAO.findCursoPeriodoByAll(cmm.getCodCurso(), cmm.getNombrePlan(), cmm.getPeriodoNombre());
-			
-			Aula aula= aulaDAO.findByNombreAula(cmm.getAula());
-			
-			Docente docente = docenteDAO.findDocenteByNombreByApellidoPatByApellidoMat
-					(cmm.getDocenteNombre(), cmm.getDocenteApPaterno(), cmm.getDocenteApMaterno());
-			
-			Date horaInicio=convertirStringADate(cmm.getHoraInicio());	
-			Date horaFin=convertirStringADate(cmm.getHoraFinal());
-			if(docente!=null) {
-				System.out.println(docente.getPersona().getPersonaNombre());
-			}else{
-				System.out.println("NOOOOOOOOOOOOOOOOOO EXISTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+			else {	//Si no es el primer cursoPeriodo de la carga en agregarse
+				System.out.println("Ya existía cursoPeriodo en "+(i+1));
 			}
 			
-			grupo.setCursoPeriodo(cp);
-			grupo.setGrupoNumero(cmm.getGrupoNumero());
-			grupo.setHorarioClases(new HashSet<HorarioClase>(horarioClases));
-			grupoDAO.save(grupo);
-			
-			
-			//horarioClase.setIdhorarioClase(0); Se pone automático
-			horarioClase.setAula(aula);
-			horarioClase.setDia(cmm.getDia());
-			horarioClase.setDocente(docente);
-			horarioClase.setGrupo(grupo);
-			horarioClase.setHoraInicio(horaInicio);
-			horarioClase.setHoraFin(horaFin);
-			horarioClase.setHorarioClasePeriodo(cmm.getNombrePeriodo());
-			horarioClase.setHorarioClaseTipo(cmm.getTipoClase());
-			horarioClase.setNombreAula(cmm.getAula());
-			horarioClaseDAO.save(horarioClase);
-			logger.info("Paso por aqui el REGISTRO"+i+"AAAAAAAAAAAAAAAAAAAAA");
+			 
 		}
-		logger.info("Paso por aqui 6666666");
-		//return cursosExistentes;	//Debería ser void
+
+		for (int i = 0; i < listacursoMasivoModel.size(); i++) {// AGREGO HORARIOCLASE Y GRUPO
+			Grupo grupo = new Grupo();
+			HorarioClase horarioClase = new HorarioClase();
+			CursoMasivoModel cmm = listacursoMasivoModel.get(i);
+
+			List<HorarioClase> horarioClases = horarioClaseDAO.findHorarioClaseByGrupo(cmm.getGrupoNumero());
+
+			CursoPeriodo cp = cursoPeriodoDAO.findCursoPeriodoByAll(cmm.getCodCurso(), cmm.getNombrePlan(),
+					cmm.getPeriodoNombre());
+
+			Aula aula = aulaDAO.findByNombreAula(cmm.getAula());
+
+			Docente docente = docenteDAO.findDocenteByNombreByApellidoPatByApellidoMat(cmm.getDocenteNombre(),
+					cmm.getDocenteApPaterno(), cmm.getDocenteApMaterno());
+
+			Date horaInicio = convertirStringADate(cmm.getHoraInicio());
+			Date horaFin = convertirStringADate(cmm.getHoraFinal());
+			if (docente == null) {
+				cursosConProblemas.add(cp);
+				System.out.println("El docente no existe en "+(i+1));
+				
+			} else if(cp == null){
+				System.out.println("Problemas con CursoPeriodo en "+(i+1));
+			}
+			else {
+				grupo.setCursoPeriodo(cp);
+				grupo.setGrupoNumero(cmm.getGrupoNumero());
+				grupo.setHorarioClases(new HashSet<HorarioClase>(horarioClases));
+				grupoDAO.save(grupo);
+				System.out.print("Se agregó un grupo en "+(i+1)+". ");
+				
+				// horarioClase.setIdhorarioClase(0); Se pone automático
+				horarioClase.setAula(aula);
+				horarioClase.setDia(cmm.getDia());
+				horarioClase.setDocente(docente);
+				horarioClase.setGrupo(grupo);
+				horarioClase.setHoraInicio(horaInicio);
+				horarioClase.setHoraFin(horaFin);
+				horarioClase.setHorarioClasePeriodo(cmm.getNombrePeriodo());
+				horarioClase.setHorarioClaseTipo(cmm.getTipoClase());
+				horarioClase.setNombreAula(cmm.getAula());
+				horarioClaseDAO.save(horarioClase);
+				System.out.println("Se agregó un horarioClase en "+(i+1));
+			}
+
+			
+		}
+		 return cursosConProblemas;
 	}
-	
-	public CursoPeriodo converterToCursoPeriodo(CursoPeriodoModelForm formCursoPeriodoModel){
+
+	public CursoPeriodo converterToCursoPeriodo(CursoPeriodoModelForm formCursoPeriodoModel) {
 		CursoPeriodo cursoPeriodo = new CursoPeriodo();
-		CursoConjunto cc=cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(formCursoPeriodoModel.getCodCurso(), formCursoPeriodoModel.getPlanNombre());
-		if(cc==null) {
-			List<CursoBase> cb= cursoBaseDAO.findCursoBaseByNombre(formCursoPeriodoModel.getCursoPeriodoNombre());
-			CursoBase cursoBase=null;
-			if(cb!=null) {
-				//Crear nuevo CursoConjunto
-				cursoBase=cb.get(0);
+		CursoConjunto cc = cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(
+				formCursoPeriodoModel.getCodCurso(), formCursoPeriodoModel.getPlanNombre());
+		if (cc == null) {
+			List<CursoBase> cb = cursoBaseDAO.findCursoBaseByNombre(formCursoPeriodoModel.getCursoPeriodoNombre());
+			CursoBase cursoBase = null;
+			if (cb != null) {
+				// Crear nuevo CursoConjunto
+				cursoBase = cb.get(0);
 				cursoServ.insertarCursoConjunto(cursoBase, 0);
-				cc=cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(formCursoPeriodoModel.getCodCurso(), formCursoPeriodoModel.getPlanNombre());
+				cc = cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(formCursoPeriodoModel.getCodCurso(),
+						formCursoPeriodoModel.getPlanNombre());
 			}
 		}
-		
+
 		Periodo p = periodoDAO.findById(Integer.parseInt(formCursoPeriodoModel.getPeriodo()));
-		
+
 		cursoPeriodo.setPeriodo(p);
 		cursoPeriodo.setCursoConjunto(cc);
 		cursoPeriodo.setCursoPeriodoNombre(formCursoPeriodoModel.getCursoPeriodoNombre());
-		
+
 		return cursoPeriodo;
 	}
-	public boolean insertarCursoPeriodo(CursoPeriodo cursoPeriodo){
-		if(cursoPeriodo==null) {
+
+	public boolean insertarCursoPeriodo(CursoPeriodo cursoPeriodo) {
+		if (cursoPeriodo == null) {
 			System.out.println("Ocurrió un error al ingresar cursoPeriodo");
+			return false;
+		} else {
+			try {
+				cursoPeriodoDAO.save(cursoPeriodo);
+			} catch (Exception e) {
+				logger.warn(e);
+				System.out.println("Error: "+e);
+				return false;
+			}
 			return true;
 		}
-		else
-			cursoPeriodoDAO.save(cursoPeriodo);
-		return false;
+
 	}
-	
+
 	public Date convertirStringADate(String fecha) {
-		Date hora=new Date(70,0,1);
-		System.out.print("Antes de convertir: "+fecha);
-		String[] seccionesHora = fecha.split(":");	//Suponiendo que la entrada es HH:MM:SS solo usaremos HH y MM
+		Date hora = new Date(70, 0, 1);
+		//System.out.print("Antes de convertir: " + fecha);
+		String[] seccionesHora = fecha.split(":"); // Suponiendo que la entrada es HH:MM:SS solo usaremos HH y MM
 		hora.setHours(Integer.parseInt(seccionesHora[0]));
 		hora.setMinutes(Integer.parseInt(seccionesHora[1]));
-		hora.setSeconds(0);	//Esto se puede cambiar y recibir seccionesHora[2]
-		System.out.println("\tDespues de convertir: "+hora.toString());
+		hora.setSeconds(0); // Esto se puede cambiar y recibir seccionesHora[2]
+		//System.out.println("\tDespues de convertir: " + hora.toString());
 		return hora;
 	}
 }
