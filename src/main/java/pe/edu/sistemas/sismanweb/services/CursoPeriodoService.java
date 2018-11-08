@@ -58,10 +58,29 @@ public class CursoPeriodoService {
 	@Autowired
 	private DocenteDAO docenteDAO;
 
-	public  List<CursoPeriodo> /*void*/ saveBulk(List<CursoMasivoModel> listacursoMasivoModel) {
-		List<CursoPeriodo> cursosConProblemas = new ArrayList<CursoPeriodo>();
-		boolean seAgrego=false;
+	public List<CursoMasivoModel> /* void */ saveBulk(List<CursoMasivoModel> listacursoMasivoModel) {
+		List<CursoMasivoModel> cursosConProblemas = new ArrayList<CursoMasivoModel>();
+		boolean seAgrego = false;
 
+		for (int i = 0; i < listacursoMasivoModel.size(); i++) { // AGREGO TODOS LOS CURSOCONJUNTO QUE NO EXISTAN A TODOS LOS CURSOSMODEL
+			CursoMasivoModel cmm = listacursoMasivoModel.get(i);
+			CursoConjunto cc = cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(cmm.getCodCurso(), cmm.getNombrePlan());
+			if (cc == null) {
+				CursoBase cursoBase = cursoBaseDAO.findCursoBaseByNombreByPlanNombre(cmm.getDescCurso(), cmm.getNombrePlan());
+				if (cursoBase != null) {
+					// Crear nuevo CursoConjunto
+					//Obtener el CURSOC_CODCOMUN del cursoConjunto
+					CursoConjunto aux = cursoConjuntoDAO.findCursoConjuntoByNombre(cmm.getDescCurso());
+					boolean seIngreso = cursoServ.insertarCursoConjunto(cursoBase, aux.getCursocCodcomun());
+					System.out.println((seIngreso)?"Se ingresó el curso conjunto ":"No se ingresó el curso conjunto");
+					cc = cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(cmm.getCodCurso(), cmm.getNombrePlan());
+				}
+				else {
+					System.out.println("Debería crear el CursoBase con nombre "+cmm.getDescCurso()+" y el plan "+cmm.getNombrePlan());
+				}
+			}
+		}		//Después de este método, no debería haber problema con ningun cursoConjunto
+		
 		for (int i = 0; i < listacursoMasivoModel.size(); i++) { // AGREGO LOS CURSOPERIODO
 			CursoMasivoModel cmm = listacursoMasivoModel.get(i);
 			CursoPeriodo cursoPeriodo = null;
@@ -73,18 +92,16 @@ public class CursoPeriodoService {
 			if (!cursoPeriodoDAO.existsCursoPeriodoBy(cmm.getDescCurso(), Integer.parseInt(cmm.getPeriodoNombre()))) {
 				cursoPeriodo = converterToCursoPeriodo(cpmf);
 				seAgrego = insertarCursoPeriodo(cursoPeriodo);
-				if(!seAgrego){ 
-					 cursosConProblemas.add(cursoPeriodo);
-					 System.out.println("No se agregó el cursoPeriodo en "+(i+1));
-				 }else {
-					 System.out.println("Se agregó 1 cursoPeriodo en "+(i+1));
-				 }
+				if (!seAgrego) {
+					cursosConProblemas.add(cmm);
+					System.out.println("No se agregó el cursoPeriodo en " + (i + 1));
+				} else {
+					System.out.println("Se agregó 1 cursoPeriodo en " + (i + 1));
+				}
+			} else { // Si no es el primer cursoPeriodo de la carga en agregarse
+				System.out.println("Ya existía cursoPeriodo en " + (i + 1));
 			}
-			else {	//Si no es el primer cursoPeriodo de la carga en agregarse
-				System.out.println("Ya existía cursoPeriodo en "+(i+1));
-			}
-			
-			 
+
 		}
 
 		for (int i = 0; i < listacursoMasivoModel.size(); i++) {// AGREGO HORARIOCLASE Y GRUPO
@@ -99,25 +116,42 @@ public class CursoPeriodoService {
 
 			Aula aula = aulaDAO.findByNombreAula(cmm.getAula());
 
-			Docente docente = docenteDAO.findDocenteByNombreByApellidoPatByApellidoMat(cmm.getDocenteNombre(),
+			String nombres = cmm.getDocenteNombre();
+			Docente docente = docenteDAO.findDocenteByNombreByApellidoPatByApellidoMat(nombres,
 					cmm.getDocenteApPaterno(), cmm.getDocenteApMaterno());
 
 			Date horaInicio = convertirStringADate(cmm.getHoraInicio());
 			Date horaFin = convertirStringADate(cmm.getHoraFinal());
-			if (docente == null) {
-				cursosConProblemas.add(cp);
-				System.out.println("El docente no existe en "+(i+1));
-				
-			} else if(cp == null){
-				System.out.println("Problemas con CursoPeriodo en "+(i+1));
+			if (docente == null) { // Si no se encuentra por sus dos nombres, quizá está solo por 1 nombre
+				if (nombres != null) {
+					String[] cadaNombre = nombres.split(" "); // Separamos por cada nombre
+					int j = 0;
+					for (j = 0; j < cadaNombre.length; j++) { // Hago esto por cada nombre
+						docente = docenteDAO.findDocenteByNombreByApellidoPatByApellidoMat(cadaNombre[j],
+								cmm.getDocenteApPaterno(), cmm.getDocenteApMaterno());
+						if (docente != null) // Cuando encuen)tro el docente, salgo de la iteración
+							break;
+					}
+					if (j >= cadaNombre.length) { // Si buscó con todos los nombres y no lo encontró
+						cursosConProblemas.add(cmm);
+						System.out.println("El docente no existe en " + (i + 1));
+					}
+				}else {
+					cursosConProblemas.add(cmm);
+					System.out.println("El docente no existe en " + (i + 1));
+				}
 			}
-			else {
+			if (cp == null) {
+				cursosConProblemas.add(cmm);
+				System.out.println("Problemas con CursoPeriodo en " + (i + 1));
+			}
+			if (docente != null && cp != null) {
 				grupo.setCursoPeriodo(cp);
 				grupo.setGrupoNumero(cmm.getGrupoNumero());
 				grupo.setHorarioClases(new HashSet<HorarioClase>(horarioClases));
 				grupoDAO.save(grupo);
-				System.out.print("Se agregó un grupo en "+(i+1)+". ");
-				
+				System.out.print("Se agregó un grupo en " + (i + 1) + ". ");
+
 				// horarioClase.setIdhorarioClase(0); Se pone automático
 				horarioClase.setAula(aula);
 				horarioClase.setDia(cmm.getDia());
@@ -129,29 +163,30 @@ public class CursoPeriodoService {
 				horarioClase.setHorarioClaseTipo(cmm.getTipoClase());
 				horarioClase.setNombreAula(cmm.getAula());
 				horarioClaseDAO.save(horarioClase);
-				System.out.println("Se agregó un horarioClase en "+(i+1));
+				System.out.println("Se agregó un horarioClase en " + (i + 1));
 			}
 
-			
 		}
-		 return cursosConProblemas;
+		return cursosConProblemas;
 	}
 
 	public CursoPeriodo converterToCursoPeriodo(CursoPeriodoModelForm formCursoPeriodoModel) {
 		CursoPeriodo cursoPeriodo = new CursoPeriodo();
 		CursoConjunto cc = cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(
 				formCursoPeriodoModel.getCodCurso(), formCursoPeriodoModel.getPlanNombre());
-		if (cc == null) {
-			List<CursoBase> cb = cursoBaseDAO.findCursoBaseByNombre(formCursoPeriodoModel.getCursoPeriodoNombre());
-			CursoBase cursoBase = null;
-			if (cb != null) {
+		/*if (cc == null) {		//No debería haber ningún problema porque se agregan todos los CursoConjunto al comienzo
+			CursoBase cursoBase = cursoBaseDAO.findCursoBaseByNombreByPlanNombre(formCursoPeriodoModel.getCursoPeriodoNombre(), formCursoPeriodoModel.getPlanNombre());
+			if (cursoBase != null) {
 				// Crear nuevo CursoConjunto
-				cursoBase = cb.get(0);
-				cursoServ.insertarCursoConjunto(cursoBase, 0);
+				boolean seIngreso = cursoServ.insertarCursoConjunto(cursoBase, 0);
+				System.out.println((seIngreso)?"Se ingresó el curso conjunto ":"No se ingresó el curso conjunto");
 				cc = cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(formCursoPeriodoModel.getCodCurso(),
 						formCursoPeriodoModel.getPlanNombre());
 			}
-		}
+			else {
+				System.out.println("Debería crear el Curso Base con nombre "+formCursoPeriodoModel.getCursoPeriodoNombre()+" y el plan "+formCursoPeriodoModel.getPlanNombre());
+			}
+		}*/
 
 		Periodo p = periodoDAO.findById(Integer.parseInt(formCursoPeriodoModel.getPeriodo()));
 
@@ -171,7 +206,7 @@ public class CursoPeriodoService {
 				cursoPeriodoDAO.save(cursoPeriodo);
 			} catch (Exception e) {
 				logger.warn(e);
-				System.out.println("Error: "+e);
+				System.out.println("Error: " + e);
 				return false;
 			}
 			return true;
@@ -181,12 +216,12 @@ public class CursoPeriodoService {
 
 	public Date convertirStringADate(String fecha) {
 		Date hora = new Date(70, 0, 1);
-		//System.out.print("Antes de convertir: " + fecha);
+		// System.out.print("Antes de convertir: " + fecha);
 		String[] seccionesHora = fecha.split(":"); // Suponiendo que la entrada es HH:MM:SS solo usaremos HH y MM
 		hora.setHours(Integer.parseInt(seccionesHora[0]));
 		hora.setMinutes(Integer.parseInt(seccionesHora[1]));
 		hora.setSeconds(0); // Esto se puede cambiar y recibir seccionesHora[2]
-		//System.out.println("\tDespues de convertir: " + hora.toString());
+		// System.out.println("\tDespues de convertir: " + hora.toString());
 		return hora;
 	}
 }

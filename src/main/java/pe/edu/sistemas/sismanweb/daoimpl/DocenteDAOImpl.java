@@ -40,13 +40,26 @@ public class DocenteDAOImpl extends AbstractDAOImpl<Docente, Integer> implements
 		Docente docente= null;
 		Query query = null;
 		try{
-			query=getCurrentSession().createQuery(" FROM Docente "
+			String SQL="";
+			SQL="FROM Docente WHERE persona.personaNombre like :nombre ";
+			if(apellidoPaterno!=null)
+				SQL+="AND persona.personaAppaterno like :apellidopaterno ";
+			else if(apellidoMaterno!=null)
+				SQL+="AND persona.personaApmaterno like :apellidomaterno";
+			
+			/*query=getCurrentSession().createQuery(" FROM Docente "
 					+ "WHERE persona.personaNombre like :nombre "
 					+ "AND persona.personaAppaterno like :apellidopaterno "
-					+ "AND persona.personaApmaterno like :apellidomaterno").setMaxResults(1);
+					+ "AND persona.personaApmaterno like :apellidomaterno").setMaxResults(1);*/
+			query=getCurrentSession().createQuery(SQL).setMaxResults(1);
+			
+			
 			query.setParameter("nombre", "%"+ nombres+"%");
-			query.setParameter("apellidopaterno", "%"+apellidoPaterno+"%");
-			query.setParameter("apellidomaterno", "%"+apellidoMaterno+"%");
+			if(apellidoPaterno!=null)
+				query.setParameter("apellidopaterno", "%"+apellidoPaterno+"%");
+			else if(apellidoMaterno!=null)
+				query.setParameter("apellidomaterno", "%"+apellidoMaterno+"%");
+			
 			docente=(Docente)query.uniqueResult();
 		}catch(HibernateException he){
 			he.printStackTrace();

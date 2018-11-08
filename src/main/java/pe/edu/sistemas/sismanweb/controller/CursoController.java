@@ -288,7 +288,7 @@ public class CursoController {
 		JSONArray jsonArrayCursoPeriodo = new JSONArray(listCursos);
 		DeserealizarJSON<CursoMasivoModel> deserealizador = new DeserealizarJSON<CursoMasivoModel>(CursoMasivoModel.class);
 		List<CursoMasivoModel> cursoMasivoModel = null;
-		List<CursoPeriodo> resultado = null;
+		List<CursoMasivoModel> resultado = null;
 		logger.info("CANTIDAD DE REGISTROS: "+jsonArrayCursoPeriodo.length());
 		
 		cursoMasivoModel = deserealizador.deserealiza(jsonArrayCursoPeriodo);
@@ -300,8 +300,8 @@ public class CursoController {
 				resultado = cursoPeriodoService.saveBulk(cursoMasivoModel);
 				model.addAttribute("cantidadCursosGuardados",(jsonArrayCursoPeriodo.length()-resultado.size()));
 			if(!resultado.isEmpty()){
-				logger.warn("NO SE PUDIERON REGISTRAR  "+resultado.size()+" CURSOPERIODO");	//Error 3
-				System.out.println("NO SE PUDIERON REGISTRAR  "+resultado.size()+" CURSOPERIODO");
+				logger.warn("NO SE PUDIERON REGISTRAR  "+resultado.size()+" Horarios");	//Error 3
+				System.out.println("NO SE PUDIERON REGISTRAR  "+resultado.size()+" Horarios");
 				model.addAttribute("listaCursosNoAgregados", resultado);
 				return "curso/avisosGrupal :: contentCursoAvisoExistenProb";
 			}else{

@@ -152,8 +152,8 @@ public class PruebaCurso {
 	@Test
 	@Transactional
 	public void muestraCodigoCursoConjunto(){
-		String codigoCurso="201203M";
-		String nombrePlan="2009-Sistemas";
+		String codigoCurso="2011110";
+		String nombrePlan="2014-Sistemas";
 		CursoConjunto cc=cursoConjuntoDao.findCursoConjuntoByCodigoCursoByNombrePlan(codigoCurso, nombrePlan);
 		if(cc==null)
 			System.out.println("No se encontró el cursoconjunto");
@@ -180,6 +180,7 @@ public class PruebaCurso {
 	@Autowired CursoConjuntoDAO cursoConjuntoDAO;
 	@Autowired PeriodoDAO periodoDAO;
 	@Test
+	@Ignore
 	@Transactional
 	public void agregarCursoPeriodo(){
 		//CursoMasivoModel cmm = listacursoMasivoModel.get(i);
@@ -206,5 +207,12 @@ public class PruebaCurso {
 			cursoPeriodoDAO.save(cursoPeriodo);
 			System.out.println("Se agregó 1 curso");
 		}
+	}
+	@Test
+	@Ignore
+	@Transactional
+	public void encontrarCursoBasePorNombreYPlan() {
+		CursoBase cb = cursoBaseDao.findCursoBaseByNombreByPlanNombre("SISTEMAS INTELIGENTES", "2014-Sistemas");
+		System.out.println((cb==null)?"No se encontró el cursoBase":"Sí se encontró el cursoBase "+cb.getCursobNombre());
 	}
 }

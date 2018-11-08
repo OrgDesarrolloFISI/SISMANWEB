@@ -22,14 +22,30 @@
 				th:object="${listaCursosNoAgregados}">
 				<thead>
 					<tr>
+						<th>Hora de Inicio</th>
+						<th>Hora de Fin</th>
+						<th>Codigo</th>
 						<th>Nombre del curso</th>
-						<th>Periodo</th>
+						<th>Grupo</th>
+						<th>Dia</th>
+						<th>Apellido Paterno</th>
+						<th>Apellido Materno</th>
+						<th>Nombres</th>
+						<th>Tipo de clase</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="cursoPeriodo : ${listaCursosNoAgregados}">
-						<td th:text="${cursoPeriodo.cursoPeriodoNombre}"></td>
-						<td th:text="${cursoPeriodo.periodo.periodoNombre}"></td>
+					<tr th:each="cursoMasivoModel : ${listaCursosNoAgregados}">
+						<td th:text="${cursoMasivoModel.horaInicio}"></td>
+						<td th:text="${cursoMasivoModel.horaFinal}"></td>
+						<td th:text="${cursoMasivoModel.codCurso}"></td>
+						<td th:text="${cursoMasivoModel.descCurso}"></td>
+						<td th:text="${cursoMasivoModel.grupoNumero}"></td>
+						<td th:text="${cursoMasivoModel.dia}"></td>
+						<td th:text="${cursoMasivoModel.docenteApPaterno}"></td>
+						<td th:text="${cursoMasivoModel.docenteApMaterno}"></td>
+						<td th:text="${cursoMasivoModel.docenteNombre}"></td>
+						<td th:text="${cursoMasivoModel.tipoClase}"></td>
 					</tr>
 				</tbody>
 			</table>
