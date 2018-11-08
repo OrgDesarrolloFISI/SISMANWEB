@@ -48,30 +48,85 @@
 									<p class="lead ">Los datos "codigo", "nombre", "apPaterno",
 										"apMaterno" son obligatorios en el documento, el resto de
 										datos pueden ser obviados.</p>
-									<p class="lead">Para el atributo "idPlan" se tienen los
-										siguientes valores numericos que se corresponden con los
-										planes:</p>
-
-									<div class="form-group">
+									<div class="row">
 										<div class="col-xs-4">
-											<table style="width: 30%;"
-												class="table table-striped table-bordered ">
-												<thead>
-													<tr>
-														<th>idPlan</th>
-														<th>Nombre de Plan</th>
+											<p class="lead">Para el atributo "aula" se tienen los
+												siguientes valores:</p>
 
-													</tr>
-												</thead>
-												<tbody>
-													<tr th:each="plan : ${listaPlanes}">
-														<td th:text="${plan.idplan}"></td>
-														<td th:text="${plan.planNombre}"></td>
-													</tr>
-												</tbody>
-											</table>
+											<div class="form-group">
+												<div style="padding-left:15%;">
+													<table style="width: 70%;"
+														class="table table-striped table-bordered ">
+														<thead>
+															<tr>
+																<th style="text-align:center;">Nombre de Aula</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr th:each="aula : ${listaAulas}">
+																<td th:text="${aula.nombre}"></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
 										</div>
+
+										<div class="col-xs-4">
+											<p class="lead">Para el atributo "nombrePlan" se tienen
+												los siguientes valores:</p>
+
+											<div class="form-group">
+												<div style="padding-left:15%;">
+													<table style="width: 70%;"
+														class="table table-striped table-bordered ">
+														<thead>
+															<tr>
+																<th style="text-align:center;">Nombre de Plan</th>
+
+															</tr>
+														</thead>
+														<tbody>
+															<tr th:each="plan : ${listaPlanes}">
+																<td th:text="${plan.planNombre}"></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+
+										<div class="col-xs-4">
+											<p class="lead">Para el atributo "tipoClase" se tienen
+												los siguientes valores:</p>
+
+											<div class="form-group">
+												<div style="padding-left:15%;">
+													<table style="width: 70%;"
+														class="table table-striped table-bordered ">
+														<thead>
+															<tr>
+																<th style="text-align:center;">Tipo de clase</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td>TEORIA</td>
+															</tr>
+															<tr>
+																<td>PRACTICA</td>
+															</tr>
+															<tr>
+																<td>LABORATORIO</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+
 									</div>
+
 								</div>
 							</form>
 						</div>

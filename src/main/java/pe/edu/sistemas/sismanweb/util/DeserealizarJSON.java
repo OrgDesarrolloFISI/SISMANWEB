@@ -32,7 +32,7 @@ public class DeserealizarJSON<Model> {
 			jsonObject = jsonArray.getJSONObject(i);
 			try {
 				model = JSON_MAPPER.readValue(jsonObject.toString(), modelClass);
-				logger.info("Objecto json: "+jsonObject.toString());
+				//logger.info("Objecto json: "+jsonObject.toString());
 				listModel.add(model);
 			} catch (Exception e) {
 				logger.error("OCURRIO UN ERROR EN EL REGISTRO: "+(i+1));

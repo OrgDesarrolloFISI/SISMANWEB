@@ -21,13 +21,13 @@ import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
 import pe.edu.sistemas.sismanweb.domain.CursoPeriodo;
 import pe.edu.sistemas.sismanweb.domain.Plan;
+import pe.edu.sistemas.sismanweb.services.AulaService;
 import pe.edu.sistemas.sismanweb.services.CursoPeriodoService;
 import pe.edu.sistemas.sismanweb.services.CursoService;
 import pe.edu.sistemas.sismanweb.services.PlanService;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoBCModelForm;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoMasivoModel;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
-import pe.edu.sistemas.sismanweb.services.modelform.CursoPeriodoModelForm;
 import pe.edu.sistemas.sismanweb.util.DeserealizarJSON;
 import pe.edu.sistemas.sismanweb.util.Search;
 
@@ -40,6 +40,7 @@ public class CursoController {
 	@Autowired CursoService cursoService;	
 	@Autowired PlanService  planService;
 	@Autowired CursoPeriodoService cursoPeriodoService;
+	@Autowired AulaService aulaService;
 	
 	boolean flagB = false;
 	boolean flagC = false;
@@ -229,8 +230,11 @@ public class CursoController {
    /*-----------*/
 	@GetMapping("/bulkCursoBase")
 	public String bulkCursosBase(Model model){
-		/*model.addAttribute("listaPlanes", planService.obtenerPlanes());
-		logger.info("RETORNANDO VISTA CARGA MASIVA -- CURSOS");*/
+		model.addAttribute("listaPlanes", planService.obtenerPlanes());
+		model.addAttribute("listaAulas", aulaService.obtenerAulas());
+		/*logger.info("RETORNANDO VISTA CARGA MASIVA -- CURSOS");*/
+		
+		
 		return "curso/registroGrupalBase";		
 	}
 	@PostMapping("/addBulkBase")
@@ -277,8 +281,9 @@ public class CursoController {
   /*--------------*/
 	@GetMapping("/bulk")
 	public String bulkCursos(Model model){
-		/*model.addAttribute("listaPlanes", planService.obtenerPlanes());
-		logger.info("RETORNANDO VISTA CARGA MASIVA -- CURSOS");*/
+		model.addAttribute("listaPlanes", planService.obtenerPlanes());
+		model.addAttribute("listaAulas", aulaService.obtenerAulas());
+		/*logger.info("RETORNANDO VISTA CARGA MASIVA -- CURSOS");*/
 		return "curso/registroGrupal";		
 	}
 	

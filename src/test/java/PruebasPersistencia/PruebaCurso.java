@@ -150,6 +150,7 @@ public class PruebaCurso {
 	}
 	
 	@Test
+	@Ignore
 	@Transactional
 	public void muestraCodigoCursoConjunto(){
 		String codigoCurso="2011110";
@@ -190,7 +191,7 @@ public class PruebaCurso {
 		//Puede ocurrir error si es que el modelo recibido es nulo
 		CursoPeriodoModelForm cpmf=new CursoPeriodoModelForm("201204", "SISTEMAS INTELIGENTES", "20182", "2009-Sistemas");
 		
-		if(!cursoPeriodoDAO.existsCursoPeriodoBy("SISTEMAS INTELIGENTES", Integer.parseInt("20182"))) {
+		if(!cursoPeriodoDAO.existsCursoPeriodoByAll(cpmf.getCodCurso(), cpmf.getPlanNombre(), cpmf.getPeriodo())) {
 			//cursoPeriodo = converterToCursoPeriodo(cpmf);
 			cursoPeriodo = new CursoPeriodo();
 			CursoConjunto cc=cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(cpmf.getCodCurso(), cpmf.getPlanNombre());
@@ -208,6 +209,18 @@ public class PruebaCurso {
 			System.out.println("Se agregó 1 curso");
 		}
 	}
+	
+	@Test
+	@Ignore
+	@Transactional
+	public void existeCursoPeriodo(){
+		boolean existe=cursoPeriodoDAO.existsCursoPeriodoByAll("201204", "2009-Sistemas", "2018-II");
+		if(existe)
+			System.out.println("Sí existe");
+		else
+			System.out.println("No existe");
+	}
+	
 	@Test
 	@Ignore
 	@Transactional

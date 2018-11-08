@@ -74,6 +74,7 @@ public class CursoPeriodoService {
 					boolean seIngreso = cursoServ.insertarCursoConjunto(cursoBase, aux.getCursocCodcomun());
 					System.out.println((seIngreso)?"Se ingresó el curso conjunto ":"No se ingresó el curso conjunto");
 					cc = cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(cmm.getCodCurso(), cmm.getNombrePlan());
+					System.out.println("Se agregó el curso "+cursoBase.getCursobNombre());
 				}
 				else {
 					System.out.println("Debería crear el CursoBase con nombre "+cmm.getDescCurso()+" y el plan "+cmm.getNombrePlan());
@@ -89,7 +90,7 @@ public class CursoPeriodoService {
 			// Puede ocurrir error si es que el modelo recibido es nulo
 			CursoPeriodoModelForm cpmf = new CursoPeriodoModelForm(cmm.getCodCurso(), cmm.getDescCurso(),
 					cmm.getPeriodoNombre(), cmm.getNombrePlan());
-			if (!cursoPeriodoDAO.existsCursoPeriodoBy(cmm.getDescCurso(), Integer.parseInt(cmm.getPeriodoNombre()))) {
+			if (!cursoPeriodoDAO.existsCursoPeriodoByAll(cmm.getCodCurso(), cmm.getNombrePlan(), cmm.getPeriodoNombre())) {
 				cursoPeriodo = converterToCursoPeriodo(cpmf);
 				seAgrego = insertarCursoPeriodo(cursoPeriodo);
 				if (!seAgrego) {

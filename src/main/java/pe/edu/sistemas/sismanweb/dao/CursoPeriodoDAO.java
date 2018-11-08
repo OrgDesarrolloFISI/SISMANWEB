@@ -6,5 +6,5 @@ public interface CursoPeriodoDAO extends AbstractDAO<CursoPeriodo, Integer> {
 
 	public CursoPeriodo findCursoPeriodoByAll(String codigoCurso, String nombreplan, String periodoNombre);
 	
-	public boolean existsCursoPeriodoBy(String nombreCurso, int idPeriodo);
+	public boolean existsCursoPeriodoByAll(String codigoCurso, String nombreplan, String periodoNombre);
 }

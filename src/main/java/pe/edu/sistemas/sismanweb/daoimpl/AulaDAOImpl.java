@@ -1,5 +1,7 @@
 package pe.edu.sistemas.sismanweb.daoimpl;
 
+import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
@@ -28,6 +30,21 @@ public class AulaDAOImpl extends AbstractDAOImpl<Aula,Integer> implements AulaDA
 		}
 		
 		return aula;
+	}
+	
+	@Override
+	public List<Aula> findAll(){
+		List<Aula> aulas=null;
+		Query query=null;
+		
+		try {
+			query=getCurrentSession().createQuery(" FROM Aula");
+			aulas = (List<Aula>)query.list();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		
+		return aulas;
 	}
 
 	
