@@ -64,6 +64,7 @@ public class CursoPeriodoService {
 
 		for (int i = 0; i < listacursoMasivoModel.size(); i++) { // AGREGO TODOS LOS CURSOCONJUNTO QUE NO EXISTAN A TODOS LOS CURSOSMODEL
 			CursoMasivoModel cmm = listacursoMasivoModel.get(i);
+			System.out.println(cmm);
 			CursoConjunto cc = cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(cmm.getCodCurso(), cmm.getNombrePlan());
 			if (cc == null) {
 				CursoBase cursoBase = cursoBaseDAO.findCursoBaseByNombreByPlanNombre(cmm.getDescCurso(), cmm.getNombrePlan());
@@ -71,7 +72,12 @@ public class CursoPeriodoService {
 					// Crear nuevo CursoConjunto
 					//Obtener el CURSOC_CODCOMUN del cursoConjunto
 					CursoConjunto aux = cursoConjuntoDAO.findCursoConjuntoByNombre(cmm.getDescCurso());
-					boolean seIngreso = cursoServ.insertarCursoConjunto(cursoBase, aux.getCursocCodcomun());
+					boolean seIngreso;
+					if(aux==null)
+						seIngreso=cursoServ.insertarCursoConjunto(cursoBase, 0);
+					else
+						seIngreso= cursoServ.insertarCursoConjunto(cursoBase, aux.getCursocCodcomun());
+					
 					System.out.println((seIngreso)?"Se ingresó el curso conjunto ":"No se ingresó el curso conjunto");
 					cc = cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(cmm.getCodCurso(), cmm.getNombrePlan());
 					System.out.println("Se agregó el curso "+cursoBase.getCursobNombre());
