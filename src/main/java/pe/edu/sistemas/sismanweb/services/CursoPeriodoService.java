@@ -136,19 +136,23 @@ public class CursoPeriodoService {
 					for (j = 0; j < cadaNombre.length; j++) { // Hago esto por cada nombre
 						docente = docenteDAO.findDocenteByNombreByApellidoPatByApellidoMat(cadaNombre[j],
 								cmm.getDocenteApPaterno(), cmm.getDocenteApMaterno());
-						if (docente != null) // Cuando encuen)tro el docente, salgo de la iteración
+						if (docente != null) // Cuando encuentro el docente, salgo de la iteración
 							break;
 					}
 					if (j >= cadaNombre.length) { // Si buscó con todos los nombres y no lo encontró
+						cmm.setMotivoError("El docente no existe");
 						cursosConProblemas.add(cmm);
 						System.out.println("El docente no existe en " + (i + 1));
+						
 					}
-				}else {
+				}else {	//Docente que no tiene nombres
+					cmm.setMotivoError("El docente no existe");
 					cursosConProblemas.add(cmm);
 					System.out.println("El docente no existe en " + (i + 1));
 				}
 			}
 			if (cp == null) {
+				cmm.setMotivoError("El Curso del Periodo no existe");
 				cursosConProblemas.add(cmm);
 				System.out.println("Problemas con CursoPeriodo en " + (i + 1));
 			}
