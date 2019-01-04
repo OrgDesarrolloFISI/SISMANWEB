@@ -58,125 +58,204 @@ public class CursoPeriodoService {
 	@Autowired
 	private DocenteDAO docenteDAO;
 
-	public List<CursoMasivoModel> /* void */ saveBulk(List<CursoMasivoModel> listacursoMasivoModel) {
+	public List<CursoMasivoModel> saveBulk(List<CursoMasivoModel> listacursoMasivoModel) {
 		List<CursoMasivoModel> cursosConProblemas = new ArrayList<CursoMasivoModel>();
 		boolean seAgrego = false;
 
-		for (int i = 0; i < listacursoMasivoModel.size(); i++) { // AGREGO TODOS LOS CURSOCONJUNTO QUE NO EXISTAN A TODOS LOS CURSOSMODEL
+		for (int i = 0; i < listacursoMasivoModel.size(); i++) { // AGREGO TODOS
+																	// LOS
+																	// CURSOCONJUNTO
+																	// QUE NO
+																	// EXISTAN A
+																	// TODOS LOS
+																	// CURSOSMODEL
 			CursoMasivoModel cmm = listacursoMasivoModel.get(i);
 			System.out.println(cmm);
-			CursoConjunto cc = cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(cmm.getCodCurso(), cmm.getNombrePlan());
+			CursoConjunto cc = cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(cmm.getCodCurso(),
+					cmm.getNombrePlan());
 			if (cc == null) {
-				CursoBase cursoBase = cursoBaseDAO.findCursoBaseByNombreByPlanNombre(cmm.getDescCurso(), cmm.getNombrePlan());
+				CursoBase cursoBase = cursoBaseDAO.findCursoBaseByNombreByPlanNombre(cmm.getDescCurso(),
+						cmm.getNombrePlan());
 				if (cursoBase != null) {
-					// Crear nuevo CursoConjunto
-					//Obtener el CURSOC_CODCOMUN del cursoConjunto
-					CursoConjunto aux = cursoConjuntoDAO.findCursoConjuntoByNombre(cmm.getDescCurso());
+					CursoConjunto aux = cursoConjuntoDAO.findCursoConjuntoByNombre(cmm.getDescCurso()); // Obtener
+																										// el
+																										// CURSOC_CODCOMUN
+																										// del
+																										// cursoConjunto
 					boolean seIngreso;
-					if(aux==null)
-						seIngreso=cursoServ.insertarCursoConjunto(cursoBase, 0);
+
+					// Crear nuevo CursoConjunto
+					if (aux == null)
+						seIngreso = cursoServ.insertarCursoConjunto(cursoBase, 0);
 					else
-						seIngreso= cursoServ.insertarCursoConjunto(cursoBase, aux.getCursocCodcomun());
-					
-					System.out.println((seIngreso)?"Se ingresó el curso conjunto ":"No se ingresó el curso conjunto");
-					cc = cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(cmm.getCodCurso(), cmm.getNombrePlan());
-					System.out.println("Se agregó el curso "+cursoBase.getCursobNombre());
-				}
-				else {
-					System.out.println("Debería crear el CursoBase con nombre "+cmm.getDescCurso()+" y el plan "+cmm.getNombrePlan());
-				}
-			}
-		}		//Después de este método, no debería haber problema con ningun cursoConjunto
-		
-		for (int i = 0; i < listacursoMasivoModel.size(); i++) { // AGREGO LOS CURSOPERIODO
-			CursoMasivoModel cmm = listacursoMasivoModel.get(i);
-			CursoPeriodo cursoPeriodo = null;
+						seIngreso = cursoServ.insertarCursoConjunto(cursoBase, aux.getCursocCodcomun());
 
-			System.out.println(cmm.toString());
-			// Puede ocurrir error si es que el modelo recibido es nulo
-			CursoPeriodoModelForm cpmf = new CursoPeriodoModelForm(cmm.getCodCurso(), cmm.getDescCurso(),
-					cmm.getPeriodoNombre(), cmm.getNombrePlan());
-			if (!cursoPeriodoDAO.existsCursoPeriodoByAll(cmm.getCodCurso(), cmm.getNombrePlan(), cmm.getPeriodoNombre())) {
-				cursoPeriodo = converterToCursoPeriodo(cpmf);
-				seAgrego = insertarCursoPeriodo(cursoPeriodo);
-				if (!seAgrego) {
-					cursosConProblemas.add(cmm);
-					System.out.println("No se agregó el cursoPeriodo en " + (i + 1));
+					System.out
+							.println((seIngreso) ? "Se ingresó el curso conjunto " : "No se ingresó el curso conjunto");
+					cc = cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(cmm.getCodCurso(),
+							cmm.getNombrePlan());
+					System.out.println("Se agregó el curso " + cursoBase.getCursobNombre());
 				} else {
-					System.out.println("Se agregó 1 cursoPeriodo en " + (i + 1));
+					cmm.setConError(true);
+					cmm.setMotivoError("No existe el Curso Base");
+					listacursoMasivoModel.set(i, cmm);
+					cursosConProblemas.add(cmm);
+					System.out.println("Debería crear el CursoBase con nombre " + cmm.getDescCurso() + " y el plan "
+							+ cmm.getNombrePlan());
 				}
-			} else { // Si no es el primer cursoPeriodo de la carga en agregarse
-				System.out.println("Ya existía cursoPeriodo en " + (i + 1));
 			}
+		} // Después de este método, no debería haber problema con ningún
+			// CursoConjunto
 
+		for (int i = 0; i < listacursoMasivoModel.size(); i++) { // AGREGO LOS
+																	// CURSOPERIODO
+			CursoMasivoModel cmm = listacursoMasivoModel.get(i);
+
+			if (!cmm.isConError()) {
+				CursoPeriodo cursoPeriodo = null;
+
+				System.out.println(cmm.toString());
+				// Puede ocurrir error si es que el modelo recibido es nulo
+				CursoPeriodoModelForm cpmf = new CursoPeriodoModelForm(cmm.getCodCurso(), cmm.getDescCurso(),
+						cmm.getPeriodoNombre(), cmm.getNombrePlan());
+				
+				
+				if (!cursoPeriodoDAO.existsCursoPeriodoByAll(cmm.getCodCurso(), cmm.getNombrePlan(),
+						cmm.getPeriodoNombre())) {
+					cursoPeriodo = converterToCursoPeriodo(cpmf);
+					seAgrego = insertarCursoPeriodo(cursoPeriodo);
+
+					if (!seAgrego) { // Podría haber problemas con la BD
+						cmm.setConError(true);
+						cmm.setMotivoError("Problemas al agregar el CursoPeriodo");
+						listacursoMasivoModel.set(i, cmm);
+						cursosConProblemas.add(cmm);
+						System.out.println("No se agregó el cursoPeriodo en " + (i + 1));
+					} else {
+						System.out.println("Se agregó 1 cursoPeriodo en " + (i + 1));
+					}
+				} else { // Si no es el primer cursoPeriodo de la carga en
+							// agregarse lo cual no sería un problema
+					System.out.println("Ya existía cursoPeriodo en " + (i + 1));
+				}
+			}
 		}
 
-		for (int i = 0; i < listacursoMasivoModel.size(); i++) {// AGREGO HORARIOCLASE Y GRUPO
-			Grupo grupo = new Grupo();
-			HorarioClase horarioClase = new HorarioClase();
+		int cantidadGruposAntes = grupoDAO.getUltimoIdGrupo();
+
+		for (int i = 0; i < listacursoMasivoModel.size(); i++) {// AGREGO
+																// HORARIOCLASE
+																// Y GRUPO
 			CursoMasivoModel cmm = listacursoMasivoModel.get(i);
+			if (!cmm.isConError()) {
+				Grupo grupo = new Grupo();
+				HorarioClase horarioClase = new HorarioClase();
 
-			List<HorarioClase> horarioClases = horarioClaseDAO.findHorarioClaseByGrupo(cmm.getGrupoNumero());
+				CursoPeriodo cp = cursoPeriodoDAO.findCursoPeriodoByAll(cmm.getCodCurso(), cmm.getNombrePlan(),
+						cmm.getPeriodoNombre());
 
-			CursoPeriodo cp = cursoPeriodoDAO.findCursoPeriodoByAll(cmm.getCodCurso(), cmm.getNombrePlan(),
-					cmm.getPeriodoNombre());
-
-			Aula aula = aulaDAO.findByNombreAula(cmm.getAula());
-
-			String nombres = cmm.getDocenteNombre();
-			Docente docente = docenteDAO.findDocenteByNombreByApellidoPatByApellidoMat(nombres,
-					cmm.getDocenteApPaterno(), cmm.getDocenteApMaterno());
-
-			Date horaInicio = convertirStringADate(cmm.getHoraInicio());
-			Date horaFin = convertirStringADate(cmm.getHoraFinal());
-			if (docente == null) { // Si no se encuentra por sus dos nombres, quizá está solo por 1 nombre
-				if (nombres != null) {
-					String[] cadaNombre = nombres.split(" "); // Separamos por cada nombre
-					int j = 0;
-					for (j = 0; j < cadaNombre.length; j++) { // Hago esto por cada nombre
-						docente = docenteDAO.findDocenteByNombreByApellidoPatByApellidoMat(cadaNombre[j],
-								cmm.getDocenteApPaterno(), cmm.getDocenteApMaterno());
-						if (docente != null) // Cuando encuentro el docente, salgo de la iteración
-							break;
-					}
-					if (j >= cadaNombre.length) { // Si buscó con todos los nombres y no lo encontró
-						cmm.setMotivoError("El docente no existe");
-						cursosConProblemas.add(cmm);
-						System.out.println("El docente no existe en " + (i + 1));
-						
-					}
-				}else {	//Docente que no tiene nombres
-					cmm.setMotivoError("El docente no existe");
+				if (cp == null) { // No debería haber error acá dado que ya se
+									// agregó en el "for" anterior
+					cmm.setMotivoError("El Curso del Periodo no existía");
+					cmm.setConError(true);
+					listacursoMasivoModel.set(i, cmm);
 					cursosConProblemas.add(cmm);
-					System.out.println("El docente no existe en " + (i + 1));
+					System.out.println("Problemas con CursoPeriodo en " + (i + 1));
+				} else {
+
+					Aula aula = aulaDAO.findByNombreAula(cmm.getAula());
+
+					List<HorarioClase> horarioClases = horarioClaseDAO
+							.findHorarioClaseByIdCursoperiodoByGrupo(cp.getIdcursoPeriodo(), cmm.getGrupoNumero());
+
+					Date horaInicio = convertirStringADate(cmm.getHoraInicio());
+					Date horaFin = convertirStringADate(cmm.getHoraFinal());
+
+					String nombres = cmm.getDocenteNombre();
+					Docente docente = docenteDAO.findDocenteByNombreByApellidoPatByApellidoMat(nombres,
+							cmm.getDocenteApPaterno(), cmm.getDocenteApMaterno());
+
+					if (docente == null) { // Si no se encuentra por sus dos
+											// nombres, quizá está solo por 1
+											// nombre
+						if (nombres != null) {
+							String[] cadaNombre = nombres.split(" "); // Separamos
+																		// por
+																		// cada
+																		// nombre
+							int j = 0;
+							for (j = 0; j < cadaNombre.length; j++) { // Buscamos
+																		// esto
+																		// por
+																		// cada
+																		// nombre
+								docente = docenteDAO.findDocenteByNombreByApellidoPatByApellidoMat(cadaNombre[j],
+										cmm.getDocenteApPaterno(), cmm.getDocenteApMaterno());
+								if (docente != null) // Cuando encuentro el
+														// docente, salgo de la
+														// iteración (for j)
+									break;
+							}
+							if (j >= cadaNombre.length) { // Si buscó con todos
+															// los nombres y no
+															// lo encontró
+								cmm.setMotivoError("El docente no existe");
+								cmm.setConError(true);
+								listacursoMasivoModel.set(i, cmm);
+								cursosConProblemas.add(cmm);
+								System.out.println("El docente no existe en " + (i + 1));
+
+							}
+						} else { // Docente que no tiene nombres
+							cmm.setMotivoError("El docente no existe");
+							cmm.setConError(true);
+							listacursoMasivoModel.set(i, cmm);
+							cursosConProblemas.add(cmm);
+							System.out.println("El docente no existe en " + (i + 1));
+						}
+					}
+
+					if (docente != null && cp != null) {
+						System.out.println(cp);
+						Grupo aux = grupoDAO.findByidcursoPeriodoBygrupoNumero(cp.getIdcursoPeriodo(),
+								cmm.getGrupoNumero());
+						if (aux == null) {
+							grupo.setCursoPeriodo(cp);
+							grupo.setGrupoNumero(cmm.getGrupoNumero());
+							grupo.setHorarioClases(new HashSet<HorarioClase>(horarioClases));
+							grupoDAO.save(grupo);
+							System.out.print("Se agregó un grupo en " + (i + 1) + ". ");
+
+							// horarioClase.setIdhorarioClase(0); Se pone
+							// automático
+							horarioClase.setAula(aula);
+							horarioClase.setDia(cmm.getDia());
+							horarioClase.setDocente(docente);
+							horarioClase.setGrupo(grupo);
+							horarioClase.setHoraInicio(horaInicio);
+							horarioClase.setHoraFin(horaFin);
+							horarioClase.setHorarioClasePeriodo(cmm.getNombrePeriodo());
+							horarioClase.setHorarioClaseTipo(cmm.getTipoClase());
+							horarioClase.setNombreAula(cmm.getAula());
+							horarioClaseDAO.save(horarioClase);
+							System.out.println("Se agregó un horarioClase en " + (i + 1));
+						} else {
+							System.out.println(aux.getIdgrupo()+" ? "+cantidadGruposAntes);
+							if (aux.getIdgrupo()<=cantidadGruposAntes) {
+								cmm.setMotivoError("Ya existía ese curso y grupo");
+								cmm.setConError(true);
+								listacursoMasivoModel.set(i, cmm);
+								cursosConProblemas.add(cmm);
+								System.out.println("Ya existía ese curso y grupo " + (i + 1));
+							} else {	//Esto pasaría cuando un mismo curso se agrega en diferentes planes
+								System.out.println("Se está repitiendo el curso "+cp.getCursoPeriodoNombre()+" en diferente plan en "+(i+1)+".");
+							}
+
+						}
+					}
+
 				}
 			}
-			if (cp == null) {
-				cmm.setMotivoError("El Curso del Periodo no existe");
-				cursosConProblemas.add(cmm);
-				System.out.println("Problemas con CursoPeriodo en " + (i + 1));
-			}
-			if (docente != null && cp != null) {
-				grupo.setCursoPeriodo(cp);
-				grupo.setGrupoNumero(cmm.getGrupoNumero());
-				grupo.setHorarioClases(new HashSet<HorarioClase>(horarioClases));
-				grupoDAO.save(grupo);
-				System.out.print("Se agregó un grupo en " + (i + 1) + ". ");
-
-				// horarioClase.setIdhorarioClase(0); Se pone automático
-				horarioClase.setAula(aula);
-				horarioClase.setDia(cmm.getDia());
-				horarioClase.setDocente(docente);
-				horarioClase.setGrupo(grupo);
-				horarioClase.setHoraInicio(horaInicio);
-				horarioClase.setHoraFin(horaFin);
-				horarioClase.setHorarioClasePeriodo(cmm.getNombrePeriodo());
-				horarioClase.setHorarioClaseTipo(cmm.getTipoClase());
-				horarioClase.setNombreAula(cmm.getAula());
-				horarioClaseDAO.save(horarioClase);
-				System.out.println("Se agregó un horarioClase en " + (i + 1));
-			}
-
 		}
 		return cursosConProblemas;
 	}
@@ -185,19 +264,22 @@ public class CursoPeriodoService {
 		CursoPeriodo cursoPeriodo = new CursoPeriodo();
 		CursoConjunto cc = cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(
 				formCursoPeriodoModel.getCodCurso(), formCursoPeriodoModel.getPlanNombre());
-		/*if (cc == null) {		//No debería haber ningún problema porque se agregan todos los CursoConjunto al comienzo
-			CursoBase cursoBase = cursoBaseDAO.findCursoBaseByNombreByPlanNombre(formCursoPeriodoModel.getCursoPeriodoNombre(), formCursoPeriodoModel.getPlanNombre());
-			if (cursoBase != null) {
-				// Crear nuevo CursoConjunto
-				boolean seIngreso = cursoServ.insertarCursoConjunto(cursoBase, 0);
-				System.out.println((seIngreso)?"Se ingresó el curso conjunto ":"No se ingresó el curso conjunto");
-				cc = cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(formCursoPeriodoModel.getCodCurso(),
-						formCursoPeriodoModel.getPlanNombre());
-			}
-			else {
-				System.out.println("Debería crear el Curso Base con nombre "+formCursoPeriodoModel.getCursoPeriodoNombre()+" y el plan "+formCursoPeriodoModel.getPlanNombre());
-			}
-		}*/
+		/*
+		 * if (cc == null) { //No debería haber ningún problema porque se
+		 * agregan todos los CursoConjunto al comienzo CursoBase cursoBase =
+		 * cursoBaseDAO.findCursoBaseByNombreByPlanNombre(formCursoPeriodoModel.
+		 * getCursoPeriodoNombre(), formCursoPeriodoModel.getPlanNombre()); if
+		 * (cursoBase != null) { // Crear nuevo CursoConjunto boolean seIngreso
+		 * = cursoServ.insertarCursoConjunto(cursoBase, 0);
+		 * System.out.println((seIngreso)?"Se ingresó el curso conjunto "
+		 * :"No se ingresó el curso conjunto"); cc =
+		 * cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(
+		 * formCursoPeriodoModel.getCodCurso(),
+		 * formCursoPeriodoModel.getPlanNombre()); } else {
+		 * System.out.println("Debería crear el Curso Base con nombre "
+		 * +formCursoPeriodoModel.getCursoPeriodoNombre()+" y el plan "
+		 * +formCursoPeriodoModel.getPlanNombre()); } }
+		 */
 
 		Periodo p = periodoDAO.findById(Integer.parseInt(formCursoPeriodoModel.getPeriodo()));
 
@@ -228,7 +310,9 @@ public class CursoPeriodoService {
 	public Date convertirStringADate(String fecha) {
 		Date hora = new Date(70, 0, 1);
 		// System.out.print("Antes de convertir: " + fecha);
-		String[] seccionesHora = fecha.split(":"); // Suponiendo que la entrada es HH:MM:SS solo usaremos HH y MM
+		String[] seccionesHora = fecha.split(":"); // Suponiendo que la entrada
+													// es HH:MM:SS solo usaremos
+													// HH y MM
 		hora.setHours(Integer.parseInt(seccionesHora[0]));
 		hora.setMinutes(Integer.parseInt(seccionesHora[1]));
 		hora.setSeconds(0); // Esto se puede cambiar y recibir seccionesHora[2]

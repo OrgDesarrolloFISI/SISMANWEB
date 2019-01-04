@@ -1,7 +1,5 @@
 package pe.edu.sistemas.sismanweb.services.modelform;
 
-import java.sql.Date;
-
 public class CursoMasivoModel {
 	String horaInicio; // 16:00:00
 	String horaFinal; // 18:00:00
@@ -30,6 +28,8 @@ public class CursoMasivoModel {
 
 	String motivoError;
 
+	boolean conError = false;
+	
 	public String getHoraInicio() {
 		return horaInicio;
 	}
@@ -148,6 +148,14 @@ public class CursoMasivoModel {
 
 	public void setMotivoError(String motivoError) {
 		this.motivoError = motivoError;
+	}
+
+	public boolean isConError() {
+		return conError;
+	}
+
+	public void setConError(boolean conError) {
+		this.conError = conError;
 	}
 
 	@Override

@@ -6,6 +6,6 @@ import pe.edu.sistemas.sismanweb.domain.HorarioClase;
 
 public interface HorarioClaseDAO extends AbstractDAO<HorarioClase,Integer>{
 
-	public List<HorarioClase> findHorarioClaseByGrupo(int grupoNumero);
+	public List<HorarioClase> findHorarioClaseByIdCursoperiodoByGrupo(int idCursoPeriodo, int grupoNumero);
 	
 }

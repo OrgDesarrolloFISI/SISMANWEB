@@ -34,4 +34,21 @@ public class GrupoDAOImpl extends AbstractDAOImpl<Grupo,Integer> implements Grup
 		return grupo;
 	}
 
+	@Override
+	public Integer getUltimoIdGrupo() {
+		Query query = null;
+		
+		try {
+			query=getCurrentSession()
+					.createQuery("SELECT idgrupo FROM Grupo "
+							+ "ORDER BY idgrupo DESC").setMaxResults(1);			
+			return (Integer) query.uniqueResult();
+			
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	
 }

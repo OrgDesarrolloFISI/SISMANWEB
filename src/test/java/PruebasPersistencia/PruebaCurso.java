@@ -18,6 +18,7 @@ import pe.edu.sistemas.sismanweb.dao.PlanDAO;
 import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
 import pe.edu.sistemas.sismanweb.domain.CursoPeriodo;
+import pe.edu.sistemas.sismanweb.domain.CursoPeriodoBus;
 import pe.edu.sistemas.sismanweb.domain.Periodo;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoPeriodoModelForm;
 
@@ -197,11 +198,11 @@ public class PruebaCurso {
 			CursoConjunto cc=cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(cpmf.getCodCurso(), cpmf.getPlanNombre());
 			Periodo p = periodoDAO.findById(Integer.parseInt(cpmf.getPeriodo()));
 			cursoPeriodo.setIdcursoPeriodo(1);
-			cursoPeriodo.setPeriodo(p);
+			//cursoPeriodo.setPeriodo(p);
 			cursoPeriodo.setCursoConjunto(cc);
 			cursoPeriodo.setCursoPeriodoNombre(cpmf.getCursoPeriodoNombre());
 			
-			System.out.println("Info del cursoPeriodo: "+cursoPeriodo.getCursoPeriodoNombre()+". PeriodoID: "+cursoPeriodo.getPeriodo().getIdperiodo()+
+			System.out.println("Info del cursoPeriodo: "+cursoPeriodo.getCursoPeriodoNombre()+". PeriodoID: "+/*cursoPeriodo.getPeriodo().getIdperiodo()+*/
 					".CursoConjuntoID: "+cursoPeriodo.getCursoConjunto().getCursocCodcomun()+".");
 			
 			/*existe = *///insertarCursoPeriodo(cursoPeriodo);
@@ -227,5 +228,16 @@ public class PruebaCurso {
 	public void encontrarCursoBasePorNombreYPlan() {
 		CursoBase cb = cursoBaseDao.findCursoBaseByNombreByPlanNombre("SISTEMAS INTELIGENTES", "2014-Sistemas");
 		System.out.println((cb==null)?"No se encontró el cursoBase":"Sí se encontró el cursoBase "+cb.getCursobNombre());
+	}
+	
+	@Test
+	@Transactional
+	public void encontrarCursoPeriodoPorTodo() {
+		CursoPeriodo cp = cursoPeriodoDao.findCursoPeriodoByAll("2010903", "2014-Sistemas", "20191");
+		
+		if(cp!=null)
+			System.out.println("Sí existe");
+		else
+			System.out.println("No existe");
 	}
 }

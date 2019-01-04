@@ -17,13 +17,15 @@ public class HorarioClaseDAOImpl extends AbstractDAOImpl<HorarioClase,Integer> i
 	}
 
 	@Override
-	public List<HorarioClase> findHorarioClaseByGrupo(int grupoNumero) {
+	public List<HorarioClase> findHorarioClaseByIdCursoperiodoByGrupo(int idCursoPeriodo, int grupoNumero) {
 		List<HorarioClase> listHorarioClase=null;
 		Query query=null;
 		
 		try {
 			query=getCurrentSession().createQuery(" FROM HorarioClase "
-					+ "WHERE grupo.grupoNumero= :grupoNumero");
+					+ "WHERE grupo.cursoPeriodo.idcursoPeriodo= :idCursoPeriodo "
+					+ "AND  grupo.grupoNumero= :grupoNumero");
+			query.setParameter("idCursoPeriodo", idCursoPeriodo);
 			query.setParameter("grupoNumero", grupoNumero);
 			listHorarioClase=(List<HorarioClase>)query.list();
 		} catch (HibernateException e) {
