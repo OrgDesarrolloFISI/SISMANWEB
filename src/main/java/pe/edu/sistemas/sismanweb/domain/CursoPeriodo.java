@@ -1,13 +1,15 @@
 package pe.edu.sistemas.sismanweb.domain;
 // Generated 18/09/2018 05:06:44 PM by Hibernate Tools 4.3.1.Final
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,14 +22,21 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "curso_periodo", catalog = "modelogeneralfisi")
 public class CursoPeriodo implements java.io.Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer idcursoPeriodo;
 	private CursoConjunto cursoConjunto;
 	private Periodo periodo;
 	private String cursoPeriodoNombre;
 	private Set<Grupo> grupos = new HashSet<Grupo>(0);
+	/*
+	 * public CursoPeriodo(CursoPeriodoBus cursoPeriodoBus) {
+	 * this.idcursoPeriodo=cursoPeriodoBus.getIdcursoPeriodo();
+	 * this.cursoConjunto=new CursoConjunto(cursoPeriodoBus.getCursoConjuntoBus());
+	 * this.periodo=cursoPeriodoBus.getPeriodo();
+	 * this.cursoPeriodoNombre=cursoPeriodoBus.getCursoPeriodoNombre(); }
+	 */
 
 	public CursoPeriodo() {
 	}
@@ -57,7 +66,7 @@ public class CursoPeriodo implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CURSO_PERIODO_CURSOC_CODCOMUN", nullable = false, referencedColumnName="CURSOC_CODCOMUN")
+	@JoinColumn(name = "CURSO_PERIODO_CURSOC_CODCOMUN", nullable = false, referencedColumnName = "CURSOC_CODCOMUN")
 	public CursoConjunto getCursoConjunto() {
 		return this.cursoConjunto;
 	}
@@ -99,7 +108,5 @@ public class CursoPeriodo implements java.io.Serializable {
 		return "CursoPeriodo [idcursoPeriodo=" + idcursoPeriodo + ", cursoConjunto=" + cursoConjunto + ", periodo="
 				+ periodo + ", cursoPeriodoNombre=" + cursoPeriodoNombre + ", grupos=" + grupos + "]";
 	}
-	
-	
 
 }

@@ -240,7 +240,6 @@ public class CursoPeriodoService {
 							horarioClaseDAO.save(horarioClase);
 							System.out.println("Se agregó un horarioClase en " + (i + 1));
 						} else {
-							System.out.println(aux.getIdgrupo()+" ? "+cantidadGruposAntes);
 							if (aux.getIdgrupo()<=cantidadGruposAntes) {
 								cmm.setMotivoError("Ya existía ese curso y grupo");
 								cmm.setConError(true);

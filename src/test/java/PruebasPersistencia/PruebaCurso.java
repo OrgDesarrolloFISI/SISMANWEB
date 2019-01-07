@@ -18,7 +18,6 @@ import pe.edu.sistemas.sismanweb.dao.PlanDAO;
 import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
 import pe.edu.sistemas.sismanweb.domain.CursoPeriodo;
-import pe.edu.sistemas.sismanweb.domain.CursoPeriodoBus;
 import pe.edu.sistemas.sismanweb.domain.Periodo;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoPeriodoModelForm;
 
@@ -217,7 +216,7 @@ public class PruebaCurso {
 	public void existeCursoPeriodo(){
 		boolean existe=cursoPeriodoDAO.existsCursoPeriodoByAll("201204", "2009-Sistemas", "2018-II");
 		if(existe)
-			System.out.println("Sí existe");
+			System.out.println("Sí existe");	
 		else
 			System.out.println("No existe");
 	}
@@ -233,8 +232,7 @@ public class PruebaCurso {
 	@Test
 	@Transactional
 	public void encontrarCursoPeriodoPorTodo() {
-		CursoPeriodo cp = cursoPeriodoDao.findCursoPeriodoByAll("2010903", "2014-Sistemas", "20191");
-		
+		CursoPeriodo cp = cursoPeriodoDao.findCursoPeriodoByAll("203001", "2009-Sistemas", "20190");
 		if(cp!=null)
 			System.out.println("Sí existe");
 		else
