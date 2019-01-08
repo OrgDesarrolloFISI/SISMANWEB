@@ -118,8 +118,7 @@ public class CursoPeriodoService {
 				// Puede ocurrir error si es que el modelo recibido es nulo
 				CursoPeriodoModelForm cpmf = new CursoPeriodoModelForm(cmm.getCodCurso(), cmm.getDescCurso(),
 						cmm.getPeriodoNombre(), cmm.getNombrePlan());
-				
-				
+
 				if (!cursoPeriodoDAO.existsCursoPeriodoByAll(cmm.getCodCurso(), cmm.getNombrePlan(),
 						cmm.getPeriodoNombre())) {
 					cursoPeriodo = converterToCursoPeriodo(cpmf);
@@ -163,7 +162,10 @@ public class CursoPeriodoService {
 					System.out.println("Problemas con CursoPeriodo en " + (i + 1));
 				} else {
 
-					Aula aula = aulaDAO.findByNombreAula(cmm.getAula());
+					String nombreAula=cmm.getAula();
+					if (nombreAula.equals("0"))	nombreAula="NO ASIGNADO";
+					
+					Aula aula = aulaDAO.findByNombreAula(nombreAula);
 
 					List<HorarioClase> horarioClases = horarioClaseDAO
 							.findHorarioClaseByIdCursoperiodoByGrupo(cp.getIdcursoPeriodo(), cmm.getGrupoNumero());
@@ -219,7 +221,7 @@ public class CursoPeriodoService {
 						System.out.println(cp);
 						Grupo aux = grupoDAO.findByidcursoPeriodoBygrupoNumero(cp.getIdcursoPeriodo(),
 								cmm.getGrupoNumero());
-						if (aux == null) {
+						if (aux == null) { // Si no existe ningun grupo aún
 							grupo.setCursoPeriodo(cp);
 							grupo.setGrupoNumero(cmm.getGrupoNumero());
 							grupo.setHorarioClases(new HashSet<HorarioClase>(horarioClases));
@@ -239,15 +241,34 @@ public class CursoPeriodoService {
 							horarioClase.setNombreAula(cmm.getAula());
 							horarioClaseDAO.save(horarioClase);
 							System.out.println("Se agregó un horarioClase en " + (i + 1));
-						} else {
-							if (aux.getIdgrupo()<=cantidadGruposAntes) {
+						} else { // Si ya existe un grupo
+							if (aux.getIdgrupo() <= cantidadGruposAntes) { // Si se repite un grupo con uno ya en la bd
 								cmm.setMotivoError("Ya existía ese curso y grupo");
 								cmm.setConError(true);
 								listacursoMasivoModel.set(i, cmm);
 								cursosConProblemas.add(cmm);
 								System.out.println("Ya existía ese curso y grupo " + (i + 1));
-							} else {	//Esto pasaría cuando un mismo curso se agrega en diferentes planes
-								System.out.println("Se está repitiendo el curso "+cp.getCursoPeriodoNombre()+" en diferente plan en "+(i+1)+".");
+							} else { // Si en la carga se repite el grupo (diferentes planes o mismo curso pero otro
+										// tipo: TEORIA, PRACTICA o LABORATORIO ó Diferente día horario)
+								boolean existe=horarioClaseDAO.existsHorarioClaseByIdGrupoByDiaByHorIniByHorFinByTipoClase(
+										cmm.getGrupoNumero(), cmm.getDia(), horaInicio, horaFin	, cmm.getTipoClase());
+								if(!existe) {	//Si no existe, puede ser que sea otro tipoClase u otro día, entonces se agrega
+									horarioClase.setAula(aula);
+									horarioClase.setDia(cmm.getDia());
+									horarioClase.setDocente(docente);
+									horarioClase.setGrupo(aux);
+									horarioClase.setHoraInicio(horaInicio);
+									horarioClase.setHoraFin(horaFin);
+									horarioClase.setHorarioClasePeriodo(cmm.getNombrePeriodo());
+									horarioClase.setHorarioClaseTipo(cmm.getTipoClase());
+									horarioClase.setNombreAula(cmm.getAula());
+									horarioClaseDAO.save(horarioClase);
+								}
+								else {//Se quiere subir lo mismo pero de otro plan probablemente
+									System.out.println("Se está repitiendo el curso " + cp.getCursoPeriodoNombre()
+											+ " en diferente plan en " + (i + 1) + ".");
+								}
+								
 							}
 
 						}
@@ -264,18 +285,17 @@ public class CursoPeriodoService {
 		CursoConjunto cc = cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(
 				formCursoPeriodoModel.getCodCurso(), formCursoPeriodoModel.getPlanNombre());
 		/*
-		 * if (cc == null) { //No debería haber ningún problema porque se
-		 * agregan todos los CursoConjunto al comienzo CursoBase cursoBase =
+		 * if (cc == null) { //No debería haber ningún problema porque se agregan todos
+		 * los CursoConjunto al comienzo CursoBase cursoBase =
 		 * cursoBaseDAO.findCursoBaseByNombreByPlanNombre(formCursoPeriodoModel.
 		 * getCursoPeriodoNombre(), formCursoPeriodoModel.getPlanNombre()); if
-		 * (cursoBase != null) { // Crear nuevo CursoConjunto boolean seIngreso
-		 * = cursoServ.insertarCursoConjunto(cursoBase, 0);
+		 * (cursoBase != null) { // Crear nuevo CursoConjunto boolean seIngreso =
+		 * cursoServ.insertarCursoConjunto(cursoBase, 0);
 		 * System.out.println((seIngreso)?"Se ingresó el curso conjunto "
 		 * :"No se ingresó el curso conjunto"); cc =
 		 * cursoConjuntoDAO.findCursoConjuntoByCodigoCursoByNombrePlan(
-		 * formCursoPeriodoModel.getCodCurso(),
-		 * formCursoPeriodoModel.getPlanNombre()); } else {
-		 * System.out.println("Debería crear el Curso Base con nombre "
+		 * formCursoPeriodoModel.getCodCurso(), formCursoPeriodoModel.getPlanNombre());
+		 * } else { System.out.println("Debería crear el Curso Base con nombre "
 		 * +formCursoPeriodoModel.getCursoPeriodoNombre()+" y el plan "
 		 * +formCursoPeriodoModel.getPlanNombre()); } }
 		 */

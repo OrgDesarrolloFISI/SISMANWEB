@@ -1,5 +1,6 @@
 package pe.edu.sistemas.sismanweb.daoimpl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -34,5 +35,34 @@ public class HorarioClaseDAOImpl extends AbstractDAOImpl<HorarioClase,Integer> i
 		
 		return listHorarioClase;
 	}
+
+	@Override
+	public boolean existsHorarioClaseByIdGrupoByDiaByHorIniByHorFinByTipoClase(int idGrupo, int dia, Date HoraInicio,
+			Date HoraFin, String claseTipo) {
+		
+		boolean existe=false;
+		Query query=null;
+		
+		try {
+			query=getCurrentSession().createQuery(" FROM HorarioClase "
+					+ "WHERE grupo.idgrupo = :idGrupo "
+					+ "AND dia= :dia "
+					+ "AND horaInicio= :horaInicio "
+					+ "AND horaFin= :horaFin "
+					+ "AND horarioClaseTipo= :claseTipo");
+			query.setParameter("idGrupo", idGrupo);
+			query.setParameter("dia", dia);
+			query.setParameter("horaInicio", HoraInicio);
+			query.setParameter("horaFin", HoraFin);
+			query.setParameter("claseTipo", claseTipo).setMaxResults(1);
+			HorarioClase horarioClase=(HorarioClase)query.uniqueResult();
+			existe=(horarioClase!=null?true:false);
+			
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return existe;
+	}
+	
 	
 }
