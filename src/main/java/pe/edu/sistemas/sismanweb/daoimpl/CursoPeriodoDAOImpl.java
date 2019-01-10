@@ -3,6 +3,8 @@ package pe.edu.sistemas.sismanweb.daoimpl;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.CursoPeriodoDAO;
 import pe.edu.sistemas.sismanweb.domain.CursoPeriodo;
@@ -15,6 +17,8 @@ public class CursoPeriodoDAOImpl extends AbstractDAOImpl<CursoPeriodo, Integer> 
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")	
+	@Transactional(propagation=Propagation.MANDATORY)
 	public CursoPeriodo findCursoPeriodoByAll(String codigoCurso, String nombreplan, String periodoNombre) {
 		CursoPeriodo cursoPeriodo = null;
 		Query query = null;
@@ -37,6 +41,8 @@ public class CursoPeriodoDAOImpl extends AbstractDAOImpl<CursoPeriodo, Integer> 
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")	
+	@Transactional(propagation=Propagation.MANDATORY)
 	public boolean existsCursoPeriodoByAll(String codigoCurso, String nombreplan, String periodoNombre) {
 		boolean existe = false;
 		CursoPeriodo cp = findCursoPeriodoByAll(codigoCurso, nombreplan, periodoNombre);

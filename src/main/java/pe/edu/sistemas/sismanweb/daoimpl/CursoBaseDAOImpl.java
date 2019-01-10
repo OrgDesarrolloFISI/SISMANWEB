@@ -34,7 +34,8 @@ public class CursoBaseDAOImpl extends AbstractDAOImpl<CursoBase, Integer> implem
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.MANDATORY)
+	@SuppressWarnings("unchecked")	
+	@Transactional(propagation=Propagation.MANDATORY)
 	public CursoBase findCursoBaseByCodigoByPlan(String codigo, Integer idplan) {
 		CursoBase cursoBase = null;
 		Query query = null;
@@ -52,7 +53,8 @@ public class CursoBaseDAOImpl extends AbstractDAOImpl<CursoBase, Integer> implem
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.MANDATORY)
+	@SuppressWarnings("unchecked")	
+	@Transactional(propagation=Propagation.MANDATORY)
 	public CursoBase findCursoBaseByNombreByPlanNombre(String nombre, String nombrePlan) {
 		CursoBase cursoBase = null;
 		Query query = null;

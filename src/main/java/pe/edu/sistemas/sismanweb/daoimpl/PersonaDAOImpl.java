@@ -17,6 +17,7 @@ public class PersonaDAOImpl extends AbstractDAOImpl<Persona, Integer> implements
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")	
 	@Transactional(propagation=Propagation.MANDATORY)
 	public Persona findPersonaByCodigo(String codigo) {
 		Persona persona = null;

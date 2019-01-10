@@ -20,6 +20,7 @@ public class CursoConjuntoDAOImpl extends AbstractDAOImpl<CursoConjunto, Integer
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")	
 	@Transactional(propagation=Propagation.MANDATORY)
 	public CursoConjunto findCursoConjuntoByNombre(String nombre) {
 		CursoConjunto cursoConjunto = null;
@@ -35,6 +36,7 @@ public class CursoConjuntoDAOImpl extends AbstractDAOImpl<CursoConjunto, Integer
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")	
 	@Transactional(propagation=Propagation.MANDATORY)
 	public Integer findCodigoMaximo() {
 		Integer codigo = null;
@@ -80,6 +82,8 @@ public class CursoConjuntoDAOImpl extends AbstractDAOImpl<CursoConjunto, Integer
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")	
+	@Transactional(propagation=Propagation.MANDATORY)
 	public CursoConjunto buscarBaseConjuntoRepetida(Integer idBase) {
 		CursoConjunto cursoConjunto = null;
 		Query query = null;

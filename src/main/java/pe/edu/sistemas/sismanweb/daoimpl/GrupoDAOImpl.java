@@ -3,6 +3,8 @@ package pe.edu.sistemas.sismanweb.daoimpl;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.GrupoDAO;
 import pe.edu.sistemas.sismanweb.domain.Grupo;
@@ -15,6 +17,8 @@ public class GrupoDAOImpl extends AbstractDAOImpl<Grupo,Integer> implements Grup
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")	
+	@Transactional(propagation=Propagation.MANDATORY)
 	public Grupo findByidcursoPeriodoBygrupoNumero(Integer idcursoPeriodo, int grupoNumero) {
 		Grupo grupo = null;
 		Query query = null;
@@ -35,6 +39,8 @@ public class GrupoDAOImpl extends AbstractDAOImpl<Grupo,Integer> implements Grup
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")	
+	@Transactional(propagation=Propagation.MANDATORY)
 	public Integer getUltimoIdGrupo() {
 		Query query = null;
 		

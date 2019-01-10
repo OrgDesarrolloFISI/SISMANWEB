@@ -2,6 +2,8 @@ package pe.edu.sistemas.sismanweb.daoimpl;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -17,6 +19,7 @@ import pe.edu.sistemas.sismanweb.domain.Usuario;
 @Repository
 public class UsuarioDAOImpl implements UsuarioDAO{
 
+	Log LOGGER = LogFactory.getLog(UsuarioDAOImpl.class);
 	@Autowired
 	private SessionFactory sessionFactory;
 	
@@ -36,6 +39,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			query.setParameter("codigo", codigo);
 			usuario = (List<Usuario>)query.list();	
 		}catch(HibernateException he){
+			LOGGER.error("Se buscó el usuario "+codigo+" pero dió el error: "+he.getMessage());
 			he.printStackTrace();
 		}		
 		return usuario;
