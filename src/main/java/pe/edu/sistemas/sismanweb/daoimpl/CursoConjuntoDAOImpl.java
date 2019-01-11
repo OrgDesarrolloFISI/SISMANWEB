@@ -80,6 +80,7 @@ public class CursoConjuntoDAOImpl extends AbstractDAOImpl<CursoConjunto, Integer
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.MANDATORY)
 	public CursoConjunto buscarBaseConjuntoRepetida(Integer idBase) {
 		CursoConjunto cursoConjunto = null;
 		Query query = null;

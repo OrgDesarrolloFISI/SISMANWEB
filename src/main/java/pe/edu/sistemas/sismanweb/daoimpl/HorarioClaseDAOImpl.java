@@ -6,6 +6,8 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.HorarioClaseDAO;
 import pe.edu.sistemas.sismanweb.domain.HorarioClase;
@@ -18,6 +20,7 @@ public class HorarioClaseDAOImpl extends AbstractDAOImpl<HorarioClase,Integer> i
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.MANDATORY)
 	public List<HorarioClase> findHorarioClaseByIdCursoperiodoByGrupo(int idCursoPeriodo, int grupoNumero) {
 		List<HorarioClase> listHorarioClase=null;
 		Query query=null;
@@ -37,6 +40,7 @@ public class HorarioClaseDAOImpl extends AbstractDAOImpl<HorarioClase,Integer> i
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.MANDATORY)
 	public boolean existsHorarioClaseByIdGrupoByDiaByHorIniByHorFinByTipoClase(int idGrupo, int dia, Date HoraInicio,
 			Date HoraFin, String claseTipo) {
 		

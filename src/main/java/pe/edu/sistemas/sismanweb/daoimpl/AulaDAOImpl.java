@@ -5,6 +5,8 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.AulaDAO;
 import pe.edu.sistemas.sismanweb.domain.Aula;
@@ -17,6 +19,7 @@ public class AulaDAOImpl extends AbstractDAOImpl<Aula,Integer> implements AulaDA
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.MANDATORY)
 	public Aula findByNombreAula(String nombreAula) {
 		Aula aula=null;
 		Query query=null;
@@ -33,6 +36,7 @@ public class AulaDAOImpl extends AbstractDAOImpl<Aula,Integer> implements AulaDA
 	}
 	
 	@Override
+	@Transactional(propagation=Propagation.MANDATORY)
 	public List<Aula> findAll(){
 		List<Aula> aulas=null;
 		Query query=null;

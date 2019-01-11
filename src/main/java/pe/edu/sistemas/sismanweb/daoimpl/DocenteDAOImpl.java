@@ -36,6 +36,7 @@ public class DocenteDAOImpl extends AbstractDAOImpl<Docente, Integer> implements
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.MANDATORY)
 	public Docente findDocenteByNombreByApellidoPatByApellidoMat(String nombres, String apellidoPaterno,String apellidoMaterno) {
 		Docente docente= null;
 		Query query = null;

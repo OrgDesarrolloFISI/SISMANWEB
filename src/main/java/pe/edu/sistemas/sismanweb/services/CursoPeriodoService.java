@@ -163,8 +163,7 @@ public class CursoPeriodoService {
 				} else {
 
 					String nombreAula=cmm.getAula();
-					if (nombreAula.equals("0"))	nombreAula="NO ASIGNADO";
-					
+					if (nombreAula.compareTo("0")==0)	nombreAula="NO_ASIGNADO";
 					Aula aula = aulaDAO.findByNombreAula(nombreAula);
 
 					List<HorarioClase> horarioClases = horarioClaseDAO
@@ -218,7 +217,6 @@ public class CursoPeriodoService {
 					}
 
 					if (docente != null && cp != null) {
-						System.out.println(cp);
 						Grupo aux = grupoDAO.findByidcursoPeriodoBygrupoNumero(cp.getIdcursoPeriodo(),
 								cmm.getGrupoNumero());
 						if (aux == null) { // Si no existe ningun grupo aún
