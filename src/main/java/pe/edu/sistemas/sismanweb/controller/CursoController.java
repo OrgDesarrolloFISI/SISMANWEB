@@ -22,12 +22,16 @@ import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
 import pe.edu.sistemas.sismanweb.domain.CursoPeriodo;
 import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.AulaService;
+import pe.edu.sistemas.sismanweb.services.CursoBaseService;
 import pe.edu.sistemas.sismanweb.services.CursoPeriodoService;
 import pe.edu.sistemas.sismanweb.services.CursoService;
 import pe.edu.sistemas.sismanweb.services.PlanService;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoBCModelForm;
+import pe.edu.sistemas.sismanweb.services.modelform.CursoBaseModelForm;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoMasivoModel;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
+import pe.edu.sistemas.sismanweb.services.modelform.CursoModelFormBase;
+import pe.edu.sistemas.sismanweb.services.modelform.CursoPeriodoModelForm;
 import pe.edu.sistemas.sismanweb.util.DeserealizarJSON;
 import pe.edu.sistemas.sismanweb.util.Search;
 
@@ -40,6 +44,7 @@ public class CursoController {
 	@Autowired CursoService cursoService;	
 	@Autowired PlanService  planService;
 	@Autowired CursoPeriodoService cursoPeriodoService;
+	@Autowired CursoBaseService cursoBaseService;
 	@Autowired AulaService aulaService;
 	
 	boolean flagB = false;
@@ -239,16 +244,17 @@ public class CursoController {
 	}
 	@PostMapping("/addBulkBase")
 	public String agregarCursosBase(Model model, @RequestBody String listCursos ){
-		logger.info("CADENA RECIBIDA: "+listCursos);
-		JSONArray jsonArrayCursoPeriodo = new JSONArray(listCursos);
-		DeserealizarJSON<CursoMasivoModel> deserealizador = new DeserealizarJSON<CursoMasivoModel>(CursoMasivoModel.class);
-		List<CursoMasivoModel> cursoMasivoModel = null;
-		List<CursoPeriodo> resultado = null;
-		logger.info("CANTIDAD DE REGISTROS: "+jsonArrayCursoPeriodo.length());
 		
-		cursoMasivoModel = deserealizador.deserealiza(jsonArrayCursoPeriodo);
+		logger.info("CADENA RECIBIDA: "+listCursos);
+		JSONArray jsonArrayCursoBase = new JSONArray(listCursos);
+		DeserealizarJSON<CursoModelFormBase> deserealizador = new DeserealizarJSON<CursoModelFormBase>(CursoModelFormBase.class);
+		List<CursoModelFormBase> cursoMasivoModel = null;
+		//List<CursoPeriodo> resultado = null;
+		logger.info("CANTIDAD DE REGISTROS: "+jsonArrayCursoBase.length());
+		
+		cursoMasivoModel = deserealizador.deserealiza(jsonArrayCursoBase);
 		logger.info("Paso por aqui 1");
-		if(jsonArrayCursoPeriodo.length()!=cursoMasivoModel.size()){	//Cada error que exista envía un fragmento para activarlo en la página
+		if(jsonArrayCursoBase.length()!=cursoMasivoModel.size()){	//Cada error que exista envía un fragmento para activarlo en la página
 																		//Los errores aún no se han modificado para cursos(sigue con lo de docentes).
 			logger.info("Paso por aqui 2");
 			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO: "+(cursoMasivoModel.size()+1));//Error 1
@@ -256,12 +262,20 @@ public class CursoController {
 		}else{
 			logger.info("Paso por aqui 3");
 			try{
-				/*resultado = */cursoPeriodoService.saveBulk(cursoMasivoModel);
+				/*resultado = cursoBaseService.saveBulk(cursoMasivoModel);*/
+				for(int i = 0; i < cursoMasivoModel.size(); i++) {
+					CursoModelFormBase cmf = cursoMasivoModel.get(i);
+					CursoBaseModelForm cpmf = new CursoBaseModelForm(cmf.getCodigo(),cmf.getNombre(),cmf.getPlanNombre(),
+							cmf.getCreditos(),cmf.getPlanNombre());
+					CursoBase cursoBase = cursoService.coverterToCurso(cpmf);
+					boolean existe = cursoService.insertarCurso(cursoBase);	
+				}
 				
 				}catch(Exception e){	//Error 2
 					logger.warn("ERROR EN LOS ID's");
 					return "curso/avisosGrupal :: contentCursoAvisoIdsGrup";
 				}
+				
 				//model.addAttribute("cantidadCursosGuardados",(jsonArrayCursoPeriodo.length()-resultado.size()));
 			/*if(!resultado.isEmpty()){
 				model.addAttribute("listaDocentesRepetidos", resultado);
@@ -317,5 +331,6 @@ public class CursoController {
 		}
 		
 	}
+	
 	
 }

@@ -111,4 +111,21 @@ var string_ws;
           });
    }
     
+    function SendDataCursoBase(){
+      	 $.ajax({
+               url: '/sismanweb/curso/addBulkBase',
+               type: 'POST', 
+               contentType: "application/json; charset=utf-8",
+               dataType: "html",  
+               data: string_ws,
+               success: function(data) {            	             	 
+              	 console.log("se entrego datos de Curso Base");
+              	 $("#fileData").val("");
+              	 $("#cargaExterna").html(data);
+               },
+               error : function(xhr, status) {
+                   alert('Disculpe, existio un problema -- '+xhr+" -- "+status);
+               },
+             });
+      }
  

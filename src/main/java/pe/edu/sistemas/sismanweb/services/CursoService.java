@@ -16,6 +16,7 @@ import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
 import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
+import pe.edu.sistemas.sismanweb.services.modelform.CursoModelFormBase;
 
 @Service
 @Transactional
@@ -140,6 +141,17 @@ public class CursoService {
 	}
 
 	public CursoBase coverterToCurso(CursoModelForm cursoModelForm) {
+		CursoBase cursoBase = new CursoBase();
+		cursoBase.setCursobCodigo(cursoModelForm.getCodigo());
+		cursoBase.setCursobNombre(cursoModelForm.getNombre());
+		cursoBase.setCursobCiclo(cursoModelForm.getCiclo());
+		cursoBase.setCursobCreditos(cursoModelForm.getCreditos());
+		cursoBase.setPlan(planDao.findById(cursoModelForm.getIdPlan()));
+
+		return cursoBase;
+	}
+	
+	public CursoBase coverterToCursoBase(CursoModelFormBase cursoModelForm) {
 		CursoBase cursoBase = new CursoBase();
 		cursoBase.setCursobCodigo(cursoModelForm.getCodigo());
 		cursoBase.setCursobNombre(cursoModelForm.getNombre());
