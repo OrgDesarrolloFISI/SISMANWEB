@@ -247,27 +247,32 @@ public class CursoController {
 		
 		logger.info("CADENA RECIBIDA: "+listCursos);
 		JSONArray jsonArrayCursoBase = new JSONArray(listCursos);
-		DeserealizarJSON<CursoModelFormBase> deserealizador = new DeserealizarJSON<CursoModelFormBase>(CursoModelFormBase.class);
-		List<CursoModelFormBase> cursoMasivoModel = null;
+		DeserealizarJSON<CursoModelForm> deserealizador = new DeserealizarJSON<CursoModelForm>(CursoModelForm.class);
+		List<CursoModelForm> cursoMasivoModel = null;
 		//List<CursoPeriodo> resultado = null;
 		logger.info("CANTIDAD DE REGISTROS: "+jsonArrayCursoBase.length());
 		
 		cursoMasivoModel = deserealizador.deserealiza(jsonArrayCursoBase);
 		logger.info("Paso por aqui 1");
-		if(jsonArrayCursoBase.length()!=cursoMasivoModel.size()){	//Cada error que exista envía un fragmento para activarlo en la página
+		System.out.println("JSONARRAYCURSOBASE ES "+jsonArrayCursoBase.length());
+		System.out.println("cursoMasivoModel.size() ES "+cursoMasivoModel.size());
+		/*if(jsonArrayCursoBase.length()!=cursoMasivoModel.size()){	//Cada error que exista envía un fragmento para activarlo en la página
 																		//Los errores aún no se han modificado para cursos(sigue con lo de docentes).
 			logger.info("Paso por aqui 2");
 			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO: "+(cursoMasivoModel.size()+1));//Error 1
 			return "curso/avisosGrupal :: contentCursoAvisoErrorGrup";
-		}else{
+		}else{*/
 			logger.info("Paso por aqui 3");
 			try{
 				/*resultado = cursoBaseService.saveBulk(cursoMasivoModel);*/
 				for(int i = 0; i < cursoMasivoModel.size(); i++) {
-					CursoModelFormBase cmf = cursoMasivoModel.get(i);
-					CursoBaseModelForm cpmf = new CursoBaseModelForm(cmf.getCodigo(),cmf.getNombre(),cmf.getPlanNombre(),
-							cmf.getCreditos(),cmf.getPlanNombre());
+					CursoModelForm cmf = cursoMasivoModel.get(i);
+					/*CursoModelForm cpmf = new CursoModelForm(cmf.getCodigo(),cmf.getNombre(),cmf.getPlanNombre(),
+							cmf.getCreditos(),cmf.getPlanNombre());*/
+					CursoModelForm cpmf = new CursoModelForm(cmf.getIdPlan(),cmf.getPlanNombre(),cmf.getCodigo(),cmf.getNombre(),cmf.getCiclo(),cmf.getCreditos());
+					System.out.println(cpmf.toString());
 					CursoBase cursoBase = cursoService.coverterToCurso(cpmf);
+					System.out.println("Un paso antes de guardar"+cursoBase.toString());
 					boolean existe = cursoService.insertarCurso(cursoBase);	
 				}
 				
@@ -287,7 +292,7 @@ public class CursoController {
 			}*/		
 			return "curso/avisosGrupal";
 		}	
-	}
+	//}
 	
 	
 	/*--------------*/

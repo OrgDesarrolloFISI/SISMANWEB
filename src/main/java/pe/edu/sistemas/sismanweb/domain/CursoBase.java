@@ -117,4 +117,11 @@ public class CursoBase implements java.io.Serializable {
 		this.cursoConjuntos = cursoConjuntos;
 	}
 
+	@Override
+	public String toString() {
+		return "CursoBase [idcursoGeneral=" + idcursoGeneral + ", plan=" + plan + ", cursobCodigo=" + cursobCodigo
+				+ ", cursobNombre=" + cursobNombre + ", cursobCiclo=" + cursobCiclo + ", cursobCreditos="
+				+ cursobCreditos + ", cursoConjuntos=" + cursoConjuntos + "]";
+	}
+	
 }

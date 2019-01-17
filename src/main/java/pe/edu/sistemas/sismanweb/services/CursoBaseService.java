@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.edu.sistemas.sismanweb.dao.CursoBaseDAO;
+import pe.edu.sistemas.sismanweb.dao.CursoConjuntoDAO;
 import pe.edu.sistemas.sismanweb.domain.Aula;
 import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
@@ -27,7 +28,8 @@ public class CursoBaseService {
 
 	@Autowired
 	private CursoBaseDAO cursoBaseDAO;
-	
+	@Autowired
+	private CursoConjuntoDAO cursoConjuntoDAO;
 	public List<CursoMasivoModel> saveBulk(List<CursoMasivoModel> listacursoMasivoModel) {
 		List<CursoMasivoModel> cursosConProblemas = new ArrayList<CursoMasivoModel>();
 		boolean seAgrego = false;

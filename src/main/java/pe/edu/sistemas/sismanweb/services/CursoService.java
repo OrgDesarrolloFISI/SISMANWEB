@@ -41,10 +41,14 @@ public class CursoService {
 
 	public boolean insertarCurso(CursoBase cursoBase) {
 		CursoBase cursoBaseExiste;
-
+		System.out.println("Funcion Insertar Curso ");
+		System.out.println(cursoBase.toString());
+		
+		//System.out.println("codigo "+cursoBase.getCursobCodigo()+" idPlan "+cursoBase.getPlan().getIdplan());
+		System.out.println(" idPlan "+cursoBase.getPlan().getIdplan());
 		cursoBaseExiste = cursoBaseDao.findCursoBaseByCodigoByPlan(cursoBase.getCursobCodigo(),
 				cursoBase.getPlan().getIdplan());
-
+		System.out.println("Curso Base Existe "+cursoBaseExiste);
 		if (cursoBaseExiste != null) {
 			logger.info("YA EXISTE UN CURSO CON EL MISMO CODIGO Y PLAN");
 			return true;
@@ -146,21 +150,11 @@ public class CursoService {
 		cursoBase.setCursobNombre(cursoModelForm.getNombre());
 		cursoBase.setCursobCiclo(cursoModelForm.getCiclo());
 		cursoBase.setCursobCreditos(cursoModelForm.getCreditos());
-		cursoBase.setPlan(planDao.findById(cursoModelForm.getIdPlan()));
+		cursoBase.setPlan(planDao.findbynombreplan(cursoModelForm.getPlanNombre()));
 
 		return cursoBase;
 	}
 	
-	public CursoBase coverterToCursoBase(CursoModelFormBase cursoModelForm) {
-		CursoBase cursoBase = new CursoBase();
-		cursoBase.setCursobCodigo(cursoModelForm.getCodigo());
-		cursoBase.setCursobNombre(cursoModelForm.getNombre());
-		cursoBase.setCursobCiclo(cursoModelForm.getCiclo());
-		cursoBase.setCursobCreditos(cursoModelForm.getCreditos());
-		cursoBase.setPlan(planDao.findById(cursoModelForm.getIdPlan()));
-
-		return cursoBase;
-	}
 
 	public CursoModelForm converterToCursoModelForm(CursoBase curso) {
 		CursoModelForm formCursoModel = new CursoModelForm();

@@ -2,6 +2,7 @@ package pe.edu.sistemas.sismanweb.daoimpl;
 
 import java.util.List;
 
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
@@ -36,7 +37,10 @@ public class CursoBaseDAOImpl extends AbstractDAOImpl<CursoBase, Integer> implem
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public CursoBase findCursoBaseByCodigoByPlan(String codigo, Integer idplan) {
+		System.out.println("Entro al FINDCURSOBASEBYPLAN");
 		CursoBase cursoBase = null;
+		System.out.println("codigo "+codigo);
+		System.out.println("idpolan "+idplan);
 		Query query = null;
 		try {
 			query = getCurrentSession()
@@ -46,6 +50,8 @@ public class CursoBaseDAOImpl extends AbstractDAOImpl<CursoBase, Integer> implem
 			query.setParameter("idplan", idplan);
 			cursoBase = (CursoBase) query.uniqueResult();
 		} catch (HibernateException he) {
+			LogFactory.getLog(CursoBaseDAOImpl.class).error("SE PRODUJO EL ERROR:   "+he.getMessage());
+			
 			he.printStackTrace();
 		}
 		return cursoBase;

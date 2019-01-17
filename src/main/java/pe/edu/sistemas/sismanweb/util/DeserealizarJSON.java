@@ -28,11 +28,17 @@ public class DeserealizarJSON<Model> {
 	public List<Model> deserealiza(JSONArray jsonArray){
 		JSONObject jsonObject = null;
 		List<Model> listModel = new ArrayList<Model>();
+		System.out.println("EN EL DESREALIZADOR EL JSONARRAY ES "+jsonArray.length());
 		for(int i=0; i< jsonArray.length(); i++){
+			System.out.println("Entro al for");
 			jsonObject = jsonArray.getJSONObject(i);
+			System.out.println("Se asigno el jsonArray.getJSONObject "+jsonObject.toString());
 			try {
+				System.out.println("Entro al try");
 				model = JSON_MAPPER.readValue(jsonObject.toString(), modelClass);
+				//System.out.println("EN EL Objecto json: "+ jsonObject.toString());
 				//logger.info("Objecto json: "+jsonObject.toString());
+				System.out.println("Se asigno el JSON_MAPPER.readValue");
 				listModel.add(model);
 			} catch (Exception e) {
 				logger.error("OCURRIO UN ERROR EN EL REGISTRO: "+(i+1));
