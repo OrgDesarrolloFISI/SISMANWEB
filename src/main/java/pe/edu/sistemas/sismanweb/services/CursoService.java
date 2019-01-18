@@ -144,6 +144,17 @@ public class CursoService {
 		return cursosFormCodigo;
 	}
 
+	public CursoBase coverterToCursoIndividual(CursoModelForm cursoModelForm) {
+		CursoBase cursoBase = new CursoBase();
+		cursoBase.setCursobCodigo(cursoModelForm.getCodigo());
+		cursoBase.setCursobNombre(cursoModelForm.getNombre());
+		cursoBase.setCursobCiclo(cursoModelForm.getCiclo());
+		cursoBase.setCursobCreditos(cursoModelForm.getCreditos());
+		cursoBase.setPlan(planDao.findById(cursoModelForm.getIdPlan()));
+
+		return cursoBase;
+	}
+	
 	public CursoBase coverterToCurso(CursoModelForm cursoModelForm) {
 		CursoBase cursoBase = new CursoBase();
 		cursoBase.setCursobCodigo(cursoModelForm.getCodigo());

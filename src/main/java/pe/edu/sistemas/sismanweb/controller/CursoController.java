@@ -180,7 +180,7 @@ public class CursoController {
 	@PostMapping("/add")
 	public String agregarCurso(Model model,@ModelAttribute("curso") CursoModelForm cursoModelForm){
 		logger.info("Agregando datos de: "+cursoModelForm.getCodigo()+" -- "+cursoModelForm.getNombre());
-		CursoBase cursoBase = cursoService.coverterToCurso(cursoModelForm);
+		CursoBase cursoBase = cursoService.coverterToCursoIndividual(cursoModelForm);
 		boolean existe = cursoService.insertarCurso(cursoBase);	
 		if(existe){
 			logger.info("AGREGAR CURSO --- Codigo ya existente");
