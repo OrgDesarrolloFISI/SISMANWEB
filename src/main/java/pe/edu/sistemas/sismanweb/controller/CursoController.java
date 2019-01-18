@@ -22,6 +22,7 @@ import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
 //import pe.edu.sistemas.sismanweb.domain.CursoPeriodo;
 import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.AulaService;
+import pe.edu.sistemas.sismanweb.services.CursoBaseService;
 import pe.edu.sistemas.sismanweb.services.CursoPeriodoService;
 import pe.edu.sistemas.sismanweb.services.CursoService;
 import pe.edu.sistemas.sismanweb.services.PlanService;
@@ -41,6 +42,7 @@ public class CursoController {
 	@Autowired CursoService cursoService;	
 	@Autowired PlanService  planService;
 	@Autowired CursoPeriodoService cursoPeriodoService;
+	@Autowired CursoBaseService cursoBaseService;
 	@Autowired AulaService aulaService;
 	
 	boolean flagB = false;
@@ -238,54 +240,29 @@ public class CursoController {
 		
 		return "curso/registroGrupalBase";		
 	}
+	
 	@PostMapping("/addBulkBase")
 	public String agregarCursosBase(Model model, @RequestBody String listCursos ){
-		
-		logger.info("CADENA RECIBIDA: "+listCursos);
+		boolean resultado=false;
+		//logger.info("CADENA RECIBIDA: "+listCursos);
 		JSONArray jsonArrayCursoBase = new JSONArray(listCursos);
 		DeserealizarJSON<CursoModelForm> deserealizador = new DeserealizarJSON<CursoModelForm>(CursoModelForm.class);
 		List<CursoModelForm> cursoMasivoModel = null;
-		//List<CursoPeriodo> resultado = null;
-		logger.info("CANTIDAD DE REGISTROS: "+jsonArrayCursoBase.length());
-		
+		//logger.info("CANTIDAD DE REGISTROS: "+jsonArrayCursoBase.length());
 		cursoMasivoModel = deserealizador.deserealiza(jsonArrayCursoBase);
-		logger.info("Paso por aqui 1");
-		System.out.println("JSONARRAYCURSOBASE ES "+jsonArrayCursoBase.length());
-		System.out.println("cursoMasivoModel.size() ES "+cursoMasivoModel.size());
-		/*if(jsonArrayCursoBase.length()!=cursoMasivoModel.size()){	//Cada error que exista envía un fragmento para activarlo en la página
-																		//Los errores aún no se han modificado para cursos(sigue con lo de docentes).
-			logger.info("Paso por aqui 2");
-			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO: "+(cursoMasivoModel.size()+1));//Error 1
-			return "curso/avisosGrupal :: contentCursoAvisoErrorGrup";
-		}else{*/
-			logger.info("Paso por aqui 3");
+		//logger.info("Paso por aqui 1");
+		//System.out.println("JSONARRAYCURSOBASE ES "+jsonArrayCursoBase.length());
+		//System.out.println("cursoMasivoModel.size() ES "+cursoMasivoModel.size());
+			//logger.info("Paso por aqui 3");
 			try{
-				/*resultado = cursoBaseService.saveBulk(cursoMasivoModel);*/
-				for(int i = 0; i < cursoMasivoModel.size(); i++) {
-					CursoModelForm cmf = cursoMasivoModel.get(i);
-					/*CursoModelForm cpmf = new CursoModelForm(cmf.getCodigo(),cmf.getNombre(),cmf.getPlanNombre(),
-							cmf.getCreditos(),cmf.getPlanNombre());*/
-					CursoModelForm cpmf = new CursoModelForm(cmf.getIdPlan(),cmf.getPlanNombre(),cmf.getCodigo(),cmf.getNombre(),cmf.getCiclo(),cmf.getCreditos());
-					System.out.println(cpmf.toString());
-					CursoBase cursoBase = cursoService.coverterToCurso(cpmf);
-					System.out.println("Un paso antes de guardar"+cursoBase.toString());
-					boolean existe = cursoService.insertarCurso(cursoBase);	
+				resultado = cursoBaseService.saveBulk(cursoMasivoModel);	
+				if(resultado==false) {
+					return "curso/avisosGrupal :: contentCursoAvisoErrorGrup";
 				}
-				
-			}catch(Exception e){	//Error 2
+			}catch(Exception e){	
 					logger.warn("ERROR EN LOS ID's");
 					return "curso/avisosGrupal :: contentCursoAvisoIdsGrup";
-				}
-				
-				//model.addAttribute("cantidadCursosGuardados",(jsonArrayCursoPeriodo.length()-resultado.size()));
-			/*if(!resultado.isEmpty()){
-				model.addAttribute("listaDocentesRepetidos", resultado);
-				logger.warn("EXISTEN "+resultado.size()+" DOCENTES YA REGISTRADOS");	//Error 3
-				return "docente/avisosGrupal :: contentDocenteAvisoExistenGrup";
-			}else{
-				logger.info("SE REGISTRO EXITOSAMENTE DOCENTES");		//Éxito
-				return "curso/avisosGrupal :: contentCursoAvisoExitoGrup";
-			}*/		
+				}		
 			return "curso/avisosGrupal :: contentCursoAvisoExitoGrup";
 		}	
 	
