@@ -63,6 +63,44 @@
 
 	</div>
 
+
+	<div th:fragment="contentCursoAvisoExitoGrup" class="text-center">
+		<p class="lead">Se registraron los cursos exitosamente:</p>
+		<br />
+		<p class="lead" th:text=${cantidadCursosGuardados}></p>
+	</div>
+
+	<div th:fragment="contentCursoAvisoExistenProbBase">
+		<p class=" text-center lead">Se pudo registrar la siguiente	cantidad de cursos:</p>
+		<p class="text-center lead" th:text=${cantidadCursosGuardados}></p>
+		<br />
+		<p class="lead">En el archivo se encontro cursos con problemas para ingresar, por lo que no se registraran:</p>
+		<div class="panel-body">
+			<table id="dataTable" class="table table-striped table-bordered"
+				th:object="${listaCursosNoAgregados}">
+				<thead>
+					<tr>
+						<th>Nombre del Plan</th>
+						<th>Codigo</th>
+						<th>Nombre del curso</th>
+						<th>Ciclo</th>
+						<th>Creditos</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="cursoMasivoModel : ${listaCursosNoAgregados}">
+						<td th:text="${cursoMasivoModel.PlanNombre}"></td>
+						<td th:text="${cursoMasivoModel.Codigo}"></td>
+						<td th:text="${cursoMasivoModel.Nombre}"></td>
+						<td th:text="${cursoMasivoModel.Ciclo}"></td>
+						<td th:text="${cursoMasivoModel.Creditos}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+
 	<!--**********************FAvisoAjax********************** -->
 
 </body>

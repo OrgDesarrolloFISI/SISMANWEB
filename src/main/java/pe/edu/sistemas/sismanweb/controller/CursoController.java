@@ -243,7 +243,7 @@ public class CursoController {
 	
 	@PostMapping("/addBulkBase")
 	public String agregarCursosBase(Model model, @RequestBody String listCursos ){
-		boolean resultado=false;
+		List<CursoModelForm> resultado;
 		//logger.info("CADENA RECIBIDA: "+listCursos);
 		JSONArray jsonArrayCursoBase = new JSONArray(listCursos);
 		DeserealizarJSON<CursoModelForm> deserealizador = new DeserealizarJSON<CursoModelForm>(CursoModelForm.class);
@@ -254,11 +254,21 @@ public class CursoController {
 		//System.out.println("JSONARRAYCURSOBASE ES "+jsonArrayCursoBase.length());
 		//System.out.println("cursoMasivoModel.size() ES "+cursoMasivoModel.size());
 			//logger.info("Paso por aqui 3");
-			try{
-				resultado = cursoBaseService.saveBulk(cursoMasivoModel);	
-				if(resultado==false) {
-					return "curso/avisosGrupal :: contentCursoAvisoErrorGrup";
-				}
+
+		try {		
+				resultado = cursoBaseService.saveBulk(cursoMasivoModel);
+				model.addAttribute("cantidadCursosGuardados",(cursoMasivoModel.size() -resultado.size()));
+			if(!resultado.isEmpty()){
+				logger.warn("NO SE PUDIERON REGISTRAR  "+resultado.size()+" Horarios");	//Error 3
+				System.out.println("NO SE PUDIERON REGISTRAR  "+resultado.size()+" Horarios");
+				model.addAttribute("listaCursosNoAgregados", resultado);
+				return "curso/avisosGrupal :: contentCursoAvisoExistenProbBase";
+			}else{
+				logger.info("SE REGISTRO EXITOSAMENTE CURSOS BASE");		//Éxito
+				System.out.println("SE REGISTRO EXITOSAMENTE DOCENTES");
+				//return "curso/avisosGrupal :: contentCursoAvisoExitoGrup";
+			}
+				
 			}catch(Exception e){	
 					logger.warn("ERROR EN LOS ID's");
 					return "curso/avisosGrupal :: contentCursoAvisoIdsGrup";

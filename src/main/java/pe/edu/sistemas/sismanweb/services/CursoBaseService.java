@@ -17,20 +17,32 @@ public class CursoBaseService {
 	
 	@Autowired CursoService cursoService;	
 	
-	public boolean saveBulk(List<CursoModelForm> listacursoMasivoModel) {
+	public List<CursoModelForm> saveBulk(List<CursoModelForm> listacursoMasivoModel) {
 		List<CursoModelForm> cursosConProblemas = new ArrayList<CursoModelForm>();
+		boolean seAgrego = false;
 		boolean resultado=false;
 		for(int i = 0; i < listacursoMasivoModel.size(); i++) {
 			CursoModelForm cmf = listacursoMasivoModel.get(i);
 			CursoModelForm cpmf = new CursoModelForm(cmf.getIdPlan(),cmf.getPlanNombre(),cmf.getCodigo(),cmf.getNombre(),cmf.getCiclo(),cmf.getCreditos());
-			System.out.println(cpmf.toString());
-			CursoBase cursoBase = cursoService.coverterToCurso(cpmf);
+			//System.out.println(cpmf.toString());
+			/*CursoBase cursoBase = cursoService.coverterToCurso(cpmf);
 			System.out.println("Un paso antes de guardar"+cursoBase.toString());
-			resultado=cursoService.insertarCurso(cursoBase);	
+			resultado=cursoService.insertarCurso(cursoBase);	*/
 			
+			
+			CursoBase cursoBase = cursoService.coverterToCurso(cpmf);
+			seAgrego = cursoService.insertarCurso(cursoBase);
+			if (!seAgrego) { // Podría haber problemas con la BD
+				//cmm.setConError(true);
+				//cmm.setMotivoError("Problemas al agregar el CursoPeriodo");
+				cursosConProblemas.add(cpmf);
+				System.out.println("No se agregó el cursoBase en " + (i + 1));
+			} else {
+				System.out.println("Se agregó 1 cursoPeriodo en " + (i + 1));
+			}
 			
 		}
-		return resultado;
+		return cursosConProblemas;
 	}
 
 }
