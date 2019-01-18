@@ -19,19 +19,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
-import pe.edu.sistemas.sismanweb.domain.CursoPeriodo;
+//import pe.edu.sistemas.sismanweb.domain.CursoPeriodo;
 import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.AulaService;
-import pe.edu.sistemas.sismanweb.services.CursoBaseService;
 import pe.edu.sistemas.sismanweb.services.CursoPeriodoService;
 import pe.edu.sistemas.sismanweb.services.CursoService;
 import pe.edu.sistemas.sismanweb.services.PlanService;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoBCModelForm;
-import pe.edu.sistemas.sismanweb.services.modelform.CursoBaseModelForm;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoMasivoModel;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
-import pe.edu.sistemas.sismanweb.services.modelform.CursoModelFormBase;
-import pe.edu.sistemas.sismanweb.services.modelform.CursoPeriodoModelForm;
+//import pe.edu.sistemas.sismanweb.services.modelform.CursoPeriodoModelForm;
 import pe.edu.sistemas.sismanweb.util.DeserealizarJSON;
 import pe.edu.sistemas.sismanweb.util.Search;
 
@@ -44,7 +41,6 @@ public class CursoController {
 	@Autowired CursoService cursoService;	
 	@Autowired PlanService  planService;
 	@Autowired CursoPeriodoService cursoPeriodoService;
-	@Autowired CursoBaseService cursoBaseService;
 	@Autowired AulaService aulaService;
 	
 	boolean flagB = false;
@@ -276,7 +272,7 @@ public class CursoController {
 					boolean existe = cursoService.insertarCurso(cursoBase);	
 				}
 				
-				}catch(Exception e){	//Error 2
+			}catch(Exception e){	//Error 2
 					logger.warn("ERROR EN LOS ID's");
 					return "curso/avisosGrupal :: contentCursoAvisoIdsGrup";
 				}
@@ -290,9 +286,8 @@ public class CursoController {
 				logger.info("SE REGISTRO EXITOSAMENTE DOCENTES");		//Éxito
 				return "curso/avisosGrupal :: contentCursoAvisoExitoGrup";
 			}*/		
-			return "curso/avisosGrupal";
+			return "curso/avisosGrupal :: contentCursoAvisoExitoGrup";
 		}	
-	//}
 	
 	
 	/*--------------*/

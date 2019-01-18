@@ -16,7 +16,6 @@ import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
 import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoModelForm;
-import pe.edu.sistemas.sismanweb.services.modelform.CursoModelFormBase;
 
 @Service
 @Transactional
