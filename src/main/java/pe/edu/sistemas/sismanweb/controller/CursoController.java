@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
-import pe.edu.sistemas.sismanweb.domain.CursoPeriodo;
 import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.AulaService;
+import pe.edu.sistemas.sismanweb.services.CursoBaseService;
 import pe.edu.sistemas.sismanweb.services.CursoPeriodoService;
 import pe.edu.sistemas.sismanweb.services.CursoService;
 import pe.edu.sistemas.sismanweb.services.PlanService;
@@ -40,6 +40,7 @@ public class CursoController {
 	@Autowired CursoService cursoService;	
 	@Autowired PlanService  planService;
 	@Autowired CursoPeriodoService cursoPeriodoService;
+	@Autowired CursoBaseService cursoBaseService;
 	@Autowired AulaService aulaService;
 	
 	boolean flagB = false;
@@ -175,7 +176,7 @@ public class CursoController {
 	@PostMapping("/add")
 	public String agregarCurso(Model model,@ModelAttribute("curso") CursoModelForm cursoModelForm){
 		logger.info("Agregando datos de: "+cursoModelForm.getCodigo()+" -- "+cursoModelForm.getNombre());
-		CursoBase cursoBase = cursoService.coverterToCurso(cursoModelForm);
+		CursoBase cursoBase = cursoService.coverterToCursoIndividual(cursoModelForm);
 		boolean existe = cursoService.insertarCurso(cursoBase);	
 		if(existe){
 			logger.info("AGREGAR CURSO --- Codigo ya existente");
@@ -237,42 +238,32 @@ public class CursoController {
 		
 		return "curso/registroGrupalBase";		
 	}
+	
 	@PostMapping("/addBulkBase")
-	public String agregarCursosBase(Model model, @RequestBody String listCursos ){
-		logger.info("CADENA RECIBIDA: "+listCursos);
-		JSONArray jsonArrayCursoPeriodo = new JSONArray(listCursos);
-		DeserealizarJSON<CursoMasivoModel> deserealizador = new DeserealizarJSON<CursoMasivoModel>(CursoMasivoModel.class);
-		List<CursoMasivoModel> cursoMasivoModel = null;
-		List<CursoPeriodo> resultado = null;
-		logger.info("CANTIDAD DE REGISTROS: "+jsonArrayCursoPeriodo.length());
-		
-		cursoMasivoModel = deserealizador.deserealiza(jsonArrayCursoPeriodo);
-		logger.info("Paso por aqui 1");
-		if(jsonArrayCursoPeriodo.length()!=cursoMasivoModel.size()){	//Cada error que exista envía un fragmento para activarlo en la página
-																		//Los errores aún no se han modificado para cursos(sigue con lo de docentes).
-			logger.info("Paso por aqui 2");
-			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO: "+(cursoMasivoModel.size()+1));//Error 1
-			return "curso/avisosGrupal :: contentCursoAvisoErrorGrup";
-		}else{
-			logger.info("Paso por aqui 3");
-			try{
-				/*resultado = */cursoPeriodoService.saveBulk(cursoMasivoModel);
-				
-				}catch(Exception e){	//Error 2
-					logger.warn("ERROR EN LOS ID's");
-					return "curso/avisosGrupal :: contentCursoAvisoIdsGrup";
-				}
-				//model.addAttribute("cantidadCursosGuardados",(jsonArrayCursoPeriodo.length()-resultado.size()));
-			/*if(!resultado.isEmpty()){
-				model.addAttribute("listaDocentesRepetidos", resultado);
-				logger.warn("EXISTEN "+resultado.size()+" DOCENTES YA REGISTRADOS");	//Error 3
-				return "docente/avisosGrupal :: contentDocenteAvisoExistenGrup";
-			}else{
-				logger.info("SE REGISTRO EXITOSAMENTE DOCENTES");		//Éxito
-				return "curso/avisosGrupal :: contentCursoAvisoExitoGrup";
-			}*/		
-			return "curso/avisosGrupal";
-		}	
+	public String agregarCursosBase(Model model, @RequestBody String listCursos) {
+		List<CursoModelForm> resultado;
+		JSONArray jsonArrayCursoBase = new JSONArray(listCursos);
+		DeserealizarJSON<CursoModelForm> deserealizador = new DeserealizarJSON<CursoModelForm>(CursoModelForm.class);
+		List<CursoModelForm> cursoMasivoModel = null;
+		cursoMasivoModel = deserealizador.deserealiza(jsonArrayCursoBase);
+		try {
+			resultado = cursoBaseService.saveBulk(cursoMasivoModel);
+			model.addAttribute("cantidadCursosGuardados", (cursoMasivoModel.size() - resultado.size()));
+			if (!resultado.isEmpty()) {
+				logger.warn("NO SE PUDIERON REGISTRAR  " + resultado.size() + " Horarios"); // Error 3
+				System.out.println("NO SE PUDIERON REGISTRAR  " + resultado.size() + " Horarios");
+				model.addAttribute("listaCursosNoAgregados", resultado);
+				return "curso/avisosGrupal :: contentCursoAvisoExistenProbBase";
+			} else {
+				logger.info("SE REGISTRO EXITOSAMENTE CURSOS BASE"); // Éxito
+				System.out.println("SE REGISTRO EXITOSAMENTE DOCENTES");
+				// return "curso/avisosGrupal :: contentCursoAvisoExitoGrup";
+			}
+		} catch (Exception e) {
+			logger.warn("ERROR EN LOS ID's");
+			return "curso/avisosGrupal :: contentCursoAvisoIdsGrup";
+		}
+		return "curso/avisosGrupal :: contentCursoAvisoExitoGrup";
 	}
 	
 	
@@ -310,9 +301,38 @@ public class CursoController {
 				model.addAttribute("listaCursosNoAgregados", resultado);
 				return "curso/avisosGrupal :: contentCursoAvisoExistenProb";
 			}else{
-				logger.info("SE REGISTRO EXITOSAMENTE DOCENTES");		//Éxito
-				System.out.println("SE REGISTRO EXITOSAMENTE DOCENTES");
+				logger.info("SE REGISTRO EXITOSAMENTE HORARIOSCLASE");		//Éxito
+				System.out.println("SE REGISTRO EXITOSAMENTE HORARIOSCLASE");
 				return "curso/avisosGrupal :: contentCursoAvisoExitoGrup";
+			}
+		}
+		
+	}
+	@PostMapping("/updateBulk")
+	public String actualizarCursos(Model model, @RequestBody String listCursos ){
+		logger.info("CADENA RECIBIDA: "+listCursos);
+		JSONArray jsonArrayCursoPeriodo = new JSONArray(listCursos);
+		DeserealizarJSON<CursoMasivoModel> deserealizador = new DeserealizarJSON<CursoMasivoModel>(CursoMasivoModel.class);
+		List<CursoMasivoModel> cursoMasivoModel = null;
+		CursoMasivoModel resultado = null;
+		logger.info("CANTIDAD DE REGISTROS: "+jsonArrayCursoPeriodo.length());
+		
+		cursoMasivoModel = deserealizador.deserealiza(jsonArrayCursoPeriodo);
+		if(jsonArrayCursoPeriodo.length()!=cursoMasivoModel.size()){	//Cada error que exista envía un fragmento para activarlo en la página
+			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO: "+(cursoMasivoModel.size()+1));//Error 1
+			System.out.println("ENVIANDO MENSAJE DE ERROR EN REGISTRO: "+(cursoMasivoModel.size()+1));
+			return "curso/avisosGrupal :: contentCursoAvisoErrorGrup";
+		}else{
+				resultado = cursoPeriodoService.updateBulk(cursoMasivoModel);
+				model.addAttribute("cantidadCursosActualizados",(jsonArrayCursoPeriodo.length()));
+			if(resultado!=null){
+				logger.warn("NO SE PUDO ACTUALIZAR HASTA ANTES DEL REGISTRO "+resultado);
+				model.addAttribute("cursoError", resultado);
+				return "curso/avisosGrupal :: contentCursoAvisoExisteError";
+			}else{
+				logger.info("SE ACTUALIZARON EXITOSAMENTE TODOS LOS HORARIO CLASES");		//Éxito
+				System.out.println("SE ACTUALIZARON EXITOSAMENTE HORARIOS CLASE");
+				return "curso/avisosGrupal :: contentCursoAvisoExitoGrupActualiza";
 			}
 		}
 		

@@ -30,13 +30,6 @@ public class CursoPeriodo implements java.io.Serializable {
 	private Periodo periodo;
 	private String cursoPeriodoNombre;
 	private Set<Grupo> grupos = new HashSet<Grupo>(0);
-	/*
-	 * public CursoPeriodo(CursoPeriodoBus cursoPeriodoBus) {
-	 * this.idcursoPeriodo=cursoPeriodoBus.getIdcursoPeriodo();
-	 * this.cursoConjunto=new CursoConjunto(cursoPeriodoBus.getCursoConjuntoBus());
-	 * this.periodo=cursoPeriodoBus.getPeriodo();
-	 * this.cursoPeriodoNombre=cursoPeriodoBus.getCursoPeriodoNombre(); }
-	 */
 
 	public CursoPeriodo() {
 	}

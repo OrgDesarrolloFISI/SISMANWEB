@@ -30,13 +30,6 @@ public class CursoConjunto implements java.io.Serializable {
 	private String cursocNombre;
 	private int cursocCodcomun;
 	private Set<CursoPeriodo> cursoPeriodos = new HashSet<CursoPeriodo>(0);
-	/*
-	 * public CursoConjunto(CursoConjuntoBus cursoConjuntoBus) {
-	 * this.idcursoConjunto=cursoConjuntoBus.getIdcursoConjunto();
-	 * this.cursoBase=cursoConjuntoBus.getCursoBase();
-	 * this.cursocNombre=cursoConjuntoBus.getCursocNombre();
-	 * this.cursocCodcomun=cursoConjuntoBus.getCursocCodcomun(); }
-	 */
 
 	public CursoConjunto() {
 	}

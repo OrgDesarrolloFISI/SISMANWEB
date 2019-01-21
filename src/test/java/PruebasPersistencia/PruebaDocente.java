@@ -138,6 +138,19 @@ public class PruebaDocente {
 			System.out.println("El codigo del docente es "+d.getIddocente());
 	}
 	
-	
+	@Test
+	@Transactional
+	public void buscaraDocentePorNombresYApellidos(){
+		String nombres="ROLANDO ALBERTO";
+		String apellidoPaterno="MAGUIÑA";
+		String apellidoMaterno="PEREZ";
+		
+		Docente d=docenteService.buscarDocenteXNombresApPaternoApMaterno(nombres, apellidoPaterno, apellidoMaterno);
+		
+		if (d==null)
+			System.out.println("No se encontró el docente");
+		else
+			System.out.println("El codigo del docente es "+d.getIddocente());
+	}
 
 }

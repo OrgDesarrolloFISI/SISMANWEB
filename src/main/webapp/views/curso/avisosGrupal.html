@@ -12,11 +12,20 @@
 		<p class="lead" th:text=${cantidadCursosGuardados}></p>
 	</div>
 
+	<div th:fragment="contentCursoAvisoExitoGrupActualiza" class="text-center">
+		<p class="lead">Se actualizaron los cursos exitosamente:</p>
+		<br />
+		<p class="lead" th:text=${cantidadCursosActualizados}></p>
+	</div>
+	
 	<div th:fragment="contentCursoAvisoExistenProb">
-		<p class=" text-center lead">Se pudo registrar la siguiente	cantidad de cursos:</p>
+		<p class=" text-center lead">Se pudo registrar la siguiente
+			cantidad de cursos:</p>
 		<p class="text-center lead" th:text=${cantidadCursosGuardados}></p>
 		<br />
-		<p class="lead">En el archivo se encontro cursos con problemas para ingresar, por lo que no se registraran:</p>
+		<p class="lead">Las siguientes filas del archivo se encontraron
+			con problemas en los campos al intentar guardarlas, por lo que no se
+			podran registrar:</p>
 		<div class="panel-body">
 			<table id="dataTable" class="table table-striped table-bordered"
 				th:object="${listaCursosNoAgregados}">
@@ -55,6 +64,45 @@
 
 	</div>
 
+	<div th:fragment="contentCursoAvisoExisteError">
+		<p class=" text-center lead">Hubo un error en los datos y se
+			actualizo hasta una fila antes a:</p>
+		<br />
+		<div class="panel-body">
+			<table id="dataTable" class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th>Hora de Inicio</th>
+						<th>Hora de Fin</th>
+						<th>Codigo</th>
+						<th>Nombre del curso</th>
+						<th>Grupo</th>
+						<th>Dia</th>
+						<th>Apellido Paterno</th>
+						<th>Apellido Materno</th>
+						<th>Nombres</th>
+						<th>Tipo de clase</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td th:text="${cursoError.horaInicio}"></td>
+						<td th:text="${cursoError.horaFinal}"></td>
+						<td th:text="${cursoError.codCurso}"></td>
+						<td th:text="${cursoError.descCurso}"></td>
+						<td th:text="${cursoError.grupoNumero}"></td>
+						<td th:text="${cursoError.dia}"></td>
+						<td th:text="${cursoError.docenteApPaterno}"></td>
+						<td th:text="${cursoError.docenteApMaterno}"></td>
+						<td th:text="${cursoError.docenteNombre}"></td>
+						<td th:text="${cursoError.tipoClase}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="panel-body"></div>
+
+	</div>
 	<div th:fragment="contentCursoAvisoErrorGrup" class="text-center">
 		<p class="lead">Hubo un error en la especificaci&oacute;n de
 			cabeceras del documento subido, por favor revise que todas las
@@ -63,6 +111,38 @@
 
 	</div>
 
+	<div th:fragment="contentCursoAvisoExistenProbBase">
+		<p class=" text-center lead">Se pudo registrar la siguiente
+			cantidad de cursos:</p>
+		<p class="text-center lead" th:text=${cantidadCursosGuardados}></p>
+		<br />
+		<p class="lead">En el archivo se encontro cursos con problemas
+			para ingresar, por lo que no se registraran:</p>
+		<div class="panel-body">
+			<table id="dataTable" class="table table-striped table-bordered"
+				th:object="${listaCursosNoAgregados}">
+				<thead>
+					<tr>
+						<th>Nombre del Plan</th>
+						<th>Codigo</th>
+						<th>Nombre del curso</th>
+						<th>Ciclo</th>
+						<th>Creditos</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="cursoMasivoModel : ${listaCursosNoAgregados}">
+						<td th:text="${cursoMasivoModel.PlanNombre}"></td>
+						<td th:text="${cursoMasivoModel.Codigo}"></td>
+						<td th:text="${cursoMasivoModel.Nombre}"></td>
+						<td th:text="${cursoMasivoModel.Ciclo}"></td>
+						<td th:text="${cursoMasivoModel.Creditos}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
 	<!--**********************FAvisoAjax********************** -->
 
 </body>

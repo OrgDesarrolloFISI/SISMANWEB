@@ -19,102 +19,104 @@ import pe.edu.sistemas.sismanweb.services.modelform.DocenteModelForm;
 @Service
 @Transactional
 public class DocenteService {
-	
 
-	@Autowired private DocenteDAO docenteDao;	
-	@Autowired private PersonaDAO personaDao;
-	@Autowired private ClaseDocenteDAO claseDocenteDao;	
-	@Autowired private CategoriaDocenteDAO categoriaDocenteDao;	
-	@Autowired private DepartamentoAcademicoDAO departamentoAcademicoDao;
-	
-	
-	public boolean insertarDocente(Docente docente){
+	@Autowired
+	private DocenteDAO docenteDao;
+	@Autowired
+	private PersonaDAO personaDao;
+	@Autowired
+	private ClaseDocenteDAO claseDocenteDao;
+	@Autowired
+	private CategoriaDocenteDAO categoriaDocenteDao;
+	@Autowired
+	private DepartamentoAcademicoDAO departamentoAcademicoDao;
+
+	public boolean insertarDocente(Docente docente) {
 		Persona persona = personaDao.findPersonaByCodigo(docente.getPersona().getPersonaCodigo());
-		if(persona!=null){
+		if (persona != null) {
 			return true;
-		}else{
+		} else {
 			docenteDao.save(docente);
 			return false;
 		}
 	}
-	
-	
-	public boolean actualizarDocente(Docente docente, Persona persona_codigo){
-		if(persona_codigo!=null){
-			
-			if(persona_codigo.getIdPersona().intValue()!=docente.getPersona().getIdPersona().intValue() ){
-				//Significa que hay otro usuario con el mismo codigo
+
+	public boolean actualizarDocente(Docente docente, Persona persona_codigo) {
+		if (persona_codigo != null) {
+
+			if (persona_codigo.getIdPersona().intValue() != docente.getPersona().getIdPersona().intValue()) {
+				// Significa que hay otro usuario con el mismo codigo
 				System.out.println("El codigo de persona ya existe en otro docente");
 				return true;
-			}else{
-				//Ocurrio que: 1. No hubo conflicto de codigo 2.- Persona_id = Persona_codigo
+			} else {
+				// Ocurrio que: 1. No hubo conflicto de codigo 2.- Persona_id = Persona_codigo
 				System.out.println("Docente actualizado 1");
 				docenteDao.update(docente);
 				return false;
 			}
-		}else{
-			//Ocurrio que: 1. No hubo conflicto de codigo
+		} else {
+			// Ocurrio que: 1. No hubo conflicto de codigo
 			System.out.println("Docente actualizado 2");
 			docenteDao.update(docente);
 			return false;
 		}
 	}
-	
-	public void eliminarDocente(Docente docente){
+
+	public void eliminarDocente(Docente docente) {
 		docenteDao.delete(docente);
 	}
-	
-	public List<Docente> obtenerDocentes(){
+
+	public List<Docente> obtenerDocentes() {
 		List<Docente> resultado = docenteDao.findAll();
-		for(Docente doc: resultado){
+		for (Docente doc : resultado) {
 			doc.getPersona().getPersonaNombre();
-			if(doc.getDepartamentoAcademico()!=null){
+			if (doc.getDepartamentoAcademico() != null) {
 				doc.getDepartamentoAcademico().getDepartamentoAcademicoNombre();
 			}
-			if(doc.getCategoriaDocente()!=null){
+			if (doc.getCategoriaDocente() != null) {
 				doc.getCategoriaDocente().getCategoriaDocenteNombre();
 			}
-			if(doc.getClase()!=null){
+			if (doc.getClase() != null) {
 				doc.getClase().getClaseNombre();
-			}			
+			}
 		}
 		return resultado;
 	}
-	
-	public Docente obtenerDocenteXID(Integer idDocente){
-		Docente docente = docenteDao.findById(idDocente);			
+
+	public Docente obtenerDocenteXID(Integer idDocente) {
+		Docente docente = docenteDao.findById(idDocente);
 		docente.getPersona().getPersonaNombre();
 
-		if(docente.getDepartamentoAcademico()!=null){
+		if (docente.getDepartamentoAcademico() != null) {
 			docente.getDepartamentoAcademico().getDepartamentoAcademicoNombre();
 		}
-		if(docente.getCategoriaDocente()!=null){
+		if (docente.getCategoriaDocente() != null) {
 			docente.getCategoriaDocente().getCategoriaDocenteNombre();
 		}
-		if(docente.getClase()!=null){
+		if (docente.getClase() != null) {
 			docente.getClase().getClaseNombre();
 		}
 		return docente;
 	}
-	
-	public List<Docente> saveBulk(List<DocenteModelForm> listaDocenteModel){
+
+	public List<Docente> saveBulk(List<DocenteModelForm> listaDocenteModel) {
 		List<Docente> docentesExistentes = new ArrayList<Docente>();
 		Docente docente = null;
 		Boolean existe;
-		for(int i=0; i< listaDocenteModel.size(); i++){
+		for (int i = 0; i < listaDocenteModel.size(); i++) {
 			docente = converterToDocente(listaDocenteModel.get(i));
 			existe = insertarDocente(docente);
-			if(existe){
+			if (existe) {
 				docentesExistentes.add(docente);
-			}			
+			}
 		}
-		return docentesExistentes;		
+		return docentesExistentes;
 	}
-	
-	public Docente converterToDocente(DocenteModelForm formDocenteModel){
+
+	public Docente converterToDocente(DocenteModelForm formDocenteModel) {
 		Docente docente = new Docente();
 		Persona persona = new Persona();
-		if(formDocenteModel.getIdPersona()!=0){
+		if (formDocenteModel.getIdPersona() != 0) {
 			persona.setIdPersona(formDocenteModel.getIdPersona());
 		}
 		persona.setPersonaCodigo(formDocenteModel.getCodigo());
@@ -133,27 +135,26 @@ public class DocenteService {
 		docente.setPersona(persona);
 		docente.setDocenteClave("");
 		docente.setDocenteGrupoOcupacional("Profesional");
-		docente.setDocenteRegular(0);		
+		docente.setDocenteRegular(0);
 		docente.setClase(claseDocenteDao.findById(formDocenteModel.getIdClase()));
 		docente.setCategoriaDocente(categoriaDocenteDao.findById(formDocenteModel.getIdCategoria()));
-		docente.setDepartamentoAcademico(departamentoAcademicoDao.findById(formDocenteModel.getIdDepAcad()));	
-		
-		return docente;		
+		docente.setDepartamentoAcademico(departamentoAcademicoDao.findById(formDocenteModel.getIdDepAcad()));
+
+		return docente;
 	}
-	
-	
-	public DocenteModelForm converterToDocenteModelForm(Docente docente){
+
+	public DocenteModelForm converterToDocenteModelForm(Docente docente) {
 		DocenteModelForm formDocenteModel = new DocenteModelForm();
 		Persona persona = docente.getPersona();
 		formDocenteModel.setIdDocente(docente.getIddocente());
 		formDocenteModel.setIdPersona(docente.getPersona().getIdPersona());
-		if(docente.getCategoriaDocente()!=null){
+		if (docente.getCategoriaDocente() != null) {
 			formDocenteModel.setIdCategoria(docente.getCategoriaDocente().getIdecategoriaDocente());
 		}
-		if(docente.getClase()!=null){
+		if (docente.getClase() != null) {
 			formDocenteModel.setIdClase(docente.getClase().getIdclase());
 		}
-		if(docente.getDepartamentoAcademico()!=null){
+		if (docente.getDepartamentoAcademico() != null) {
 			formDocenteModel.setIdDepAcad((docente.getDepartamentoAcademico().getIddepartamentoAcademico()));
 		}
 		formDocenteModel.setNombre(persona.getPersonaNombre());
@@ -165,47 +166,87 @@ public class DocenteService {
 		formDocenteModel.setDni(persona.getPersonaDni());
 		formDocenteModel.setSexo(persona.getPersonaSexo());
 		formDocenteModel.setTelefono(persona.getPersonaTelefono());
-		
-		return formDocenteModel;
-	
-	}
-	
 
-	public List<DocenteModelForm> buscarDocentesxParam(String valor, String filtro){
+		return formDocenteModel;
+
+	}
+
+	public List<DocenteModelForm> buscarDocentesxParam(String valor, String filtro) {
 		DocenteModelForm formDocenteModel;
-		
+
 		List<DocenteModelForm> docentesFormCodigo = new ArrayList<DocenteModelForm>();
-		switch(filtro){
-		case"1":	filtro="personaCodigo";break;
-		case"2":	filtro="personaNombre";break;
-		case"3":	filtro="personaAppaterno";break;
-		case"4":	filtro="personaApmaterno";break;
-		//default:	filtro="idPersona";	
-			
+		switch (filtro) {
+		case "1":
+			filtro = "personaCodigo";
+			break;
+		case "2":
+			filtro = "personaNombre";
+			break;
+		case "3":
+			filtro = "personaAppaterno";
+			break;
+		case "4":
+			filtro = "personaApmaterno";
+			break;
+		// default: filtro="idPersona";
+
 		}
-		
-		List<Docente> docentesCodigo = docenteDao.obtenerDocentesxCod(valor,filtro);
-		
-		for(Docente docente : docentesCodigo){
+
+		List<Docente> docentesCodigo = docenteDao.obtenerDocentesxCod(valor, filtro);
+
+		for (Docente docente : docentesCodigo) {
 			docente.getPersona().getPersonaNombre();
-			
-			if(docente.getDepartamentoAcademico()!=null){
+
+			if (docente.getDepartamentoAcademico() != null) {
 				docente.getDepartamentoAcademico().getDepartamentoAcademicoNombre();
 			}
-			if(docente.getCategoriaDocente()!=null){
+			if (docente.getCategoriaDocente() != null) {
 				docente.getCategoriaDocente().getCategoriaDocenteNombre();
 			}
-			if(docente.getClase()!=null){
+			if (docente.getClase() != null) {
 				docente.getClase().getClaseNombre();
 			}
 			formDocenteModel = converterToDocenteModelForm(docente);
 			docentesFormCodigo.add(formDocenteModel);
 		}
-		
+
 		return docentesFormCodigo;
+
+	}
+
+	public Docente buscarDocenteXNombresApPaternoApMaterno(String nombres, String apPaterno, String apMaterno) {
+		Docente docente = docenteDao.findDocenteByNombreByApellidoPatByApellidoMat(nombres, apPaterno, apMaterno);
+
+		if (docente == null) { // Si no se encuentra por sus dos
+								// nombres, quizá está solo por 1
+								// nombre
+			if (nombres != null) {
+				String[] cadaNombre = nombres.split(" "); // Separamos
+															// por
+															// cada
+															// nombre
+				int j = 0;
+				for (j = 0; j < cadaNombre.length; j++) { // Buscamos
+															// esto
+															// por
+															// cada
+															// nombre
+					docente = docenteDao.findDocenteByNombreByApellidoPatByApellidoMat(cadaNombre[j], apPaterno,
+							apMaterno);
+					if (docente != null) // Cuando encuentro el
+											// docente, salgo de la
+											// iteración (for j)
+						break;
+				}
+				if (j >= cadaNombre.length) { // Si buscó con todos los nombres y no lo encontró
+					return null;
+				}
+			} else { // Docente que no tiene nombres
+				return null;
+			}
+		}
+		return docente;
 		
 	}
-	
-	
-	
+
 }

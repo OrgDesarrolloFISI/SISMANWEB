@@ -153,4 +153,12 @@ public class HorarioClase implements java.io.Serializable {
 		this.horarioClasePeriodo = horarioClasePeriodo;
 	}
 
+	@Override
+	public String toString() {
+		return "HorarioClase [idhorarioClase=" + idhorarioClase + ", aula=" + aula.getNombre() + ", docente="
+				+ docente.getPersona().getPersonaAppaterno() + ", grupo=" + grupo.getGrupoNumero() + ", horaInicio="
+				+ horaInicio + ", horaFin=" + horaFin + ", nombreAula=" + nombreAula + ", dia=" + dia
+				+ ", horarioClaseTipo=" + horarioClaseTipo + ", horarioClasePeriodo=" + horarioClasePeriodo + "]";
+	}
+
 }

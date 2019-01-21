@@ -19,7 +19,7 @@
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="x_panel">
 						<div class="x_title">
-							<h2>Registro Grupal de cursos</h2>
+							<h2>Registro Grupal de cursos Base</h2>
 							<div class="clearfix"></div>
 						</div>
 						<div class="x_content">
@@ -31,10 +31,7 @@
 										value="Parse and send XSLS file" />
 								</div>
 
-
-								<button id="botonExcel" type="button" onclick="SendDataCurso()" class="btn btn-primary">Enviar a agregar
-									Excel</button>
-								<button id="botonExcel" type="button" onclick="SendDataCursoActualizar()" class="btn btn-secondary">Enviar a actualizar
+								<button id="botonExcel" type="button" onclick="SendDataCursoBase()">Enviar
 									Excel</button>
 
 								<div id="cargaExterna" class="text-center">
@@ -44,37 +41,11 @@
 									<div>
 										<img
 											style="border: 2px solid; border-radius: 6px; width: 80%; margin: 0 auto;"
-											src="../static/imgs/plantilla_cursos.PNG"
-											th:src="@{/static/imgs/plantilla_cursos.PNG}" />
+											src="../static/imgs/MasivaCursosBase.PNG"
+											th:src="@{/static/imgs/MasivaCursosBase.PNG}" />
 									</div>
 									<br /> <br />
-									<p class="lead ">Los datos "codigo", "nombre", "apPaterno",
-										"apMaterno" son obligatorios en el documento, el resto de
-										datos pueden ser obviados.</p>
 									<div class="row">
-										<div class="col-xs-4">
-											<p class="lead">Para el atributo "aula" se tienen los
-												siguientes valores:</p>
-
-											<div class="form-group">
-												<div style="padding-left:15%;">
-													<table style="width: 70%;"
-														class="table table-striped table-bordered ">
-														<thead>
-															<tr>
-																<th style="text-align:center;">Nombre de Aula</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr th:each="aula : ${listaAulas}">
-																<td th:text="${aula.nombre}"></td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
-											</div>
-										</div>
-
 										<div class="col-xs-4">
 											<p class="lead">Para el atributo "nombrePlan" se tienen
 												los siguientes valores:</p>
@@ -98,36 +69,6 @@
 												</div>
 											</div>
 										</div>
-
-										<div class="col-xs-4">
-											<p class="lead">Para el atributo "tipoClase" se tienen
-												los siguientes valores:</p>
-
-											<div class="form-group">
-												<div style="padding-left:15%;">
-													<table style="width: 70%;"
-														class="table table-striped table-bordered ">
-														<thead>
-															<tr>
-																<th style="text-align:center;">Tipo de clase</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-																<td>TEORIA</td>
-															</tr>
-															<tr>
-																<td>PRACTICA</td>
-															</tr>
-															<tr>
-																<td>LABORATORIO</td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
-											</div>
-										</div>
-
 									</div>
 
 								</div>
