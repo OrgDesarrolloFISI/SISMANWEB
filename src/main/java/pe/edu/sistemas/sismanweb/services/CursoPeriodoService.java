@@ -178,6 +178,7 @@ public class CursoPeriodoService {
 
 					Docente docente = docenteServ.buscarDocenteXNombresApPaternoApMaterno(cmm.getDocenteNombre(),
 							cmm.getDocenteApPaterno(), cmm.getDocenteApMaterno());
+
 					if (docente != null && cp != null) {
 						System.out.println(cp);
 						Grupo aux = grupoDAO.findByidcursoPeriodoBygrupoNumero(cp.getIdcursoPeriodo(),
@@ -241,6 +242,13 @@ public class CursoPeriodoService {
 							}
 
 						}
+					} else { // Llegaría acá si es que CursoPeriodo es nulo, pero es muy poco probable ya que
+								// se agrega en una anterior iteración
+						cmm.setMotivoError("Docente no existe en la BD");
+						cmm.setConError(true);
+						listacursoMasivoModel.set(i, cmm);
+						cursosConProblemas.add(cmm);
+						System.out.println("Docente no existe en " + (i + 1));
 					}
 
 				}
