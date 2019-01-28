@@ -30,12 +30,21 @@ public class DocenteService {
 	private CategoriaDocenteDAO categoriaDocenteDao;
 	@Autowired
 	private DepartamentoAcademicoDAO departamentoAcademicoDao;
+	@Autowired 
+	private PersonaService personaService;	
 
 	public boolean insertarDocente(Docente docente) {
 		Persona persona = personaDao.findPersonaByCodigo(docente.getPersona().getPersonaCodigo());
 		if (persona != null) {
+			
 			return true;
 		} else {
+			personaService.insertarPersona(docente.getPersona());
+			persona=personaService.obtenerPersonaxCodigo(docente.getPersona().getPersonaCodigo());
+			System.out.println(persona.toString());
+			System.out.println("A punto de guardar");
+			System.out.println("PERSONA DAO ID"+docente.getPersona().getIdPersona());
+
 			docenteDao.save(docente);
 			return false;
 		}
@@ -116,6 +125,7 @@ public class DocenteService {
 	public Docente converterToDocente(DocenteModelForm formDocenteModel) {
 		Docente docente = new Docente();
 		Persona persona = new Persona();
+		System.out.println("ID DE PERSONA:::::::::::: "+formDocenteModel.getIdPersona());
 		if (formDocenteModel.getIdPersona() != 0) {
 			persona.setIdPersona(formDocenteModel.getIdPersona());
 		}
@@ -131,6 +141,8 @@ public class DocenteService {
 		persona.setPersonaCodigoSistema(formDocenteModel.getCodigo());
 		persona.setPersonaPasswordSistema(formDocenteModel.getCodigo());
 		persona.setPersonaPasswordSistema2(" ");
+		
+		
 		docente.setIddocente(formDocenteModel.getIdDocente());
 		docente.setPersona(persona);
 		docente.setDocenteClave("");

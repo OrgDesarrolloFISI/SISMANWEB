@@ -30,6 +30,7 @@ public class AlumnoService {
 	@Autowired private PlanDAO planDao;	
 	@Autowired private TipoAlumnoDAO tipoAlumnoDao;
 	@Autowired private PersonaDAO personaDao;
+	@Autowired private PersonaService personaService;	
 	
 	
 	public boolean insertarAlumno(Alumno alumno){
@@ -37,6 +38,7 @@ public class AlumnoService {
 		if(persona!=null){
 			return true;
 		}else{
+			personaService.insertarPersona(alumno.getPersona());
 			alumnoDao.save(alumno);
 			return false;
 		}		
