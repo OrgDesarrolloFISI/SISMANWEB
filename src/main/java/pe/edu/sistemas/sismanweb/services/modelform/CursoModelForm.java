@@ -61,6 +61,12 @@ public class CursoModelForm {
 	public void setCreditos(int creditos) {
 		this.creditos = creditos;
 	}
+
+	@Override
+	public String toString() {
+		return "CursoModelForm [idPlan=" + idPlan + ", planNombre=" + planNombre + ", codigo=" + codigo + ", nombre="
+				+ nombre + ", ciclo=" + ciclo + ", creditos=" + creditos + "]";
+	}
 	
 
 }

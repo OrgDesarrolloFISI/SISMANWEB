@@ -257,13 +257,14 @@ public class CursoController {
 			} else {
 				logger.info("SE REGISTRO EXITOSAMENTE CURSOS BASE"); // Éxito
 				System.out.println("SE REGISTRO EXITOSAMENTE DOCENTES");
-				// return "curso/avisosGrupal :: contentCursoAvisoExitoGrup";
+				 return "curso/avisosGrupal :: contentCursoAvisoExitoGrup";
 			}
 		} catch (Exception e) {
 			logger.warn("ERROR EN LOS ID's");
+			e.printStackTrace();
 			return "curso/avisosGrupal :: contentCursoAvisoIdsGrup";
 		}
-		return "curso/avisosGrupal :: contentCursoAvisoExitoGrup";
+		//return "curso/avisosGrupal :: contentCursoAvisoExitoGrup";
 	}
 	
 	

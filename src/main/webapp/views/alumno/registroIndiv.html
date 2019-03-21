@@ -2,6 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" data-layout-decorate="~{fragments/layout}">
 <head>
     <title th:text="${titulo}">Titulo</title>
+    <meta charset="UTF-8"/>
 </head>
 
 <body>
@@ -34,7 +35,7 @@
 									<div class="col-xs-12">
 										<label for="nombre">Nombre</label> <input type="text"
 											class="form-control" id="nombre" placeholder="Ingrese Nombre"
-											pattern="([a-zA-Z]\s*){1,26}"required oninput="check_text(this);"
+											pattern="([a-zA-ZñÑáéíóúÁÉÍÓÚ]\s*){1,26}"required oninput="check_text(this);"
 											th:field="*{nombre}" /> <input type="hidden"
 											th:field="*{idAlumno}" /> <input type="hidden"
 											th:field="*{idPersona}" />
@@ -43,13 +44,13 @@
 										<label for="apellido_paterno">Apellido Paterno</label> <input
 											type="text" class="form-control" id="apellido_paterno"
 											placeholder="Ingrese Apellido Paterno" required oninput="check_text(this);"
-											pattern="([a-zA-Z]\s*){1,16}" th:field="*{apPaterno}" />
+											pattern="([a-zA-ZñÑáéíóúÁÉÍÓÚ]\s*){1,16}" th:field="*{apPaterno}" />
 									</div>
 									<div class="col-xs-6">
 										<label for="apellido_materno">Apellido Materno</label> <input
 											type="text" class="form-control" id="apellido_materno"
 											placeholder="Ingrese Apellido Materno" required oninput="check_text(this);"
-											pattern="([a-zA-Z]\s*){1,17}" th:field="*{apMaterno}" />
+											pattern="([a-zA-ZñÑáéíóúÁÉÍÓÚ]\s*){1,17}" th:field="*{apMaterno}" />
 									</div>
 									<div class="col-xs-6">
 										<label for="codigo">Codigo</label> <input type="text"
@@ -99,14 +100,14 @@
 									<div class="col-xs-6">
 										<label for="Direccion">Direccion</label> <input type="text"
 											class="form-control" id="Direccion" placeholder="Direccion"
-											pattern="[a-zA-Z0-9]{1-63}" th:field="*{direccion}" /> <br />
+											pattern="[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ]{1-63}" th:field="*{direccion}" /> <br />
 									</div>
 								</div>
 
 								<div class="text-center">
 									<button type="submit" class="btn btn-primary"
 										style="width: 30%;"
-										th:text="${alumno.codigo != null ? 'Actualizar' : 'Registrar'}">Bot�n</button>
+										th:text="${alumno.codigo != null ? 'Actualizar' : 'Registrar'}">Botón</button>
 								</div>
 							</form>
 					</div>

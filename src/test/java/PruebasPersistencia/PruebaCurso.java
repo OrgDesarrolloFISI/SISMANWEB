@@ -19,6 +19,7 @@ import pe.edu.sistemas.sismanweb.domain.CursoBase;
 import pe.edu.sistemas.sismanweb.domain.CursoConjunto;
 import pe.edu.sistemas.sismanweb.domain.CursoPeriodo;
 import pe.edu.sistemas.sismanweb.domain.Periodo;
+import pe.edu.sistemas.sismanweb.domain.Plan;
 import pe.edu.sistemas.sismanweb.services.modelform.CursoPeriodoModelForm;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -230,6 +231,7 @@ public class PruebaCurso {
 	}
 	
 	@Test
+	@Ignore
 	@Transactional
 	public void encontrarCursoPeriodoPorTodo() {
 		CursoPeriodo cp = cursoPeriodoDao.findCursoPeriodoByAll("203001", "2009-Sistemas", "20190");
@@ -237,5 +239,16 @@ public class PruebaCurso {
 			System.out.println("Sí existe");
 		else
 			System.out.println("No existe");
+	}
+	
+	@Test
+	@Ignore
+	@Transactional
+	public void encontrarPlanPorNombre(){
+		Plan p=planDao.obtenerPlanxNombrePlan("2018-Computacion");
+		if(p==null)
+			System.out.println("El plan es nulo");
+		else
+			System.out.println(p.getIdplan());
 	}
 }
