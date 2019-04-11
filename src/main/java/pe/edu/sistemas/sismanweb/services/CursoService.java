@@ -45,12 +45,12 @@ public class CursoService {
 
 		if (cursoBaseExiste != null) {
 			logger.info("YA EXISTE UN CURSO CON EL MISMO CODIGO Y PLAN");
-			return true;
+			return false;
 		} else {
 
 			cursoBaseDao.save(cursoBase);
 			logger.info("--NUEVO CURSO AGREGADO-- ");
-			return false;
+			return true;
 		}
 	}
 

@@ -5,6 +5,7 @@ public class CursoMasivoModel {
 	String horaFinal; // 18:00:00
 
 	// CursoConjunto (codCurso + nombrePlan)
+	int codigoEscuela;// 200
 	String codCurso; // 2010802
 	String nombrePlan; // 2014-Sistemas
 	String descCurso; // PROYECTO DE TESIS
@@ -18,10 +19,10 @@ public class CursoMasivoModel {
 	String aula; // 210
 	int dia; // 1
 
-	// Docente (docenteApPaterno + docenteApMaterno + docenteNombre)
+	// Docente (docenteNombre + docenteApPaterno + docenteApMaterno)
+	String docenteNombre; // DAVID SANTOS
 	String docenteApPaterno;// MAURICIO
 	String docenteApMaterno;// SANCHEZ
-	String docenteNombre; // DAVID SANTOS
 
 	String tipoClase; // TEORÍA
 	String nombrePeriodo; // 2018-II
@@ -29,7 +30,7 @@ public class CursoMasivoModel {
 	String motivoError;
 
 	boolean conError = false;
-	
+
 	public String getHoraInicio() {
 		return horaInicio;
 	}
@@ -44,6 +45,14 @@ public class CursoMasivoModel {
 
 	public void setHoraFinal(String horaFinal) {
 		this.horaFinal = horaFinal;
+	}
+
+	public int getCodigoEscuela() {
+		return codigoEscuela;
+	}
+
+	public void setCodigoEscuela(int codigoEscuela) {
+		this.codigoEscuela = codigoEscuela;
 	}
 
 	public String getCodCurso() {
@@ -102,6 +111,14 @@ public class CursoMasivoModel {
 		this.dia = dia;
 	}
 
+	public String getDocenteNombre() {
+		return docenteNombre;
+	}
+
+	public void setDocenteNombre(String docenteNombre) {
+		this.docenteNombre = docenteNombre;
+	}
+	
 	public String getDocenteApPaterno() {
 		return docenteApPaterno;
 	}
@@ -116,14 +133,6 @@ public class CursoMasivoModel {
 
 	public void setDocenteApMaterno(String docenteApMaterno) {
 		this.docenteApMaterno = docenteApMaterno;
-	}
-
-	public String getDocenteNombre() {
-		return docenteNombre;
-	}
-
-	public void setDocenteNombre(String docenteNombre) {
-		this.docenteNombre = docenteNombre;
 	}
 
 	public String getTipoClase() {

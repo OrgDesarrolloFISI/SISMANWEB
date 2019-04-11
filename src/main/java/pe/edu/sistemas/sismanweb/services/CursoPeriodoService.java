@@ -66,7 +66,7 @@ public class CursoPeriodoService {
 
 		for (int i = 0; i < listacursoMasivoModel.size(); i++) { // AGREGO TODOS
 																	// LOS
-																	// CURSOCONJUNTO
+																	// CURSO_CONJUNTO
 																	// QUE NO
 																	// EXISTAN A
 																	// TODOS LOS
@@ -79,11 +79,8 @@ public class CursoPeriodoService {
 				CursoBase cursoBase = cursoBaseDAO.findCursoBaseByNombreByPlanNombre(cmm.getDescCurso(),
 						cmm.getNombrePlan());
 				if (cursoBase != null) {
-					CursoConjunto aux = cursoConjuntoDAO.findCursoConjuntoByNombre(cmm.getDescCurso()); // Obtener
-																										// el
-																										// CURSOC_CODCOMUN
-																										// del
-																										// cursoConjunto
+					CursoConjunto aux = cursoConjuntoDAO.findCursoConjuntoByNombreYCodigoEscuela(cmm.getDescCurso(),cmm.getCodigoEscuela()); 
+					// Obtener el CURSOC_CODCOMUN del cursoConjunto
 					boolean seIngreso;
 
 					// Crear nuevo CursoConjunto
@@ -157,7 +154,7 @@ public class CursoPeriodoService {
 
 				if (cp == null) { // No debería haber error acá dado que ya se
 									// agregó en el "for" anterior
-					cmm.setMotivoError("El Curso del Periodo no existía");
+					cmm.setMotivoError("El Curso del Periodo no existe");
 					cmm.setConError(true);
 					listacursoMasivoModel.set(i, cmm);
 					cursosConProblemas.add(cmm);

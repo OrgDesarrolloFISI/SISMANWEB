@@ -89,7 +89,7 @@ public class PruebaCurso {
 	@Ignore
 	@Transactional
 	public void muestraUnCursoConjunto(){
-		CursoConjunto cc = cursoConjuntoDao.findCursoConjuntoByNombre("base de daTOs");
+		CursoConjunto cc = cursoConjuntoDao.findCursoConjuntoByNombreYCodigoEscuela("sistemas inteligentes",200);
 		if(cc != null){
 			System.out.print(cc.getIdcursoConjunto()+" -- "+cc.getCursocNombre()+" -- ["+cc.getCursoBase().getIdcursoGeneral()+" :: "+cc.getCursoBase().getCursobNombre()+" :: "
 			+cc.getCursoBase().getCursobCodigo()+" :: "+cc.getCursoBase().getPlan().getIdplan()+"] -- "+cc.getCursocCodcomun());
@@ -151,7 +151,6 @@ public class PruebaCurso {
 	}
 	
 	@Test
-	@Ignore
 	@Transactional
 	public void muestraCodigoCursoConjunto(){
 		String codigoCurso="2011110";

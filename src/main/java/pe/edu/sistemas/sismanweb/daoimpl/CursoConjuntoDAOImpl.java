@@ -22,12 +22,15 @@ public class CursoConjuntoDAOImpl extends AbstractDAOImpl<CursoConjunto, Integer
 	@Override
 	@SuppressWarnings("unchecked")	
 	@Transactional(propagation=Propagation.MANDATORY)
-	public CursoConjunto findCursoConjuntoByNombre(String nombre) {
+	public CursoConjunto findCursoConjuntoByNombreYCodigoEscuela(String nombre, int codigoEscuela) {
 		CursoConjunto cursoConjunto = null;
 		Query query = null;
 		try{
-			query = getCurrentSession().createQuery("from CursoConjunto where cursocNombre = :nombre").setMaxResults(1);
+			query = getCurrentSession().createQuery("from CursoConjunto "
+					+ "where cursocNombre = :nombre "
+					+ "AND cursoBase.plan.escuelaIdescuela= :codigoEscuela").setMaxResults(1);
 			query.setParameter("nombre", nombre);
+			query.setParameter("codigoEscuela", codigoEscuela);
 			cursoConjunto = (CursoConjunto)query.uniqueResult();
 		}catch (HibernateException he) {
 			he.printStackTrace();
